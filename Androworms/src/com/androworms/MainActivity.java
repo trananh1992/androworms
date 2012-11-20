@@ -20,14 +20,14 @@ public class MainActivity extends Activity {
         setContentView(R.layout.splash_screen);
         
         /* Affiche la liste des développeurs */
-        String[] liste_dev = getResources().getStringArray(R.array.liste_developpeurs);
-        String txt_dev = "";
-        for (int i=0;i<liste_dev.length;i++) {
-        	txt_dev += liste_dev[i] + "<br/>";
+        String[] listeDev = getResources().getStringArray(R.array.liste_developpeurs);
+        String txtDev = "";
+        for (int i=0;i<listeDev.length;i++) {
+        	txtDev += listeDev[i] + "<br/>";
         }
-        TextView tv_developers;
-        tv_developers = (TextView)findViewById(R.id.textView3);
-        tv_developers.setText(Html.fromHtml(txt_dev));
+        TextView tvDevelopers;
+        tvDevelopers = (TextView)findViewById(R.id.textView3);
+        tvDevelopers.setText(Html.fromHtml(txtDev));
     }
 
     @Override
