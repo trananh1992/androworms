@@ -14,5 +14,9 @@
         <item>William Bon</item>
     </string-array>
     <string name="no_data">Pas de données</string>
+    <string name="menu_score">Scores</string>
+    <string name="menu_solo">solo</string>
+    <string name="menu_multi">Multi-joueurs</string>
+    <string name="menu_principal">Menu principal</string>
 
 </resources>

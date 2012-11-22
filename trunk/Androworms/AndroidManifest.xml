@@ -20,6 +20,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ActiviteMenuPrincipal"
+            android:label="@string/menu_principal">
+        </activity>
     </application>
 
 </manifest>
