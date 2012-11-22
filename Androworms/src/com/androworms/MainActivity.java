@@ -1,10 +1,11 @@
 package com.androworms;
 
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
+import android.os.Bundle;
 import android.text.Html;
 import android.view.Menu;
+import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
@@ -28,6 +29,12 @@ public class MainActivity extends Activity {
         TextView tvDevelopers;
         tvDevelopers = (TextView)findViewById(R.id.textView3);
         tvDevelopers.setText(Html.fromHtml(txtDev));
+        
+        
+        
+        OnClickListener event = new MainActivityEvent(this);
+        findViewById(R.id.LinearLayout2).setOnClickListener(event);
+        
     }
 
     @Override
