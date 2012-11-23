@@ -4,15 +4,19 @@ import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
-
+	
+	private static final String TAG = "Androworms.SplashScreen";
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.v(TAG,"Androworms : Bienvenue sur le spashscreen");
         
         /* Changer l'orientation en mode paysage */
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
