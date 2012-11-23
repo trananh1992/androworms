@@ -22,14 +22,15 @@ public class MainActivity extends Activity {
         
         /* Affiche la liste des développeurs */
         String[] listeDev = getResources().getStringArray(R.array.liste_developpeurs);
-        StringBuilder txtDev = new StringBuilder();
+        StringBuffer buf = new StringBuffer();
         for (int i=0;i<listeDev.length;i++) {
-        	txtDev.append(listeDev[i]);
-        	txtDev.append("<br/>");
+        	buf.append(listeDev[i]);
+        	buf.append("<br/>");
         }
+        String txtDev = buf.toString();
         TextView tvDevelopers;
         tvDevelopers = (TextView)findViewById(R.id.textView3);
-        tvDevelopers.setText(Html.fromHtml(txtDev.toString()));
+        tvDevelopers.setText(Html.fromHtml(txtDev));
         
         
         
