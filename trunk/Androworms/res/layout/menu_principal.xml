@@ -76,5 +76,11 @@
             android:layout_height="wrap_content" >
         </TableRow>
     </TableLayout>
+
+    <Button
+        android:id="@+id/test_cam"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:text="Test de la cam" />
 
 </LinearLayout>
