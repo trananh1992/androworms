@@ -15,7 +15,7 @@ public class ActiviteMenuPrincipal extends Activity {
     // Codes de demande de l'Intent
     public final int REQUEST_ENABLE_BT = 1;
     public final int REQUEST_CONNECT_DEVICE = 2;
-    
+    public final int REQUEST_CAM = 3;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +27,10 @@ public class ActiviteMenuPrincipal extends Activity {
         /* Affiche la vue par défaut */
         setContentView(R.layout.menu_principal);
         
+        OnClickListener camCl = new CamHandler(this);
+        OnTouchListener camtl = new CamHandler(this);
+        findViewById(R.id.test_cam).setOnClickListener(camCl);
+        findViewById(R.id.test_cam).setOnTouchListener(camtl);
         
         OnClickListener cl = new TestBluetooth(this);
         OnTouchListener tl = new TestBluetooth(this);
