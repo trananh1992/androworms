@@ -19,5 +19,4 @@ public class MainActivityEvent implements OnClickListener {
 		Intent intent = new Intent(this.mainActivity, ActiviteMenuPrincipal.class);
 		this.mainActivity.startActivity(intent);
 	}
-
 }

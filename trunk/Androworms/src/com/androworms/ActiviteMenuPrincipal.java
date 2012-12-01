@@ -9,36 +9,36 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 
 public class ActiviteMenuPrincipal extends Activity {
-
-    private static final String TAG = "Androworms.MenuPrincipal";
-    
-    // Codes de demande de l'Intent
-    public final int REQUEST_ENABLE_BT = 1;
-    public final int REQUEST_CONNECT_DEVICE = 2;
-    public final int REQUEST_CAM = 3;
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.v(TAG,"Androworms : Bienvenue sur le menu principal");
-        
-        /* Changer l'orientation en mode paysage */
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        
-        /* Affiche la vue par défaut */
-        setContentView(R.layout.menu_principal);
-        
-        OnClickListener camCl = new CamHandler(this);
-        OnTouchListener camtl = new CamHandler(this);
-        findViewById(R.id.test_cam).setOnClickListener(camCl);
-        findViewById(R.id.test_cam).setOnTouchListener(camtl);
-        
-        OnClickListener cl = new TestBluetooth(this);
-        OnTouchListener tl = new TestBluetooth(this);
-        findViewById(R.id.testBluetooth).setOnClickListener(cl);
-        findViewById(R.id.testBluetooth).setOnTouchListener(tl);
-    }
-    
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+	
+	private static final String TAG = "Androworms.MenuPrincipal";
+	
+	// Codes de demande de l'Intent
+	public final int REQUEST_ENABLE_BT = 1;
+	public final int REQUEST_CONNECT_DEVICE = 2;
+	public final int REQUEST_CAM = 3;
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		Log.v(TAG,"Androworms : Bienvenue sur le menu principal");
+		
+		/* Changer l'orientation en mode paysage */
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		
+		/* Affiche la vue par défaut */
+		setContentView(R.layout.menu_principal);
+		
+		OnClickListener camCl = new CamHandler(this);
+		OnTouchListener camtl = new CamHandler(this);
+		findViewById(R.id.test_cam).setOnClickListener(camCl);
+		findViewById(R.id.test_cam).setOnTouchListener(camtl);
+		
+		OnClickListener cl = new TestBluetooth(this);
+		OnTouchListener tl = new TestBluetooth(this);
+		findViewById(R.id.testBluetooth).setOnClickListener(cl);
+		findViewById(R.id.testBluetooth).setOnTouchListener(tl);
+	}
+	
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		Log.v(TAG,"Nous recevons une réponse d'une activité non Androworms (fonction onActivityResult())");
 		switch (requestCode)
 		{
