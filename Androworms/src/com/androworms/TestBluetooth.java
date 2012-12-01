@@ -20,14 +20,14 @@ public class TestBluetooth implements OnClickListener, OnTouchListener {
 	public TestBluetooth(ActiviteMenuPrincipal activiteMenuPrincipal) {
 		this.activiteMenuPrincipal = activiteMenuPrincipal;
 	}
-
+	
 	public boolean onTouch(View arg0, MotionEvent arg1) {
 		// TODO Auto-generated method stub
 		Log.v(TAG,"onTouch() début");
 		
 		return false;
 	}
-
+	
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
 		
