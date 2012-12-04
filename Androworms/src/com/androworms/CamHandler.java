@@ -5,10 +5,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
@@ -17,7 +15,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.MediaStore.Images.Media;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -29,7 +26,9 @@ import android.view.View.OnTouchListener;
 import android.widget.ImageButton;
 
 public class CamHandler extends Activity implements SurfaceHolder.Callback, OnClickListener, OnTouchListener {
+	
 	private static final String TAG = "Androworms.CamHandler.Event";
+	
 	private Camera camera;
 	private boolean isPreviewRunning = false;
 	private SimpleDateFormat timeStampFormat = new SimpleDateFormat("yyyy-MM-dd-HH.mm.ss");
@@ -95,7 +94,11 @@ public class CamHandler extends Activity implements SurfaceHolder.Callback, OnCl
     {
     	try {
     		File root = Environment.getExternalStorageDirectory();
-    		File photo = new File(root,"maPhoto.jpg");
+    		File androworms = new File(root,"Androworms");
+    		if (!androworms.exists()) {
+    			androworms.mkdir();
+    		}
+    		File photo = new File(androworms,"maPhoto.jpg");
     		
     		filoutputStream = new FileOutputStream(photo);
     		Log.e(TAG,photo.getAbsolutePath().toString());

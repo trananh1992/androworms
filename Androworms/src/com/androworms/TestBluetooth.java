@@ -15,7 +15,7 @@ public class TestBluetooth implements OnClickListener, OnTouchListener {
 	
 	private static final String TAG = "Androworms.Bluetooth";
 	
-	ActiviteMenuPrincipal activiteMenuPrincipal;
+	private ActiviteMenuPrincipal activiteMenuPrincipal;
 	
 	public TestBluetooth(ActiviteMenuPrincipal activiteMenuPrincipal) {
 		this.activiteMenuPrincipal = activiteMenuPrincipal;

@@ -18,5 +18,6 @@
     <string name="menu_solo">solo</string>
     <string name="menu_multi">Multi-joueurs</string>
     <string name="menu_principal">Menu principal</string>
+    <string name="numero_version">0.0.1 Alpha</string>
 
 </resources>
