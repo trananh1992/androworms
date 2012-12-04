@@ -1,13 +1,23 @@
 package com.androworms;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore.Images.Media;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -16,17 +26,19 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.widget.ImageButton;
 
 public class CamHandler extends Activity implements SurfaceHolder.Callback, OnClickListener, OnTouchListener {
 	private static final String TAG = "Androworms.CamHandler.Event";
 	private Camera camera;
 	private boolean isPreviewRunning = false;
-	
+	private SimpleDateFormat timeStampFormat = new SimpleDateFormat("yyyy-MM-dd-HH.mm.ss");
 	private SurfaceView surfaceView;
 	private SurfaceHolder surfaceHolder;
 	private Handler mAutoFocusHandler;
 	private int mAutoFocusMessage;
-	
+	private Uri taken;
+    private OutputStream filoutputStream;
 	
 	ActiviteMenuPrincipal activiteMenuPrincipal;
 	
@@ -40,16 +52,15 @@ public class CamHandler extends Activity implements SurfaceHolder.Callback, OnCl
 		surfaceHolder.addCallback(this);
 		surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 		
-		/*ImageButton close = (ImageButton) findViewById(R.id.takepicture);
+		ImageButton close = (ImageButton) findViewById(R.id.takepicture);
 		close.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				takeThePicture();// TODO : a créer
+				takeThePicture();
 			}
-		});*/
+		});
 		Log.v(TAG,"Androworms : ending on create");
 	}
 	
-	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
 	}
@@ -60,10 +71,44 @@ public class CamHandler extends Activity implements SurfaceHolder.Callback, OnCl
 		}
 	};
 	
-	
+	Camera.PictureCallback mPictureCallbackRaw = new Camera.PictureCallback() {
+        public void onPictureTaken(byte[] data, Camera c) {
+            Log.e(getClass().getSimpleName(), "PICTURE CALLBACK RAW: " + data);
+            camera.startPreview();
+        }
+    };
+    
+    Camera.PictureCallback mPictureCallbackJpeg = new Camera.PictureCallback() {
+        public void onPictureTaken(byte[] data, Camera c) {
+        	try {
+    			Log.v(getClass().getSimpleName(), "onPictureTaken=" + data + " length = " + data.length);
+    			filoutputStream.write(data);
+    			filoutputStream.flush();
+    			filoutputStream.close();
+    			
+    		} catch(Exception ex) {
+    		}
+        }
+    };
+    
+    private void takeThePicture ()
+    {
+    	try {
+    		File root = Environment.getExternalStorageDirectory();
+    		File photo = new File(root,"maPhoto.jpg");
+    		
+    		filoutputStream = new FileOutputStream(photo);
+    		Log.e(TAG,photo.getAbsolutePath().toString());
+    		camera.takePicture(mShutterCallback, mPictureCallbackRaw, mPictureCallbackJpeg);
+    	} catch(Exception ex ){
+    		ex.printStackTrace();
+    		Log.e(getClass().getSimpleName(), ex.getMessage(), ex);
+    	}
+    }
+    
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if(keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
-			//takeThePicture();
+			takeThePicture();
 			return true;
 		}
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
