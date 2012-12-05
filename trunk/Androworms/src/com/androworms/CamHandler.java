@@ -37,9 +37,9 @@ public class CamHandler extends Activity implements SurfaceHolder.Callback, OnCl
 	private Handler mAutoFocusHandler;
 	private int mAutoFocusMessage;
 	private Uri taken;
-    private OutputStream filoutputStream;
+	private OutputStream filoutputStream;
 	
-	ActiviteMenuPrincipal activiteMenuPrincipal;
+	MenuPrincipalActivity activiteMenuPrincipal;
 	
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -194,7 +194,7 @@ public class CamHandler extends Activity implements SurfaceHolder.Callback, OnCl
 		
 	}
 	
-	public CamHandler(ActiviteMenuPrincipal activiteMenuPrincipal) {
+	public CamHandler(MenuPrincipalActivity activiteMenuPrincipal) {
 		this.activiteMenuPrincipal = activiteMenuPrincipal;
 	}
 	
