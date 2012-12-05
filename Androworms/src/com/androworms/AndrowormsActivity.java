@@ -9,7 +9,7 @@ import android.view.Menu;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 
-public class MainActivity extends Activity {
+public class AndrowormsActivity extends Activity {
 	
 	private static final String TAG = "Androworms.SplashScreen";
 	
@@ -38,7 +38,7 @@ public class MainActivity extends Activity {
 		
 		
 		
-		OnClickListener event = new MainActivityEvent(this);
+		OnClickListener event = new AndrowormsActivityEvent(this);
 		findViewById(R.id.LinearLayout2).setOnClickListener(event);
 		
 	}

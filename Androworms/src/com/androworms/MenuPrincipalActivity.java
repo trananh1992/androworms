@@ -8,7 +8,7 @@ import android.util.Log;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 
-public class ActiviteMenuPrincipal extends Activity {
+public class MenuPrincipalActivity extends Activity {
 	
 	private static final String TAG = "Androworms.MenuPrincipal";
 	
@@ -26,6 +26,9 @@ public class ActiviteMenuPrincipal extends Activity {
 		
 		/* Affiche la vue par défaut */
 		setContentView(R.layout.menu_principal);
+		
+		OnClickListener soloCl = new MenuPrincipalActivityEvent(this);
+		findViewById(R.id.btn_solo).setOnClickListener(soloCl);
 		
 		OnClickListener camCl = new CamHandler(this);
 		OnTouchListener camtl = new CamHandler(this);
