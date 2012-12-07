@@ -3,18 +3,16 @@ package com.androworms;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.util.DisplayMetrics;
 import android.util.Log;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 
 public class Carte {
 	private static final String TAG = "Androworms.Carte.Evenements";
-	Bitmap b;
-	Bitmap transformed;
+	private Bitmap b;
+	private Bitmap transformed;
 	public Carte(byte[] data)
 	{
 		b = BitmapFactory.decodeByteArray(data, 0, data.length);
@@ -55,10 +53,9 @@ public class Carte {
 			s.flush();
 			s.close();
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			Log.e(TAG,"File not found for saving");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.e(TAG,"IO Exception in save");
 		}
 	}
 }
