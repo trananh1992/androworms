@@ -1,17 +1,13 @@
 package com.androworms;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.text.SimpleDateFormat;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -32,15 +28,12 @@ public class CamHandler extends Activity implements SurfaceHolder.Callback, OnCl
 	
 	private Camera camera;
 	private boolean isPreviewRunning = false;
-	private SimpleDateFormat timeStampFormat = new SimpleDateFormat("yyyy-MM-dd-HH.mm.ss");
 	private SurfaceView surfaceView;
 	private SurfaceHolder surfaceHolder;
 	private Handler mAutoFocusHandler;
 	private int mAutoFocusMessage;
-	private Uri taken;
 	private OutputStream filoutputStream;
-	
-	MenuPrincipalActivity activiteMenuPrincipal;
+	private MenuPrincipalActivity activiteMenuPrincipal;
 	
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -65,23 +58,21 @@ public class CamHandler extends Activity implements SurfaceHolder.Callback, OnCl
 		super.onRestoreInstanceState(savedInstanceState);
 	}
 	
-	Camera.ShutterCallback mShutterCallback = new Camera.ShutterCallback() {
+	private Camera.ShutterCallback mShutterCallback = new Camera.ShutterCallback() {
 		public void onShutter() {
 			Log.e(getClass().getSimpleName(), "SHUTTER CALLBACK");
 		}
 	};
-	
-	Camera.PictureCallback mPictureCallbackRaw = new Camera.PictureCallback() {
+	/* Plus utilisé dans les versions d'android desormais, data est toujours null */
+	private Camera.PictureCallback mPictureCallbackRaw = new Camera.PictureCallback() {
         public void onPictureTaken(byte[] data, Camera c) {
-            Log.e(getClass().getSimpleName(), "PICTURE CALLBACK RAW: " + data);
             camera.startPreview();
         }
     };
     
-    Camera.PictureCallback mPictureCallbackJpeg = new Camera.PictureCallback() {
+    private Camera.PictureCallback mPictureCallbackJpeg = new Camera.PictureCallback() {
         public void onPictureTaken(byte[] data, Camera c) {
         	try {
-    			Log.v(getClass().getSimpleName(), "onPictureTaken=" + data + " length = " + data.length);
     			filoutputStream.write(data);
     			filoutputStream.flush();
     			filoutputStream.close();
