@@ -1,6 +1,7 @@
 package com.androworms;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -84,7 +85,6 @@ public class CamHandler extends Activity implements SurfaceHolder.Callback, OnCl
     			filoutputStream.write(data);
     			filoutputStream.flush();
     			filoutputStream.close();
-    			
     		} catch(Exception ex) {
     		}
         }
