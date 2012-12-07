@@ -1,9 +1,14 @@
 package com.androworms;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
@@ -23,6 +28,30 @@ public class MenuPrincipalActivity extends Activity {
 		
 		/* Changer l'orientation en mode paysage */
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		
+		/* Test pour générer une carte à partir d'une photo fixée (path en dur)
+		try {
+			File root = Environment.getExternalStorageDirectory();
+			File androworms = new File(root,"Androworms");
+			if (!androworms.exists()) {
+				androworms.mkdir();
+			}
+			File photo = new File(androworms,"maPhoto2.png");
+			File inputTest = new File(androworms,"inputTest.jpg");
+			
+			FileInputStream input = new FileInputStream(inputTest);
+			byte data2[];
+			data2 = new byte[input.available()];
+			input.read(data2);
+			Carte carte = new Carte(data2);
+			
+			carte.save(photo.getAbsolutePath());
+			input.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		//*/
+		
 		
 		/* Affiche la vue par défaut */
 		setContentView(R.layout.menu_principal);
