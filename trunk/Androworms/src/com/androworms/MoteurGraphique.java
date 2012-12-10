@@ -6,4 +6,10 @@ package com.androworms;
 public class MoteurGraphique 
 {
 
+	public MoteurGraphique() 
+	{
+	}
+	
+	
+
 }

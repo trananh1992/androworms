@@ -13,11 +13,31 @@ public class Personnage
 	 * chapeau 
 	 * accessoire
 	 */
+	private String nom;
 	private Position position;
 	
-	public Personnage()
+	public Personnage(String nom)
 	{
+		this.nom = nom;
 		position = new Position();
 	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public Position getPosition() {
+		return position;
+	}
+
+	public void setPosition(Position position) {
+		this.position = position;
+	}
+	
+	
 
 }
