@@ -23,5 +23,7 @@
     <string name="menu_principal">Menu principal</string>
     <string name="numero_version">0.0.1 Alpha</string>
     <string name="title_activity_game">GameActivity</string>
+    <string name="joueur1">Joueur 1</string>
+    <string name="joueur2">Joueur 2</string>
 
 </resources>
