@@ -1,14 +1,9 @@
 package com.androworms;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
