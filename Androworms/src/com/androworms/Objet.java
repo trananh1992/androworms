@@ -1,5 +1,8 @@
 package com.androworms;
 
-public class Objet {
+public class Objet 
+{
+	private String nom;
+	
 
 }

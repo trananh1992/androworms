@@ -4,10 +4,28 @@ public class ObjetSurCarte {
 	private Objet objet;
 	private Position position;
 	
-	public ObjetSurCarte()
+	public ObjetSurCarte(Objet o, Position p)
 	{
-		objet = new Objet();
-		position = new Position();
+		this.objet = o;
+		this.position = p;
 	}
+
+	public Objet getObjet() {
+		return objet;
+	}
+
+	public void setObjet(Objet objet) {
+		this.objet = objet;
+	}
+
+	public Position getPosition() {
+		return position;
+	}
+
+	public void setPosition(Position position) {
+		this.position = position;
+	}
+	
+	
 
 }

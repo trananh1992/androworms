@@ -8,5 +8,19 @@ public class MoteurPhysique
 {
 	private MoteurGraphique mg;
 	private Noyau noyau;
+	
+	public MoteurPhysique(Noyau n)
+	{
+		this.noyau = n;
+		this.mg = n.getMg();		
+	}
+	
+	public MoteurPhysique(MoteurGraphique mg, Noyau noyau) {
+		super();
+		this.mg = mg;
+		this.noyau = noyau;
+	}
+	
+	
 
 }
