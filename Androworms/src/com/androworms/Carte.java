@@ -13,8 +13,7 @@ public class Carte {
 	private static final String TAG = "Androworms.Carte.Evenements";
 	private Bitmap b;
 	private Bitmap transformed;
-	public Carte(byte[] data)
-	{
+	public Carte(byte[] data) {
 		b = BitmapFactory.decodeByteArray(data, 0, data.length);
 		
 		int height = b.getHeight();
@@ -44,8 +43,7 @@ public class Carte {
 		Log.v(TAG, "Done computing alpha");
 	}
 	
-	public void save(String path)
-	{
+	public void save(String path) {
 		FileOutputStream s;
 		try {
 			s = new FileOutputStream(path);
