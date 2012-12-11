@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">Androworms</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="menu_settings">Paramètres</string>
+    <string name="menu_parametres">Paramètres</string>
     <string name="title_activity_main">Androworms</string>
     <string name="contentDescription_logo_androworms">Logo Androworms</string>
     <string name="texte_developpeurs">Développeurs :</string>
 
     <string-array name="liste_developpeurs">
-        <item>Aurey Ernewein</item>
+        <item>Audrey Ernewein</item>
         <item>Damien Finck</item>
         <item>Marie-Hélène Goddet</item>
         <item>Renaud Vanhoutreve</item>
@@ -25,5 +23,4 @@
     <string name="title_activity_game">GameActivity</string>
     <string name="joueur1">Joueur 1</string>
     <string name="joueur2">Joueur 2</string>
-
 </resources>
