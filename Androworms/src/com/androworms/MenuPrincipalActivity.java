@@ -1,5 +1,7 @@
 package com.androworms;
 
+import com.androworms.test.TestSlider;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -59,10 +61,15 @@ public class MenuPrincipalActivity extends Activity {
 		findViewById(R.id.test_cam).setOnClickListener(camCl);
 		findViewById(R.id.test_cam).setOnTouchListener(camtl);
 		
-		OnClickListener cl = new TestBluetooth(this);
-		OnTouchListener tl = new TestBluetooth(this);
-		findViewById(R.id.testBluetooth).setOnClickListener(cl);
-		findViewById(R.id.testBluetooth).setOnTouchListener(tl);
+		OnClickListener cl_bluetooth = new TestBluetooth(this);
+		OnTouchListener tl_bluetooth = new TestBluetooth(this);
+		findViewById(R.id.test_bluetooth).setOnClickListener(cl_bluetooth);
+		findViewById(R.id.test_bluetooth).setOnTouchListener(tl_bluetooth);
+		
+		OnClickListener cl_slider = new TestSlider(this);
+		OnTouchListener tl_slider = new TestSlider(this);
+		findViewById(R.id.test_slider).setOnClickListener(cl_slider);
+		findViewById(R.id.test_slider).setOnTouchListener(tl_slider);
 	}
 	
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
