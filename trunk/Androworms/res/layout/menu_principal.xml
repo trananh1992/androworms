@@ -81,10 +81,16 @@
             android:layout_height="wrap_content" >
 
             <Button
-                android:id="@+id/testBluetooth"
+                android:id="@+id/test_bluetooth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/test_bluetooth" />
+
+            <Button
+                android:id="@+id/test_cam"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:text="@string/test_camera" />
 
         </TableRow>
 
@@ -92,16 +98,14 @@
             android:id="@+id/tableRow4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/test_slider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Test du Slider" />
+
         </TableRow>
     </TableLayout>
-
-
-
-
-    <Button
-        android:id="@+id/test_cam"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:text="@string/test_camera" />
 
 </LinearLayout>

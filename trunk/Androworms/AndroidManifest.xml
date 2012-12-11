@@ -32,6 +32,8 @@
         </activity>
         <activity android:name="com.androworms.CamHandler" >
         </activity>
+        <activity android:name="com.androworms.test.TestSlider" >
+        </activity>
         <activity
             android:name="com.androworms.GameActivity"
             android:label="@string/title_activity_game" >
