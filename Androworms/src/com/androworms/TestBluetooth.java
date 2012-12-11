@@ -35,7 +35,7 @@ public class TestBluetooth implements OnClickListener, OnTouchListener {
 		
 		BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		if (mBluetoothAdapter == null) {
-		    // Device does not support Bluetooth
+			// Device does not support Bluetooth
 			Log.v(TAG,"Le téléphone n'est pas compatible bluetooth !");
 		} else {
 			Log.v(TAG,"Le téléphone est compatible bluetooth !");

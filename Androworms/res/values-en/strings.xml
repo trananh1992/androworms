@@ -2,7 +2,7 @@
     <string name="app_name">Androworms</string>
     <string name="menu_parametres">Settings</string>
     <string name="title_activity_main">Androworms</string>
+    <string name="pas_de_donnees">No data</string>
     <string name="joueur1">Player 1</string>
     <string name="joueur2">Player 2</string>
-    <string name="no_data">No data</string>
 </resources>

@@ -52,18 +52,18 @@ public class GameActivity extends Activity {
 		/** Paramètrages des composants graphiques dans les Layout**/
 		LayoutParams params_txt_score = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		params_txt_score.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-	    params_txt_score.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-	    params_txt_score.rightMargin = 40;
-	    params_txt_score.topMargin = 40;
+		params_txt_score.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+		params_txt_score.rightMargin = 40;
+		params_txt_score.topMargin = 40;
 		
-	    LayoutParams params_btn_cmd = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-	    params_btn_cmd.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-	    params_btn_cmd.addRule(RelativeLayout.CENTER_VERTICAL);
-	    
-	    LayoutParams params_imgv_bonhomme = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-	    params_imgv_bonhomme.addRule(RelativeLayout.CENTER_HORIZONTAL);
-	    params_imgv_bonhomme.addRule(RelativeLayout.CENTER_VERTICAL);
-	    
+		LayoutParams params_btn_cmd = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		params_btn_cmd.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+		params_btn_cmd.addRule(RelativeLayout.CENTER_VERTICAL);
+		
+		LayoutParams params_imgv_bonhomme = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		params_imgv_bonhomme.addRule(RelativeLayout.CENTER_HORIZONTAL);
+		params_imgv_bonhomme.addRule(RelativeLayout.CENTER_VERTICAL);
+		
 		/** Construction de l'interface **/
 		setContentView(rl_globale);
 			rl_globale.addView(rl_carte);
