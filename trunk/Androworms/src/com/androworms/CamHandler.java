@@ -65,41 +65,40 @@ public class CamHandler extends Activity implements SurfaceHolder.Callback, OnCl
 	};
 	/* Plus utilisé dans les versions d'android desormais, data est toujours null */
 	private Camera.PictureCallback mPictureCallbackRaw = new Camera.PictureCallback() {
-        public void onPictureTaken(byte[] data, Camera c) {
-            camera.startPreview();
-        }
-    };
-    
-    private Camera.PictureCallback mPictureCallbackJpeg = new Camera.PictureCallback() {
-        public void onPictureTaken(byte[] data, Camera c) {
-        	try {
-    			filoutputStream.write(data);
-    			filoutputStream.flush();
-    			filoutputStream.close();
-    		} catch(Exception ex) {
-    		}
-        }
-    };
-    
-    private void takeThePicture ()
-    {
-    	try {
-    		File root = Environment.getExternalStorageDirectory();
-    		File androworms = new File(root,"Androworms");
-    		if (!androworms.exists()) {
-    			androworms.mkdir();
-    		}
-    		File photo = new File(androworms,"maPhoto.jpg");
-    		
-    		filoutputStream = new FileOutputStream(photo);
-    		Log.e(TAG,photo.getAbsolutePath().toString());
-    		camera.takePicture(mShutterCallback, mPictureCallbackRaw, mPictureCallbackJpeg);
-    	} catch(Exception ex ){
-    		ex.printStackTrace();
-    		Log.e(getClass().getSimpleName(), ex.getMessage(), ex);
-    	}
-    }
-    
+		public void onPictureTaken(byte[] data, Camera c) {
+			camera.startPreview();
+		}
+	};
+	
+	private Camera.PictureCallback mPictureCallbackJpeg = new Camera.PictureCallback() {
+		public void onPictureTaken(byte[] data, Camera c) {
+			try {
+				filoutputStream.write(data);
+				filoutputStream.flush();
+				filoutputStream.close();
+			} catch(Exception ex) {
+			}
+		}
+	};
+	
+	private void takeThePicture () {
+		try {
+			File root = Environment.getExternalStorageDirectory();
+			File androworms = new File(root,"Androworms");
+			if (!androworms.exists()) {
+				androworms.mkdir();
+			}
+			File photo = new File(androworms,"maPhoto.jpg");
+			
+			filoutputStream = new FileOutputStream(photo);
+			Log.e(TAG,photo.getAbsolutePath().toString());
+			camera.takePicture(mShutterCallback, mPictureCallbackRaw, mPictureCallbackJpeg);
+		} catch(Exception ex ){
+			ex.printStackTrace();
+			Log.e(getClass().getSimpleName(), ex.getMessage(), ex);
+		}
+	}
+	
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if(keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
 			takeThePicture();

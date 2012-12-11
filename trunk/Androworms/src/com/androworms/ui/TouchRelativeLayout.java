@@ -22,13 +22,13 @@ public class TouchRelativeLayout extends RelativeLayout {
 	
 	// Variables globales
 	private static final String TAG = "TESTAndroworms.TouchRelativeLayout3";
-
+	
 	// 3 états
 	int mode;
 	static final int RIEN = 0;
 	static final int DEPLACEMENT = 1;
 	static final int ZOOM = 2;
-
+	
 	// Traquer le mouvement
 	int idPointeurCourant;
 	PointF position_ancienne_touche;
@@ -37,7 +37,7 @@ public class TouchRelativeLayout extends RelativeLayout {
 	PointF position_fond;
 	PointF position_joueur_1;
 	PointF position_joueur_2;
-
+	
 	// Images pour le jeu
 	private Bitmap bm_fond;
 	private Bitmap bm_terrain;
@@ -57,25 +57,25 @@ public class TouchRelativeLayout extends RelativeLayout {
 	static final float ZOOM_MIN = 0.5f;
 	static final float ZOOM_MAX = 4.0f;
 	
-
+	
 	// Constructeurs
 	public TouchRelativeLayout(Context context) {
 		super(context);
 		constructeurPartage(context);
 	}
-
+	
 	public TouchRelativeLayout(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		constructeurPartage(context);
 	}
-
+	
 	public TouchRelativeLayout(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		constructeurPartage(context);
 	}
-
+	
 	// Fonctions
-
+	
 	/**
 	 * Cette fonction initialise le composants avec un constructeur partagé
 	 * 
@@ -83,7 +83,7 @@ public class TouchRelativeLayout extends RelativeLayout {
 	 */
 	private void constructeurPartage(Context context) {
 		Log.v(TAG, "constructeurPartage()");
-
+		
 		mode = RIEN;
 		this.setWillNotDraw(false);
 		this.setClickable(true);
@@ -92,7 +92,7 @@ public class TouchRelativeLayout extends RelativeLayout {
 		position_fond = new PointF(0, 0);
 		position_joueur_1 = new PointF(80, 470);
 		position_joueur_2 = new PointF(1000, 490);
-
+		
 		/* Bitmap */
 		bm_fond_original = prepareBitmap(getResources().getDrawable(R.drawable.image_fond_640x360),1280, 720);
 		bm_terrain_original = prepareBitmap(getResources().getDrawable(R.drawable.terrain_jeu_defaut_640x360), 1280, 720);
@@ -103,7 +103,7 @@ public class TouchRelativeLayout extends RelativeLayout {
 		bm_terrain = bm_terrain_original;
 		bm_joueur_1 = bm_joueur_1_original;
 		bm_joueur_2 = bm_joueur_2_original;
-
+		
 		/* scale detector */
 		mScaleDetector = new ScaleGestureDetector(context, new ScaleListener2());
 		scale_courant = 1;
@@ -111,7 +111,7 @@ public class TouchRelativeLayout extends RelativeLayout {
 		
 		matrix = new Matrix();
 	}
-
+	
 	private static Bitmap prepareBitmap(Drawable drawable, int width, int height) {
 		Bitmap bitmap = Bitmap.createBitmap(width, height,Bitmap.Config.ARGB_8888);
 		drawable.setBounds(0, 0, width, height);
@@ -119,7 +119,7 @@ public class TouchRelativeLayout extends RelativeLayout {
 		drawable.draw(canvas);
 		return bitmap;
 	}
-
+	
 	/**
 	 * Initialisation du TouchRelativeLayout Cette fonction doit être appelé après avoir ajouter les composants au RelativeLayout.
 	 * Elle paramètre la liste des ImageView de ce layout pour pouvoir les manipuler.
@@ -128,46 +128,46 @@ public class TouchRelativeLayout extends RelativeLayout {
 	 */
 	public void init(Context context) {
 		Log.v(TAG, "init()");
-
+		
 		idPointeurCourant = 0;
 		setOnTouchListener(new OnTouchListener() {
-
+		
 			public boolean onTouch(View v, MotionEvent event) {
-
+				
 				position_ancienne_touche.set(position_nouvelle_touche);
 				position_nouvelle_touche = new PointF(event.getX(), event.getY());
-
-				// Log.v(TAG, "onTouch() (" + event.getX() + ";" + event.getY() + ")    --> NbPointeur="+event.getPointerCount());
-
+				
+				// Log.v(TAG, "onTouch() (" + event.getX() + ";" + event.getY() + ")   --> NbPointeur="+event.getPointerCount());
+				
 				// scale
 				mScaleDetector.onTouchEvent(event);
-
+				
 				switch (event.getAction()) {
 				case MotionEvent.ACTION_DOWN: // Appuie sur l'écran avec un doigt
 					// Log.v(TAG, "ACTION_DOWN");
 					mode = DEPLACEMENT;
 					position_ancienne_touche = new PointF(-1, -1);
 					break;
-
+				
 				case MotionEvent.ACTION_POINTER_DOWN: // En théorie 2 doigts quiappuie en même temps (non reproductible)
 					// Log.v(TAG, "ACTION_POINTER_DOWN");
 					mode = DEPLACEMENT;
 					position_ancienne_touche = new PointF(-1, -1);
 					break;
-
+				
 				case MotionEvent.ACTION_MOVE: // Un doigt qui bouge sur l'écran
-
+				
 					if (mode == DEPLACEMENT) {
 						// Log.v(TAG, "ACTION_MOVE -- DEPLACEMENT");
 						// En mode déplacement, position_ancienne_touche n'est jamais égale à -1 sinon erreur
-
+						
 						float tempX, tempY;
-
+						
 						// position_fond.x += position_nouvelle_touche.x -
 						// position_ancienne_touche.x;
 						// position_fond.y += position_nouvelle_touche.y -
 						// position_ancienne_touche.y;
-
+						
 						// position_joueur_1.x += position_nouvelle_touche.x -
 						// position_ancienne_touche.x;
 						// position_joueur_1.y += position_nouvelle_touche.y -
@@ -192,7 +192,7 @@ public class TouchRelativeLayout extends RelativeLayout {
 							position_joueur_2.y += position_nouvelle_touche.y - position_ancienne_touche.y;
 						//}
 						
-
+						
 						// Position bonhomme
 						 /*tempX = position_joueur_1.x + position_nouvelle_touche.x - position_ancienne_touche.x;
 						 tempY = position_joueur_1.y + position_nouvelle_touche.y - position_ancienne_touche.y;
@@ -203,39 +203,39 @@ public class TouchRelativeLayout extends RelativeLayout {
 							 position_joueur_1.y = tempY;
 						 }*/
 						 
-
+					
 					} else {
 						// Log.v(TAG, "ACTION_MOVE -- other ("+mode+")");
 					}
-
+					
 					break;
-
+				
 				case MotionEvent.ACTION_UP: // Un doigt qu'on leve (to check)
 					// Log.v(TAG, "ACTION_UP");
 					mode = RIEN;
 					position_ancienne_touche = new PointF(-1, -1);
 					break;
-
+				
 				case MotionEvent.ACTION_POINTER_UP: // Lorsque l'on leve 2 doigt (to ceck, parce que ça peut aussi être le second doigt qui se leve)
 					// Log.v(TAG, "ACTION_POINTER_UP");
 					mode = RIEN;
 					position_ancienne_touche = new PointF(-1, -1);
 					break;
 				}
-
+				
 				invalidate();
 				return true;// true ou false ?? -->
 							// http://developer.android.com/reference/android/view/View.OnTouchListener.html
 			}
 		});
-
+	
 	}
-
+	
 	@Override
 	protected void onDraw(Canvas canvas) {
 		//Log.v(TAG, "onDraw()");
 	}
-
+	
 	@Override
 	protected void dispatchDraw(Canvas canvas) {
 		//Log.v(TAG, "dispatchDraw()");
@@ -249,14 +249,14 @@ public class TouchRelativeLayout extends RelativeLayout {
 		canvas.drawBitmap(bm_joueur_1, position_joueur_1.x, position_joueur_1.y, null);
 		canvas.drawBitmap(bm_joueur_2, position_joueur_2.x, position_joueur_2.y, null);
 	}
-
+	
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 		Log.v(TAG, "onMeasure()");
-
+	
 	}
-
+	
 	private class ScaleListener2 extends
 			ScaleGestureDetector.SimpleOnScaleGestureListener {
 		@Override
@@ -264,12 +264,12 @@ public class TouchRelativeLayout extends RelativeLayout {
 			mode = ZOOM;
 			return true;
 		}
-
+		
 		@Override
 		public boolean onScale(ScaleGestureDetector detector) {
-
+			
 			float mScaleFactor = detector.getScaleFactor();
-
+			
 			Log.v(TAG, "onScale() = " + scale_courant);
 			
 			float temp = scale_courant * mScaleFactor;

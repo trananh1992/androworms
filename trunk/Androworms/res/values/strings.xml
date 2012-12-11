@@ -14,7 +14,7 @@
         <item>William Bon</item>
     </string-array>
 
-    <string name="no_data">Pas de données</string>
+    <string name="pas_de_donnees">Pas de données</string>
     <string name="menu_score">Scores</string>
     <string name="menu_solo">solo</string>
     <string name="menu_multi">Multi-joueurs</string>
@@ -23,4 +23,7 @@
     <string name="title_activity_game">GameActivity</string>
     <string name="joueur1">Joueur 1</string>
     <string name="joueur2">Joueur 2</string>
+    
+    <string name="test_bluetooth">Test du Bluetooth</string>
+    <string name="test_camera">Test de la caméra</string>
 </resources>
