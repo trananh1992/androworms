@@ -3,8 +3,11 @@ package com.androworms;
 public class Projectile 
 {
 	// Variable global pour connaitre le type de projectile.
-	public static final short EXPLOSIF  = 1; //missile, grenade
-	public static final short PERFORANT = 2; //pistolet, mitraillette
+	//missile, grenade
+	public static final short EXPLOSIF  = 1;
+	//pistolet, mitraillette
+	public static final short PERFORANT = 2; 
+
 	
 	// Propriete 
 	private int degat;

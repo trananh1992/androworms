@@ -26,20 +26,24 @@ public class Munition {
 	
 	public boolean aEncoreProjectile()
 	{
-		if(nombre == 0) return false;
-		else return true;
+		return (nombre != 0);
 	}
 	
 	public Projectile prendreUnProjectile()
 	{
-		if(nombre > 0) nombre--;
+		if(nombre > 0)
+		{	
+			nombre--;	
+		}
 		return projectile;
 	}
 	
 	public void ajouter(int valeur)
 	{
-		if( nombre >= 0) 
-			nombre += valeur;
+		if( nombre >= 0)
+		{	
+			nombre += valeur;	
+		}
 	}
 	
 	public void projectileInfini()
