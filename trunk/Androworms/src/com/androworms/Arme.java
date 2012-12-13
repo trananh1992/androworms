@@ -3,7 +3,13 @@ package com.androworms;
 public class Arme extends Objet 
 {
 	private int portee;
-	private Projectile projectile;
+	private Munition munition;
+	
+	public Arme (Munition m, int p)
+	{
+		portee = p;
+		munition = m;
+	}
 	
 	
 	public int getPortee() {
@@ -12,12 +18,14 @@ public class Arme extends Objet
 	public void setPortee(int portee) {
 		this.portee = portee;
 	}
-	public Projectile getProjectile() {
-		return projectile;
+	public Munition getMunition() {
+		return munition;
 	}
-	public void setProjectile(Projectile projectile) {
-		this.projectile = projectile;
+	public void setMunition(Munition munition) {
+		this.munition = munition;
 	}
+
+	
 	
 	
 
