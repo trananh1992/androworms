@@ -30,7 +30,7 @@ public class TouchRelativeLayout extends RelativeLayout {
 	static final int ZOOM = 2;
 	
 	// Traquer le mouvement
-	int idPointeurCourant;
+	private int idPointeurCourant;
 	private PointF positionAncienneTouche;
 	private PointF positionNouvelleTouche;
 	
@@ -220,6 +220,8 @@ public class TouchRelativeLayout extends RelativeLayout {
 					// Log.v(TAG, "ACTION_POINTER_UP");
 					mode = RIEN;
 					positionAncienneTouche = new PointF(-1, -1);
+					break;
+				default:
 					break;
 				}
 				
