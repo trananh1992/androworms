@@ -24,36 +24,36 @@ public class TouchRelativeLayout extends RelativeLayout {
 	private static final String TAG = "TESTAndroworms.TouchRelativeLayout3";
 	
 	// 3 états
-	int mode;
+	private int mode;
 	static final int RIEN = 0;
 	static final int DEPLACEMENT = 1;
 	static final int ZOOM = 2;
 	
 	// Traquer le mouvement
 	int idPointeurCourant;
-	PointF position_ancienne_touche;
-	PointF position_nouvelle_touche;
+	private PointF positionAncienneTouche;
+	private PointF positionNouvelleTouche;
 	
-	PointF position_fond;
-	PointF position_joueur_1;
-	PointF position_joueur_2;
+	private PointF positionFond;
+	private PointF positionJoueur1;
+	private PointF positionJoueur2;
 	
 	// Images pour le jeu
-	private Bitmap bm_fond;
-	private Bitmap bm_terrain;
-	private Bitmap bm_joueur_1;
-	private Bitmap bm_joueur_2;
+	private Bitmap bmFond;
+	private Bitmap bmTerrain;
+	private Bitmap bmJoueur1;
+	private Bitmap bmJoueur2;
 	
-	private Bitmap bm_fond_original;
-	private Bitmap bm_terrain_original;
-	private Bitmap bm_joueur_1_original;
-	private Bitmap bm_joueur_2_original;
+	private Bitmap bmFondOriginal;
+	private Bitmap bmTerrainOriginal;
+	private Bitmap bmJoueur1Original;
+	private Bitmap bmJoueur2Original;
 	
 	
 	// Gestion du zoom
-	ScaleGestureDetector mScaleDetector;
-	float scale_courant;
-	Matrix matrix;
+	private ScaleGestureDetector mScaleDetector;
+	private float scaleCourant;
+	private Matrix matrix;
 	static final float ZOOM_MIN = 0.5f;
 	static final float ZOOM_MAX = 4.0f;
 	
@@ -87,26 +87,26 @@ public class TouchRelativeLayout extends RelativeLayout {
 		mode = RIEN;
 		this.setWillNotDraw(false);
 		this.setClickable(true);
-		position_nouvelle_touche = new PointF(-1, -1);
-		position_ancienne_touche = new PointF(-1, -1);
-		position_fond = new PointF(0, 0);
-		position_joueur_1 = new PointF(80, 470);
-		position_joueur_2 = new PointF(1000, 490);
+		positionNouvelleTouche = new PointF(-1, -1);
+		positionAncienneTouche = new PointF(-1, -1);
+		positionFond = new PointF(0, 0);
+		positionJoueur1 = new PointF(80, 470);
+		positionJoueur2 = new PointF(1000, 490);
 		
 		/* Bitmap */
-		bm_fond_original = prepareBitmap(getResources().getDrawable(R.drawable.image_fond_640x360),1280, 720);
-		bm_terrain_original = prepareBitmap(getResources().getDrawable(R.drawable.terrain_jeu_defaut_640x360), 1280, 720);
-		bm_joueur_1_original = prepareBitmap(getResources().getDrawable(R.drawable.logo_android_robot), 180, 173);
-		bm_joueur_2_original = prepareBitmap(getResources().getDrawable(R.drawable.logo_android_robot), 180, 173);
+		bmFondOriginal = prepareBitmap(getResources().getDrawable(R.drawable.image_fond_640x360),1280, 720);
+		bmTerrainOriginal = prepareBitmap(getResources().getDrawable(R.drawable.terrain_jeu_defaut_640x360), 1280, 720);
+		bmJoueur1Original = prepareBitmap(getResources().getDrawable(R.drawable.logo_android_robot), 180, 173);
+		bmJoueur2Original = prepareBitmap(getResources().getDrawable(R.drawable.logo_android_robot), 180, 173);
 		
-		bm_fond = bm_fond_original;
-		bm_terrain = bm_terrain_original;
-		bm_joueur_1 = bm_joueur_1_original;
-		bm_joueur_2 = bm_joueur_2_original;
+		bmFond = bmFondOriginal;
+		bmTerrain = bmTerrainOriginal;
+		bmJoueur1 = bmJoueur1Original;
+		bmJoueur2 = bmJoueur2Original;
 		
 		/* scale detector */
 		mScaleDetector = new ScaleGestureDetector(context, new ScaleListener2());
-		scale_courant = 1;
+		scaleCourant = 1;
 		
 		
 		matrix = new Matrix();
@@ -134,8 +134,8 @@ public class TouchRelativeLayout extends RelativeLayout {
 		
 			public boolean onTouch(View v, MotionEvent event) {
 				
-				position_ancienne_touche.set(position_nouvelle_touche);
-				position_nouvelle_touche = new PointF(event.getX(), event.getY());
+				positionAncienneTouche.set(positionNouvelleTouche);
+				positionNouvelleTouche = new PointF(event.getX(), event.getY());
 				
 				// Log.v(TAG, "onTouch() (" + event.getX() + ";" + event.getY() + ")   --> NbPointeur="+event.getPointerCount());
 				
@@ -146,13 +146,13 @@ public class TouchRelativeLayout extends RelativeLayout {
 				case MotionEvent.ACTION_DOWN: // Appuie sur l'écran avec un doigt
 					// Log.v(TAG, "ACTION_DOWN");
 					mode = DEPLACEMENT;
-					position_ancienne_touche = new PointF(-1, -1);
+					positionAncienneTouche = new PointF(-1, -1);
 					break;
 				
 				case MotionEvent.ACTION_POINTER_DOWN: // En théorie 2 doigts quiappuie en même temps (non reproductible)
 					// Log.v(TAG, "ACTION_POINTER_DOWN");
 					mode = DEPLACEMENT;
-					position_ancienne_touche = new PointF(-1, -1);
+					positionAncienneTouche = new PointF(-1, -1);
 					break;
 				
 				case MotionEvent.ACTION_MOVE: // Un doigt qui bouge sur l'écran
@@ -177,19 +177,19 @@ public class TouchRelativeLayout extends RelativeLayout {
 						
 						
 						// Terrain
-						tempX = position_fond.x + position_nouvelle_touche.x - position_ancienne_touche.x;
-						tempY = position_fond.y + position_nouvelle_touche.y - position_ancienne_touche.y;
+						tempX = positionFond.x + positionNouvelleTouche.x - positionAncienneTouche.x;
+						tempY = positionFond.y + positionNouvelleTouche.y - positionAncienneTouche.y;
 						//if (tempX > 0 && (tempX + bm_fond.getWidth()) < 1280) {
-							position_fond.x = tempX;
-							position_joueur_1.x += position_nouvelle_touche.x - position_ancienne_touche.x;
-							position_joueur_2.x += position_nouvelle_touche.x - position_ancienne_touche.x;
+							positionFond.x = tempX;
+							positionJoueur1.x += positionNouvelleTouche.x - positionAncienneTouche.x;
+							positionJoueur2.x += positionNouvelleTouche.x - positionAncienneTouche.x;
 						//} else {
 						//	Log.d(TAG, "REFUS (deplacement-x) :: tempX="+tempX+";  width="+bm_fond.getWidth());
 						//}
 						//if (tempY > 0 && (tempY + bm_fond.getHeight()) < 720) {
-							position_fond.y = tempY;
-							position_joueur_1.y += position_nouvelle_touche.y - position_ancienne_touche.y;
-							position_joueur_2.y += position_nouvelle_touche.y - position_ancienne_touche.y;
+							positionFond.y = tempY;
+							positionJoueur1.y += positionNouvelleTouche.y - positionAncienneTouche.y;
+							positionJoueur2.y += positionNouvelleTouche.y - positionAncienneTouche.y;
 						//}
 						
 						
@@ -204,22 +204,22 @@ public class TouchRelativeLayout extends RelativeLayout {
 						 }*/
 						 
 					
-					} else {
+					}/* else {
 						// Log.v(TAG, "ACTION_MOVE -- other ("+mode+")");
-					}
+					}*/
 					
 					break;
 				
 				case MotionEvent.ACTION_UP: // Un doigt qu'on leve (to check)
 					// Log.v(TAG, "ACTION_UP");
 					mode = RIEN;
-					position_ancienne_touche = new PointF(-1, -1);
+					positionAncienneTouche = new PointF(-1, -1);
 					break;
 				
 				case MotionEvent.ACTION_POINTER_UP: // Lorsque l'on leve 2 doigt (to ceck, parce que ça peut aussi être le second doigt qui se leve)
 					// Log.v(TAG, "ACTION_POINTER_UP");
 					mode = RIEN;
-					position_ancienne_touche = new PointF(-1, -1);
+					positionAncienneTouche = new PointF(-1, -1);
 					break;
 				}
 				
@@ -244,10 +244,10 @@ public class TouchRelativeLayout extends RelativeLayout {
 		canvas.setMatrix(matrix);
 		//canvas.scale(scale_courant, scale_courant);
 		
-		canvas.drawBitmap(bm_fond, position_fond.x, position_fond.y, null);
-		canvas.drawBitmap(bm_terrain, position_fond.x, position_fond.y, null);
-		canvas.drawBitmap(bm_joueur_1, position_joueur_1.x, position_joueur_1.y, null);
-		canvas.drawBitmap(bm_joueur_2, position_joueur_2.x, position_joueur_2.y, null);
+		canvas.drawBitmap(bmFond, positionFond.x, positionFond.y, null);
+		canvas.drawBitmap(bmTerrain, positionFond.x, positionFond.y, null);
+		canvas.drawBitmap(bmJoueur1, positionJoueur1.x, positionJoueur1.y, null);
+		canvas.drawBitmap(bmJoueur2, positionJoueur2.x, positionJoueur2.y, null);
 	}
 	
 	@Override
@@ -270,16 +270,16 @@ public class TouchRelativeLayout extends RelativeLayout {
 			
 			float mScaleFactor = detector.getScaleFactor();
 			
-			Log.v(TAG, "onScale() = " + scale_courant);
+			Log.v(TAG, "onScale() = " + scaleCourant);
 			
-			float temp = scale_courant * mScaleFactor;
+			float temp = scaleCourant * mScaleFactor;
 			if (ZOOM_MIN < temp && temp < ZOOM_MAX) {
-				scale_courant = temp;
+				scaleCourant = temp;
 				
 				
 				matrix = new Matrix();
 				
-				matrix.postScale(scale_courant, scale_courant);
+				matrix.postScale(scaleCourant, scaleCourant);
 				
 				
 				/*original_width = bm_fond_original.getWidth();
