@@ -1,5 +1,8 @@
 package com.androworms;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /*
  * Cette classe contient toutes les informations
  * sur le personnage utiliser par un joueur.
@@ -15,6 +18,7 @@ public class Personnage
 	 */
 	private String nom;
 	private Position position;
+
 	
 	public Personnage(String nom)
 	{

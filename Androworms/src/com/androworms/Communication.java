@@ -4,14 +4,11 @@ package com.androworms;
  * Classe mere pour la classe client et la classe serveur.
  * Les deux classes suivantes permettent de contacter les joueurs.
  */
-public class Machine 
+public class Communication 
 {
-	// Pour transmettre les informations dans l'applications.
-	private Noyau noyau;
-	
-	public Machine(Noyau n)
+	public Communication(Noyau n)
 	{
-		this.noyau = n;
+
 	}
 
 }

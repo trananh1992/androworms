@@ -5,8 +5,9 @@ public class Arme extends Objet
 	private int portee;
 	private Munition munition;
 	
-	public Arme (Munition m, int p)
+	public Arme (String nom, Munition m, int p)
 	{
+		super(nom);
 		portee = p;
 		munition = m;
 	}

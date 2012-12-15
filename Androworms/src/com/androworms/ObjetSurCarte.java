@@ -26,6 +26,12 @@ public class ObjetSurCarte {
 		this.position = position;
 	}
 	
+	public void setPosition(int x, int y)
+	{
+		position.setX(x);
+		position.setY(y);
+	}
+	
 	
 
 }
