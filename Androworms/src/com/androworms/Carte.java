@@ -56,10 +56,10 @@ public class Carte {
 		} catch (FileNotFoundException e) {
 			Log.e(TAG,"File not found for saving");
 		} catch (IOException e) {
-			try
-			{
-				if(s != null)
+			try {
+				if(s != null) {
 					s.close();
+				}
 			}
 			catch (IOException e2)
 			{

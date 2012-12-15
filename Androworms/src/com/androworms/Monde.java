@@ -57,8 +57,9 @@ public class Monde {
 		{
 			if(nomObjet.compareTo(tousLesObjets.get(i).getNom()) == 0)
 			{
-				if( tousLesObjets.get(i) instanceof Arme)
+				if( tousLesObjets.get(i) instanceof Arme) {
 					((Arme)tousLesObjets.get(i)).getMunition().ajouter(nombre);
+				}
 			}
 		}
 	}
