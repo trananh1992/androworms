@@ -149,8 +149,6 @@ public class TouchRelativeLayout extends RelativeLayout {
 						matrix.postTranslate(tempX, tempY);
 					
 						fixTrans();
-					} else {
-						Log.v(TAG, "ACTION_MOVE -- other ("+mode+")");
 					}
 					
 					break;

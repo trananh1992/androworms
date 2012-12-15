@@ -1,6 +1,7 @@
 package com.androworms.ui;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -35,11 +36,15 @@ public class Paddle extends LinearLayout implements OnTouchListener {
 		btnHaut.setImageResource(R.drawable.navigation_haut);
 		btnDroite.setImageResource(R.drawable.navigation_droite);
 		
+		btnGauche.setBackgroundColor(Color.TRANSPARENT);
+		btnHaut.setBackgroundColor(Color.TRANSPARENT);
+		btnDroite.setBackgroundColor(Color.TRANSPARENT);
+		
 		btnGauche.setOnTouchListener(this);
 		btnHaut.setOnTouchListener(this);
 		btnDroite.setOnTouchListener(this);
 		
-		LayoutParams paramsLayout = new LinearLayout.LayoutParams(64, 64);
+		LayoutParams paramsLayout = new LinearLayout.LayoutParams(128, 128);
 		
 		this.addView(btnGauche,paramsLayout);
 		this.addView(btnHaut,paramsLayout);
