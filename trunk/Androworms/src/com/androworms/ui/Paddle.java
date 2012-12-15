@@ -62,6 +62,7 @@ public class Paddle extends LinearLayout implements OnTouchListener {
 				break;
 			case MotionEvent.ACTION_UP:
 				((ImageView)v).setAlpha(255);
+				break;
 			default:
 				break;
 		}
