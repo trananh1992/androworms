@@ -189,7 +189,9 @@ public class TouchRelativeLayout extends RelativeLayout {
         float fixTransY = getFixTrans(transY, bmFond.getHeight(), bmFond.getHeight() * scaleCourant);
 
         if (fixTransX != 0 || fixTransY != 0)
+        {
             matrix.postTranslate(fixTransX, fixTransY);
+        }
     }
 
 	private float getFixTrans(float trans, float viewSize, float contentSize) {
@@ -204,9 +206,13 @@ public class TouchRelativeLayout extends RelativeLayout {
         }
 
         if (trans < minTrans)
+        {
             return -trans + minTrans;
+        }
         if (trans > maxTrans)
+        {
             return -trans + maxTrans;
+        }
         return 0;
     }
 	
