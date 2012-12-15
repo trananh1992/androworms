@@ -20,14 +20,13 @@ import com.androworms.R;
  */
 public class TouchRelativeLayout extends RelativeLayout {
 	
-	// Variables globales
-	private static final String TAG = "TESTAndroworms.TouchRelativeLayout3";
+	private static final String TAG = "TESTAndroworms.TouchRelativeLayout";
 	
 	// 3 états
 	private int mode;
-	static final int RIEN = 0;
-	static final int DEPLACEMENT = 1;
-	static final int ZOOM = 2;
+	private static final int RIEN = 0;
+	private static final int DEPLACEMENT = 1;
+	private static final int ZOOM = 2;
 	
 	// Traquer le mouvement
 	private int idPointeurCourant;
@@ -44,21 +43,14 @@ public class TouchRelativeLayout extends RelativeLayout {
 	private Bitmap bmJoueur1;
 	private Bitmap bmJoueur2;
 	
-	private Bitmap bmFondOriginal;
-	private Bitmap bmTerrainOriginal;
-	private Bitmap bmJoueur1Original;
-	private Bitmap bmJoueur2Original;
-	
 	
 	// Gestion du zoom
 	private ScaleGestureDetector mScaleDetector;
 	private float scaleCourant;
 	private Matrix matrix;
-	static final float ZOOM_MIN = 0.5f;
-	static final float ZOOM_MAX = 4.0f;
+	private static final float ZOOM_MIN = 1f;
+	private static final float ZOOM_MAX = 4.0f;
 	
-	
-	// Constructeurs
 	public TouchRelativeLayout(Context context) {
 		super(context);
 		constructeurPartage(context);
@@ -73,8 +65,6 @@ public class TouchRelativeLayout extends RelativeLayout {
 		super(context, attrs, defStyle);
 		constructeurPartage(context);
 	}
-	
-	// Fonctions
 	
 	/**
 	 * Cette fonction initialise le composants avec un constructeur partagé
@@ -94,18 +84,13 @@ public class TouchRelativeLayout extends RelativeLayout {
 		positionJoueur2 = new PointF(1000, 490);
 		
 		/* Bitmap */
-		bmFondOriginal = prepareBitmap(getResources().getDrawable(R.drawable.image_fond_640x360),1280, 720);
-		bmTerrainOriginal = prepareBitmap(getResources().getDrawable(R.drawable.terrain_jeu_defaut_640x360), 1280, 720);
-		bmJoueur1Original = prepareBitmap(getResources().getDrawable(R.drawable.logo_android_robot), 180, 173);
-		bmJoueur2Original = prepareBitmap(getResources().getDrawable(R.drawable.logo_android_robot), 180, 173);
-		
-		bmFond = bmFondOriginal;
-		bmTerrain = bmTerrainOriginal;
-		bmJoueur1 = bmJoueur1Original;
-		bmJoueur2 = bmJoueur2Original;
-		
+		bmFond = prepareBitmap(getResources().getDrawable(R.drawable.image_fond_640x360),1280, 720);
+		bmTerrain = prepareBitmap(getResources().getDrawable(R.drawable.terrain_jeu_defaut_640x360), 1280, 720);
+		bmJoueur1 = prepareBitmap(getResources().getDrawable(R.drawable.logo_android_robot), 180, 173);
+		bmJoueur2 = prepareBitmap(getResources().getDrawable(R.drawable.logo_android_robot), 180, 173);
+
 		/* scale detector */
-		mScaleDetector = new ScaleGestureDetector(context, new ScaleListener2());
+		mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
 		scaleCourant = 1;
 		
 		
@@ -128,8 +113,10 @@ public class TouchRelativeLayout extends RelativeLayout {
 	 */
 	public void init(Context context) {
 		Log.v(TAG, "init()");
+		matrix = new Matrix();
 		
 		idPointeurCourant = 0;
+		
 		setOnTouchListener(new OnTouchListener() {
 		
 			public boolean onTouch(View v, MotionEvent event) {
@@ -137,20 +124,15 @@ public class TouchRelativeLayout extends RelativeLayout {
 				positionAncienneTouche.set(positionNouvelleTouche);
 				positionNouvelleTouche = new PointF(event.getX(), event.getY());
 				
-				// Log.v(TAG, "onTouch() (" + event.getX() + ";" + event.getY() + ")   --> NbPointeur="+event.getPointerCount());
-				
-				// scale
 				mScaleDetector.onTouchEvent(event);
 				
 				switch (event.getAction()) {
-				case MotionEvent.ACTION_DOWN: // Appuie sur l'écran avec un doigt
-					// Log.v(TAG, "ACTION_DOWN");
+				case MotionEvent.ACTION_DOWN: // Appui sur l'écran avec un doigt
 					mode = DEPLACEMENT;
 					positionAncienneTouche = new PointF(-1, -1);
 					break;
 				
 				case MotionEvent.ACTION_POINTER_DOWN: // En théorie 2 doigts quiappuie en même temps (non reproductible)
-					// Log.v(TAG, "ACTION_POINTER_DOWN");
 					mode = DEPLACEMENT;
 					positionAncienneTouche = new PointF(-1, -1);
 					break;
@@ -158,66 +140,27 @@ public class TouchRelativeLayout extends RelativeLayout {
 				case MotionEvent.ACTION_MOVE: // Un doigt qui bouge sur l'écran
 				
 					if (mode == DEPLACEMENT) {
-						// Log.v(TAG, "ACTION_MOVE -- DEPLACEMENT");
 						// En mode déplacement, position_ancienne_touche n'est jamais égale à -1 sinon erreur
 						
 						float tempX, tempY;
 						
-						// position_fond.x += position_nouvelle_touche.x -
-						// position_ancienne_touche.x;
-						// position_fond.y += position_nouvelle_touche.y -
-						// position_ancienne_touche.y;
-						
-						// position_joueur_1.x += position_nouvelle_touche.x -
-						// position_ancienne_touche.x;
-						// position_joueur_1.y += position_nouvelle_touche.y -
-						// position_ancienne_touche.y;
-						
-						
-						
-						
-						// Terrain
-						tempX = positionFond.x + positionNouvelleTouche.x - positionAncienneTouche.x;
-						tempY = positionFond.y + positionNouvelleTouche.y - positionAncienneTouche.y;
-						//if (tempX > 0 && (tempX + bm_fond.getWidth()) < 1280) {
-							positionFond.x = tempX;
-							positionJoueur1.x += positionNouvelleTouche.x - positionAncienneTouche.x;
-							positionJoueur2.x += positionNouvelleTouche.x - positionAncienneTouche.x;
-						//} else {
-						//	Log.d(TAG, "REFUS (deplacement-x) :: tempX="+tempX+";  width="+bm_fond.getWidth());
-						//}
-						//if (tempY > 0 && (tempY + bm_fond.getHeight()) < 720) {
-							positionFond.y = tempY;
-							positionJoueur1.y += positionNouvelleTouche.y - positionAncienneTouche.y;
-							positionJoueur2.y += positionNouvelleTouche.y - positionAncienneTouche.y;
-						//}
-						
-						
-						// Position bonhomme
-						 /*tempX = position_joueur_1.x + position_nouvelle_touche.x - position_ancienne_touche.x;
-						 tempY = position_joueur_1.y + position_nouvelle_touche.y - position_ancienne_touche.y;
-						 if (tempX > 0 && (tempX + bm_joueur_1.getWidth()) < 1280) {
-							 position_joueur_1.x = tempX;
-						 }
-						 if (tempY > 0 && (tempY + bm_joueur_1.getHeight()) < 720) {
-							 position_joueur_1.y = tempY;
-						 }*/
-						 
+						tempX = positionNouvelleTouche.x - positionAncienneTouche.x;
+						tempY = positionNouvelleTouche.y - positionAncienneTouche.y;
+						matrix.postTranslate(tempX, tempY);
 					
-					}/* else {
-						// Log.v(TAG, "ACTION_MOVE -- other ("+mode+")");
-					}*/
+						fixTrans();
+					} else {
+						Log.v(TAG, "ACTION_MOVE -- other ("+mode+")");
+					}
 					
 					break;
 				
 				case MotionEvent.ACTION_UP: // Un doigt qu'on leve (to check)
-					// Log.v(TAG, "ACTION_UP");
 					mode = RIEN;
 					positionAncienneTouche = new PointF(-1, -1);
 					break;
 				
 				case MotionEvent.ACTION_POINTER_UP: // Lorsque l'on leve 2 doigt (to ceck, parce que ça peut aussi être le second doigt qui se leve)
-					// Log.v(TAG, "ACTION_POINTER_UP");
 					mode = RIEN;
 					positionAncienneTouche = new PointF(-1, -1);
 					break;
@@ -229,38 +172,65 @@ public class TouchRelativeLayout extends RelativeLayout {
 				return true;// true ou false ?? -->
 							// http://developer.android.com/reference/android/view/View.OnTouchListener.html
 			}
+			
 		});
-	
 	}
+	
+	/**
+	 * Fonction qui corrige la translation si elle dépasse
+	 */
+	private void fixTrans() {
+		float[] m = new float[9];
+        matrix.getValues(m);
+        float transX = m[Matrix.MTRANS_X];
+        float transY = m[Matrix.MTRANS_Y];
+        
+        float fixTransX = getFixTrans(transX, bmFond.getWidth(), bmFond.getWidth() * scaleCourant);
+        float fixTransY = getFixTrans(transY, bmFond.getHeight(), bmFond.getHeight() * scaleCourant);
+
+        if (fixTransX != 0 || fixTransY != 0)
+            matrix.postTranslate(fixTransX, fixTransY);
+    }
+
+	private float getFixTrans(float trans, float viewSize, float contentSize) {
+        float minTrans, maxTrans;
+
+        if (contentSize <= viewSize) {
+            minTrans = 0;
+            maxTrans = viewSize - contentSize;
+        } else {
+            minTrans = viewSize - contentSize;
+            maxTrans = 0;
+        }
+
+        if (trans < minTrans)
+            return -trans + minTrans;
+        if (trans > maxTrans)
+            return -trans + maxTrans;
+        return 0;
+    }
 	
 	@Override
 	protected void onDraw(Canvas canvas) {
-		//Log.v(TAG, "onDraw()");
+		
 	}
 	
 	@Override
 	protected void dispatchDraw(Canvas canvas) {
-		//Log.v(TAG, "dispatchDraw()");
-		
-		// les 2 solutions marchent : on laisse les 2 pour le moment
 		canvas.setMatrix(matrix);
-		//canvas.scale(scale_courant, scale_courant);
-		
 		canvas.drawBitmap(bmFond, positionFond.x, positionFond.y, null);
 		canvas.drawBitmap(bmTerrain, positionFond.x, positionFond.y, null);
 		canvas.drawBitmap(bmJoueur1, positionJoueur1.x, positionJoueur1.y, null);
 		canvas.drawBitmap(bmJoueur2, positionJoueur2.x, positionJoueur2.y, null);
+
 	}
 	
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-		Log.v(TAG, "onMeasure()");
-	
 	}
 	
-	private class ScaleListener2 extends
-			ScaleGestureDetector.SimpleOnScaleGestureListener {
+	private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
 		@Override
 		public boolean onScaleBegin(ScaleGestureDetector detector) {
 			mode = ZOOM;
@@ -270,50 +240,25 @@ public class TouchRelativeLayout extends RelativeLayout {
 		@Override
 		public boolean onScale(ScaleGestureDetector detector) {
 			
+			// Scale sur cette évenement
 			float mScaleFactor = detector.getScaleFactor();
 			
-			Log.v(TAG, "onScale() = " + scaleCourant);
-			
+			// Scale globale sur l'image d'origine
 			float temp = scaleCourant * mScaleFactor;
-			if (ZOOM_MIN < temp && temp < ZOOM_MAX) {
+			// Gestion du Zoom max et zomm min
+			if (ZOOM_MIN > temp) { 
+				mScaleFactor = ZOOM_MIN / scaleCourant;
+				scaleCourant = ZOOM_MIN;
+			} else if (temp > ZOOM_MAX) { 
+				mScaleFactor = ZOOM_MAX / scaleCourant;
+				scaleCourant = ZOOM_MAX;
+			} else {
 				scaleCourant = temp;
-				
-				
-				matrix = new Matrix();
-				
-				matrix.postScale(scaleCourant, scaleCourant);
-				
-				
-				/*original_width = bm_fond_original.getWidth();
-				original_height = bm_fond_original.getHeight();
-				bm_fond = Bitmap.createBitmap(bm_fond_original, 0, 0, Math.min(original_width, 1280), Math.min(original_height,720), matrix, false);
-				
-				original_width = bm_terrain_original.getWidth();
-				original_height = bm_terrain_original.getHeight();
-				bm_terrain = Bitmap.createBitmap(bm_terrain_original, 0, 0, Math.min(original_width, 1280), Math.min(original_height,720), matrix, false);
-				*/
-				
-				
-				//lst_imageview.get(2).setImageMatrix(matrix);
-				
-				/*
-				original_width = bm_joueur_1_original.getWidth();
-				original_height = bm_joueur_1_original.getHeight();
-				bm_joueur_1 = Bitmap.createBitmap(bm_joueur_1_original, 0, 0, original_width, original_height, matrix, false);
-				
-				bm_joueur_1.recycle();*/
-				
-				
-				/*lst_imageview.get(0).setImageBitmap(bm_fond);
-				lst_imageview.get(1).setImageBitmap(bm_terrain);
-				lst_imageview.get(2).setImageBitmap(bm_joueur_1);*/
-				
-				return true;
 			}
-			else {
-				return false;
-			}
-			
+			// Application du Zoom
+			matrix.postScale(mScaleFactor, mScaleFactor, detector.getFocusX(), detector.getFocusY());
+			fixTrans();
+			return true;
 		}
 	}
 }
