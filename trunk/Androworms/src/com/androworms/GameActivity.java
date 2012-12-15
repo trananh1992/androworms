@@ -20,7 +20,7 @@ public class GameActivity extends Activity {
 	//private static final int WIDTH = 640;
 	//private static final int HEIGHT = 400;
 	
-	@Override
+
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.v(TAG,"Start");

@@ -6,16 +6,8 @@ package com.androworms;
  * son mode de contact...
  */
 public class Joueur {
-	private Personnage personnage;
 	private Contact contact;
 	
-	
-	public Personnage getPersonnage() {
-		return personnage;
-	}
-	public void setPersonnage(Personnage personnage) {
-		this.personnage = personnage;
-	}
 	public Contact getContact() {
 		return contact;
 	}

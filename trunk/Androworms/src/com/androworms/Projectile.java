@@ -12,6 +12,8 @@ public class Projectile
 	// Propriete 
 	private int degat;
 	private int typeExplosion;
+	// Rayon d'action pour la degradation de la carte.
+	private int rayon;
 		
 	public int getDegat() {
 		return degat;
@@ -26,6 +28,12 @@ public class Projectile
 		this.typeExplosion = typeExplosion;
 	}
 	
+	public int getRayon() {
+		return rayon;
+	}
+	public void setRayon(int rayon) {
+		this.rayon = rayon;
+	}
 	public void estExplosif()
 	{
 		typeExplosion = EXPLOSIF;

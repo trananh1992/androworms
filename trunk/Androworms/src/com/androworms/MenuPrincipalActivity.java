@@ -18,7 +18,7 @@ public class MenuPrincipalActivity extends Activity {
 	public final int REQUEST_ENABLE_BT = 1;
 	public final int REQUEST_CONNECT_DEVICE = 2;
 	public final int REQUEST_CAM = 3;
-	@Override
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.v(TAG,"Androworms : Bienvenue sur le menu principal");
