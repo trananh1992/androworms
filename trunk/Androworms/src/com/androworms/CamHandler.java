@@ -28,8 +28,6 @@ public class CamHandler extends Activity implements SurfaceHolder.Callback, OnCl
 	
 	private Camera camera;
 	private boolean isPreviewRunning = false;
-	private SurfaceView surfaceView;
-	private SurfaceHolder surfaceHolder;
 	private Handler mAutoFocusHandler;
 	private int mAutoFocusMessage;
 	private OutputStream filoutputStream;
@@ -37,6 +35,8 @@ public class CamHandler extends Activity implements SurfaceHolder.Callback, OnCl
 	
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
+		SurfaceView surfaceView;
+		SurfaceHolder surfaceHolder;
 		Log.v(TAG,"Androworms : begining on create");
 		getWindow().setFormat(PixelFormat.TRANSLUCENT);
 		setContentView(R.layout.camera);
@@ -54,10 +54,6 @@ public class CamHandler extends Activity implements SurfaceHolder.Callback, OnCl
 		Log.v(TAG,"Androworms : ending on create");
 	}
 	
-	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-		super.onRestoreInstanceState(savedInstanceState);
-	}
-	
 	private Camera.ShutterCallback mShutterCallback = new Camera.ShutterCallback() {
 		public void onShutter() {
 			Log.e(getClass().getSimpleName(), "SHUTTER CALLBACK");
@@ -72,12 +68,12 @@ public class CamHandler extends Activity implements SurfaceHolder.Callback, OnCl
 	
 	private Camera.PictureCallback mPictureCallbackJpeg = new Camera.PictureCallback() {
 		public void onPictureTaken(byte[] data, Camera c) {
-			try {
-				filoutputStream.write(data);
-				filoutputStream.flush();
-				filoutputStream.close();
-			} catch(Exception ex) {
-			}
+				try {
+					filoutputStream.write(data);
+					filoutputStream.flush();
+					filoutputStream.close();
+				} catch (IOException e) {
+				}
 		}
 	};
 	
@@ -85,8 +81,14 @@ public class CamHandler extends Activity implements SurfaceHolder.Callback, OnCl
 		try {
 			File root = Environment.getExternalStorageDirectory();
 			File androworms = new File(root,"Androworms");
+			boolean status = true;
 			if (!androworms.exists()) {
-				androworms.mkdir();
+				status = androworms.mkdir();
+			}
+			if(!status)
+			{
+				Log.e(TAG,"failed to create directory Androworms.");
+				return;
 			}
 			File photo = new File(androworms,"maPhoto.jpg");
 			
@@ -94,7 +96,6 @@ public class CamHandler extends Activity implements SurfaceHolder.Callback, OnCl
 			Log.e(TAG,photo.getAbsolutePath().toString());
 			camera.takePicture(mShutterCallback, mPictureCallbackRaw, mPictureCallbackJpeg);
 		} catch(Exception ex ){
-			ex.printStackTrace();
 			Log.e(getClass().getSimpleName(), ex.getMessage(), ex);
 		}
 	}
@@ -113,10 +114,6 @@ public class CamHandler extends Activity implements SurfaceHolder.Callback, OnCl
 	protected void onResume() {
 		Log.e(getClass().getSimpleName(), "onResume");
 		super.onResume();
-	}
-	
-	protected void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
 	}
 	
 	protected void onStop() {
@@ -163,9 +160,10 @@ public class CamHandler extends Activity implements SurfaceHolder.Callback, OnCl
 	
 	private final Camera.AutoFocusCallback autoFocusCallback = new Camera.AutoFocusCallback() {
 		public void onAutoFocus(boolean success, Camera camera) {
+			int delai = 1500;
 			if (mAutoFocusHandler != null) {
 				Message message = mAutoFocusHandler.obtainMessage(mAutoFocusMessage, success);
-				mAutoFocusHandler.sendMessageDelayed(message, 1500);
+				mAutoFocusHandler.sendMessageDelayed(message, delai);
 				mAutoFocusHandler = null;
 			}
 		}
