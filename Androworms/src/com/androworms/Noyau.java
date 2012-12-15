@@ -1,7 +1,5 @@
 package com.androworms;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /*
  * Le noyau gere tous les interactions.
@@ -13,8 +11,7 @@ public class Noyau {
 	// private ihm...
 
 	
-	public Noyau()
-	{
+	public Noyau() {
 		
 	}
 	
