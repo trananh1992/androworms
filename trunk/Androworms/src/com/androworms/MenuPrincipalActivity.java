@@ -15,9 +15,9 @@ public class MenuPrincipalActivity extends Activity {
 	private static final String TAG = "Androworms.MenuPrincipal";
 	
 	// Codes de demande de l'Intent
-	public final int REQUEST_ENABLE_BT = 1;
-	public final int REQUEST_CONNECT_DEVICE = 2;
-	public final int REQUEST_CAM = 3;
+	public static final int REQUEST_ENABLE_BT = 1;
+	public static final int REQUEST_CONNECT_DEVICE = 2;
+	public static final int REQUEST_CAM = 3;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -61,15 +61,15 @@ public class MenuPrincipalActivity extends Activity {
 		findViewById(R.id.test_cam).setOnClickListener(camCl);
 		findViewById(R.id.test_cam).setOnTouchListener(camtl);
 		
-		OnClickListener cl_bluetooth = new TestBluetooth(this);
-		OnTouchListener tl_bluetooth = new TestBluetooth(this);
-		findViewById(R.id.test_bluetooth).setOnClickListener(cl_bluetooth);
-		findViewById(R.id.test_bluetooth).setOnTouchListener(tl_bluetooth);
+		OnClickListener clBluetooth = new TestBluetooth(this);
+		OnTouchListener tlBluetooth = new TestBluetooth(this);
+		findViewById(R.id.test_bluetooth).setOnClickListener(clBluetooth);
+		findViewById(R.id.test_bluetooth).setOnTouchListener(tlBluetooth);
 		
-		OnClickListener cl_slider = new TestSlider(this);
-		OnTouchListener tl_slider = new TestSlider(this);
-		findViewById(R.id.test_slider).setOnClickListener(cl_slider);
-		findViewById(R.id.test_slider).setOnTouchListener(tl_slider);
+		OnClickListener clSlider = new TestSlider(this);
+		OnTouchListener tlSlider = new TestSlider(this);
+		findViewById(R.id.test_slider).setOnClickListener(clSlider);
+		findViewById(R.id.test_slider).setOnTouchListener(tlSlider);
 	}
 	
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {

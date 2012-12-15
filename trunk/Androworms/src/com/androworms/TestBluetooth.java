@@ -43,7 +43,7 @@ public class TestBluetooth implements OnClickListener, OnTouchListener {
 			if (!mBluetoothAdapter.isEnabled()) {
 				Log.v(TAG,"Le bluetooth n'est pas activé");
 				Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-				activiteMenuPrincipal.startActivityForResult(enableBtIntent, activiteMenuPrincipal.REQUEST_ENABLE_BT);
+				activiteMenuPrincipal.startActivityForResult(enableBtIntent, MenuPrincipalActivity.REQUEST_ENABLE_BT);
 			} else {
 				Log.v(TAG,"Le bluetooth est activé");
 				
