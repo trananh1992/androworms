@@ -13,13 +13,13 @@ import com.androworms.R;
 
 public class TestSlider extends Activity implements OnClickListener, OnTouchListener {
 	
-	private ActiviteAndroworms androwormsActivity;
+	private ActiviteAndroworms activiteAndroworms;
 	
 	public TestSlider() {
 		super();
 	}
 	public TestSlider(ActiviteAndroworms menuPrincipalActivity) {
-		this.androwormsActivity = menuPrincipalActivity;
+		this.activiteAndroworms = menuPrincipalActivity;
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class TestSlider extends Activity implements OnClickListener, OnTouchList
 
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
-		Intent intent = new Intent(this.androwormsActivity, TestSlider.class);
-		this.androwormsActivity.startActivity(intent);
+		Intent intent = new Intent(this.activiteAndroworms, TestSlider.class);
+		this.activiteAndroworms.startActivity(intent);
 	}
 }

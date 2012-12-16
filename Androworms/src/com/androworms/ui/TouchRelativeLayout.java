@@ -176,8 +176,7 @@ public class TouchRelativeLayout extends RelativeLayout {
 				}
 				
 				invalidate();
-				return true;// true ou false ?? -->
-							// http://developer.android.com/reference/android/view/View.OnTouchListener.html
+				return true;
 			}
 			
 		});
