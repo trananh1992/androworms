@@ -22,6 +22,9 @@ public class TouchRelativeLayout extends RelativeLayout {
 	
 	private static final String TAG = "TESTAndroworms.TouchRelativeLayout";
 	
+	private static final int MAP_WIDTH = 1280;
+	private static final int MAP_HEIGHT = 720;
+	
 	// 3 états
 	private int mode;
 	private static final int RIEN = 0;
@@ -74,6 +77,7 @@ public class TouchRelativeLayout extends RelativeLayout {
 	private void constructeurPartage(Context context) {
 		Log.v(TAG, "constructeurPartage()");
 		
+		
 		mode = RIEN;
 		this.setWillNotDraw(false);
 		this.setClickable(true);
@@ -84,8 +88,8 @@ public class TouchRelativeLayout extends RelativeLayout {
 		positionJoueur2 = new PointF(1000, 490);
 		
 		/* Bitmap */
-		bmFond = prepareBitmap(getResources().getDrawable(R.drawable.image_fond_640x360),1280, 720);
-		bmTerrain = prepareBitmap(getResources().getDrawable(R.drawable.terrain_jeu_defaut_640x360), 1280, 720);
+		bmFond = prepareBitmap(getResources().getDrawable(R.drawable.image_fond_640x360),MAP_WIDTH, MAP_HEIGHT);
+		bmTerrain = prepareBitmap(getResources().getDrawable(R.drawable.terrain_jeu_defaut_640x360), MAP_WIDTH, MAP_HEIGHT);
 		bmJoueur1 = prepareBitmap(getResources().getDrawable(R.drawable.logo_android_robot), 180, 173);
 		bmJoueur2 = prepareBitmap(getResources().getDrawable(R.drawable.logo_android_robot), 180, 173);
 
@@ -127,17 +131,20 @@ public class TouchRelativeLayout extends RelativeLayout {
 				mScaleDetector.onTouchEvent(event);
 				
 				switch (event.getAction()) {
-				case MotionEvent.ACTION_DOWN: // Appui sur l'écran avec un doigt
+				case MotionEvent.ACTION_DOWN:
+					// Appui sur l'écran avec un doigt
 					mode = DEPLACEMENT;
 					positionAncienneTouche = new PointF(-1, -1);
 					break;
 				
-				case MotionEvent.ACTION_POINTER_DOWN: // En théorie 2 doigts quiappuie en même temps (non reproductible)
+				case MotionEvent.ACTION_POINTER_DOWN:
+					// En théorie 2 doigts quiappuie en même temps (non reproductible)
 					mode = DEPLACEMENT;
 					positionAncienneTouche = new PointF(-1, -1);
 					break;
 				
-				case MotionEvent.ACTION_MOVE: // Un doigt qui bouge sur l'écran
+				case MotionEvent.ACTION_MOVE:
+					// Un doigt qui bouge sur l'écran
 				
 					if (mode == DEPLACEMENT) {
 						// En mode déplacement, position_ancienne_touche n'est jamais égale à -1 sinon erreur
@@ -153,12 +160,14 @@ public class TouchRelativeLayout extends RelativeLayout {
 					
 					break;
 				
-				case MotionEvent.ACTION_UP: // Un doigt qu'on leve (to check)
+				case MotionEvent.ACTION_UP:
+					// Un doigt qu'on leve (to check)
 					mode = RIEN;
 					positionAncienneTouche = new PointF(-1, -1);
 					break;
 				
-				case MotionEvent.ACTION_POINTER_UP: // Lorsque l'on leve 2 doigt (to ceck, parce que ça peut aussi être le second doigt qui se leve)
+				case MotionEvent.ACTION_POINTER_UP:
+					// Lorsque l'on leve 2 doigt (to ceck, parce que ça peut aussi être le second doigt qui se leve)
 					mode = RIEN;
 					positionAncienneTouche = new PointF(-1, -1);
 					break;
@@ -179,40 +188,37 @@ public class TouchRelativeLayout extends RelativeLayout {
 	 */
 	private void fixTrans() {
 		float[] m = new float[9];
-        matrix.getValues(m);
-        float transX = m[Matrix.MTRANS_X];
-        float transY = m[Matrix.MTRANS_Y];
-        
-        float fixTransX = getFixTrans(transX, bmFond.getWidth(), bmFond.getWidth() * scaleCourant);
-        float fixTransY = getFixTrans(transY, bmFond.getHeight(), bmFond.getHeight() * scaleCourant);
-
-        if (fixTransX != 0 || fixTransY != 0)
-        {
-            matrix.postTranslate(fixTransX, fixTransY);
-        }
-    }
-
+		matrix.getValues(m);
+		float transX = m[Matrix.MTRANS_X];
+		float transY = m[Matrix.MTRANS_Y];
+		
+		float fixTransX = getFixTrans(transX, bmFond.getWidth(), bmFond.getWidth() * scaleCourant);
+		float fixTransY = getFixTrans(transY, bmFond.getHeight(), bmFond.getHeight() * scaleCourant);
+		
+		if (fixTransX != 0 || fixTransY != 0) {
+			matrix.postTranslate(fixTransX, fixTransY);
+		}
+	}
+	
 	private float getFixTrans(float trans, float viewSize, float contentSize) {
-        float minTrans, maxTrans;
-
+		float minTrans, maxTrans;
+        
         if (contentSize <= viewSize) {
-            minTrans = 0;
+        	minTrans = 0;
             maxTrans = viewSize - contentSize;
         } else {
-            minTrans = viewSize - contentSize;
+        	minTrans = viewSize - contentSize;
             maxTrans = 0;
         }
-
-        if (trans < minTrans)
-        {
-            return -trans + minTrans;
+        
+        if (trans < minTrans) {
+        	return -trans + minTrans;
         }
-        if (trans > maxTrans)
-        {
-            return -trans + maxTrans;
+        if (trans > maxTrans) {
+        	return -trans + maxTrans;
         }
         return 0;
-    }
+	}
 	
 	@Override
 	protected void onDraw(Canvas canvas) {
@@ -226,7 +232,6 @@ public class TouchRelativeLayout extends RelativeLayout {
 		canvas.drawBitmap(bmTerrain, positionFond.x, positionFond.y, null);
 		canvas.drawBitmap(bmJoueur1, positionJoueur1.x, positionJoueur1.y, null);
 		canvas.drawBitmap(bmJoueur2, positionJoueur2.x, positionJoueur2.y, null);
-
 	}
 	
 	@Override
