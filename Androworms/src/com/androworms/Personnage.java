@@ -1,11 +1,15 @@
 package com.androworms;
 
+import android.graphics.Point;
+
+
 
 /*
  * Cette classe contient toutes les informations
  * sur le personnage utiliser par un joueur.
  */
-public class Personnage  {
+public class Personnage 
+{
 	/*
 	 * Propriete de personnage.
 	 * Image du personnage
@@ -14,12 +18,13 @@ public class Personnage  {
 	 * accessoire
 	 */
 	private String nom;
-	private Position position;
+	private Point position;
 
 	
-	public Personnage(String nom) {
+	public Personnage(String nom)
+	{
 		this.nom = nom;
-		position = new Position();
+		position = new Point();
 	}
 
 	public String getNom() {
@@ -30,11 +35,14 @@ public class Personnage  {
 		this.nom = nom;
 	}
 
-	public Position getPosition() {
+	public Point getPosition() {
 		return position;
 	}
 
-	public void setPosition(Position position) {
+	public void setPosition(Point position) {
 		this.position = position;
 	}
+	
+	
+
 }

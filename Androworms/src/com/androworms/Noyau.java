@@ -7,7 +7,6 @@ package com.androworms;
  */
 public class Noyau {
 
-	private Communication communication;
 	// private ihm...
 
 	
