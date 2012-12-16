@@ -9,10 +9,10 @@ public class ActiviteAndrowormsEvent implements OnClickListener {
 	
 	private static final String TAG = "Androworms.MenuPrincipalActivityEvent";
 	
-	private ActiviteAndroworms menuPrincipalActivity;
+	private ActiviteAndroworms activiteAndroworms;
 	
-	public ActiviteAndrowormsEvent(ActiviteAndroworms menuPrincipalActivity) {
-		this.menuPrincipalActivity = menuPrincipalActivity;
+	public ActiviteAndrowormsEvent(ActiviteAndroworms activiteAndroworms) {
+		this.activiteAndroworms = activiteAndroworms;
 	}
 
 	public void onClick(View arg0) {
@@ -20,7 +20,7 @@ public class ActiviteAndrowormsEvent implements OnClickListener {
 		
 		Log.v(TAG,"Lancement du jeu");
 		
-		Intent intent = new Intent(this.menuPrincipalActivity, GameActivity.class);
-		this.menuPrincipalActivity.startActivity(intent);
+		Intent intent = new Intent(this.activiteAndroworms, GameActivity.class);
+		this.activiteAndroworms.startActivity(intent);
 	}
 }

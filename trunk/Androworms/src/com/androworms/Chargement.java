@@ -10,7 +10,7 @@ public class Chargement extends AsyncTask<ActiviteAndroworms, Integer, Boolean> 
 	public static final String TAG = "Chargement";
 	public static final int TEMPS_PAUSE = 5000;
 	
-	private ActiviteAndroworms activiteSplash;
+	private ActiviteAndroworms activiteAndroworms;
 	private boolean chargementFini;
 	private boolean touchDone;
 	
@@ -20,12 +20,12 @@ public class Chargement extends AsyncTask<ActiviteAndroworms, Integer, Boolean> 
 		chargementFini = false;
 		Date dateDebutChargement = new Date();
 		
-		this.activiteSplash = params[0];
+		this.activiteAndroworms = params[0];
 		
 		/** DEBUT DE ZONE SPECIAL POUR LES OPERATIONS DE CHARGEMENT DE DONNEES POUR ANDROWORMS **/
 		
 		/* Chargement des informations du téléphone */
-		Informations.init(activiteSplash.getWindowManager().getDefaultDisplay());
+		Informations.init(activiteAndroworms.getWindowManager().getDefaultDisplay());
 		
 		
 		/** FIN DE ZONE SPECIAL POUR LES OPERATIONS DE CHARGEMENT DE DONNEES POUR ANDROWORMS **/
@@ -57,7 +57,7 @@ public class Chargement extends AsyncTask<ActiviteAndroworms, Integer, Boolean> 
 	protected void onPostExecute(Boolean result) {
 		// A la fin de l'opération
 		Log.v(TAG,"onPostExecute()");
-		activiteSplash.chargerMenuPrincipal();
+		activiteAndroworms.chargerMenuPrincipal();
 	}
 	
 	public void finish() {
