@@ -11,20 +11,20 @@ import android.view.View.OnTouchListener;
 
 public class ActiviteCreationCarte extends Activity implements OnClickListener,OnTouchListener {
 	private static final String TAG = "Androworms.ActiviteCreationCarte.Event";
-	private MenuPrincipalActivity activiteMenuPrincipal;
+	private AndrowormsActivity androwormsActivity;
 	static final int TAKE_PICTURE = 0;
 	
 	public void onClick(View arg0) {
 		Log.v(TAG,"On a cliqué sur l'activité de creation de carte");
-		Intent intent = new Intent(this.activiteMenuPrincipal, ActiviteCreationCarte.class);
+		Intent intent = new Intent(this.androwormsActivity, ActiviteCreationCarte.class);
 		Log.v(TAG,"Androworms : created intent!");
-		this.activiteMenuPrincipal.startActivityForResult(intent,TAKE_PICTURE);
+		this.androwormsActivity.startActivityForResult(intent,TAKE_PICTURE);
 		Log.v(TAG,"Androworms : started activity!");
 		
 	}
 	
-	public ActiviteCreationCarte(MenuPrincipalActivity activiteMenuPrincipal) {
-		this.activiteMenuPrincipal = activiteMenuPrincipal;
+	public ActiviteCreationCarte(AndrowormsActivity activiteMenuPrincipal) {
+		this.androwormsActivity = activiteMenuPrincipal;
 	}
 	
 	public ActiviteCreationCarte() {
@@ -42,7 +42,6 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		findViewById(R.id.TakePicture).setOnClickListener(camCl);
 	}
 
-	@Override
 	public boolean onTouch(View arg0, MotionEvent arg1) {
 		// TODO Auto-generated method stub
 		Log.v(TAG,"touch me");

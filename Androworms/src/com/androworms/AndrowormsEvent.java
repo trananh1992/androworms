@@ -5,22 +5,22 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-public class MenuPrincipalActivityEvent implements OnClickListener {
+public class AndrowormsEvent implements OnClickListener {
 	
 	private static final String TAG = "Androworms.MenuPrincipalActivityEvent";
 	
-	private MenuPrincipalActivity menuPrincipalActivity;
+	private AndrowormsActivity menuPrincipalActivity;
 	
-	public MenuPrincipalActivityEvent(MenuPrincipalActivity menuPrincipalActivity) {
+	public AndrowormsEvent(AndrowormsActivity menuPrincipalActivity) {
 		this.menuPrincipalActivity = menuPrincipalActivity;
 	}
 
 	public void onClick(View arg0) {
-		// TODO Auto-generated method stub
+		// TODO pour savoir sur quelle bouton on a cliqué
 		
-		Log.v(TAG,"btn_Solo");
+		Log.v(TAG,"Lancement du jeu");
+		
 		Intent intent = new Intent(this.menuPrincipalActivity, GameActivity.class);
 		this.menuPrincipalActivity.startActivity(intent);
 	}
-
 }
