@@ -8,18 +8,18 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 
-import com.androworms.MenuPrincipalActivity;
+import com.androworms.AndrowormsActivity;
 import com.androworms.R;
 
 public class TestSlider extends Activity implements OnClickListener, OnTouchListener {
 	
-	private MenuPrincipalActivity activiteMenuPrincipal;
+	private AndrowormsActivity AndrowormsActivity;
 	
 	public TestSlider() {
 		super();
 	}
-	public TestSlider(MenuPrincipalActivity menuPrincipalActivity) {
-		this.activiteMenuPrincipal = menuPrincipalActivity;
+	public TestSlider(AndrowormsActivity menuPrincipalActivity) {
+		this.AndrowormsActivity = menuPrincipalActivity;
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class TestSlider extends Activity implements OnClickListener, OnTouchList
 
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
-		Intent intent = new Intent(this.activiteMenuPrincipal, TestSlider.class);
-		this.activiteMenuPrincipal.startActivity(intent);
+		Intent intent = new Intent(this.AndrowormsActivity, TestSlider.class);
+		this.AndrowormsActivity.startActivity(intent);
 	}
 }
