@@ -8,7 +8,4 @@ public class ServeurPrimaire extends Serveur {
 		super();
 		this.communication = communication;
 	}
-
-	
-
 }

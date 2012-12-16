@@ -1,7 +1,6 @@
 package com.androworms;
 
-public class Projectile 
-{
+public class Projectile  {
 	// Variable global pour connaitre le type de projectile.
 	//missile, grenade
 	public static final short EXPLOSIF  = 1;
@@ -34,13 +33,11 @@ public class Projectile
 	public void setRayon(int rayon) {
 		this.rayon = rayon;
 	}
-	public void estExplosif()
-	{
+	public void estExplosif() {
 		typeExplosion = EXPLOSIF;
 	}
 	
-	public void estPerforant()
-	{
+	public void estPerforant() {
 		typeExplosion = PERFORANT;
 	}
 	

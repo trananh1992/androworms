@@ -12,9 +12,10 @@ import android.view.View.OnTouchListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.androworms.test.TestBluetooth;
 import com.androworms.test.TestSlider;
 
-public class AndrowormsActivity extends Activity {
+public class ActiviteAndroworms extends Activity {
 	
 	private static final String TAG = "Androworms.SplashScreen";
 	
@@ -95,7 +96,7 @@ public class AndrowormsActivity extends Activity {
 		/* Affiche la vue par défaut */
 		setContentView(R.layout.menu_principal);
 		
-		OnClickListener soloCl = new AndrowormsEvent(this);
+		OnClickListener soloCl = new ActiviteAndrowormsEvent(this);
 		findViewById(R.id.btn_solo).setOnClickListener(soloCl);
 		
 		OnClickListener camCl = new ActiviteCreationCarte(this);

@@ -5,13 +5,13 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-public class AndrowormsEvent implements OnClickListener {
+public class ActiviteAndrowormsEvent implements OnClickListener {
 	
 	private static final String TAG = "Androworms.MenuPrincipalActivityEvent";
 	
-	private AndrowormsActivity menuPrincipalActivity;
+	private ActiviteAndroworms menuPrincipalActivity;
 	
-	public AndrowormsEvent(AndrowormsActivity menuPrincipalActivity) {
+	public ActiviteAndrowormsEvent(ActiviteAndroworms menuPrincipalActivity) {
 		this.menuPrincipalActivity = menuPrincipalActivity;
 	}
 
