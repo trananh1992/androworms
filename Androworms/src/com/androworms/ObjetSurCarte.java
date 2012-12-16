@@ -4,8 +4,7 @@ public class ObjetSurCarte {
 	private Objet objet;
 	private Position position;
 	
-	public ObjetSurCarte(Objet o, Position p)
-	{
+	public ObjetSurCarte(Objet o, Position p) {
 		this.objet = o;
 		this.position = p;
 	}
@@ -26,12 +25,8 @@ public class ObjetSurCarte {
 		this.position = position;
 	}
 	
-	public void setPosition(int x, int y)
-	{
+	public void setPosition(int x, int y) {
 		position.setX(x);
 		position.setY(y);
 	}
-	
-	
-
 }

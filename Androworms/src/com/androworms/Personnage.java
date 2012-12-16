@@ -8,8 +8,7 @@ import android.graphics.Point;
  * Cette classe contient toutes les informations
  * sur le personnage utiliser par un joueur.
  */
-public class Personnage 
-{
+public class Personnage {
 	/*
 	 * Propriete de personnage.
 	 * Image du personnage
@@ -21,8 +20,7 @@ public class Personnage
 	private Point position;
 
 	
-	public Personnage(String nom)
-	{
+	public Personnage(String nom) {
 		this.nom = nom;
 		position = new Point();
 	}
@@ -42,7 +40,4 @@ public class Personnage
 	public void setPosition(Point position) {
 		this.position = position;
 	}
-	
-	
-
 }

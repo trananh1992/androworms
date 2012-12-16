@@ -1,7 +1,6 @@
 package com.androworms;
 
-public class Serveur 
-{
+public class Serveur {
 	
 
 }

@@ -1,6 +1,5 @@
 package com.androworms;
 
-public class ServeurSecondaire extends Serveur 
-{
+public class ServeurSecondaire extends Serveur  {
 
 }

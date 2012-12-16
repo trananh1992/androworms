@@ -11,7 +11,7 @@ import android.view.View.OnTouchListener;
 
 public class ActiviteCreationCarte extends Activity implements OnClickListener,OnTouchListener {
 	private static final String TAG = "Androworms.ActiviteCreationCarte.Event";
-	private AndrowormsActivity androwormsActivity;
+	private ActiviteAndroworms androwormsActivity;
 	static final int TAKE_PICTURE = 0;
 	
 	public void onClick(View arg0) {
@@ -23,7 +23,7 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		
 	}
 	
-	public ActiviteCreationCarte(AndrowormsActivity activiteMenuPrincipal) {
+	public ActiviteCreationCarte(ActiviteAndroworms activiteMenuPrincipal) {
 		this.androwormsActivity = activiteMenuPrincipal;
 	}
 	

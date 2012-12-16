@@ -19,7 +19,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.androworms.AndrowormsActivity"
+            android:name="com.androworms.ActiviteAndroworms"
             android:label="@string/title_activity_main"
             android:screenOrientation="landscape" >
             <intent-filter>

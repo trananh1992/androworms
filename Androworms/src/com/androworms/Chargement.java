@@ -5,16 +5,17 @@ import java.util.Date;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class Chargement extends AsyncTask<AndrowormsActivity, Integer, Boolean> {
-	public static String TAG = "Chargement";
-	public static int TEMPS_PAUSE = 5000;
+public class Chargement extends AsyncTask<ActiviteAndroworms, Integer, Boolean> {
 	
-	private AndrowormsActivity activiteSplash;
+	public static final String TAG = "Chargement";
+	public static final int TEMPS_PAUSE = 5000;
+	
+	private ActiviteAndroworms activiteSplash;
 	private boolean chargementFini;
 	private boolean touchDone;
 	
 	@Override
-	protected Boolean doInBackground(AndrowormsActivity... params) {
+	protected Boolean doInBackground(ActiviteAndroworms... params) {
 		Log.v(TAG,"doInBackground()");
 		chargementFini = false;
 		Date dateDebutChargement = new Date();
@@ -56,7 +57,6 @@ public class Chargement extends AsyncTask<AndrowormsActivity, Integer, Boolean> 
 	protected void onPostExecute(Boolean result) {
 		// A la fin de l'opération
 		Log.v(TAG,"onPostExecute()");
-		//o.getThread().start();
 		activiteSplash.chargerMenuPrincipal();
 	}
 	
