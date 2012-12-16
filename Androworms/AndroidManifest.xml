@@ -30,7 +30,7 @@
             android:name="com.androworms.MenuPrincipalActivity"
             android:label="@string/menu_principal" >
         </activity>
-        <activity android:name="com.androworms.CamHandler" >
+        <activity android:name="com.androworms.ActiviteCamera" >
         </activity>
         <activity android:name="com.androworms.test.TestSlider" >
         </activity>
@@ -38,6 +38,7 @@
             android:name="com.androworms.GameActivity"
             android:label="@string/title_activity_game" >
         </activity>
+        <activity android:name="com.androworms.ActiviteCreationCarte"></activity>
     </application>
 
 </manifest>
