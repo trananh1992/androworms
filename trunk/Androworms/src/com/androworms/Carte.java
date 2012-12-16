@@ -20,9 +20,9 @@ public class Carte {
 		transformed = Bitmap.createBitmap(width,height,Bitmap.Config.ARGB_8888);
 		int i,j;
 		int color;
-		int seuil = 200;
-		int nComponents = 3;
-		int maxComponentValue = 255;
+		final int seuil = 200;
+		final int nComponents = 3;
+		final int maxComponentValue = 255;
 		Log.v(TAG, "begin computing alpha");
 		for(i=0;i<width;i++)
 		{
@@ -47,7 +47,7 @@ public class Carte {
 	
 	public void save(String path) {
 		FileOutputStream s = null;
-		int compression = 100;
+		final int compression = 100;
 		try {
 			s = new FileOutputStream(path);
 			transformed.compress(Bitmap.CompressFormat.PNG, compression, s);
@@ -56,15 +56,16 @@ public class Carte {
 		} catch (FileNotFoundException e) {
 			Log.e(TAG,"File not found for saving");
 		} catch (IOException e) {
+			Log.e(TAG,"IO Exception in save");
+		} finally {
 			try {
-				if(s != null) {
+				if(s!=null)
+				{
 					s.close();
 				}
 			}
-			catch (IOException e2)
-			{
+			catch (Throwable e) {
 			}
-			Log.e(TAG,"IO Exception in save");
 		}
 	}
 }

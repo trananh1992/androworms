@@ -22,16 +22,16 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.ImageButton;
 
-public class CamHandler extends Activity implements SurfaceHolder.Callback, OnClickListener, OnTouchListener {
+public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, OnClickListener, OnTouchListener {
 	
-	private static final String TAG = "Androworms.CamHandler.Event";
+	private static final String TAG = "Androworms.ActiviteCamera.Event";
 	
 	private Camera camera;
 	private boolean isPreviewRunning = false;
 	private Handler mAutoFocusHandler;
 	private int mAutoFocusMessage;
 	private OutputStream filoutputStream;
-	private MenuPrincipalActivity activiteMenuPrincipal;
+	private ActiviteCreationCarte activiteCreationCarte;
 	
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -62,7 +62,9 @@ public class CamHandler extends Activity implements SurfaceHolder.Callback, OnCl
 	/* Plus utilisé dans les versions d'android desormais, data est toujours null */
 	private Camera.PictureCallback mPictureCallbackRaw = new Camera.PictureCallback() {
 		public void onPictureTaken(byte[] data, Camera c) {
-			camera.startPreview();
+			//camera.startPreview();
+			//setResult(RESULT_OK,);
+			finish();
 		}
 	};
 	
@@ -175,18 +177,18 @@ public class CamHandler extends Activity implements SurfaceHolder.Callback, OnCl
 	
 	public void onClick(View v) {
 		Log.v(TAG,"Androworms : Vous avez cliqué sur cam!");
-		Intent intent = new Intent(this.activiteMenuPrincipal, CamHandler.class);
+		Intent intent = new Intent(this.activiteCreationCarte, ActiviteCamera.class);
 		Log.v(TAG,"Androworms : created intent!");
-		this.activiteMenuPrincipal.startActivity(intent);
+		this.activiteCreationCarte.startActivity(intent);
 		Log.v(TAG,"Androworms : started activity!");
 		
 	}
 	
-	public CamHandler(MenuPrincipalActivity activiteMenuPrincipal) {
-		this.activiteMenuPrincipal = activiteMenuPrincipal;
+	public ActiviteCamera(ActiviteCreationCarte activiteCreationCarte) {
+		this.activiteCreationCarte = activiteCreationCarte;
 	}
 	
-	public CamHandler() {
+	public ActiviteCamera() {
 		super();
 	}
 }

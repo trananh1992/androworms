@@ -56,10 +56,10 @@ public class MenuPrincipalActivity extends Activity {
 		OnClickListener soloCl = new MenuPrincipalActivityEvent(this);
 		findViewById(R.id.btn_solo).setOnClickListener(soloCl);
 		
-		OnClickListener camCl = new CamHandler(this);
-		OnTouchListener camtl = new CamHandler(this);
+		OnClickListener camCl = new ActiviteCreationCarte(this);
+	//	OnTouchListener camtl = new ActiviteCreationCarte(this);
 		findViewById(R.id.test_cam).setOnClickListener(camCl);
-		findViewById(R.id.test_cam).setOnTouchListener(camtl);
+		//findViewById(R.id.test_cam).setOnTouchListener(camtl);
 		
 		OnClickListener clBluetooth = new TestBluetooth(this);
 		OnTouchListener tlBluetooth = new TestBluetooth(this);
