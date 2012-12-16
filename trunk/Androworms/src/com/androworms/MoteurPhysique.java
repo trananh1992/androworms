@@ -17,6 +17,7 @@ public class MoteurPhysique {
 		super();
 		this.mg = mg;
 		this.noyau = noyau;
-	}
-	
+	}	
+
 }
+

@@ -55,17 +55,17 @@ public class Monde {
 	{
 		for(int i = 0; i < tousLesObjets.size(); i++)
 		{
-			if(nomObjet.compareTo(tousLesObjets.get(i).getNom()) == 0)
+			if(nomObjet.compareTo(tousLesObjets.get(i).getNom()) == 0
+					&& tousLesObjets.get(i) instanceof Arme)
 			{
-				if( tousLesObjets.get(i) instanceof Arme) {
-					((Arme)tousLesObjets.get(i)).getMunition().ajouter(nombre);
-				}
+				((Arme)tousLesObjets.get(i)).getMunition().ajouter(nombre);
 			}
 		}
 	}
-	
-	
+}
+
+
 	
 	
 
-}
+
