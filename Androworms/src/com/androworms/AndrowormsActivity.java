@@ -36,11 +36,11 @@ public class AndrowormsActivity extends Activity {
 		tvDevelopers = (TextView)findViewById(R.id.textView3);
 		tvDevelopers.setText(Html.fromHtml(txtDev));
 		
-		
+		/* Chargement des informations du téléphone */
+		Informations.init(getWindowManager().getDefaultDisplay());
 		
 		OnClickListener event = new AndrowormsActivityEvent(this);
 		findViewById(R.id.LinearLayout2).setOnClickListener(event);
-		
 	}
 
 	@Override

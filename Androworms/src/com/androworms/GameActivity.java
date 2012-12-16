@@ -17,17 +17,12 @@ public class GameActivity extends Activity {
 	
 	private static final String TAG = "TESTAndroworms.MainActivity";
 	
-	//private static final int WIDTH = 640;
-	//private static final int HEIGHT = 400;
-	
-
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.v(TAG,"Start");
 		
 		/* Changer l'orientation en mode paysage */
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-		
 		
 		/** Intialisations des composants graphiques **/
 		RelativeLayout rlGlobale = new RelativeLayout(this);
