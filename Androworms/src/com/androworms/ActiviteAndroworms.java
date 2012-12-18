@@ -29,8 +29,10 @@ public class ActiviteAndroworms extends Activity {
 		super.onCreate(savedInstanceState);
 		Log.v(TAG,"Androworms : Bienvenue sur le spashscreen");
 		
-		/* Affiche la vue par défaut */
+		/* Affiche la vue */
 		setContentView(R.layout.splash_screen);
+		
+		
 		
 		/* Affiche la liste des développeurs */
 		String[] listeDev = getResources().getStringArray(R.array.liste_developpeurs);
@@ -93,8 +95,9 @@ public class ActiviteAndroworms extends Activity {
 		//*/
 		
 		
-		/* Affiche la vue par défaut */
+		/* Affiche la vue */
 		setContentView(R.layout.menu_principal);
+		
 		
 		OnClickListener soloCl = new ActiviteAndrowormsEvent(this);
 		findViewById(R.id.btn_solo).setOnClickListener(soloCl);
