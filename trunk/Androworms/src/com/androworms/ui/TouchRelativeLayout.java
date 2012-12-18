@@ -25,11 +25,15 @@ public class TouchRelativeLayout extends RelativeLayout {
 	private static final int MAP_WIDTH = 1280;
 	private static final int MAP_HEIGHT = 720;
 	
+	private static final int JOUEUR_WIDTH = 180;
+	private static final int JOUEUR_HEIGHT = 173;
+	
 	// 3 états
 	private int mode;
 	private static final int RIEN = 0;
 	private static final int DEPLACEMENT = 1;
 	private static final int ZOOM = 2;
+	private static final int TIR = 3;
 	
 	// Traquer le mouvement
 	private int idPointeurCourant;
@@ -90,8 +94,8 @@ public class TouchRelativeLayout extends RelativeLayout {
 		/* Bitmap */
 		bmFond = prepareBitmap(getResources().getDrawable(R.drawable.image_fond_640x360),MAP_WIDTH, MAP_HEIGHT);
 		bmTerrain = prepareBitmap(getResources().getDrawable(R.drawable.terrain_jeu_defaut_640x360), MAP_WIDTH, MAP_HEIGHT);
-		bmJoueur1 = prepareBitmap(getResources().getDrawable(R.drawable.logo_android_robot), 180, 173);
-		bmJoueur2 = prepareBitmap(getResources().getDrawable(R.drawable.logo_android_robot), 180, 173);
+		bmJoueur1 = prepareBitmap(getResources().getDrawable(R.drawable.logo_android_robot), JOUEUR_WIDTH, JOUEUR_HEIGHT);
+		bmJoueur2 = prepareBitmap(getResources().getDrawable(R.drawable.logo_android_robot), JOUEUR_WIDTH, JOUEUR_HEIGHT);
 
 		/* scale detector */
 		mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
@@ -130,22 +134,26 @@ public class TouchRelativeLayout extends RelativeLayout {
 				
 				mScaleDetector.onTouchEvent(event);
 				
+				/*       Gestion des doigts
+				 * Chaque fois qu'un doigt se rajoute sur l'écran, un id lui est attribué. (un id est un nombre qui part de 0 jusqu'à environ 10)
+				 * Quand un doigt se retire de l'écran, l'ID est libéré.
+				 * Lorsque l'on appuie sur l'écran avec un doigt, il reçois l'ID le plus petit disponible.
+				 * Le doigt principale est toujours le doigt d'ID 0. Il est donc possible que à un moment il n'y ai pas de doigt principal sur l'écran.
+				 * (Exemple : doigt A posé sur l'écran (doigt principal) -> doigt B posé sur l'écran -> doigt A levé)
+				 */
 				switch (event.getAction()) {
 				case MotionEvent.ACTION_DOWN:
-					// Appui sur l'écran avec un doigt
 					mode = DEPLACEMENT;
 					positionAncienneTouche = new PointF(-1, -1);
 					break;
 				
 				case MotionEvent.ACTION_POINTER_DOWN:
-					// En théorie 2 doigts quiappuie en même temps (non reproductible)
+					// Action : Lorsque l'on a un ou plusieurs doigt sur l'écran (et pas le doigt principal) et qu'on appuie avec un doigt
 					mode = DEPLACEMENT;
 					positionAncienneTouche = new PointF(-1, -1);
 					break;
-				
 				case MotionEvent.ACTION_MOVE:
-					// Un doigt qui bouge sur l'écran
-				
+					// Action : Un doigt sur l'écran qui bouge
 					if (mode == DEPLACEMENT) {
 						// En mode déplacement, position_ancienne_touche n'est jamais égale à -1 sinon erreur
 						
@@ -157,17 +165,15 @@ public class TouchRelativeLayout extends RelativeLayout {
 					
 						fixTrans();
 					}
-					
 					break;
-				
 				case MotionEvent.ACTION_UP:
-					// Un doigt qu'on leve (to check)
+					// Action : Lever du seul doigt sur l'écran. Ce doigt était donc le doigt principal
 					mode = RIEN;
 					positionAncienneTouche = new PointF(-1, -1);
 					break;
 				
 				case MotionEvent.ACTION_POINTER_UP:
-					// Lorsque l'on leve 2 doigt (to ceck, parce que ça peut aussi être le second doigt qui se leve)
+					// Action : lorsque que l'on a plusieurs doigts sur l'écran et que l'on lève le doigt principal
 					mode = RIEN;
 					positionAncienneTouche = new PointF(-1, -1);
 					break;
@@ -247,7 +253,6 @@ public class TouchRelativeLayout extends RelativeLayout {
 		
 		@Override
 		public boolean onScale(ScaleGestureDetector detector) {
-			
 			// Scale sur cette évenement
 			float mScaleFactor = detector.getScaleFactor();
 			
