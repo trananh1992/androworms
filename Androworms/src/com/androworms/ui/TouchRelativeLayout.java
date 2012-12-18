@@ -3,7 +3,9 @@ package com.androworms.ui;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -22,13 +24,13 @@ public class TouchRelativeLayout extends RelativeLayout {
 	
 	private static final String TAG = "TESTAndroworms.TouchRelativeLayout";
 	
+	/* Constantes de tailles des composants*/
 	private static final int MAP_WIDTH = 1280;
 	private static final int MAP_HEIGHT = 720;
-	
 	private static final int JOUEUR_WIDTH = 180;
 	private static final int JOUEUR_HEIGHT = 173;
 	
-	// 3 états
+	/* Etats possible pour le mode de gestion des doigts */
 	private int mode;
 	private static final int RIEN = 0;
 	private static final int DEPLACEMENT = 1;
@@ -36,7 +38,6 @@ public class TouchRelativeLayout extends RelativeLayout {
 	private static final int TIR = 3;
 	
 	// Traquer le mouvement
-	private int idPointeurCourant;
 	private PointF positionAncienneTouche;
 	private PointF positionNouvelleTouche;
 	
@@ -50,13 +51,13 @@ public class TouchRelativeLayout extends RelativeLayout {
 	private Bitmap bmJoueur1;
 	private Bitmap bmJoueur2;
 	
-	
 	// Gestion du zoom
 	private ScaleGestureDetector mScaleDetector;
 	private float scaleCourant;
 	private Matrix matrix;
 	private static final float ZOOM_MIN = 1f;
 	private static final float ZOOM_MAX = 4.0f;
+	
 	
 	public TouchRelativeLayout(Context context) {
 		super(context);
@@ -96,7 +97,7 @@ public class TouchRelativeLayout extends RelativeLayout {
 		bmTerrain = prepareBitmap(getResources().getDrawable(R.drawable.terrain_jeu_defaut_640x360), MAP_WIDTH, MAP_HEIGHT);
 		bmJoueur1 = prepareBitmap(getResources().getDrawable(R.drawable.logo_android_robot), JOUEUR_WIDTH, JOUEUR_HEIGHT);
 		bmJoueur2 = prepareBitmap(getResources().getDrawable(R.drawable.logo_android_robot), JOUEUR_WIDTH, JOUEUR_HEIGHT);
-
+		
 		/* scale detector */
 		mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
 		scaleCourant = 1;
@@ -123,8 +124,6 @@ public class TouchRelativeLayout extends RelativeLayout {
 		Log.v(TAG, "init()");
 		matrix = new Matrix();
 		
-		idPointeurCourant = 0;
-		
 		setOnTouchListener(new OnTouchListener() {
 		
 			public boolean onTouch(View v, MotionEvent event) {
@@ -143,6 +142,7 @@ public class TouchRelativeLayout extends RelativeLayout {
 				 */
 				switch (event.getAction()) {
 				case MotionEvent.ACTION_DOWN:
+					// Action : Appui sur l'écran lorsqu'il n'y a aucun doigt. Ce doigt est donc le doigt principal
 					mode = DEPLACEMENT;
 					positionAncienneTouche = new PointF(-1, -1);
 					break;
@@ -154,6 +154,9 @@ public class TouchRelativeLayout extends RelativeLayout {
 					break;
 				case MotionEvent.ACTION_MOVE:
 					// Action : Un doigt sur l'écran qui bouge
+					
+					
+					
 					if (mode == DEPLACEMENT) {
 						// En mode déplacement, position_ancienne_touche n'est jamais égale à -1 sinon erreur
 						
@@ -164,6 +167,8 @@ public class TouchRelativeLayout extends RelativeLayout {
 						matrix.postTranslate(tempX, tempY);
 					
 						fixTrans();
+					} else if (mode == TIR) {
+						Log.v(TAG,"TIR (ACTION_MOVE)");
 					}
 					break;
 				case MotionEvent.ACTION_UP:
@@ -237,6 +242,16 @@ public class TouchRelativeLayout extends RelativeLayout {
 		canvas.drawBitmap(bmTerrain, positionFond.x, positionFond.y, null);
 		canvas.drawBitmap(bmJoueur1, positionJoueur1.x, positionJoueur1.y, null);
 		canvas.drawBitmap(bmJoueur2, positionJoueur2.x, positionJoueur2.y, null);
+		
+		if (mode == TIR) {
+			Log.v(TAG,"TIR (DESSIN_TIR)");
+			Matrix m = new Matrix();
+			canvas.setMatrix(m);
+			
+			Paint p = new Paint();
+			p.setColor(Color.MAGENTA);
+			
+		}
 	}
 	
 	@Override
