@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PointF;
+import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.androworms.GameActivity;
 import com.androworms.R;
 
 /** Ce composant graphique est un RelativeLayout personnalisé pour Androworms.
@@ -30,12 +32,7 @@ public class TouchRelativeLayout extends RelativeLayout {
 	private static final int JOUEUR_WIDTH = 180;
 	private static final int JOUEUR_HEIGHT = 173;
 	
-	/* Etats possible pour le mode de gestion des doigts */
-	private int mode;
-	private static final int RIEN = 0;
-	private static final int DEPLACEMENT = 1;
-	private static final int ZOOM = 2;
-	private static final int TIR = 3;
+	private static final int TAILLE_MAX_TIR = 300;
 	
 	// Traquer le mouvement
 	private PointF positionAncienneTouche;
@@ -58,6 +55,8 @@ public class TouchRelativeLayout extends RelativeLayout {
 	private static final float ZOOM_MIN = 1f; // pour rajouter une bordure sur le c$oté, mettre 0.8f ici
 	private static final float ZOOM_MAX = 4.0f;
 	
+	// TIR
+	PointF pointTir;
 	
 	public TouchRelativeLayout(Context context) {
 		super(context);
@@ -83,9 +82,10 @@ public class TouchRelativeLayout extends RelativeLayout {
 		Log.v(TAG, "constructeurPartage()");
 		
 		
-		mode = RIEN;
+		GameActivity.mode = GameActivity.RIEN;
 		this.setWillNotDraw(false);
 		this.setClickable(true);
+		pointTir = new PointF(-1, -1);
 		positionNouvelleTouche = new PointF(-1, -1);
 		positionAncienneTouche = new PointF(-1, -1);
 		positionFond = new PointF(0, 0);
@@ -143,21 +143,26 @@ public class TouchRelativeLayout extends RelativeLayout {
 				switch (event.getAction()) {
 				case MotionEvent.ACTION_DOWN:
 					// Action : Appui sur l'écran lorsqu'il n'y a aucun doigt. Ce doigt est donc le doigt principal
-					mode = DEPLACEMENT;
+					if (GameActivity.mode != GameActivity.TIR) {
+						GameActivity.mode = GameActivity.DEPLACEMENT;
+					} else {
+						pointTir.set(positionNouvelleTouche);
+					}
 					positionAncienneTouche = new PointF(-1, -1);
 					break;
 				
 				case MotionEvent.ACTION_POINTER_DOWN:
 					// Action : Lorsque l'on a un ou plusieurs doigt sur l'écran (et pas le doigt principal) et qu'on appuie avec un doigt
-					mode = DEPLACEMENT;
+					if (GameActivity.mode != GameActivity.TIR) {
+						GameActivity.mode = GameActivity.DEPLACEMENT;
+					} else {
+						pointTir.set(positionNouvelleTouche);
+					}
 					positionAncienneTouche = new PointF(-1, -1);
 					break;
 				case MotionEvent.ACTION_MOVE:
 					// Action : Un doigt sur l'écran qui bouge
-					
-					
-					
-					if (mode == DEPLACEMENT) {
+					if (GameActivity.mode == GameActivity.DEPLACEMENT) {
 						// En mode déplacement, position_ancienne_touche n'est jamais égale à -1 sinon erreur
 						
 						float tempX, tempY;
@@ -167,27 +172,31 @@ public class TouchRelativeLayout extends RelativeLayout {
 						
 						// Accelérer le déplacement quand on fait de grands mouvement ! (à paramètrer plus finement !)
 						if (Math.abs(tempX) > 10) {
-							tempX *= 4;
+							tempX *= 3;
 						}
 						if (Math.abs(tempY) > 10) {
-							tempY *= 4;
+							tempY *= 3;
 						}
 						matrix.postTranslate(tempX, tempY);
 					
 						fixTrans();
-					} else if (mode == TIR) {
+					} else if (GameActivity.mode == GameActivity.TIR) {
 						Log.v(TAG,"TIR (ACTION_MOVE)");
 					}
 					break;
 				case MotionEvent.ACTION_UP:
 					// Action : Lever du seul doigt sur l'écran. Ce doigt était donc le doigt principal
-					mode = RIEN;
+					if (GameActivity.mode != GameActivity.TIR) {
+						GameActivity.mode = GameActivity.RIEN;
+					}
 					positionAncienneTouche = new PointF(-1, -1);
 					break;
 				
 				case MotionEvent.ACTION_POINTER_UP:
 					// Action : lorsque que l'on a plusieurs doigts sur l'écran et que l'on lève le doigt principal
-					mode = RIEN;
+					if (GameActivity.mode != GameActivity.TIR) {
+						GameActivity.mode = GameActivity.RIEN;
+					}
 					positionAncienneTouche = new PointF(-1, -1);
 					break;
 				default:
@@ -245,20 +254,58 @@ public class TouchRelativeLayout extends RelativeLayout {
 	
 	@Override
 	protected void dispatchDraw(Canvas canvas) {
+		// Application de la matric avec la translation et le zoom
 		canvas.setMatrix(matrix);
+		// Dessins des objets du jeu
 		canvas.drawBitmap(bmFond, positionFond.x, positionFond.y, null);
 		canvas.drawBitmap(bmTerrain, positionFond.x, positionFond.y, null);
 		canvas.drawBitmap(bmJoueur1, positionJoueur1.x, positionJoueur1.y, null);
 		canvas.drawBitmap(bmJoueur2, positionJoueur2.x, positionJoueur2.y, null);
 		
-		if (mode == TIR) {
-			Log.v(TAG,"TIR (DESSIN_TIR)");
+		// Dessins des objets pour le tir
+		if (GameActivity.mode == GameActivity.TIR) {
+			// Pour le tir, on a pas de translation ni de zoom
 			Matrix m = new Matrix();
 			canvas.setMatrix(m);
 			
-			Paint p = new Paint();
-			p.setColor(Color.MAGENTA);
+			float deplacementX = pointTir.x - positionNouvelleTouche.x;
+			float deplacementY = pointTir.y - positionNouvelleTouche.y;
+			float distance = Math.round(Math.sqrt(Math.pow(positionNouvelleTouche.x - pointTir.x, 2) + Math.pow(positionNouvelleTouche.y - pointTir.y, 2)));
 			
+			// Mise en place des outils de dessins
+			Paint paint = new Paint();
+			paint.setStrokeWidth(10);
+			paint.setAntiAlias(true);
+			paint.setStrokeCap(Paint.Cap.ROUND);
+			paint.setStyle(Paint.Style.STROKE);
+			
+			
+			float angle = ((float)(Math.atan2 (deplacementY, deplacementX)*180.0d/Math.PI))+90.0f;
+			// Ajustement de l'angle
+			angle += 90;
+			
+			// Onde viollette
+			paint.setColor(Color.MAGENTA);
+			RectF rect = new RectF();
+			for (int i=0;(i<=distance && i < TAILLE_MAX_TIR);i+=20) {
+				rect.set(pointTir.x - i, pointTir.y - i,
+						pointTir.x + i, pointTir.y + i);
+				canvas.drawArc(rect, angle, 30, false, paint);
+			}
+						
+			// flèche verte
+			paint.setColor(Color.GREEN);
+			paint.setStrokeWidth(30);
+			canvas.drawLine(pointTir.x, pointTir.y,
+					pointTir.x + distance, pointTir.y - distance, paint);
+			
+			// bout de la flèche. (si trop moche utiliser un Path et canvas.drawPath()
+			canvas.drawLine(pointTir.x + distance, pointTir.y - distance,
+					pointTir.x + distance - 50, pointTir.y - distance, paint);
+			canvas.drawLine(pointTir.x + distance, pointTir.y - distance,
+					pointTir.x + distance, pointTir.y - distance +50, paint);
+			canvas.drawLine(pointTir.x + distance - 50, pointTir.y - distance,
+					pointTir.x + distance, pointTir.y - distance +50, paint);
 		}
 	}
 	
@@ -270,31 +317,40 @@ public class TouchRelativeLayout extends RelativeLayout {
 	private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
 		@Override
 		public boolean onScaleBegin(ScaleGestureDetector detector) {
-			mode = ZOOM;
-			return true;
+			if (GameActivity.mode != GameActivity.TIR) {
+				GameActivity.mode = GameActivity.ZOOM;
+				return true;
+			} else {
+				return false;
+			}
 		}
 		
 		@Override
 		public boolean onScale(ScaleGestureDetector detector) {
-			// Scale sur cette évenement
-			float mScaleFactor = detector.getScaleFactor();
-			
-			// Scale globale sur l'image d'origine
-			float temp = scaleCourant * mScaleFactor;
-			// Gestion du Zoom max et zomm min
-			if (ZOOM_MIN > temp) { 
-				mScaleFactor = ZOOM_MIN / scaleCourant;
-				scaleCourant = ZOOM_MIN;
-			} else if (temp > ZOOM_MAX) { 
-				mScaleFactor = ZOOM_MAX / scaleCourant;
-				scaleCourant = ZOOM_MAX;
+			if (GameActivity.mode == GameActivity.ZOOM) {
+				// Scale sur cette évenement
+				float mScaleFactor = detector.getScaleFactor();
+				
+				// Scale globale sur l'image d'origine
+				float temp = scaleCourant * mScaleFactor;
+				// Gestion du Zoom max et zomm min
+				if (ZOOM_MIN > temp) { 
+					mScaleFactor = ZOOM_MIN / scaleCourant;
+					scaleCourant = ZOOM_MIN;
+				} else if (temp > ZOOM_MAX) { 
+					mScaleFactor = ZOOM_MAX / scaleCourant;
+					scaleCourant = ZOOM_MAX;
+				} else {
+					scaleCourant = temp;
+				}
+				// Application du Zoom
+				matrix.postScale(mScaleFactor, mScaleFactor, detector.getFocusX(), detector.getFocusY());
+				fixTrans();
+				return true;
 			} else {
-				scaleCourant = temp;
+				return false;
 			}
-			// Application du Zoom
-			matrix.postScale(mScaleFactor, mScaleFactor, detector.getFocusX(), detector.getFocusY());
-			fixTrans();
-			return true;
+			
 		}
 	}
 }
