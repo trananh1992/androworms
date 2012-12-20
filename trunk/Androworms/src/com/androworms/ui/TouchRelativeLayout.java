@@ -180,8 +180,6 @@ public class TouchRelativeLayout extends RelativeLayout {
 						matrix.postTranslate(tempX, tempY);
 					
 						fixTrans();
-					} else if (GameActivity.mode == GameActivity.TIR) {
-						Log.v(TAG,"TIR (ACTION_MOVE)");
 					}
 					break;
 				case MotionEvent.ACTION_UP:
@@ -196,6 +194,8 @@ public class TouchRelativeLayout extends RelativeLayout {
 					// Action : lorsque que l'on a plusieurs doigts sur l'écran et que l'on lève le doigt principal
 					if (GameActivity.mode != GameActivity.TIR) {
 						GameActivity.mode = GameActivity.RIEN;
+					} else {
+						// TODO : appel de la fonction de calcul du tir
 					}
 					positionAncienneTouche = new PointF(-1, -1);
 					break;
@@ -292,20 +292,37 @@ public class TouchRelativeLayout extends RelativeLayout {
 						pointTir.x + i, pointTir.y + i);
 				canvas.drawArc(rect, angle, 30, false, paint);
 			}
-						
-			// flèche verte
-			paint.setColor(Color.GREEN);
+			
+			
+			float[] mm = new float[9];
+			matrix.getValues(mm);
+			float transX = mm[Matrix.MTRANS_X];
+			float transY = mm[Matrix.MTRANS_Y];
+			float scaleX = mm[Matrix.MSCALE_X];
+			float scaleY = mm[Matrix.MSCALE_Y];
+			
+			PointF coinSuperieurGaucheJoueur =
+					new PointF(positionJoueur1.x  * scaleX + transX, positionJoueur1.y  * scaleY + transY);
+			PointF coinSuperieurDroitJoueur =
+					new PointF(coinSuperieurGaucheJoueur.x + JOUEUR_WIDTH, coinSuperieurGaucheJoueur.y);
+			
+			// flèche de tir sur le bonhomme
+			if (distance >= 512) {
+				paint.setColor(Color.rgb(255,0,0));
+			} else {
+				paint.setColor(Color.rgb(255,255-(int)distance/2,0));
+			}
 			paint.setStrokeWidth(30);
-			canvas.drawLine(pointTir.x, pointTir.y,
-					pointTir.x + distance, pointTir.y - distance, paint);
+			canvas.drawLine(coinSuperieurDroitJoueur.x, coinSuperieurDroitJoueur.y,
+					coinSuperieurDroitJoueur.x + distance, coinSuperieurDroitJoueur.y - distance, paint);
 			
 			// bout de la flèche. (si trop moche utiliser un Path et canvas.drawPath()
-			canvas.drawLine(pointTir.x + distance, pointTir.y - distance,
-					pointTir.x + distance - 50, pointTir.y - distance, paint);
-			canvas.drawLine(pointTir.x + distance, pointTir.y - distance,
-					pointTir.x + distance, pointTir.y - distance +50, paint);
-			canvas.drawLine(pointTir.x + distance - 50, pointTir.y - distance,
-					pointTir.x + distance, pointTir.y - distance +50, paint);
+			canvas.drawLine(coinSuperieurDroitJoueur.x + distance, coinSuperieurDroitJoueur.y - distance,
+					coinSuperieurDroitJoueur.x + distance - 50, coinSuperieurDroitJoueur.y - distance, paint);
+			canvas.drawLine(coinSuperieurDroitJoueur.x + distance, coinSuperieurDroitJoueur.y - distance,
+					coinSuperieurDroitJoueur.x + distance, coinSuperieurDroitJoueur.y - distance +50, paint);
+			canvas.drawLine(coinSuperieurDroitJoueur.x + distance - 50, coinSuperieurDroitJoueur.y - distance,
+					coinSuperieurDroitJoueur.x + distance, coinSuperieurDroitJoueur.y - distance +50, paint);
 		}
 	}
 	
