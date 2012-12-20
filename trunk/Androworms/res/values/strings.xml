@@ -30,4 +30,5 @@
     <string name="score_joueur_1">Joueur 1 : 0 pts</string>
     <string name="score_joueur_2">Joueur 2 : 0 pts</string>
     <string name="Armes">Armes</string>
+    <string name="mode_tir">Mode TIR</string>
 </resources>
