@@ -56,7 +56,7 @@ public class TouchRelativeLayout extends RelativeLayout {
 	private static final float ZOOM_MAX = 4.0f;
 	
 	// TIR
-	PointF pointTir;
+	private PointF pointTir;
 	
 	public TouchRelativeLayout(Context context) {
 		super(context);

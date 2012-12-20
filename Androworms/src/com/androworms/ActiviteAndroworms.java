@@ -8,12 +8,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.androworms.test.TestBluetooth;
-import com.androworms.test.TestSlider;
 
 public class ActiviteAndroworms extends Activity {
 	
@@ -99,23 +95,15 @@ public class ActiviteAndroworms extends Activity {
 		setContentView(R.layout.menu_principal);
 		
 		
-		OnClickListener soloCl = new ActiviteAndrowormsEvent(this);
-		findViewById(R.id.btn_solo).setOnClickListener(soloCl);
+		OnClickListener cl = new ActiviteAndrowormsEvent(this);
+		findViewById(R.id.btn_solo).setOnClickListener(cl);
+		findViewById(R.id.btn_multi).setOnClickListener(cl);
+		findViewById(R.id.btn_menu_score).setOnClickListener(cl);
+		findViewById(R.id.btn_menu_settings).setOnClickListener(cl);
 		
 		OnClickListener camCl = new ActiviteCreationCarte(this);
-	//	OnTouchListener camtl = new ActiviteCreationCarte(this);
 		findViewById(R.id.test_cam).setOnClickListener(camCl);
-	//	findViewById(R.id.test_cam).setOnTouchListener(camtl);
 		
-		OnClickListener clBluetooth = new TestBluetooth(this);
-		OnTouchListener tlBluetooth = new TestBluetooth(this);
-		findViewById(R.id.test_bluetooth).setOnClickListener(clBluetooth);
-		findViewById(R.id.test_bluetooth).setOnTouchListener(tlBluetooth);
-		
-		OnClickListener clSlider = new TestSlider(this);
-		OnTouchListener tlSlider = new TestSlider(this);
-		findViewById(R.id.test_slider).setOnClickListener(clSlider);
-		findViewById(R.id.test_slider).setOnTouchListener(tlSlider);
 	}
 	
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
