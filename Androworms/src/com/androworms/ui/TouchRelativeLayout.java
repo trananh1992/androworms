@@ -55,7 +55,7 @@ public class TouchRelativeLayout extends RelativeLayout {
 	private ScaleGestureDetector mScaleDetector;
 	private float scaleCourant;
 	private Matrix matrix;
-	private static final float ZOOM_MIN = 1f;
+	private static final float ZOOM_MIN = 1f; // pour rajouter une bordure sur le c$oté, mettre 0.8f ici
 	private static final float ZOOM_MAX = 4.0f;
 	
 	
@@ -164,6 +164,14 @@ public class TouchRelativeLayout extends RelativeLayout {
 						
 						tempX = positionNouvelleTouche.x - positionAncienneTouche.x;
 						tempY = positionNouvelleTouche.y - positionAncienneTouche.y;
+						
+						// Accelérer le déplacement quand on fait de grands mouvement ! (à paramètrer plus finement !)
+						if (Math.abs(tempX) > 10) {
+							tempX *= 4;
+						}
+						if (Math.abs(tempY) > 10) {
+							tempY *= 4;
+						}
 						matrix.postTranslate(tempX, tempY);
 					
 						fixTrans();
