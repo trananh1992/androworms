@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
@@ -52,7 +53,7 @@ public class TouchRelativeLayout extends RelativeLayout {
 	private ScaleGestureDetector mScaleDetector;
 	private float scaleCourant;
 	private Matrix matrix;
-	private static final float ZOOM_MIN = 1f; // pour rajouter une bordure sur le c$oté, mettre 0.8f ici
+	private static final float ZOOM_MIN = 1f; // pour rajouter une bordure sur le coté, mettre 0.8f ici
 	private static final float ZOOM_MAX = 4.0f;
 	
 	// TIR
@@ -306,6 +307,9 @@ public class TouchRelativeLayout extends RelativeLayout {
 			PointF coinSuperieurDroitJoueur =
 					new PointF(coinSuperieurGaucheJoueur.x + JOUEUR_WIDTH, coinSuperieurGaucheJoueur.y);
 			
+			
+			
+			
 			// flèche de tir sur le bonhomme
 			if (distance >= 512) {
 				paint.setColor(Color.rgb(255,0,0));
@@ -317,12 +321,16 @@ public class TouchRelativeLayout extends RelativeLayout {
 					coinSuperieurDroitJoueur.x + distance, coinSuperieurDroitJoueur.y - distance, paint);
 			
 			// bout de la flèche. (si trop moche utiliser un Path et canvas.drawPath()
-			canvas.drawLine(coinSuperieurDroitJoueur.x + distance, coinSuperieurDroitJoueur.y - distance,
-					coinSuperieurDroitJoueur.x + distance - 50, coinSuperieurDroitJoueur.y - distance, paint);
-			canvas.drawLine(coinSuperieurDroitJoueur.x + distance, coinSuperieurDroitJoueur.y - distance,
-					coinSuperieurDroitJoueur.x + distance, coinSuperieurDroitJoueur.y - distance +50, paint);
-			canvas.drawLine(coinSuperieurDroitJoueur.x + distance - 50, coinSuperieurDroitJoueur.y - distance,
-					coinSuperieurDroitJoueur.x + distance, coinSuperieurDroitJoueur.y - distance +50, paint);
+			Path path = new Path();
+	        path.moveTo(coinSuperieurDroitJoueur.x + distance, coinSuperieurDroitJoueur.y - distance);
+	        path.lineTo(coinSuperieurDroitJoueur.x + distance - 50, coinSuperieurDroitJoueur.y - distance);
+	        path.moveTo(coinSuperieurDroitJoueur.x + distance, coinSuperieurDroitJoueur.y - distance);
+	        path.lineTo(coinSuperieurDroitJoueur.x + distance, coinSuperieurDroitJoueur.y - distance +50);
+	        path.moveTo(coinSuperieurDroitJoueur.x + distance - 50, coinSuperieurDroitJoueur.y - distance);
+	        path.lineTo(coinSuperieurDroitJoueur.x + distance, coinSuperieurDroitJoueur.y - distance +50);
+	        path.close();
+
+	        canvas.drawPath(path, paint);
 		}
 	}
 	

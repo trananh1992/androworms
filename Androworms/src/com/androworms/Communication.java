@@ -6,44 +6,34 @@ import java.util.ArrayList;
  * Classe mere pour la classe client et la classe serveur.
  * Les deux classes suivantes permettent de contacter les joueurs.
  */
-public class Communication 
-{
+public class Communication {
 	private Client client;
 	private Serveur serveurSecondaire;
 	private Serveur serveurPrimaire;
 	
-	public Communication(boolean hote)
-	{
+	public Communication(boolean hote) {
 		client  = new Client();
 		serveurSecondaire = new ServeurSecondaire();
-		if(hote)
-		{
+		if(hote) {
 			serveurPrimaire = new ServeurPrimaire(this);
 		}
-		else
-		{
+		else {
 			serveurPrimaire = null;
 		}
 	}
 	
-	public void ajouterContactServeurPrimaire(Contact c)
-	{
+	public void ajouterContactServeurPrimaire(Contact c) {
 		client.setContactServeurPrimaire(c);
 	}
 	
-	public void deplacementJoueurDroite(String nomPersonnage)
-	{
+	public void deplacementJoueurDroite(String nomPersonnage) {
 		client.deplacementJoueurDroite(nomPersonnage);
 	}
 	
-	public ArrayList<String> listeDesServeursPrimaires()
-	{
+	public ArrayList<String> listeDesServeursPrimaires() {
 		// On recherche l'ensemble des appareils dans le voisinage (bluetooth)
 		// qui ont lance un serveurPrimaire.
 		// Le joueur pourra alors se connecter a l'un d'entre eux si besoin.
 		return new ArrayList<String>();
 	}
-	
-	
-
 }
