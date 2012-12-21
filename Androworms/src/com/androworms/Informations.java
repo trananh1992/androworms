@@ -1,28 +1,58 @@
 package com.androworms;
 
-import android.view.Display;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.os.Build;
+import android.util.DisplayMetrics;
 
 /** Classes qui contient des éléments sur les caractéristiques du téléphone.
  */
 public final class Informations {
 	
-	private static int screenWidth = -1;
-	private static int screenHeight = -1;
+	private static final String ANDROID_VERSION = Build.VERSION.SDK;
+	private static int widthPixels = -1;
+	private static int heightPixels = -1;
+	private static int screenLayoutSizeMask = -1;
+	private static float density = -1;
+	private static int densityDpi = -1;
 	
 	private Informations() {
 		
 	}
 	
-	public static void init(Display display) {
-		screenWidth = display.getWidth();
-		screenHeight = display.getHeight();
+	public static void init(Resources r) {
+		
+		DisplayMetrics metrics = r.getDisplayMetrics();
+		widthPixels = metrics.widthPixels;
+		heightPixels = metrics.heightPixels;
+		density = metrics.density;
+		densityDpi = metrics.densityDpi;
+		
+		Configuration c = r.getConfiguration();
+		screenLayoutSizeMask = c.screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
 	}
 
-	public static int getScreenWidth() {
-		return screenWidth;
+	public static String getAndroidVersion() {
+		return ANDROID_VERSION;
 	}
 
-	public static int getScreenHeight() {
-		return screenHeight;
+	public static int getWidthPixels() {
+		return widthPixels;
+	}
+
+	public static int getHeightPixels() {
+		return heightPixels;
+	}
+
+	public static float getDensity() {
+		return density;
+	}
+
+	public static int getDensityDpi() {
+		return densityDpi;
+	}
+
+	public static int getScreenLayoutSizeMask() {
+		return screenLayoutSizeMask;
 	}
 }

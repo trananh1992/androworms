@@ -2,8 +2,10 @@ package com.androworms;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -104,6 +106,58 @@ public class ActiviteAndroworms extends Activity {
 		OnClickListener camCl = new ActiviteCreationCarte(this);
 		findViewById(R.id.test_cam).setOnClickListener(camCl);
 		
+		
+		/* Inforamtions sur le téléphone */
+		StringBuffer buf = new StringBuffer();
+		buf.append("Android = " + Informations.getAndroidVersion() + "<br/>");
+		buf.append("<br/>");
+		buf.append("<b>Taille de l'écran</b><br/>");
+		buf.append("WidthPixels = " + Informations.getWidthPixels() + " px<br/>");
+		buf.append("HeightPixels = " + Informations.getHeightPixels() + " px<br/>");
+		buf.append("Taille = ");
+		switch(Informations.getScreenLayoutSizeMask()) {
+		case Configuration.SCREENLAYOUT_SIZE_SMALL:
+			buf.append("SMALL");
+			break;
+		case Configuration.SCREENLAYOUT_SIZE_NORMAL:
+			buf.append("NORMAL");
+			break;
+		case Configuration.SCREENLAYOUT_SIZE_LARGE:
+			buf.append("LARGE");
+			break;
+		case Configuration.SCREENLAYOUT_SIZE_XLARGE:
+			buf.append("XLARGE");
+			break;
+		default:
+			buf.append("???");
+			break;
+		}
+		buf.append("<br/>");
+		buf.append("<br/>");
+		buf.append("<b>Densité de l'écran</b><br/>");
+		buf.append("Density = " + Informations.getDensity() + "<br/>");
+		buf.append("DensityDPI = " + Informations.getDensityDpi() + " dp   (");
+		switch (Informations.getDensityDpi()) {
+		case DisplayMetrics.DENSITY_LOW:
+			buf.append("ldpi -- LOW");
+			break;
+		case DisplayMetrics.DENSITY_MEDIUM:
+			buf.append("mdpi -- MEDIUM");
+			break;
+		case DisplayMetrics.DENSITY_HIGH:
+			buf.append("hdpi -- HIGH");
+			break;
+		case DisplayMetrics.DENSITY_XHIGH:
+			buf.append("xhdpi -- XHIGH");
+			break;
+		default:
+			buf.append("??? -- ???");
+			break;
+		}
+		buf.append(")<br/>");
+		String txtInfo = buf.toString();
+		TextView tv = (TextView)findViewById(R.id.textView2);
+		tv.setText(Html.fromHtml(txtInfo));
 	}
 	
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
