@@ -41,7 +41,6 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		setContentView(R.layout.edition_carte);
 		
 		OnClickListener camCl = new ActiviteCamera(this);
-		//	OnTouchListener camtl = new ActiviteCreationCarte(this);
 		findViewById(R.id.TakePicture).setOnClickListener(camCl);
 	}
 
@@ -53,40 +52,16 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 	
 	protected void onActivityResult(int requestCode, int resultCode,
             Intent retour) {
-		Log.e(TAG,"called");
-		Log.e(TAG,"called");
-		Log.e(TAG,"called");
-		Log.e(TAG,"called");
-		Log.e(TAG,"called");
-		Log.e(TAG,"called");
 		Log.e(TAG,"called " + requestCode  + " " + resultCode);
-        if (requestCode == TAKE_PICTURE) {
-            if (resultCode == RESULT_OK) {
-                Log.e(TAG,"got new message!");
-                byte data[] = retour.getByteArrayExtra("image");
-                Log.e(TAG,"got "+ data);
-                ImageView surface = (ImageView) findViewById(R.id.CurrentMap);
-                Log.e(TAG,"got surface "+surface);
-                //Canvas c = surface.getHolder().lockCanvas();
-                Bitmap b = BitmapFactory.decodeByteArray(data, 0, data.length).copy(Bitmap.Config.ARGB_8888, true);
-                //Bitmap mutableBitmap = bmp.copy(Bitmap.Config.ARGB_8888, true);
-                Log.e(TAG,"builded bitmap "+b);
-                surface.setImageBitmap(b);
-                /*if( null == c)
-                {
-                	c = new Canvas(b);
-                	Log.e(TAG,"created new canvas "+c);
-                	surface.draw(c);
-                }
-                else
-                {
-                	c.setBitmap(b);
-                	surface.getHolder().unlockCanvasAndPost(c);
-                }*/
-                
-                
-                
-            }
+        if ((requestCode == TAKE_PICTURE) && (resultCode == RESULT_OK)) {
+            Log.e(TAG,"got new message!");
+            byte data[] = retour.getByteArrayExtra("image");
+            Log.e(TAG,"got data");
+            ImageView surface = (ImageView) findViewById(R.id.CurrentMap);
+            Log.e(TAG,"got surface "+surface);
+            Bitmap b = BitmapFactory.decodeByteArray(data, 0, data.length).copy(Bitmap.Config.ARGB_8888, true);
+            Log.e(TAG,"builded bitmap "+b);
+            surface.setImageBitmap(b);
         }
     }
 
