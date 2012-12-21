@@ -25,7 +25,7 @@ public class Chargement extends AsyncTask<ActiviteAndroworms, Integer, Boolean> 
 		/** DEBUT DE ZONE SPECIAL POUR LES OPERATIONS DE CHARGEMENT DE DONNEES POUR ANDROWORMS **/
 		
 		/* Chargement des informations du téléphone */
-		Informations.init(activiteAndroworms.getWindowManager().getDefaultDisplay());
+		Informations.init(activiteAndroworms.getResources());
 		
 		
 		/** FIN DE ZONE SPECIAL POUR LES OPERATIONS DE CHARGEMENT DE DONNEES POUR ANDROWORMS **/
