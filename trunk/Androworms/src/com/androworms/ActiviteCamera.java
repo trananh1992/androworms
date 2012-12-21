@@ -60,13 +60,6 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 			Log.e(getClass().getSimpleName(), "SHUTTER CALLBACK");
 		}
 	};
-	/* Plus utilisé dans les versions d'android desormais, data est toujours null */
-	private Camera.PictureCallback mPictureCallbackRaw = new Camera.PictureCallback() {
-		public void onPictureTaken(byte[] data, Camera c) {
-			//camera.startPreview();
-			
-		}
-	};
 	
 	private Camera.PictureCallback mPictureCallbackJpeg = new Camera.PictureCallback() {
 		public void onPictureTaken(byte[] data, Camera c) {
@@ -100,7 +93,7 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 			
 			filoutputStream = new FileOutputStream(photo);
 			Log.e(TAG,photo.getAbsolutePath().toString());
-			camera.takePicture(mShutterCallback, mPictureCallbackRaw, mPictureCallbackJpeg);
+			camera.takePicture(mShutterCallback, null, mPictureCallbackJpeg);
 		} catch(Exception ex ){
 			Log.e(getClass().getSimpleName(), ex.getMessage(), ex);
 		}
@@ -144,7 +137,9 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 			Log.e(TAG,"camera est null pas de back camera ?");
 			camera = Camera.open(0);
 			if(null == camera)
+			{
 				finish();
+			}
 		}
 	}
 	
@@ -170,7 +165,7 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 	
 	private final Camera.AutoFocusCallback autoFocusCallback = new Camera.AutoFocusCallback() {
 		public void onAutoFocus(boolean success, Camera camera) {
-			int delai = 1500;
+			final int delai = 1500;
 			if (mAutoFocusHandler != null) {
 				Message message = mAutoFocusHandler.obtainMessage(mAutoFocusMessage, success);
 				mAutoFocusHandler.sendMessageDelayed(message, delai);
