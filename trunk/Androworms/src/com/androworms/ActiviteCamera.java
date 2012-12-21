@@ -32,6 +32,7 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 	private int mAutoFocusMessage;
 	private OutputStream filoutputStream;
 	private ActiviteCreationCarte activiteCreationCarte;
+	static final int TAKE_PICTURE = 0;
 	
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -63,8 +64,7 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 	private Camera.PictureCallback mPictureCallbackRaw = new Camera.PictureCallback() {
 		public void onPictureTaken(byte[] data, Camera c) {
 			//camera.startPreview();
-			//setResult(RESULT_OK,);
-			finish();
+			
 		}
 	};
 	
@@ -74,6 +74,10 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 					filoutputStream.write(data);
 					filoutputStream.flush();
 					filoutputStream.close();
+					Intent i = new Intent();
+					i.putExtra("image", data);
+					setResult(RESULT_OK,i);
+					finish();
 				} catch (IOException e) {
 				}
 		}
@@ -135,6 +139,13 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 	public void surfaceCreated(SurfaceHolder holder) {
 		Log.e(getClass().getSimpleName(), "surfaceCreated");
 		camera = Camera.open();
+		if(camera == null)
+		{
+			Log.e(TAG,"camera est null pas de back camera ?");
+			camera = Camera.open(0);
+			if(null == camera)
+				finish();
+		}
 	}
 	
 	public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
@@ -142,9 +153,6 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 		if (isPreviewRunning) {
 			camera.stopPreview();
 		}
-		Camera.Parameters p = camera.getParameters();
-		p.setPreviewSize(w, h);
-		camera.setParameters(p);
 		try {
 			camera.setPreviewDisplay(holder);
 		} catch (IOException e) {
@@ -179,7 +187,7 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 		Log.v(TAG,"Androworms : Vous avez cliqué sur cam!");
 		Intent intent = new Intent(this.activiteCreationCarte, ActiviteCamera.class);
 		Log.v(TAG,"Androworms : created intent!");
-		this.activiteCreationCarte.startActivity(intent);
+		this.activiteCreationCarte.startActivityForResult(intent,TAKE_PICTURE);
 		Log.v(TAG,"Androworms : started activity!");
 		
 	}

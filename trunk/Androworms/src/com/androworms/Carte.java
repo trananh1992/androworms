@@ -64,8 +64,8 @@ public class Carte {
 					s.close();
 				}
 			}
-			catch (Throwable e) {
-			}
+			catch(IOException e)
+			{}
 		}
 	}
 }
