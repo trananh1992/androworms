@@ -44,7 +44,6 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		findViewById(R.id.TakePicture).setOnClickListener(camCl);
 	}
 
-	@Override
 	public boolean onTouch(View arg0, MotionEvent arg1) {
 		Log.v(TAG,"touch me");
 		return false;
