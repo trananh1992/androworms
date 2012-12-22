@@ -4,10 +4,14 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
+import android.hardware.Camera.Parameters;
+import android.hardware.Camera.Size;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -150,6 +154,19 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 		}
 		try {
 			camera.setPreviewDisplay(holder);
+			Parameters param = camera.getParameters();
+			List<Size> sizes = param.getSupportedPreviewSizes();
+			for(int i=sizes.size()-1; i>=0 ;i--)
+			{
+				Log.i(TAG,"Picture size "+i+" is "+((Size)sizes.get(i)).width + "x"+((Size)sizes.get(i)).height);
+				if(sizes.get(i).width<=w && sizes.get(i).height<=h)
+				{
+					Log.i(TAG,"this one fit :)");
+					param.setPreviewSize(sizes.get(i).width, sizes.get(i).height);
+			        camera.setParameters(param);
+			        break;
+				}
+			}
 		} catch (IOException e) {
 		}
 		camera.startPreview();
