@@ -3,7 +3,6 @@ package com.androworms;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.List;
 
 import android.app.Activity;
@@ -34,7 +33,7 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 	private boolean isPreviewRunning = false;
 	private Handler mAutoFocusHandler;
 	private int mAutoFocusMessage;
-	private OutputStream filoutputStream;
+	private File photoPath;
 	private ActiviteCreationCarte activiteCreationCarte;
 	static final int TAKE_PICTURE = 0;
 	
@@ -68,11 +67,12 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 	private Camera.PictureCallback mPictureCallbackJpeg = new Camera.PictureCallback() {
 		public void onPictureTaken(byte[] data, Camera c) {
 				try {
+					FileOutputStream filoutputStream = new FileOutputStream(photoPath);
 					filoutputStream.write(data);
 					filoutputStream.flush();
 					filoutputStream.close();
 					Intent i = new Intent();
-					i.putExtra("image", data);
+					i.putExtra("image", photoPath.getAbsolutePath().toString());
 					setResult(RESULT_OK,i);
 					finish();
 				} catch (IOException e) {
@@ -93,10 +93,8 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 				Log.e(TAG,"failed to create directory Androworms.");
 				return;
 			}
-			File photo = new File(androworms,"maPhoto.jpg");
-			
-			filoutputStream = new FileOutputStream(photo);
-			Log.e(TAG,photo.getAbsolutePath().toString());
+			photoPath = new File(androworms,"maPhoto.jpg");
+			Log.e(TAG,photoPath.getAbsolutePath().toString());
 			camera.takePicture(mShutterCallback, null, mPictureCallbackJpeg);
 		} catch(Exception ex ){
 			Log.e(getClass().getSimpleName(), ex.getMessage(), ex);
