@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,7 +20,7 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 	private static final String TAG = "Androworms.ActiviteCreationCarte.Event";
 	private ActiviteAndroworms activiteMenuPrincipal;
 	static final int TAKE_PICTURE = 0;
-	private boolean del_mode = false;
+	private boolean drawAlpha = false;
 	private boolean have_picture = false;
 	public void onClick(View arg0) {
 		Log.v(TAG,"On a cliqué sur l'activité de creation de carte");
@@ -40,12 +42,12 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		final int blueSkyColor = 0xff77B5FE;
+		
 		/* Affiche la vue par défaut */
 		setContentView(R.layout.edition_carte);
 		ImageView surface = (ImageView) findViewById(R.id.CurrentMap);
-		//surface.setBackgroundColor(0xff77B5FE);
-		surface.setBackgroundColor(0x00000000);
-		((ImageView)findViewById(R.id.background)).setBackgroundColor(0xff77B5FE);
+		((ImageView)findViewById(R.id.background)).setBackgroundColor(blueSkyColor);
 		
 		surface.setOnTouchListener(this);
 		OnClickListener camCl = new ActiviteCamera(this);
@@ -55,14 +57,14 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 			public void onClick(View v) {
 				if(have_picture)
 				{
-					del_mode = !del_mode;
+					drawAlpha = !drawAlpha;
 				}
 		}
 		});
 	}
 
 	public boolean onTouch(View surface, MotionEvent event) {
-		if(!del_mode)
+		if(!drawAlpha)
 		{
 			return false;
 		}
@@ -104,21 +106,19 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 				}
 			}
 		}
-		((ImageView) surface).setImageBitmap(bitmap);
+		Bitmap overlay = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), bitmap.getConfig());
+		Canvas c = new Canvas(overlay);
+		c.drawBitmap(bitmap, new Matrix(), null);
+		((ImageView) surface).setImageBitmap(overlay);
 		return true;
 	}
 	
 	protected void onActivityResult(int requestCode, int resultCode,
             Intent retour) {
-		Log.e(TAG,"called " + requestCode  + " " + resultCode);
         if ((requestCode == TAKE_PICTURE) && (resultCode == RESULT_OK)) {
-            Log.e(TAG,"got new message!");
             byte data[] = retour.getByteArrayExtra("image");
-            Log.e(TAG,"got data");
             ImageView surface = (ImageView) findViewById(R.id.CurrentMap);
-            Log.e(TAG,"got surface "+surface);
             Bitmap b = BitmapFactory.decodeByteArray(data, 0, data.length).copy(Bitmap.Config.ARGB_8888, true);
-            Log.e(TAG,"builded bitmap "+b);
             surface.setImageBitmap(Bitmap.createScaledBitmap(b,surface.getWidth(),surface.getHeight(),false));
             have_picture = true;
         }
