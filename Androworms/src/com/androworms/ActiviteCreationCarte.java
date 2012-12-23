@@ -17,12 +17,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
 public class ActiviteCreationCarte extends Activity implements OnClickListener,OnTouchListener {
 	private ActiviteAndroworms activiteMenuPrincipal;
 	static final int TAKE_PICTURE = 0;
+	private static final int bigBrush = 3;
+	private static final int mediumBrush = 2;
+	private static final int smallBrush = 1;
+	private static final int noBrush = 0;
 	private int drawAlpha = 0;
 	private int drawSolid = 0;
 	private boolean initializedImageView = false;
@@ -46,29 +49,22 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		OnClickListener brushSizeAlpha = new OnClickListener()
 		{
 			public void onClick(View v) {
-				ImageButton big = (ImageButton) findViewById(R.id.alpha_big_brush);
-				ImageButton medium = (ImageButton) findViewById(R.id.alpha_medium_brush);
-				ImageButton small = (ImageButton) findViewById(R.id.alpha_small_brush);
-				if( v == small)
+				drawAlpha = drawSolid = noBrush;
+				if( v.equals(findViewById(R.id.alpha_small_brush)))
 				{
-					drawAlpha = 1;
+					drawAlpha = smallBrush;
 				}
-				else if( v == medium)
+				else if( v.equals(findViewById(R.id.alpha_medium_brush)))
 				{
-					drawAlpha = 2;
+					drawAlpha = mediumBrush;
 				}
-				else if( v == big)
+				else if( v.equals(findViewById(R.id.alpha_big_brush)))
 				{
-					drawAlpha = 3;
+					drawAlpha = bigBrush;
 				}
-				else
-				{
-					drawAlpha = 0;
-				}
-				drawSolid = 0;
-				big.setVisibility(View.INVISIBLE);
-				small.setVisibility(View.INVISIBLE);
-				medium.setVisibility(View.INVISIBLE);
+				findViewById(R.id.alpha_small_brush).setVisibility(View.INVISIBLE);
+				findViewById(R.id.alpha_medium_brush).setVisibility(View.INVISIBLE);
+				findViewById(R.id.alpha_big_brush).setVisibility(View.INVISIBLE);
 			}
 		};
 		findViewById(R.id.alpha_big_brush).setOnClickListener(brushSizeAlpha);
@@ -82,24 +78,21 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		findViewById(R.id.erase_button).setOnClickListener(new OnClickListener()
 		{
 			public void onClick(View v) {
-				ImageButton big = (ImageButton) findViewById(R.id.alpha_big_brush);
-				ImageButton medium = (ImageButton) findViewById(R.id.alpha_medium_brush);
-				ImageButton small = (ImageButton) findViewById(R.id.alpha_small_brush);
 				findViewById(R.id.draw_small_brush).setVisibility(View.INVISIBLE);
 				findViewById(R.id.draw_medium_brush).setVisibility(View.INVISIBLE);
 				findViewById(R.id.draw_big_brush).setVisibility(View.INVISIBLE);
-				if(big.getVisibility()==View.VISIBLE)
+				if(findViewById(R.id.alpha_big_brush).getVisibility()==View.VISIBLE)
 				{
-					big.setVisibility(View.INVISIBLE);
-					small.setVisibility(View.INVISIBLE);
-					medium.setVisibility(View.INVISIBLE);
-					drawAlpha = 0;
+					findViewById(R.id.alpha_big_brush).setVisibility(View.INVISIBLE);
+					findViewById(R.id.alpha_medium_brush).setVisibility(View.INVISIBLE);
+					findViewById(R.id.alpha_small_brush).setVisibility(View.INVISIBLE);
+					drawAlpha = noBrush;
 				}
 				else
 				{
-					big.setVisibility(View.VISIBLE);
-					small.setVisibility(View.VISIBLE);
-					medium.setVisibility(View.VISIBLE);
+					findViewById(R.id.alpha_big_brush).setVisibility(View.VISIBLE);
+					findViewById(R.id.alpha_medium_brush).setVisibility(View.VISIBLE);
+					findViewById(R.id.alpha_small_brush).setVisibility(View.VISIBLE);
 				}
 		}
 		});
@@ -113,29 +106,22 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		OnClickListener brushSizeSolid = new OnClickListener()
 		{
 			public void onClick(View v) {
-				ImageButton big = (ImageButton) findViewById(R.id.draw_big_brush);
-				ImageButton medium = (ImageButton) findViewById(R.id.draw_medium_brush);
-				ImageButton small = (ImageButton) findViewById(R.id.draw_small_brush);
-				if( v == small)
+				drawSolid = drawAlpha = noBrush;
+				if( v.equals(findViewById(R.id.draw_small_brush)))
 				{
-					drawSolid = 1;
+					drawSolid = smallBrush;
 				}
-				else if( v == medium)
+				else if( v.equals(findViewById(R.id.draw_medium_brush)))
 				{
-					drawSolid = 2;
+					drawSolid = mediumBrush;
 				}
-				else if( v == big)
+				else if( v.equals(findViewById(R.id.draw_big_brush)))
 				{
-					drawSolid = 3;
+					drawSolid = bigBrush;
 				}
-				else
-				{
-					drawSolid = 0;
-				}
-				drawAlpha = 0;
-				big.setVisibility(View.INVISIBLE);
-				small.setVisibility(View.INVISIBLE);
-				medium.setVisibility(View.INVISIBLE);
+				findViewById(R.id.draw_big_brush).setVisibility(View.INVISIBLE);
+				findViewById(R.id.draw_small_brush).setVisibility(View.INVISIBLE);
+				findViewById(R.id.draw_medium_brush).setVisibility(View.INVISIBLE);
 			}
 		};
 		findViewById(R.id.draw_big_brush).setOnClickListener(brushSizeSolid);
@@ -149,24 +135,21 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		findViewById(R.id.draw).setOnClickListener(new OnClickListener()
 		{
 			public void onClick(View v) {
-				ImageButton big = (ImageButton) findViewById(R.id.draw_big_brush);
-				ImageButton medium = (ImageButton) findViewById(R.id.draw_medium_brush);
-				ImageButton small = (ImageButton) findViewById(R.id.draw_small_brush);
 				findViewById(R.id.alpha_small_brush).setVisibility(View.INVISIBLE);
 				findViewById(R.id.alpha_medium_brush).setVisibility(View.INVISIBLE);
 				findViewById(R.id.alpha_big_brush).setVisibility(View.INVISIBLE);
-				if(big.getVisibility()==View.VISIBLE)
+				if(findViewById(R.id.draw_big_brush).getVisibility()==View.VISIBLE)
 				{
-					big.setVisibility(View.INVISIBLE);
-					small.setVisibility(View.INVISIBLE);
-					medium.setVisibility(View.INVISIBLE);
-					drawSolid = 0;
+					findViewById(R.id.draw_big_brush).setVisibility(View.INVISIBLE);
+					findViewById(R.id.draw_small_brush).setVisibility(View.INVISIBLE);
+					findViewById(R.id.draw_medium_brush).setVisibility(View.INVISIBLE);
+					drawSolid = noBrush;
 				}
 				else
 				{
-					big.setVisibility(View.VISIBLE);
-					small.setVisibility(View.VISIBLE);
-					medium.setVisibility(View.VISIBLE);
+					findViewById(R.id.draw_big_brush).setVisibility(View.VISIBLE);
+					findViewById(R.id.draw_small_brush).setVisibility(View.VISIBLE);
+					findViewById(R.id.draw_medium_brush).setVisibility(View.VISIBLE);
 				}
 		}
 		});
@@ -201,7 +184,8 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 	
 	private boolean onTouchAlpha(View surface, MotionEvent event)
 	{
-		int size = 20*drawAlpha;
+		final int factorSize = 20;
+		int size = factorSize*drawAlpha;
 		int x=0;
 		int y=0;
 		Bitmap bitmap = ((BitmapDrawable)((ImageView)surface).getDrawable()).getBitmap();
@@ -248,9 +232,11 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 	
 	private boolean onTouchSolid(View surface, MotionEvent event)
 	{
-		int size = 20*drawSolid;
+		final int sizeFactor = 20;
+		int size = sizeFactor*drawSolid;
 		int x=0;
 		int y=0;
+		final int couleurTerre = 0xff9f551e;
 		Bitmap bitmap = ((BitmapDrawable)((ImageView)surface).getDrawable()).getBitmap();
 		int action = event.getAction();
 		switch (action)
@@ -275,7 +261,7 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 				{
 					if(j>=0 && j<bitmap.getHeight() && (Math.sqrt(Math.pow(x-i, 2)+Math.pow(y-j, 2))<size))
 					{
-						bitmap.setPixel(i, j, Color.argb(0xff,0x9F,0x55,0x1E));
+						bitmap.setPixel(i, j, couleurTerre);
 					}
 				}
 			}
@@ -288,7 +274,7 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 	}
 	
 	public boolean onTouch(View surface, MotionEvent event) {
-		if(drawAlpha == 0 && drawSolid == 0)
+		if(drawAlpha == noBrush && drawSolid == noBrush)
 		{
 			return false;
 		}
@@ -297,11 +283,11 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 			initImageView();
 			initializedImageView = true;
 		}
-		if(drawAlpha >0)
+		if(drawAlpha != noBrush)
 		{
 			return onTouchAlpha(surface, event);
 		}
-		else if(drawSolid>0)
+		else if(drawSolid != noBrush)
 		{
 			return onTouchSolid(surface, event);
 		}
@@ -312,7 +298,6 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 	protected void onActivityResult(int requestCode, int resultCode,
             Intent retour) {
         if ((requestCode == TAKE_PICTURE) && (resultCode == RESULT_OK)) {
-            //byte data[] = retour.getByteArrayExtra("image");
             String photoPath = retour.getStringExtra("image");
             FileInputStream stream;
 			try {
@@ -323,6 +308,7 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 	            Bitmap b = BitmapFactory.decodeByteArray(data, 0, data.length).copy(Bitmap.Config.ARGB_8888, true);
 	            surface.setImageBitmap(Bitmap.createScaledBitmap(b,surface.getWidth(),surface.getHeight(),false));
 	            initializedImageView = true;
+	            stream.close();
 			} catch (FileNotFoundException e) {
 				finish();
 			} catch (IOException e) {
