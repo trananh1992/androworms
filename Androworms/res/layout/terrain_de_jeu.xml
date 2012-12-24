@@ -15,7 +15,7 @@
         android:layout_height="match_parent" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/score_joueur_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
@@ -23,7 +23,7 @@
             android:text="@string/score_joueur_1" />
         
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/score_joueur_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -31,6 +31,13 @@
             android:layout_marginRight="40dp"
             android:layout_marginTop="40dp"
             android:text="@string/score_joueur_2" />
+
+        <TextView
+            android:id="@+id/mode_jeu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="TextView" />
         
 		<com.androworms.ui.Paddle
 	        android:id="@+id/paddle1"
@@ -147,6 +154,17 @@
 		    android:layout_alignParentBottom="true"
 		    android:layout_alignParentLeft="true"
 		    android:text="@string/mode_tir" />
+
+		<ToggleButton
+		    android:id="@+id/toggleButton1"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentBottom="true"
+		    android:layout_alignParentLeft="true"
+		    android:layout_marginLeft="100dp"
+		    android:text="Prochain bouton tir ?"
+		    android:textOff="Mode pas TIR"
+		    android:textOn="Mode Tir" />
 	    
     </RelativeLayout>
 
