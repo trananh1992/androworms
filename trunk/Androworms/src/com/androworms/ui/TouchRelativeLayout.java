@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.androworms.GameActivity;
+import com.androworms.Informations;
 import com.androworms.R;
 
 /** Ce composant graphique est un RelativeLayout personnalisé pour Androworms.
@@ -28,8 +29,8 @@ public class TouchRelativeLayout extends RelativeLayout {
 	private static final String TAG = "TESTAndroworms.TouchRelativeLayout";
 	
 	/* Constantes de tailles des composants*/
-	private static final int MAP_WIDTH = 1280;
-	private static final int MAP_HEIGHT = 720;
+	private static final int MAP_WIDTH = 2560;
+	private static final int MAP_HEIGHT = 1440;
 	private static final int JOUEUR_WIDTH = 180;
 	private static final int JOUEUR_HEIGHT = 173;
 	
@@ -48,13 +49,15 @@ public class TouchRelativeLayout extends RelativeLayout {
 	private Bitmap bmTerrain;
 	private Bitmap bmJoueur1;
 	private Bitmap bmJoueur2;
+	private Bitmap bmQaudrillage;
 	
 	// Gestion du zoom
 	private ScaleGestureDetector mScaleDetector;
 	private float scaleCourant;
 	private Matrix matrix;
-	private static final float ZOOM_MIN = 1f; // pour rajouter une bordure sur le coté, mettre 0.8f ici
-	private static final float ZOOM_MAX = 4.0f;
+	private float zoomMin; //zoom qui permet de ne pas afficher de bordures
+	private float zoomMax; //zoom qui dépend de zoomMin
+	private float zoomDebut; //valeur de zoom initiale
 	
 	// TIR
 	private PointF pointTir;
@@ -82,6 +85,11 @@ public class TouchRelativeLayout extends RelativeLayout {
 	private void constructeurPartage(Context context) {
 		Log.v(TAG, "constructeurPartage()");
 		
+		/* Gestion des limites pour le zoom */
+		zoomMin = Math.max((float)Informations.getWidthPixels() / MAP_WIDTH,
+				(float)Informations.getHeightPixels() / MAP_HEIGHT);
+		zoomMax = zoomMin * 4;
+		zoomDebut = zoomMin * 2;
 		
 		GameActivity.mode = GameActivity.RIEN;
 		this.setWillNotDraw(false);
@@ -94,17 +102,22 @@ public class TouchRelativeLayout extends RelativeLayout {
 		positionJoueur2 = new PointF(1000, 490);
 		
 		/* Bitmap */
-		bmFond = prepareBitmap(getResources().getDrawable(R.drawable.image_fond_640x360),MAP_WIDTH, MAP_HEIGHT);
+		bmFond = prepareBitmap(getResources().getDrawable(R.drawable.image_fond_640x360), MAP_WIDTH, MAP_HEIGHT);
 		bmTerrain = prepareBitmap(getResources().getDrawable(R.drawable.terrain_jeu_defaut_640x360), MAP_WIDTH, MAP_HEIGHT);
+		bmQaudrillage = prepareBitmap(getResources().getDrawable(R.drawable.image_quadrillage_640x360), MAP_WIDTH, MAP_HEIGHT);
 		bmJoueur1 = prepareBitmap(getResources().getDrawable(R.drawable.logo_android_robot), JOUEUR_WIDTH, JOUEUR_HEIGHT);
 		bmJoueur2 = prepareBitmap(getResources().getDrawable(R.drawable.logo_android_robot), JOUEUR_WIDTH, JOUEUR_HEIGHT);
 		
 		/* scale detector */
 		mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
-		scaleCourant = 1;
+		scaleCourant = zoomDebut;
 		
-		
+		//on crée une nouvelle matrice à laquelle on attribue tout de suite le zoom initial
+		//TODO changer 0 0 par les coordonées qu'on souhaite afficher
 		matrix = new Matrix();
+		matrix.postScale(scaleCourant, scaleCourant, 0, 0);
+		float[] m = new float[9];
+		matrix.getValues(m);
 	}
 	
 	private static Bitmap prepareBitmap(Drawable drawable, int width, int height) {
@@ -123,7 +136,6 @@ public class TouchRelativeLayout extends RelativeLayout {
 	 */
 	public void init(Context context) {
 		Log.v(TAG, "init()");
-		matrix = new Matrix();
 		
 		setOnTouchListener(new OnTouchListener() {
 		
@@ -215,36 +227,40 @@ public class TouchRelativeLayout extends RelativeLayout {
 	 * Fonction qui corrige la translation si elle dépasse
 	 */
 	private void fixTrans() {
+
+		//On cherches les translations en x et y voulus par le reste du programme
 		float[] m = new float[9];
 		matrix.getValues(m);
 		float transX = m[Matrix.MTRANS_X];
 		float transY = m[Matrix.MTRANS_Y];
 		
-		float fixTransX = getFixTrans(transX, bmFond.getWidth(), bmFond.getWidth() * scaleCourant);
-		float fixTransY = getFixTrans(transY, bmFond.getHeight(), bmFond.getHeight() * scaleCourant);
+		// Valeurs de zoom minimum ateignable dans les 2 directions pour voir toute l'image
+		float zoomMinX = (float)Informations.getWidthPixels() / MAP_WIDTH;
+		float zoomMinY = (float)Informations.getHeightPixels() / MAP_HEIGHT;
+		// Valeurs de translation maximum (formule trouvée en testant...)
+		float maxTransX = MAP_WIDTH * (scaleCourant - zoomMinX); //scaleCourant - zoomMin est positif
+		float maxTransY = MAP_HEIGHT * (scaleCourant - zoomMinY);
+		//Valeur de translation à rajouter pour ne pas que ça dépasse
+		float fixTransX = getFixTrans(transX, maxTransX);
+		float fixTransY = getFixTrans(transY, maxTransY);
 		
 		if (fixTransX != 0 || fixTransY != 0) {
+			// Il faut corriger la matrice sinon ça dépasse
 			matrix.postTranslate(fixTransX, fixTransY);
 		}
 	}
 	
-	private float getFixTrans(float trans, float viewSize, float contentSize) {
-		float minTrans, maxTrans;
-        
-        if (contentSize <= viewSize) {
-        	minTrans = 0;
-            maxTrans = viewSize - contentSize;
-        } else {
-        	minTrans = viewSize - contentSize;
-            maxTrans = 0;
+	private float getFixTrans(float trans, float transMax) {
+        //Attention trans est forcement négatif donc il faut qu'il soit entre -transMax et 0
+		if (trans > 0) {
+			//Ca dépasse par le côté gauche ou le haut
+        	return -trans;
         }
-        
-        if (trans < minTrans) {
-        	return -trans + minTrans;
+        if (trans < - transMax) {
+        	//Ca dépasse par le côté droit ou le bas
+        	return -trans - transMax;
         }
-        if (trans > maxTrans) {
-        	return -trans + maxTrans;
-        }
+        //Ca dépasse pas
         return 0;
 	}
 	
@@ -255,11 +271,13 @@ public class TouchRelativeLayout extends RelativeLayout {
 	
 	@Override
 	protected void dispatchDraw(Canvas canvas) {
-		// Application de la matric avec la translation et le zoom
+		// Application de la matrice avec la translation et le zoom
 		canvas.setMatrix(matrix);
+		
 		// Dessins des objets du jeu
 		canvas.drawBitmap(bmFond, positionFond.x, positionFond.y, null);
 		canvas.drawBitmap(bmTerrain, positionFond.x, positionFond.y, null);
+		canvas.drawBitmap(bmQaudrillage, positionFond.x, positionFond.y, null);
 		canvas.drawBitmap(bmJoueur1, positionJoueur1.x, positionJoueur1.y, null);
 		canvas.drawBitmap(bmJoueur2, positionJoueur2.x, positionJoueur2.y, null);
 		
@@ -280,18 +298,19 @@ public class TouchRelativeLayout extends RelativeLayout {
 			paint.setStrokeCap(Paint.Cap.ROUND);
 			paint.setStyle(Paint.Style.STROKE);
 			
-			
-			float angle = ((float)(Math.atan2 (deplacementY, deplacementX)*180.0d/Math.PI))+90.0f;
+			float angleOnde = 30f;
+			float angleBase = ((float)(Math.atan2 (deplacementY, deplacementX)*180.0d/Math.PI));
 			// Ajustement de l'angle
-			angle += 90;
+			float angle = angleBase + 180; //debut tour
+			angle -= angleOnde / 2; //pour centrer l'onde sur le doigt
 			
-			// Onde viollette
+			// Onde violette
 			paint.setColor(Color.MAGENTA);
 			RectF rect = new RectF();
 			for (int i=0;(i<=distance && i < TAILLE_MAX_TIR);i+=20) {
 				rect.set(pointTir.x - i, pointTir.y - i,
 						pointTir.x + i, pointTir.y + i);
-				canvas.drawArc(rect, angle, 30, false, paint);
+				canvas.drawArc(rect, angle, angleOnde, false, paint);
 			}
 			
 			
@@ -317,17 +336,19 @@ public class TouchRelativeLayout extends RelativeLayout {
 				paint.setColor(Color.rgb(255,255-(int)distance/2,0));
 			}
 			paint.setStrokeWidth(30);
-			canvas.drawLine(coinSuperieurDroitJoueur.x, coinSuperieurDroitJoueur.y,
-					coinSuperieurDroitJoueur.x + distance, coinSuperieurDroitJoueur.y - distance, paint);
 			
-			// bout de la flèche. (si trop moche utiliser un Path et canvas.drawPath()
+			float finFlecheX = (float) (distance * Math.cos(Math.toRadians(angleBase))) + coinSuperieurDroitJoueur.x;
+			float finFlecheY = (float) (distance * Math.sin(Math.toRadians(angleBase))) + coinSuperieurDroitJoueur.y;
+			canvas.drawLine(coinSuperieurDroitJoueur.x, coinSuperieurDroitJoueur.y,
+					finFlecheX, finFlecheY, paint);
+	
 			Path path = new Path();
-	        path.moveTo(coinSuperieurDroitJoueur.x + distance, coinSuperieurDroitJoueur.y - distance);
-	        path.lineTo(coinSuperieurDroitJoueur.x + distance - 50, coinSuperieurDroitJoueur.y - distance);
-	        path.moveTo(coinSuperieurDroitJoueur.x + distance, coinSuperieurDroitJoueur.y - distance);
-	        path.lineTo(coinSuperieurDroitJoueur.x + distance, coinSuperieurDroitJoueur.y - distance +50);
-	        path.moveTo(coinSuperieurDroitJoueur.x + distance - 50, coinSuperieurDroitJoueur.y - distance);
-	        path.lineTo(coinSuperieurDroitJoueur.x + distance, coinSuperieurDroitJoueur.y - distance +50);
+			 path.moveTo(finFlecheX, finFlecheY);
+	        path.lineTo(finFlecheX - 50, finFlecheY);
+	        path.moveTo(finFlecheX, finFlecheY);
+	        path.lineTo(finFlecheX, finFlecheY +50);
+	        path.moveTo(finFlecheX - 50, finFlecheY);
+	        path.lineTo(finFlecheX, finFlecheY +50);
 	        path.close();
 
 	        canvas.drawPath(path, paint);
@@ -358,16 +379,19 @@ public class TouchRelativeLayout extends RelativeLayout {
 				
 				// Scale globale sur l'image d'origine
 				float temp = scaleCourant * mScaleFactor;
-				// Gestion du Zoom max et zomm min
-				if (ZOOM_MIN > temp) { 
-					mScaleFactor = ZOOM_MIN / scaleCourant;
-					scaleCourant = ZOOM_MIN;
-				} else if (temp > ZOOM_MAX) { 
-					mScaleFactor = ZOOM_MAX / scaleCourant;
-					scaleCourant = ZOOM_MAX;
+				// Gestion du Zoom max et zoom min
+				if (zoomMin > temp) { 
+					mScaleFactor = zoomMin / scaleCourant;
+					scaleCourant = zoomMin;
+				} else if (temp > zoomMax) { 
+					mScaleFactor = zoomMax / scaleCourant;
+					scaleCourant = zoomMax;
 				} else {
 					scaleCourant = temp;
 				}
+				
+				Log.v(TAG, "zoom courant : " + scaleCourant);
+				
 				// Application du Zoom
 				matrix.postScale(mScaleFactor, mScaleFactor, detector.getFocusX(), detector.getFocusY());
 				fixTrans();
