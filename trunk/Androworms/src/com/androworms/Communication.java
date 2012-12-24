@@ -1,6 +1,7 @@
 package com.androworms;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /*
  * Classe mere pour la classe client et la classe serveur.
@@ -30,7 +31,7 @@ public class Communication {
 		client.deplacementJoueurDroite(nomPersonnage);
 	}
 	
-	public ArrayList<String> listeDesServeursPrimaires() {
+	public List<String> listeDesServeursPrimaires() {
 		// On recherche l'ensemble des appareils dans le voisinage (bluetooth)
 		// qui ont lance un serveurPrimaire.
 		// Le joueur pourra alors se connecter a l'un d'entre eux si besoin.

@@ -36,6 +36,26 @@ public class TouchRelativeLayout extends RelativeLayout {
 	
 	private static final int TAILLE_MAX_TIR = 300;
 	
+	//Valeurs du zoom maximum et du zoom de lancement en fonction du zoom minimum
+	private static final float ZOOM_MAX_MULT = 4;
+	private static final float ZOOM_DEBUT_MULT = 2;
+	
+	private static final int TAILLE_MATRIX = 9;
+	
+	private static final int NB_PIXELS_ACCELERATION = 10;
+	private static final int COEFF_ACCELERATION = 3;
+	
+	//Constantes qui servent pour dessiner un tir en cours
+	private static final int EPAISSEUR_FLECHE_TIR = 10;
+	private static final float ANGLE_ONDE_TIR = 30f;
+	private static final int ANGLE_DEMITOUR = 180;
+	private static final int INCREMENT_ONDE_TIR = 20;
+	private static final int COULEUR_MAXIMUM = 255;
+	private static final float INCREMENT_COULEUR = 1/2;
+	private static final int TAILLE_BOUT_FLECHE_TIR = 50;
+	private static final int ANGLE_BOUT_FLECHE_TIR = 45;
+	
+	
 	// Traquer le mouvement
 	private PointF positionAncienneTouche;
 	private PointF positionNouvelleTouche;
@@ -88,10 +108,10 @@ public class TouchRelativeLayout extends RelativeLayout {
 		/* Gestion des limites pour le zoom */
 		zoomMin = Math.max((float)Informations.getWidthPixels() / MAP_WIDTH,
 				(float)Informations.getHeightPixels() / MAP_HEIGHT);
-		zoomMax = zoomMin * 4;
-		zoomDebut = zoomMin * 2;
+		zoomMax = zoomMin * ZOOM_MAX_MULT;
+		zoomDebut = zoomMin * ZOOM_DEBUT_MULT;
 		
-		GameActivity.mode = GameActivity.RIEN;
+		GameActivity.setMode(GameActivity.RIEN);
 		this.setWillNotDraw(false);
 		this.setClickable(true);
 		pointTir = new PointF(-1, -1);
@@ -116,7 +136,7 @@ public class TouchRelativeLayout extends RelativeLayout {
 		//TODO changer 0 0 par les coordonées qu'on souhaite afficher
 		matrix = new Matrix();
 		matrix.postScale(scaleCourant, scaleCourant, 0, 0);
-		float[] m = new float[9];
+		float[] m = new float[TAILLE_MATRIX];
 		matrix.getValues(m);
 	}
 	
@@ -156,8 +176,8 @@ public class TouchRelativeLayout extends RelativeLayout {
 				switch (event.getAction()) {
 				case MotionEvent.ACTION_DOWN:
 					// Action : Appui sur l'écran lorsqu'il n'y a aucun doigt. Ce doigt est donc le doigt principal
-					if (GameActivity.mode != GameActivity.TIR) {
-						GameActivity.mode = GameActivity.DEPLACEMENT;
+					if (GameActivity.getMode() != GameActivity.TIR) {
+						GameActivity.setMode(GameActivity.DEPLACEMENT);
 					} else {
 						pointTir.set(positionNouvelleTouche);
 					}
@@ -166,8 +186,8 @@ public class TouchRelativeLayout extends RelativeLayout {
 				
 				case MotionEvent.ACTION_POINTER_DOWN:
 					// Action : Lorsque l'on a un ou plusieurs doigt sur l'écran (et pas le doigt principal) et qu'on appuie avec un doigt
-					if (GameActivity.mode != GameActivity.TIR) {
-						GameActivity.mode = GameActivity.DEPLACEMENT;
+					if (GameActivity.getMode() != GameActivity.TIR) {
+						GameActivity.setMode(GameActivity.DEPLACEMENT);
 					} else {
 						pointTir.set(positionNouvelleTouche);
 					}
@@ -175,7 +195,7 @@ public class TouchRelativeLayout extends RelativeLayout {
 					break;
 				case MotionEvent.ACTION_MOVE:
 					// Action : Un doigt sur l'écran qui bouge
-					if (GameActivity.mode == GameActivity.DEPLACEMENT) {
+					if (GameActivity.getMode() == GameActivity.DEPLACEMENT) {
 						// En mode déplacement, position_ancienne_touche n'est jamais égale à -1 sinon erreur
 						
 						float tempX, tempY;
@@ -184,11 +204,11 @@ public class TouchRelativeLayout extends RelativeLayout {
 						tempY = positionNouvelleTouche.y - positionAncienneTouche.y;
 						
 						// Accelérer le déplacement quand on fait de grands mouvement ! (à paramètrer plus finement !)
-						if (Math.abs(tempX) > 10) {
-							tempX *= 3;
+						if (Math.abs(tempX) > NB_PIXELS_ACCELERATION) {
+							tempX *= COEFF_ACCELERATION;
 						}
-						if (Math.abs(tempY) > 10) {
-							tempY *= 3;
+						if (Math.abs(tempY) > NB_PIXELS_ACCELERATION) {
+							tempY *= COEFF_ACCELERATION;
 						}
 						matrix.postTranslate(tempX, tempY);
 					
@@ -197,16 +217,16 @@ public class TouchRelativeLayout extends RelativeLayout {
 					break;
 				case MotionEvent.ACTION_UP:
 					// Action : Lever du seul doigt sur l'écran. Ce doigt était donc le doigt principal
-					if (GameActivity.mode != GameActivity.TIR) {
-						GameActivity.mode = GameActivity.RIEN;
+					if (GameActivity.getMode() != GameActivity.TIR) {
+						GameActivity.setMode(GameActivity.RIEN);
 					}
 					positionAncienneTouche = new PointF(-1, -1);
 					break;
 				
 				case MotionEvent.ACTION_POINTER_UP:
 					// Action : lorsque que l'on a plusieurs doigts sur l'écran et que l'on lève le doigt principal
-					if (GameActivity.mode != GameActivity.TIR) {
-						GameActivity.mode = GameActivity.RIEN;
+					if (GameActivity.getMode() != GameActivity.TIR) {
+						GameActivity.setMode(GameActivity.RIEN);
 					} else {
 						// TODO : appel de la fonction de calcul du tir
 					}
@@ -269,6 +289,7 @@ public class TouchRelativeLayout extends RelativeLayout {
 		
 	}
 	
+	
 	@Override
 	protected void dispatchDraw(Canvas canvas) {
 		// Application de la matrice avec la translation et le zoom
@@ -282,58 +303,46 @@ public class TouchRelativeLayout extends RelativeLayout {
 		canvas.drawBitmap(bmJoueur2, positionJoueur2.x, positionJoueur2.y, null);
 		
 		// Dessins des objets pour le tir
-		if (GameActivity.mode == GameActivity.TIR) {
+		if (GameActivity.getMode() == GameActivity.TIR) {
 			// Pour le tir, on a pas de translation ni de zoom
 			Matrix m = new Matrix();
 			canvas.setMatrix(m);
 			
-			float deplacementX = pointTir.x - positionNouvelleTouche.x;
-			float deplacementY = pointTir.y - positionNouvelleTouche.y;
-			float distance = Math.round(Math.sqrt(Math.pow(positionNouvelleTouche.x - pointTir.x, 2) + Math.pow(positionNouvelleTouche.y - pointTir.y, 2)));
-			
+			PointF deplacement = new PointF(pointTir.x - positionNouvelleTouche.x,
+					 pointTir.y - positionNouvelleTouche.y);
+			float distance = deplacement.length();
+					
 			// Mise en place des outils de dessins
 			Paint paint = new Paint();
-			paint.setStrokeWidth(10);
+			paint.setStrokeWidth(EPAISSEUR_FLECHE_TIR);
 			paint.setAntiAlias(true);
 			paint.setStrokeCap(Paint.Cap.ROUND);
 			paint.setStyle(Paint.Style.STROKE);
 			
-			float angleOnde = 30f;
-			float angleBase = ((float)(Math.atan2 (deplacementY, deplacementX)*180.0d/Math.PI));
+			float angleBase = ((float)(Math.atan2 (deplacement.y, deplacement.x)* ANGLE_DEMITOUR /Math.PI));
 			// Ajustement de l'angle
-			float angle = angleBase + 180; //debut tour
-			angle -= angleOnde / 2; //pour centrer l'onde sur le doigt
+			float angle = angleBase + ANGLE_DEMITOUR; //demi tour
+			angle -= ANGLE_ONDE_TIR / 2; //pour centrer l'onde sur le doigt
 			
 			// Onde violette
 			paint.setColor(Color.MAGENTA);
 			RectF rect = new RectF();
-			for (int i=0;(i<=distance && i < TAILLE_MAX_TIR);i+=20) {
+			for (int i=0;(i<=distance && i < TAILLE_MAX_TIR);i+= INCREMENT_ONDE_TIR) {
 				rect.set(pointTir.x - i, pointTir.y - i,
 						pointTir.x + i, pointTir.y + i);
-				canvas.drawArc(rect, angle, angleOnde, false, paint);
+				canvas.drawArc(rect, angle, ANGLE_ONDE_TIR, false, paint);
 			}
 			
-			
-			float[] mm = new float[9];
-			matrix.getValues(mm);
-			float transX = mm[Matrix.MTRANS_X];
-			float transY = mm[Matrix.MTRANS_Y];
-			float scaleX = mm[Matrix.MSCALE_X];
-			float scaleY = mm[Matrix.MSCALE_Y];
-			
-			PointF coinSuperieurGaucheJoueur =
-					new PointF(positionJoueur1.x  * scaleX + transX, positionJoueur1.y  * scaleY + transY);
-			PointF coinSuperieurDroitJoueur =
-					new PointF(coinSuperieurGaucheJoueur.x + JOUEUR_WIDTH, coinSuperieurGaucheJoueur.y);
-			
-			
-			
+		
+			PointF coinSuperieurGaucheJoueur = transpositionPointSurEcran(positionJoueur1);
+			PointF coinSuperieurDroitJoueur = new PointF(coinSuperieurGaucheJoueur.x + JOUEUR_WIDTH,
+										coinSuperieurGaucheJoueur.y);
 			
 			// flèche de tir sur le bonhomme
-			if (distance >= 512) {
-				paint.setColor(Color.rgb(255,0,0));
+			if (distance >= COULEUR_MAXIMUM / INCREMENT_COULEUR ) {
+				paint.setColor(Color.rgb(COULEUR_MAXIMUM,0,0));
 			} else {
-				paint.setColor(Color.rgb(255,255-(int)distance/2,0));
+				paint.setColor(Color.rgb(COULEUR_MAXIMUM, COULEUR_MAXIMUM-(int)(distance * INCREMENT_COULEUR),0));
 			}
 			paint.setStrokeWidth(30);
 			
@@ -348,10 +357,10 @@ public class TouchRelativeLayout extends RelativeLayout {
 			// Petits traits aux bouts de la flèche
 			PointF ptFleche1  = new PointF(); 
 			PointF ptFleche2  = new PointF();
-			ptFleche1.x = (float) (finFleche.x - 50 *Math.sin(Math.toRadians(angleBase + 45)));
-			ptFleche1.y = (float) (finFleche.y + 50 * Math.cos(Math.toRadians(angleBase + 45)));
-			ptFleche2.x = (float) (finFleche.x - 50 *Math.cos(Math.toRadians(angleBase + 45)));
-			ptFleche2.y = (float) (finFleche.y - 50 * Math.sin(Math.toRadians(angleBase + 45)));
+			ptFleche1.x = (float) (finFleche.x - TAILLE_BOUT_FLECHE_TIR * Math.sin(Math.toRadians(angleBase + ANGLE_BOUT_FLECHE_TIR)));
+			ptFleche1.y = (float) (finFleche.y + TAILLE_BOUT_FLECHE_TIR * Math.cos(Math.toRadians(angleBase + ANGLE_BOUT_FLECHE_TIR)));
+			ptFleche2.x = (float) (finFleche.x - TAILLE_BOUT_FLECHE_TIR * Math.cos(Math.toRadians(angleBase + ANGLE_BOUT_FLECHE_TIR)));
+			ptFleche2.y = (float) (finFleche.y - TAILLE_BOUT_FLECHE_TIR * Math.sin(Math.toRadians(angleBase + ANGLE_BOUT_FLECHE_TIR)));
 			// On dessine les petits traits (si on veut fermer rajouter path.close()
 			Path path = new Path();
 			path.moveTo(finFleche.x, finFleche.y);
@@ -367,11 +376,26 @@ public class TouchRelativeLayout extends RelativeLayout {
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 	}
 	
+
+	private PointF transpositionPointSurEcran(PointF pt)
+	{
+		float[] mm = new float[TAILLE_MATRIX];
+		matrix.getValues(mm);
+		float transX = mm[Matrix.MTRANS_X];
+		float transY = mm[Matrix.MTRANS_Y];
+		float scaleX = mm[Matrix.MSCALE_X];
+		float scaleY = mm[Matrix.MSCALE_Y];
+		
+		PointF result = new PointF(pt.x  * scaleX + transX, pt.y  * scaleY + transY);
+		
+		return result;
+	}
+	
 	private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
 		@Override
 		public boolean onScaleBegin(ScaleGestureDetector detector) {
-			if (GameActivity.mode != GameActivity.TIR) {
-				GameActivity.mode = GameActivity.ZOOM;
+			if (GameActivity.getMode() != GameActivity.TIR) {
+				GameActivity.setMode(GameActivity.ZOOM);
 				return true;
 			} else {
 				return false;
@@ -380,7 +404,7 @@ public class TouchRelativeLayout extends RelativeLayout {
 		
 		@Override
 		public boolean onScale(ScaleGestureDetector detector) {
-			if (GameActivity.mode == GameActivity.ZOOM) {
+			if (GameActivity.getMode() == GameActivity.ZOOM) {
 				// Scale sur cette évenement
 				float mScaleFactor = detector.getScaleFactor();
 				
@@ -408,5 +432,6 @@ public class TouchRelativeLayout extends RelativeLayout {
 			}
 			
 		}
+		
 	}
 }

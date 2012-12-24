@@ -14,7 +14,7 @@ public class GameActivity extends Activity {
 	private static final String TAG = "TESTAndroworms.MainActivity";
 	
 	/* Etats possible pour le mode de gestion des doigts */
-	public static int mode;
+	private static int mode;
 	public static final int RIEN = 0;
 	public static final int DEPLACEMENT = 1;
 	public static final int ZOOM = 2;
@@ -43,5 +43,13 @@ public class GameActivity extends Activity {
 		
 		/** Actions post-construction **/
 		trl.init(this);
+	}
+
+	public static int getMode() {
+		return mode;
+	}
+
+	public static void setMode(int mode) {
+		GameActivity.mode = mode;
 	}
 }
