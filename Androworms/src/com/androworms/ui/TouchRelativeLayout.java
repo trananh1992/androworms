@@ -337,20 +337,27 @@ public class TouchRelativeLayout extends RelativeLayout {
 			}
 			paint.setStrokeWidth(30);
 			
-			float finFlecheX = (float) (distance * Math.cos(Math.toRadians(angleBase))) + coinSuperieurDroitJoueur.x;
-			float finFlecheY = (float) (distance * Math.sin(Math.toRadians(angleBase))) + coinSuperieurDroitJoueur.y;
+			//Extrémité de la flèche
+			PointF finFleche = new PointF();
+			finFleche.x = (float) (distance * Math.cos(Math.toRadians(angleBase))) + coinSuperieurDroitJoueur.x;
+			finFleche.y = (float) (distance * Math.sin(Math.toRadians(angleBase))) + coinSuperieurDroitJoueur.y;
+			// On dessine la grande ligne
 			canvas.drawLine(coinSuperieurDroitJoueur.x, coinSuperieurDroitJoueur.y,
-					finFlecheX, finFlecheY, paint);
+					finFleche.x, finFleche.y, paint);
 	
+			// Petits traits aux bouts de la flèche
+			PointF ptFleche1  = new PointF(); 
+			PointF ptFleche2  = new PointF();
+			ptFleche1.x = (float) (finFleche.x - 50 *Math.sin(Math.toRadians(angleBase + 45)));
+			ptFleche1.y = (float) (finFleche.y + 50 * Math.cos(Math.toRadians(angleBase + 45)));
+			ptFleche2.x = (float) (finFleche.x - 50 *Math.cos(Math.toRadians(angleBase + 45)));
+			ptFleche2.y = (float) (finFleche.y - 50 * Math.sin(Math.toRadians(angleBase + 45)));
+			// On dessine les petits traits (si on veut fermer rajouter path.close()
 			Path path = new Path();
-			 path.moveTo(finFlecheX, finFlecheY);
-	        path.lineTo(finFlecheX - 50, finFlecheY);
-	        path.moveTo(finFlecheX, finFlecheY);
-	        path.lineTo(finFlecheX, finFlecheY +50);
-	        path.moveTo(finFlecheX - 50, finFlecheY);
-	        path.lineTo(finFlecheX, finFlecheY +50);
-	        path.close();
-
+			path.moveTo(finFleche.x, finFleche.y);
+			path.lineTo(ptFleche1.x, ptFleche1.y);
+			path.moveTo(finFleche.x, finFleche.y);
+			path.lineTo(ptFleche2.x, ptFleche2.y);
 	        canvas.drawPath(path, paint);
 		}
 	}
