@@ -6,6 +6,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.SlidingDrawer;
+import android.widget.SlidingDrawer.OnDrawerCloseListener;
+import android.widget.SlidingDrawer.OnDrawerOpenListener;
+import android.widget.SlidingDrawer.OnDrawerScrollListener;
+import android.widget.TextView;
 
 import com.androworms.ui.TouchRelativeLayout;
 
@@ -18,7 +23,10 @@ public class GameActivity extends Activity {
 	public static final int RIEN = 0;
 	public static final int DEPLACEMENT = 1;
 	public static final int ZOOM = 2;
-	public static final int TIR = 3;
+	public static final int SELECTION_ARME = 3;
+	public static final int TIR = 4;
+	
+	private static TextView tv;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -34,15 +42,54 @@ public class GameActivity extends Activity {
 		btnTir.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0) {
 				if (mode == TIR) {
-					mode = RIEN;
-				} else {
-					mode = TIR;
+					setMode(RIEN);
+				} else if (mode != SELECTION_ARME) {
+					setMode(TIR);
 				}
 			}
 		});
 		
+		SlidingDrawer sd = (SlidingDrawer)findViewById(R.id.slidingDrawer1);
+		sd.setOnDrawerOpenListener(new OnDrawerOpenListener() {
+			public void onDrawerOpened() {
+				setMode(SELECTION_ARME);
+			}
+		});
+		sd.setOnDrawerCloseListener(new OnDrawerCloseListener() {
+			public void onDrawerClosed() {
+				setMode(RIEN);
+			}
+		});
+		
+		tv = (TextView)findViewById(R.id.mode_jeu);
+		updateAffichageMode();
+		
 		/** Actions post-construction **/
 		trl.init(this);
+	}
+	
+	public static void updateAffichageMode() {
+		if (tv != null) {
+			switch (mode) {
+			case RIEN:
+				tv.setText("Mode : RIEN");
+				break;
+			case DEPLACEMENT:
+				tv.setText("Mode : DEPLACEMENT");
+				break;
+			case ZOOM:
+				tv.setText("Mode : ZOOM");
+				break;
+			case SELECTION_ARME:
+				tv.setText("Mode : SELECTION_ARME");
+				break;
+			case TIR:
+				tv.setText("Mode : TIR");
+				break;
+			default:
+				break;
+			}
+		}
 	}
 
 	public static int getMode() {
@@ -51,5 +98,6 @@ public class GameActivity extends Activity {
 
 	public static void setMode(int mode) {
 		GameActivity.mode = mode;
+		updateAffichageMode();
 	}
 }

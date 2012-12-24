@@ -176,7 +176,7 @@ public class TouchRelativeLayout extends RelativeLayout {
 				switch (event.getAction()) {
 				case MotionEvent.ACTION_DOWN:
 					// Action : Appui sur l'écran lorsqu'il n'y a aucun doigt. Ce doigt est donc le doigt principal
-					if (GameActivity.getMode() != GameActivity.TIR) {
+					if (GameActivity.getMode() == GameActivity.RIEN) {
 						GameActivity.setMode(GameActivity.DEPLACEMENT);
 					} else {
 						pointTir.set(positionNouvelleTouche);
@@ -186,7 +186,7 @@ public class TouchRelativeLayout extends RelativeLayout {
 				
 				case MotionEvent.ACTION_POINTER_DOWN:
 					// Action : Lorsque l'on a un ou plusieurs doigt sur l'écran (et pas le doigt principal) et qu'on appuie avec un doigt
-					if (GameActivity.getMode() != GameActivity.TIR) {
+					if (GameActivity.getMode() == GameActivity.RIEN) {
 						GameActivity.setMode(GameActivity.DEPLACEMENT);
 					} else {
 						pointTir.set(positionNouvelleTouche);
@@ -217,7 +217,7 @@ public class TouchRelativeLayout extends RelativeLayout {
 					break;
 				case MotionEvent.ACTION_UP:
 					// Action : Lever du seul doigt sur l'écran. Ce doigt était donc le doigt principal
-					if (GameActivity.getMode() != GameActivity.TIR) {
+					if (GameActivity.getMode() == GameActivity.DEPLACEMENT) {
 						GameActivity.setMode(GameActivity.RIEN);
 					}
 					positionAncienneTouche = new PointF(-1, -1);
@@ -225,7 +225,7 @@ public class TouchRelativeLayout extends RelativeLayout {
 				
 				case MotionEvent.ACTION_POINTER_UP:
 					// Action : lorsque que l'on a plusieurs doigts sur l'écran et que l'on lève le doigt principal
-					if (GameActivity.getMode() != GameActivity.TIR) {
+					if (GameActivity.getMode() == GameActivity.DEPLACEMENT) {
 						GameActivity.setMode(GameActivity.RIEN);
 					} else {
 						// TODO : appel de la fonction de calcul du tir
@@ -333,42 +333,48 @@ public class TouchRelativeLayout extends RelativeLayout {
 				canvas.drawArc(rect, angle, ANGLE_ONDE_TIR, false, paint);
 			}
 			
-		
-			PointF coinSuperieurGaucheJoueur = transpositionPointSurEcran(positionJoueur1);
-			PointF coinSuperieurDroitJoueur = new PointF(coinSuperieurGaucheJoueur.x + JOUEUR_WIDTH,
-										coinSuperieurGaucheJoueur.y);
-			
-			// flèche de tir sur le bonhomme
-			if (distance >= COULEUR_MAXIMUM / INCREMENT_COULEUR ) {
-				paint.setColor(Color.rgb(COULEUR_MAXIMUM,0,0));
-			} else {
-				paint.setColor(Color.rgb(COULEUR_MAXIMUM, COULEUR_MAXIMUM-(int)(distance * INCREMENT_COULEUR),0));
-			}
-			paint.setStrokeWidth(30);
-			
-			//Extrémité de la flèche
-			PointF finFleche = new PointF();
-			finFleche.x = (float) (distance * Math.cos(Math.toRadians(angleBase))) + coinSuperieurDroitJoueur.x;
-			finFleche.y = (float) (distance * Math.sin(Math.toRadians(angleBase))) + coinSuperieurDroitJoueur.y;
-			// On dessine la grande ligne
-			canvas.drawLine(coinSuperieurDroitJoueur.x, coinSuperieurDroitJoueur.y,
-					finFleche.x, finFleche.y, paint);
-	
-			// Petits traits aux bouts de la flèche
-			PointF ptFleche1  = new PointF(); 
-			PointF ptFleche2  = new PointF();
-			ptFleche1.x = (float) (finFleche.x - TAILLE_BOUT_FLECHE_TIR * Math.sin(Math.toRadians(angleBase + ANGLE_BOUT_FLECHE_TIR)));
-			ptFleche1.y = (float) (finFleche.y + TAILLE_BOUT_FLECHE_TIR * Math.cos(Math.toRadians(angleBase + ANGLE_BOUT_FLECHE_TIR)));
-			ptFleche2.x = (float) (finFleche.x - TAILLE_BOUT_FLECHE_TIR * Math.cos(Math.toRadians(angleBase + ANGLE_BOUT_FLECHE_TIR)));
-			ptFleche2.y = (float) (finFleche.y - TAILLE_BOUT_FLECHE_TIR * Math.sin(Math.toRadians(angleBase + ANGLE_BOUT_FLECHE_TIR)));
-			// On dessine les petits traits (si on veut fermer rajouter path.close()
-			Path path = new Path();
-			path.moveTo(finFleche.x, finFleche.y);
-			path.lineTo(ptFleche1.x, ptFleche1.y);
-			path.moveTo(finFleche.x, finFleche.y);
-			path.lineTo(ptFleche2.x, ptFleche2.y);
-	        canvas.drawPath(path, paint);
+			dessinerFleches(canvas, paint, angleBase, distance);
 		}
+	}
+	
+	/** Fonction qui dessine une flèche sur le bonhomme
+	 * @param canvas
+	 * @param paint
+	 * @param distance
+	 */
+	public void dessinerFleches(Canvas canvas, Paint paint, float angleBase, float distance) {
+		PointF coinSuperieurGaucheJoueur = transpositionPointSurEcran(positionJoueur1);
+		PointF coinSuperieurDroitJoueur = new PointF(coinSuperieurGaucheJoueur.x + JOUEUR_WIDTH, coinSuperieurGaucheJoueur.y);
+		
+		// flèche de tir sur le bonhomme
+		if (distance >= COULEUR_MAXIMUM / INCREMENT_COULEUR ) {
+			paint.setColor(Color.rgb(COULEUR_MAXIMUM,0,0));
+		} else {
+			paint.setColor(Color.rgb(COULEUR_MAXIMUM, COULEUR_MAXIMUM-(int)(distance * INCREMENT_COULEUR),0));
+		}
+		paint.setStrokeWidth(30);
+		
+		//Extrémité de la flèche
+		PointF finFleche = new PointF();
+		finFleche.x = (float) (distance * Math.cos(Math.toRadians(angleBase))) + coinSuperieurDroitJoueur.x;
+		finFleche.y = (float) (distance * Math.sin(Math.toRadians(angleBase))) + coinSuperieurDroitJoueur.y;
+		// On dessine la grande ligne
+		canvas.drawLine(coinSuperieurDroitJoueur.x, coinSuperieurDroitJoueur.y, finFleche.x, finFleche.y, paint);
+
+		// Petits traits aux bouts de la flèche
+		PointF ptFleche1  = new PointF(); 
+		PointF ptFleche2  = new PointF();
+		ptFleche1.x = (float) (finFleche.x - TAILLE_BOUT_FLECHE_TIR * Math.sin(Math.toRadians(angleBase + ANGLE_BOUT_FLECHE_TIR)));
+		ptFleche1.y = (float) (finFleche.y + TAILLE_BOUT_FLECHE_TIR * Math.cos(Math.toRadians(angleBase + ANGLE_BOUT_FLECHE_TIR)));
+		ptFleche2.x = (float) (finFleche.x - TAILLE_BOUT_FLECHE_TIR * Math.cos(Math.toRadians(angleBase + ANGLE_BOUT_FLECHE_TIR)));
+		ptFleche2.y = (float) (finFleche.y - TAILLE_BOUT_FLECHE_TIR * Math.sin(Math.toRadians(angleBase + ANGLE_BOUT_FLECHE_TIR)));
+		// On dessine les petits traits (si on veut fermer rajouter path.close()
+		Path path = new Path();
+		path.moveTo(finFleche.x, finFleche.y);
+		path.lineTo(ptFleche1.x, ptFleche1.y);
+		path.moveTo(finFleche.x, finFleche.y);
+		path.lineTo(ptFleche2.x, ptFleche2.y);
+        canvas.drawPath(path, paint);
 	}
 	
 	@Override
