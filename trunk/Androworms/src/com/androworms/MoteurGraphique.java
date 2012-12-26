@@ -25,8 +25,6 @@ public class MoteurGraphique extends RelativeLayout {
 	/* Constantes de tailles des composants*/
 	public static final int MAP_WIDTH = 2560;
 	public static final int MAP_HEIGHT = 1440;
-	private static final int JOUEUR_WIDTH = 180;
-	private static final int JOUEUR_HEIGHT = 173;
 	
 	private static final int TAILLE_MAX_TIR = 300;
 	
@@ -53,13 +51,10 @@ public class MoteurGraphique extends RelativeLayout {
 	
 	private PointF positionFond;
 	private PointF positionJoueur1;
-	private PointF positionJoueur2;
 	
 	// Images pour le jeu
 	private Bitmap bmFond;
 	private Bitmap bmTerrain;
-	private Bitmap bmJoueur1;
-	private Bitmap bmJoueur2;
 	private Bitmap bmQaudrillage;
 	
 	//Matrice qui gère le zoom et la translation d'une image
@@ -71,6 +66,9 @@ public class MoteurGraphique extends RelativeLayout {
 	
 	//position touchée en ce moment (ou dernière position touchée)
 	private PointF positionTouche;
+	
+	private Monde monde;
+	
 	
 	public MoteurGraphique(Context context) {
 		super(context);
@@ -95,21 +93,16 @@ public class MoteurGraphique extends RelativeLayout {
 	private void constructeurPartage(Context context) {
 		Log.v(TAG, "constructeurPartage()");
 		
-		
-		
 		GameActivity.setMode(GameActivity.RIEN);
 		this.setWillNotDraw(false);
 		this.setClickable(true);
 		positionFond = new PointF(0, 0);
 		positionJoueur1 = new PointF(80, 470);
-		positionJoueur2 = new PointF(1000, 490);
 		
 		/* Bitmap */
 		bmFond = prepareBitmap(getResources().getDrawable(R.drawable.image_fond_640x360), MAP_WIDTH, MAP_HEIGHT);
 		bmTerrain = prepareBitmap(getResources().getDrawable(R.drawable.terrain_jeu_defaut_640x360), MAP_WIDTH, MAP_HEIGHT);
 		bmQaudrillage = prepareBitmap(getResources().getDrawable(R.drawable.image_quadrillage_640x360), MAP_WIDTH, MAP_HEIGHT);
-		bmJoueur1 = prepareBitmap(getResources().getDrawable(R.drawable.logo_android_robot), JOUEUR_WIDTH, JOUEUR_HEIGHT);
-		bmJoueur2 = prepareBitmap(getResources().getDrawable(R.drawable.logo_android_robot), JOUEUR_WIDTH, JOUEUR_HEIGHT);
 		
 		//on crée une nouvelle matrice
 		matrix = new Matrix();
@@ -149,8 +142,18 @@ public class MoteurGraphique extends RelativeLayout {
 		canvas.drawBitmap(bmFond, positionFond.x, positionFond.y, null);
 		canvas.drawBitmap(bmTerrain, positionFond.x, positionFond.y, null);
 		canvas.drawBitmap(bmQaudrillage, positionFond.x, positionFond.y, null);
-		canvas.drawBitmap(bmJoueur1, positionJoueur1.x, positionJoueur1.y, null);
-		canvas.drawBitmap(bmJoueur2, positionJoueur2.x, positionJoueur2.y, null);
+		
+		if (monde != null)
+		{
+			//TODO Stocker les bitmap pour la performance
+			Bitmap bmPerso = prepareBitmap(getResources().getDrawable(Personnage.getIdImage()),
+										Personnage.JOUEUR_WIDTH,
+											Personnage.JOUEUR_WIDTH);
+			for(Personnage p : monde.getListePersonnage())
+			{
+				canvas.drawBitmap(bmPerso, p.getPosition().x, p.getPosition().y, null);
+			}
+		}
 		
 		// Dessins des objets pour le tir
 		if (GameActivity.getMode() == GameActivity.TIR) {
@@ -184,7 +187,7 @@ public class MoteurGraphique extends RelativeLayout {
 			}
 			
 			PointF coinSuperieurGaucheJoueur = transpositionPointSurEcran(positionJoueur1);
-			PointF coinSuperieurDroitJoueur = new PointF(coinSuperieurGaucheJoueur.x + JOUEUR_WIDTH, coinSuperieurGaucheJoueur.y);
+			PointF coinSuperieurDroitJoueur = new PointF(coinSuperieurGaucheJoueur.x + Personnage.JOUEUR_WIDTH, coinSuperieurGaucheJoueur.y);
 			dessinerFleches(coinSuperieurDroitJoueur, canvas, paint, angleBase, distance);
 		}
 	}
@@ -254,8 +257,16 @@ public class MoteurGraphique extends RelativeLayout {
 	public PointF getPointTir() {
 		return pointTir;
 	}
+	
+	public PointF getPositionTouche() {
+		return this.positionTouche;
+	}
 
 	public void setPositionTouche(PointF ptTouche) {
 		this.positionTouche = ptTouche;
+	}
+	
+	public void setMonde(Monde monde) {
+		this.monde = monde;
 	}
 }

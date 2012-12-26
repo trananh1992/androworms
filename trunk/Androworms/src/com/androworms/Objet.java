@@ -1,6 +1,8 @@
 package com.androworms;
 
-public class Objet  {
+import android.graphics.Point;
+
+public abstract class Objet  {
 	private String nom;
 
 	public Objet(String nom) {
@@ -15,4 +17,8 @@ public class Objet  {
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
+	
+	public abstract int getIdImage();
+	
+	public abstract Point getTailleImage();
 }

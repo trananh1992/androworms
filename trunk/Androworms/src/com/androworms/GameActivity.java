@@ -1,6 +1,10 @@
 package com.androworms;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,7 +13,6 @@ import android.widget.Button;
 import android.widget.SlidingDrawer;
 import android.widget.SlidingDrawer.OnDrawerCloseListener;
 import android.widget.SlidingDrawer.OnDrawerOpenListener;
-import android.widget.SlidingDrawer.OnDrawerScrollListener;
 import android.widget.TextView;
 
 
@@ -35,7 +38,20 @@ public class GameActivity extends Activity {
 		setContentView(R.layout.terrain_de_jeu);
 		
 		/* Récupération du layout de fond */
-		MoteurGraphique trl = (MoteurGraphique)findViewById(R.id.trlCarte);
+		MoteurGraphique moteurGraph = (MoteurGraphique)findViewById(R.id.trlCarte);
+		
+		// ZONE DE TEST
+		Monde monde = new Monde(null, moteurGraph);
+		List<Personnage> persos = new ArrayList<Personnage>();
+		Personnage p = new Personnage("toto");
+		p.setPosition(new Point(1500, 980));
+		persos.add(p);
+		p = new Personnage("tux");
+		p.setPosition(new Point(240, 1100));
+		persos.add(p);
+		monde.setListePersonnage(persos);
+		moteurGraph.setMonde(monde);
+		//FIN ZONE DE TEST
 		
 		Button btnTir = (Button)findViewById(R.id.button1);
 		btnTir.setOnClickListener(new OnClickListener() {
