@@ -13,7 +13,7 @@ public class Communication {
 	private Serveur serveurPrimaire;
 	
 	public Communication(boolean hote) {
-		client  = new Client();
+		//client  = new Client();
 		serveurSecondaire = new ServeurSecondaire();
 		if(hote) {
 			serveurPrimaire = new ServeurPrimaire(this);
