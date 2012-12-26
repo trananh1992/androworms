@@ -16,8 +16,13 @@ public class Personnage {
 	 * chapeau 
 	 * accessoire
 	 */
+
+	public static final int JOUEUR_WIDTH = 180;
+	public static final int JOUEUR_HEIGHT = 173;
+	
 	private String nom;
 	private Point position;
+
 
 	
 	public Personnage(String nom) {
@@ -39,5 +44,9 @@ public class Personnage {
 
 	public void setPosition(Point position) {
 		this.position = position;
+	}
+	
+	public static int getIdImage() {
+		return R.drawable.logo_android_robot;
 	}
 }

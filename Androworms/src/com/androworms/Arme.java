@@ -1,7 +1,12 @@
 package com.androworms;
 
+import android.graphics.Point;
+
 public class Arme extends Objet 
 {
+	private static final int ARME_WIDTH = 40;
+	private static final int ARME_HEIGHT = 50;
+	
 	private int portee;
 	private Munition munition;
 	
@@ -26,8 +31,16 @@ public class Arme extends Objet
 		this.munition = munition;
 	}
 
-	
-	
-	
+	@Override
+	public int getIdImage() {
+		//TODO mettre bonne image
+		return R.drawable.hache;
+	}
+
+	@Override
+	public Point getTailleImage() {
+		// TODO 
+		return new Point(ARME_WIDTH, ARME_HEIGHT);
+	}
 
 }
