@@ -1,10 +1,12 @@
 package com.androworms;
 
+import android.graphics.PointF;
+
 public class ObjetSurCarte {
 	private Objet objet;
-	private Position position;
+	private PointF position;
 	
-	public ObjetSurCarte(Objet o, Position p) {
+	public ObjetSurCarte(Objet o, PointF p) {
 		this.objet = o;
 		this.position = p;
 	}
@@ -17,16 +19,11 @@ public class ObjetSurCarte {
 		this.objet = objet;
 	}
 
-	public Position getPosition() {
+	public PointF getPosition() {
 		return position;
 	}
 
-	public void setPosition(Position position) {
+	public void setPosition(PointF position) {
 		this.position = position;
-	}
-	
-	public void setPosition(int x, int y) {
-		position.setX(x);
-		position.setY(y);
 	}
 }
