@@ -12,12 +12,7 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.MotionEvent;
-import android.view.ScaleGestureDetector;
-import android.view.View;
 import android.widget.RelativeLayout;
-
-import com.androworms.R;
 
 /** Ce composant graphique est un RelativeLayout personnalisé pour Androworms.
  * Il dessine tous les objets présents sur la carte

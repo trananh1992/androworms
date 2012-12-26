@@ -135,6 +135,8 @@ public class EvenementJeu
 		return true;
 	}
 	
+	//début d'une session de zoom
+	@Override
 	public boolean onScaleBegin(ScaleGestureDetector detector) {
 		if (GameActivity.getMode() != GameActivity.TIR) {
 			GameActivity.setMode(GameActivity.ZOOM);
@@ -144,6 +146,7 @@ public class EvenementJeu
 		}
 	}
 	
+	//Changement de zoom
 	@Override
 	public boolean onScale(ScaleGestureDetector detector) {
 		if (GameActivity.getMode() == GameActivity.ZOOM) {
@@ -175,6 +178,12 @@ public class EvenementJeu
 		
 	}
 	
+	//A la fin d'une session de zoom
+	@Override
+	public void onScaleEnd(ScaleGestureDetector detector) {
+		GameActivity.setMode(GameActivity.RIEN);
+	}
+	
 	/**
 	 * Fonction qui corrige la translation si elle dépasse
 	 */
@@ -190,7 +199,8 @@ public class EvenementJeu
 		float zoomMinX = (float)Informations.getWidthPixels() / MoteurGraphique.MAP_WIDTH;
 		float zoomMinY = (float)Informations.getHeightPixels() / MoteurGraphique.MAP_HEIGHT;
 		// Valeurs de translation maximum (formule trouvée en testant...)
-		float maxTransX = MoteurGraphique.MAP_WIDTH * (scaleCourant - zoomMinX); //scaleCourant - zoomMin est positif
+		 //scaleCourant - zoomMin est positif
+		float maxTransX = MoteurGraphique.MAP_WIDTH * (scaleCourant - zoomMinX);
 		float maxTransY = MoteurGraphique.MAP_HEIGHT * (scaleCourant - zoomMinY);
 		//Valeur de translation à rajouter pour ne pas que ça dépasse
 		float fixTransX = getFixTrans(transX, maxTransX);
@@ -202,6 +212,8 @@ public class EvenementJeu
 		}
 	}
 	
+	//Retourne la valeur à ajouter à la translation pour qu'elle se trouve bien
+	// entre -transMax et 0
 	private float getFixTrans(float trans, float transMax) {
         //Attention trans est forcement négatif donc il faut qu'il soit entre -transMax et 0
 		if (trans > 0) {
