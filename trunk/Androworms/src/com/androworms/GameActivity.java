@@ -62,9 +62,6 @@ public class GameActivity extends Activity {
 		
 		tv = (TextView)findViewById(R.id.mode_jeu);
 		updateAffichageMode();
-		
-		/** Actions post-construction **/
-		trl.init(this);
 	}
 	
 	public static void updateAffichageMode() {
