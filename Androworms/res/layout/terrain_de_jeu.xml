@@ -147,24 +147,14 @@
 	        </TableLayout>
 		</SlidingDrawer>
 
-		<Button
-		    android:id="@+id/button1"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_alignParentBottom="true"
-		    android:layout_alignParentLeft="true"
-		    android:text="@string/mode_tir" />
-
 		<ToggleButton
 		    android:id="@+id/toggleButton1"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:layout_alignParentBottom="true"
 		    android:layout_alignParentLeft="true"
-		    android:layout_marginLeft="100dp"
-		    android:text="Prochain bouton tir ?"
-		    android:textOff="Mode pas TIR"
-		    android:textOn="Mode Tir" />
+		    android:textOff="@string/mode_tir"
+		    android:textOn="@string/mode_tir" />
 	    
     </RelativeLayout>
 
