@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
@@ -147,12 +148,25 @@ public class MoteurGraphique extends RelativeLayout {
 		{
 			//TODO Stocker les bitmap pour la performance
 			Bitmap bmPerso = prepareBitmap(getResources().getDrawable(Personnage.getIdImage()),
-										Personnage.JOUEUR_WIDTH,
+											Personnage.JOUEUR_WIDTH,
 											Personnage.JOUEUR_WIDTH);
+			Bitmap bmObj;
+			
 			for(Personnage p : monde.getListePersonnage())
 			{
 				canvas.drawBitmap(bmPerso, p.getPosition().x, p.getPosition().y, null);
 			}
+			
+			for(ObjetSurCarte objSurCarte : monde.getListeObjetCarte())
+			{
+				Objet obj = objSurCarte.getObjet();
+				Point taille = obj.getTailleImage();
+				bmObj = prepareBitmap(getResources().getDrawable(obj.getIdImage()),
+										taille.x,
+										taille.y);
+				canvas.drawBitmap(bmObj, objSurCarte.getPosition().x, objSurCarte.getPosition().y, null);
+			}
+			
 		}
 		
 		// Dessins des objets pour le tir

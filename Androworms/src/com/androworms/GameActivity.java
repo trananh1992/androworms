@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.graphics.Point;
+import android.graphics.PointF;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -50,6 +51,13 @@ public class GameActivity extends Activity {
 		p.setPosition(new Point(240, 1100));
 		persos.add(p);
 		monde.setListePersonnage(persos);
+		List<ObjetSurCarte> objs = new ArrayList<ObjetSurCarte>();
+		Objet o = new Arme("truc", null, 0);
+		ObjetSurCarte obj = new ObjetSurCarte(o, new PointF(100,200));
+		objs.add(obj);
+		obj = new ObjetSurCarte(o, new PointF(500, 1000));
+		objs.add(obj);
+		monde.setListeObjetCarte(objs);
 		moteurGraph.setMonde(monde);
 		//FIN ZONE DE TEST
 		
