@@ -12,7 +12,6 @@ import android.widget.SlidingDrawer.OnDrawerOpenListener;
 import android.widget.SlidingDrawer.OnDrawerScrollListener;
 import android.widget.TextView;
 
-import com.androworms.ui.TouchRelativeLayout;
 
 public class GameActivity extends Activity {
 	
@@ -36,7 +35,7 @@ public class GameActivity extends Activity {
 		setContentView(R.layout.terrain_de_jeu);
 		
 		/* Récupération du layout de fond */
-		TouchRelativeLayout trl = (TouchRelativeLayout)findViewById(R.id.trlCarte);
+		MoteurGraphique trl = (MoteurGraphique)findViewById(R.id.trlCarte);
 		
 		Button btnTir = (Button)findViewById(R.id.button1);
 		btnTir.setOnClickListener(new OnClickListener() {
