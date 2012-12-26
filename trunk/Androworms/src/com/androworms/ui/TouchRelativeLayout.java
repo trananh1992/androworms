@@ -46,7 +46,8 @@ public class TouchRelativeLayout extends RelativeLayout {
 	private static final int COEFF_ACCELERATION = 3;
 	
 	//Constantes qui servent pour dessiner un tir en cours
-	private static final int EPAISSEUR_FLECHE_TIR = 10;
+	private static final int EPAISSEUR_FLECHE_TIR = 30;
+	private static final int EPAISSEUR_ONDE_TIR = 10;
 	private static final float ANGLE_ONDE_TIR = 30f;
 	private static final int ANGLE_DEMITOUR = 180;
 	private static final int INCREMENT_ONDE_TIR = 20;
@@ -75,9 +76,10 @@ public class TouchRelativeLayout extends RelativeLayout {
 	private ScaleGestureDetector mScaleDetector;
 	private float scaleCourant;
 	private Matrix matrix;
-	private float zoomMin; //zoom qui permet de ne pas afficher de bordures
-	private float zoomMax; //zoom qui dépend de zoomMin
-	private float zoomDebut; //valeur de zoom initiale
+	//zoom qui permet de ne pas afficher de bordures
+	private float zoomMin;
+	//zoom qui dépend de zoomMin
+	private float zoomMax; 
 	
 	// TIR
 	private PointF pointTir;
@@ -109,7 +111,6 @@ public class TouchRelativeLayout extends RelativeLayout {
 		zoomMin = Math.max((float)Informations.getWidthPixels() / MAP_WIDTH,
 				(float)Informations.getHeightPixels() / MAP_HEIGHT);
 		zoomMax = zoomMin * ZOOM_MAX_MULT;
-		zoomDebut = zoomMin * ZOOM_DEBUT_MULT;
 		
 		GameActivity.setMode(GameActivity.RIEN);
 		this.setWillNotDraw(false);
@@ -130,7 +131,7 @@ public class TouchRelativeLayout extends RelativeLayout {
 		
 		/* scale detector */
 		mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
-		scaleCourant = zoomDebut;
+		scaleCourant = zoomMin * ZOOM_DEBUT_MULT;
 		
 		//on crée une nouvelle matrice à laquelle on attribue tout de suite le zoom initial
 		//TODO changer 0 0 par les coordonées qu'on souhaite afficher
@@ -249,7 +250,7 @@ public class TouchRelativeLayout extends RelativeLayout {
 	private void fixTrans() {
 
 		//On cherches les translations en x et y voulus par le reste du programme
-		float[] m = new float[9];
+		float[] m = new float[TAILLE_MATRIX];
 		matrix.getValues(m);
 		float transX = m[Matrix.MTRANS_X];
 		float transY = m[Matrix.MTRANS_Y];
@@ -314,7 +315,7 @@ public class TouchRelativeLayout extends RelativeLayout {
 					
 			// Mise en place des outils de dessins
 			Paint paint = new Paint();
-			paint.setStrokeWidth(EPAISSEUR_FLECHE_TIR);
+			paint.setStrokeWidth(EPAISSEUR_ONDE_TIR);
 			paint.setAntiAlias(true);
 			paint.setStrokeCap(Paint.Cap.ROUND);
 			paint.setStyle(Paint.Style.STROKE);
@@ -333,7 +334,9 @@ public class TouchRelativeLayout extends RelativeLayout {
 				canvas.drawArc(rect, angle, ANGLE_ONDE_TIR, false, paint);
 			}
 			
-			dessinerFleches(canvas, paint, angleBase, distance);
+			PointF coinSuperieurGaucheJoueur = transpositionPointSurEcran(positionJoueur1);
+			PointF coinSuperieurDroitJoueur = new PointF(coinSuperieurGaucheJoueur.x + JOUEUR_WIDTH, coinSuperieurGaucheJoueur.y);
+			dessinerFleches(coinSuperieurDroitJoueur, canvas, paint, angleBase, distance);
 		}
 	}
 	
@@ -342,9 +345,7 @@ public class TouchRelativeLayout extends RelativeLayout {
 	 * @param paint
 	 * @param distance
 	 */
-	public void dessinerFleches(Canvas canvas, Paint paint, float angleBase, float distance) {
-		PointF coinSuperieurGaucheJoueur = transpositionPointSurEcran(positionJoueur1);
-		PointF coinSuperieurDroitJoueur = new PointF(coinSuperieurGaucheJoueur.x + JOUEUR_WIDTH, coinSuperieurGaucheJoueur.y);
+	public void dessinerFleches(PointF depart, Canvas canvas, Paint paint, float angleBase, float distance) {
 		
 		// flèche de tir sur le bonhomme
 		if (distance >= COULEUR_MAXIMUM / INCREMENT_COULEUR ) {
@@ -352,14 +353,14 @@ public class TouchRelativeLayout extends RelativeLayout {
 		} else {
 			paint.setColor(Color.rgb(COULEUR_MAXIMUM, COULEUR_MAXIMUM-(int)(distance * INCREMENT_COULEUR),0));
 		}
-		paint.setStrokeWidth(30);
+		paint.setStrokeWidth(EPAISSEUR_FLECHE_TIR);
 		
 		//Extrémité de la flèche
 		PointF finFleche = new PointF();
-		finFleche.x = (float) (distance * Math.cos(Math.toRadians(angleBase))) + coinSuperieurDroitJoueur.x;
-		finFleche.y = (float) (distance * Math.sin(Math.toRadians(angleBase))) + coinSuperieurDroitJoueur.y;
+		finFleche.x = (float) (distance * Math.cos(Math.toRadians(angleBase))) + depart.x;
+		finFleche.y = (float) (distance * Math.sin(Math.toRadians(angleBase))) + depart.y;
 		// On dessine la grande ligne
-		canvas.drawLine(coinSuperieurDroitJoueur.x, coinSuperieurDroitJoueur.y, finFleche.x, finFleche.y, paint);
+		canvas.drawLine(depart.x, depart.y, finFleche.x, finFleche.y, paint);
 
 		// Petits traits aux bouts de la flèche
 		PointF ptFleche1  = new PointF(); 

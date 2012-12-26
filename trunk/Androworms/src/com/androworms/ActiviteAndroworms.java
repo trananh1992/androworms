@@ -22,6 +22,8 @@ public class ActiviteAndroworms extends Activity {
 	public static final int REQUEST_CONNECT_DEVICE = 2;
 	public static final int REQUEST_CAM = 3;
 	
+	private static final String RETOUR_LIGNE_HTML = "<br/>";
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -37,7 +39,7 @@ public class ActiviteAndroworms extends Activity {
 		StringBuffer buf = new StringBuffer();
 		for (int i=0;i<listeDev.length;i++) {
 			buf.append(listeDev[i]);
-			buf.append("<br/>");
+			buf.append(RETOUR_LIGNE_HTML);
 		}
 		String txtDev = buf.toString();
 		TextView tvDevelopers;
