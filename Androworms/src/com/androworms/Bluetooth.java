@@ -1,6 +1,7 @@
 package com.androworms;
 
-import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothAdapter;
+
 
 /*
  * Cette classe inclue toutes les informations pour contacter
@@ -8,8 +9,10 @@ import android.bluetooth.BluetoothDevice;
  */
 public class Bluetooth extends Contact {
 
-	public Bluetooth(BluetoothDevice device) {
-		super(device);
+	public Bluetooth(String adresse) {
+		super();
+		BluetoothAdapter ba = BluetoothAdapter.getDefaultAdapter();
+		init(ba, adresse);
 		// TODO Auto-generated constructor stub
 	}
 

@@ -4,12 +4,12 @@ package com.androworms;
 public class Client extends Connexion{
 	
 	// Ce contact communique seulement avec le serveur primaire 
-	private Contact contactServeurPrimaire;
+	private Contact contactServeur;
 	
 	// Pour un serveur primaire local.
 	public Client()
 	{
-		contactServeurPrimaire = new Localhost();
+		contactServeur = new Localhost();
 	}
 	
 	// Pour un serveur primaire distant. 
@@ -18,23 +18,23 @@ public class Client extends Connexion{
 		super();
 	}
 
-	public Client(Contact contactServeurPrimaire) {
+	public Client(Contact contactServeur) {
 		super();
-		this.contactServeurPrimaire = contactServeurPrimaire;
+		this.contactServeur = contactServeur;
 	}
 
-	public Contact getContactServeurPrimaire() {
-		return contactServeurPrimaire;
+	public Contact getContactServeur() {
+		return contactServeur;
 	}
 
-	public void setContactServeurPrimaire(Contact contactServeurPrimaire) {
-		this.contactServeurPrimaire = contactServeurPrimaire;
+	public void setContactServeur(Contact contactServeur) {
+		this.contactServeur = contactServeur;
 	}
 
 	public void deplacementJoueurDroite(String nomPersonnage)
 	{
-		// ENvoie d'une requete au serveurPrimaire 
-		// LE texte "droite <NomPersonnage>"
+		// ENvoie d'une requete au serveur
+		// LE texte "D D <NomPersonnage>" pour "Deplacement Droite <NomPersonnage>"
 	}
 	
 }
