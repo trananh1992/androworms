@@ -12,7 +12,7 @@ import android.view.View.OnTouchListener;
 public class EvenementJeu 
 	extends ScaleGestureDetector.SimpleOnScaleGestureListener 
 	implements OnTouchListener  {
-
+	
 	private static final String TAG = "Androworms.EvenementJeu";
 	
 	private static final int TAILLE_MATRIX = 9;
@@ -50,7 +50,7 @@ public class EvenementJeu
 		//TODO changer 0 0 par les coordonées qu'on souhaite afficher
 		mg.getMatrice().postScale(scaleCourant, scaleCourant, 0, 0);
 	}
-
+	
 	public boolean onTouch(View v, MotionEvent event) {
 		
 		positionAncienneTouche.set(positionNouvelleTouche);
@@ -135,7 +135,7 @@ public class EvenementJeu
 		return true;
 	}
 	
-	//début d'une session de zoom
+	// Début d'une session de zoom
 	@Override
 	public boolean onScaleBegin(ScaleGestureDetector detector) {
 		if (GameActivity.getMode() != GameActivity.TIR) {
@@ -146,7 +146,7 @@ public class EvenementJeu
 		}
 	}
 	
-	//Changement de zoom
+	// Changement de zoom
 	@Override
 	public boolean onScale(ScaleGestureDetector detector) {
 		if (GameActivity.getMode() == GameActivity.ZOOM) {
@@ -178,18 +178,16 @@ public class EvenementJeu
 		
 	}
 	
-	//A la fin d'une session de zoom
+	// A la fin d'une session de zoom
 	@Override
 	public void onScaleEnd(ScaleGestureDetector detector) {
 		GameActivity.setMode(GameActivity.RIEN);
 	}
 	
-	/**
-	 * Fonction qui corrige la translation si elle dépasse
+	/** Fonction qui corrige la translation si elle dépasse
 	 */
 	private void fixTrans() {
-
-		//On cherches les translations en x et y voulus par le reste du programme
+		// On cherches les translations en x et y voulus par le reste du programme
 		float[] m = new float[TAILLE_MATRIX];
 		this.moteurGraph.getMatrice().getValues(m);
 		float transX = m[Matrix.MTRANS_X];
@@ -227,5 +225,4 @@ public class EvenementJeu
         //Ca dépasse pas
         return 0;
 	}
-	
 }

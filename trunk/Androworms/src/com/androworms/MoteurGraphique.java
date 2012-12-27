@@ -17,13 +17,13 @@ import android.widget.RelativeLayout;
 
 /** Ce composant graphique est un RelativeLayout personnalisé pour Androworms.
  * Il dessine tous les objets présents sur la carte
- * Il permet d'être zoomé et déplacer ce qui a pour effet de zoomer et déplacer tous les composants "ImageView" enfants de ce Layout.
+ * Il permet d'être zoomé et déplacé ce qui a pour effet de zoomer et déplacer tous les composants "ImageView" enfants de ce Layout.
  */
 public class MoteurGraphique extends RelativeLayout {
 	
 	private static final String TAG = "Androworms.MoteurGraphique";
 	
-	/* Constantes de tailles des composants*/
+	/* Constantes de tailles des composants */
 	public static final int MAP_WIDTH = 2560;
 	public static final int MAP_HEIGHT = 1440;
 	
@@ -56,7 +56,7 @@ public class MoteurGraphique extends RelativeLayout {
 	// Images pour le jeu
 	private Bitmap bmFond;
 	private Bitmap bmTerrain;
-	private Bitmap bmQaudrillage;
+	private Bitmap bmQuadrillage;
 	
 	//Matrice qui gère le zoom et la translation d'une image
 	private Matrix matrix;
@@ -103,7 +103,7 @@ public class MoteurGraphique extends RelativeLayout {
 		/* Bitmap */
 		bmFond = prepareBitmap(getResources().getDrawable(R.drawable.image_fond_640x360), MAP_WIDTH, MAP_HEIGHT);
 		bmTerrain = prepareBitmap(getResources().getDrawable(R.drawable.terrain_jeu_defaut_640x360), MAP_WIDTH, MAP_HEIGHT);
-		bmQaudrillage = prepareBitmap(getResources().getDrawable(R.drawable.image_quadrillage_640x360), MAP_WIDTH, MAP_HEIGHT);
+		bmQuadrillage = prepareBitmap(getResources().getDrawable(R.drawable.image_quadrillage_640x360), MAP_WIDTH, MAP_HEIGHT);
 		
 		//on crée une nouvelle matrice
 		matrix = new Matrix();
@@ -125,27 +125,25 @@ public class MoteurGraphique extends RelativeLayout {
 		drawable.draw(canvas);
 		return bitmap;
 	}
-	
-	
-	
+		
 	@Override
 	protected void onDraw(Canvas canvas) {
 		
 	}
-	
 	
 	@Override
 	protected void dispatchDraw(Canvas canvas) {
 		// Application de la matrice avec la translation et le zoom
 		canvas.setMatrix(matrix);
 		
-		// Dessins des objets du jeu
+		// Dessin des objets du jeu
 		canvas.drawBitmap(bmFond, positionFond.x, positionFond.y, null);
 		canvas.drawBitmap(bmTerrain, positionFond.x, positionFond.y, null);
-		canvas.drawBitmap(bmQaudrillage, positionFond.x, positionFond.y, null);
 		
-		if (monde != null)
-		{
+		// Dessin du quadrillage pour les tests
+		canvas.drawBitmap(bmQuadrillage, positionFond.x, positionFond.y, null);
+		
+		if (monde != null) {
 			//TODO Stocker les bitmap pour la performance
 			Bitmap bmPerso = prepareBitmap(getResources().getDrawable(Personnage.getIdImage()),
 											Personnage.JOUEUR_WIDTH,
@@ -161,15 +159,12 @@ public class MoteurGraphique extends RelativeLayout {
 			{
 				Objet obj = objSurCarte.getObjet();
 				Point taille = obj.getTailleImage();
-				bmObj = prepareBitmap(getResources().getDrawable(obj.getIdImage()),
-										taille.x,
-										taille.y);
+				bmObj = prepareBitmap(getResources().getDrawable(obj.getIdImage()), taille.x, taille.y);
 				canvas.drawBitmap(bmObj, objSurCarte.getPosition().x, objSurCarte.getPosition().y, null);
 			}
-			
 		}
 		
-		// Dessins des objets pour le tir
+		// Dessin des objets pour le tir
 		if (GameActivity.getMode() == GameActivity.TIR) {
 			// Pour le tir, on a pas de translation ni de zoom
 			Matrix m = new Matrix();
@@ -249,9 +244,11 @@ public class MoteurGraphique extends RelativeLayout {
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 	}
 	
-
-	private PointF transpositionPointSurEcran(PointF pt)
-	{
+	/** Retourne les coordonnées d'un point avec la translation et le zoom associé.
+	 * @param pt : Point de l'objet relative à la carte
+	 * @return : Point de l'objet relative à l'écran
+	 */
+	private PointF transpositionPointSurEcran(PointF pt) {
 		float[] mm = new float[TAILLE_MATRIX];
 		matrix.getValues(mm);
 		float transX = mm[Matrix.MTRANS_X];
@@ -263,11 +260,11 @@ public class MoteurGraphique extends RelativeLayout {
 		
 		return result;
 	}
-
+	
 	public Matrix getMatrice() {
 		return matrix;
 	}
-
+	
 	public PointF getPointTir() {
 		return pointTir;
 	}
@@ -275,7 +272,7 @@ public class MoteurGraphique extends RelativeLayout {
 	public PointF getPositionTouche() {
 		return this.positionTouche;
 	}
-
+	
 	public void setPositionTouche(PointF ptTouche) {
 		this.positionTouche = ptTouche;
 	}
