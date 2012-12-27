@@ -101,9 +101,15 @@ public class MoteurGraphique extends RelativeLayout {
 		positionJoueur1 = new PointF(80, 470);
 		
 		/* Bitmap */
-		bmFond = prepareBitmap(getResources().getDrawable(R.drawable.image_fond_640x360), MAP_WIDTH, MAP_HEIGHT);
-		bmTerrain = prepareBitmap(getResources().getDrawable(R.drawable.terrain_jeu_defaut_640x360), MAP_WIDTH, MAP_HEIGHT);
-		bmQuadrillage = prepareBitmap(getResources().getDrawable(R.drawable.image_quadrillage_640x360), MAP_WIDTH, MAP_HEIGHT);
+		try {
+			bmFond = prepareBitmap(getResources().getDrawable(R.drawable.image_fond_640x360), MAP_WIDTH, MAP_HEIGHT);
+			bmTerrain = prepareBitmap(getResources().getDrawable(R.drawable.terrain_jeu_defaut_640x360), MAP_WIDTH, MAP_HEIGHT);
+			bmQuadrillage = prepareBitmap(getResources().getDrawable(R.drawable.image_quadrillage_640x360), MAP_WIDTH, MAP_HEIGHT);
+		} catch(OutOfMemoryError e)
+		{
+			Log.e(TAG, "Erreur de chargement les bitmaps sont trop lourds");
+			//TODO terminer ou dire quelque chose...
+		}
 		
 		//on crée une nouvelle matrice
 		matrix = new Matrix();
@@ -259,6 +265,16 @@ public class MoteurGraphique extends RelativeLayout {
 		PointF result = new PointF(pt.x  * scaleX + transX, pt.y  * scaleY + transY);
 		
 		return result;
+	}
+	
+	/**
+	 * Libère les bitmap pour libérer de la mémoire
+	 */
+	public void nettoyer()
+	{
+		this.bmFond.recycle();
+		this.bmQuadrillage.recycle();
+		this.bmTerrain.recycle();
 	}
 	
 	public Matrix getMatrice() {

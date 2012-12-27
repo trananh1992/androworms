@@ -89,6 +89,16 @@ public class GameActivity extends Activity {
 		updateAffichageMode();
 	}
 	
+	
+	/* Appelée quand l'activité n'est plus affichée
+	 */
+	protected void onStop() {
+		super.onStop();
+		Log.v(TAG, "GameActivity stop");
+		MoteurGraphique moteurGraph = (MoteurGraphique)findViewById(R.id.trlCarte);
+		moteurGraph.nettoyer();
+	}
+	
 	public static void updateAffichageMode() {
 		if (tv != null) {
 			switch (mode) {
