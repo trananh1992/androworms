@@ -8,9 +8,6 @@ import android.graphics.Point;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.SlidingDrawer;
@@ -19,10 +16,9 @@ import android.widget.SlidingDrawer.OnDrawerOpenListener;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-
 public class GameActivity extends Activity {
 	
-	private static final String TAG = "TESTAndroworms.MainActivity";
+	private static final String TAG = "TESTAndroworms.GameActivity";
 	
 	/* Etats possible pour le mode de gestion des doigts */
 	private static int mode;
@@ -64,6 +60,7 @@ public class GameActivity extends Activity {
 		moteurGraph.setMonde(monde);
 		//FIN ZONE DE TEST
 		
+		/* Mode TIR */
 		ToggleButton tgb = (ToggleButton)findViewById(R.id.toggleButton1);
 		tgb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -75,7 +72,7 @@ public class GameActivity extends Activity {
 			}
 		});
 		
-		
+		/* Selecteur d'armes */
 		SlidingDrawer sd = (SlidingDrawer)findViewById(R.id.slidingDrawer1);
 		sd.setOnDrawerOpenListener(new OnDrawerOpenListener() {
 			public void onDrawerOpened() {
@@ -115,11 +112,11 @@ public class GameActivity extends Activity {
 			}
 		}
 	}
-
+	
 	public static int getMode() {
 		return mode;
 	}
-
+	
 	public static void setMode(int mode) {
 		GameActivity.mode = mode;
 		updateAffichageMode();

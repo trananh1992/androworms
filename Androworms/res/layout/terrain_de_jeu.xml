@@ -37,7 +37,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="TextView" />
+            android:layout_marginTop="50dp"
+            android:text="@string/pas_de_donnees" />
         
 		<com.androworms.ui.Paddle
 	        android:id="@+id/paddle1"
@@ -78,18 +79,21 @@
 	                    android:id="@+id/imageView1"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
+	                    android:contentDescription="@string/Armes"
 	                    android:src="@drawable/hache" />
 	
 	                <ImageView
 	                    android:id="@+id/ImageView04"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
+	                    android:contentDescription="@string/Armes"
 	                    android:src="@drawable/hache" />
 	
 	                <ImageView
 	                    android:id="@+id/ImageView03"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
+	                    android:contentDescription="@string/Armes"
 	                    android:src="@drawable/hache" />
 	
 	            </TableRow>
@@ -103,18 +107,21 @@
 	                    android:id="@+id/ImageView07"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
+	                    android:contentDescription="@string/Armes"
 	                    android:src="@drawable/hache" />
 	
 	                <ImageView
 	                    android:id="@+id/ImageView08"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
+	                    android:contentDescription="@string/Armes"
 	                    android:src="@drawable/hache" />
 	
 	                <ImageView
 	                    android:id="@+id/ImageView06"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
+	                    android:contentDescription="@string/Armes"
 	                    android:src="@drawable/hache" />
 	
 	            </TableRow>
@@ -128,18 +135,21 @@
 	                    android:id="@+id/ImageView09"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
+	                    android:contentDescription="@string/Armes"
 	                    android:src="@drawable/hache" />
 	
 	                <ImageView
 	                    android:id="@+id/ImageView10"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
+	                    android:contentDescription="@string/Armes"
 	                    android:src="@drawable/hache" />
 	
 	                <ImageView
 	                    android:id="@+id/ImageView01"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
+	                    android:contentDescription="@string/Armes"
 	                    android:src="@drawable/hache" />
 	
 	            </TableRow>

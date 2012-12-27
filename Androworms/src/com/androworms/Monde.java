@@ -51,21 +51,12 @@ public class Monde {
 		this.listeObjetCarte = listeObjetCarte;
 	}
 	
-	public void ajouterMunition(String nomObjet, int nombre) 
-	{
-		for(int i = 0; i < tousLesObjets.size(); i++)
-		{
+	public void ajouterMunition(String nomObjet, int nombre) {
+		for(int i = 0; i < tousLesObjets.size(); i++) {
 			if(nomObjet.compareTo(tousLesObjets.get(i).getNom()) == 0
-					&& tousLesObjets.get(i) instanceof Arme)
-			{
+					&& tousLesObjets.get(i) instanceof Arme) {
 				((Arme)tousLesObjets.get(i)).getMunition().ajouter(nombre);
 			}
 		}
 	}
 }
-
-
-	
-	
-
-

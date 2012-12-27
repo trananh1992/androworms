@@ -1,7 +1,7 @@
 package com.androworms;
 
 /*
- * Cette classe genere la physique du jeu.
+ * Cette classe génère la physique du jeu.
  * C'est a dire les chutes, projections --> les trajectoires.
  */
 public class MoteurPhysique {
@@ -18,6 +18,4 @@ public class MoteurPhysique {
 		this.mg = mg;
 		this.noyau = noyau;
 	}	
-
 }
-
