@@ -39,9 +39,10 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 	
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
+		
+		/* On attache la vue de fond avec la caméra*/
 		SurfaceView surfaceView;
 		SurfaceHolder surfaceHolder;
-		Log.v(TAG,"Androworms : begining on create");
 		getWindow().setFormat(PixelFormat.TRANSLUCENT);
 		setContentView(R.layout.camera);
 		surfaceView = (SurfaceView)findViewById(R.id.surface);
@@ -49,6 +50,7 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 		surfaceHolder.addCallback(this);
 		surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 		
+		/* Ajout de la gestion de l'évênement sur le bouton */
 		ImageButton close = (ImageButton) findViewById(R.id.takepicture);
 		close.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -58,49 +60,62 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 		Log.v(TAG,"Androworms : ending on create");
 	}
 	
+	/* Début de section des callbacks appelés automatiquement lors de la prise de photo */
 	private Camera.ShutterCallback mShutterCallback = new Camera.ShutterCallback() {
 		public void onShutter() {
-			Log.e(getClass().getSimpleName(), "SHUTTER CALLBACK");
 		}
 	};
 	
+	/* Callback principal, lorsque l'image au format jpeg est disponible (on l'enregistre) */
 	private Camera.PictureCallback mPictureCallbackJpeg = new Camera.PictureCallback() {
 		public void onPictureTaken(byte[] data, Camera c) {
 				try {
+					/* sauvegarde de la photo */
 					FileOutputStream filoutputStream = new FileOutputStream(photoPath);
 					filoutputStream.write(data);
 					filoutputStream.flush();
 					filoutputStream.close();
+					
+					/* Création de l'intent pour passer à l'activité parent l'endroit où est la photo*/
 					Intent i = new Intent();
 					i.putExtra("image", photoPath.getAbsolutePath().toString());
 					setResult(RESULT_OK,i);
+					
+					/* on force la fin de l'activité*/
 					finish();
 				} catch (IOException e) {
 				}
 		}
 	};
-	
+	/* fonction appelée en cas d'appuie sur le bouton de photo */
 	private void takeThePicture () {
 		try {
+			/* on crée le dossier pour stocker la photo */
 			File root = Environment.getExternalStorageDirectory();
 			File androworms = new File(root,"Androworms");
 			boolean status = true;
 			if (!androworms.exists()) {
 				status = androworms.mkdir();
 			}
+			
+			/* échec lors de la création du dossier */
 			if(!status)
 			{
-				Log.e(TAG,"failed to create directory Androworms.");
+				Log.e(TAG,"échec lors de la création du dossier Androworms.");
 				return;
 			}
+			
+			/* création du path complet vers la photo */
 			photoPath = new File(androworms,"maPhoto.jpg");
-			Log.e(TAG,photoPath.getAbsolutePath().toString());
+			
+			/* lancement de la capture de la photo */
 			camera.takePicture(mShutterCallback, null, mPictureCallbackJpeg);
 		} catch(Exception ex ){
 			Log.e(getClass().getSimpleName(), ex.getMessage(), ex);
 		}
 	}
 	
+	/* l'appuie sur la touche DPAD CENTER prend aussi une photo (non testé) */
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if(keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
 			takeThePicture();
@@ -113,12 +128,10 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 	}
 	
 	protected void onResume() {
-		Log.e(getClass().getSimpleName(), "onResume");
 		super.onResume();
 	}
 	
 	protected void onStop() {
-		Log.e(getClass().getSimpleName(), "onStop");
 		super.onStop();
 	}
 	
@@ -132,12 +145,18 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 	}
 	
 	public void surfaceCreated(SurfaceHolder holder) {
-		Log.e(getClass().getSimpleName(), "surfaceCreated");
+		/* la surface de visualisation à été créer, 
+		 * on affiche alors les données de la caméra*/
 		camera = Camera.open();
 		if(camera == null)
 		{
-			Log.e(TAG,"camera est null pas de back camera ?");
+			/* Si l'appareil android ne dispose pas de caméra arrière,
+			 * on ouvre alors la caméra de face */
 			camera = Camera.open(0);
+			
+			
+			/* L'appareil ne dispose probablement pas de caméra, 
+			 * ou alors elle est déjà utilisée */
 			if(null == camera)
 			{
 				finish();
@@ -145,21 +164,21 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 		}
 	}
 	
+	/* La surface à changée (lorsqu'on applique la caméra dessus par exemple) */
 	public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
-		Log.e(getClass().getSimpleName(), "surfaceChanged");
 		if (isPreviewRunning) {
 			camera.stopPreview();
 		}
 		try {
+			/* On a stoppé la caméra le temps de changer la dimension de l'affichage des
+			 * données */
 			camera.setPreviewDisplay(holder);
 			Parameters param = camera.getParameters();
 			List<Size> sizes = param.getSupportedPreviewSizes();
 			for(int i=sizes.size()-1; i>=0 ;i--)
 			{
-				Log.i(TAG,"Picture size "+i+" is "+((Size)sizes.get(i)).width + "x"+((Size)sizes.get(i)).height);
 				if(sizes.get(i).width<=w && sizes.get(i).height<=h)
 				{
-					Log.i(TAG,"this one fit :)");
 					param.setPreviewSize(sizes.get(i).width, sizes.get(i).height);
 			        camera.setParameters(param);
 			        break;
@@ -172,7 +191,6 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 	}
 	
 	public void surfaceDestroyed(SurfaceHolder holder) {
-		Log.e(getClass().getSimpleName(), "surfaceDestroyed");
 		camera.stopPreview();
 		isPreviewRunning = false;
 		camera.release();
@@ -193,12 +211,10 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 		return false;
 	}
 	
+	/* Gestionnaire d'évênement lançant cette activité */
 	public void onClick(View v) {
-		Log.v(TAG,"Androworms : Vous avez cliqué sur cam!");
 		Intent intent = new Intent(this.activiteCreationCarte, ActiviteCamera.class);
-		Log.v(TAG,"Androworms : created intent!");
 		this.activiteCreationCarte.startActivityForResult(intent,TAKE_PICTURE);
-		Log.v(TAG,"Androworms : started activity!");
 		
 	}
 	

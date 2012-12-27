@@ -29,6 +29,8 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 	private int drawAlpha = 0;
 	private int drawSolid = 0;
 	private boolean initializedImageView = false;
+	
+	/* Gestionnaire d'évênement permettant le lancement de cette activité */
 	public void onClick(View arg0) {
 		Intent intent = new Intent(this.activiteMenuPrincipal, ActiviteCreationCarte.class);
 		this.activiteMenuPrincipal.startActivity(intent);
@@ -43,9 +45,9 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		super();
 	}
 	
+	/* Ajout du gestionnaire d'évenement pour les boutons de taille de brosse Alpha */
 	private void setAlphaBrushSizeListener()
 	{
-		/* Ajout du gestionnaire d'évenement pour les boutons de taille de brosse Alpha */
 		OnClickListener brushSizeAlpha = new OnClickListener()
 		{
 			public void onClick(View v) {
@@ -73,9 +75,9 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		findViewById(R.id.alpha_small_brush).setOnClickListener(brushSizeAlpha);
 	}
 	
+	/* Ajout du gestionnaire d'évenement pour le bouton de alpha */
 	private void setAlphaListener()
 	{
-		/* Ajout du gestionnaire d'évenement pour le bouton de alpha */
 		findViewById(R.id.erase_button).setOnClickListener(new OnClickListener()
 		{
 			public void onClick(View v) {
@@ -101,9 +103,9 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		
 	}
 	
+	/* Ajout du gestionnaire d'évenement pour les boutons de taille de brosse Solid */
 	private void setSolidBrushSizeListener()
 	{
-		/* Ajout du gestionnaire d'évenement pour les boutons de taille de brosse Solid */
 		OnClickListener brushSizeSolid = new OnClickListener()
 		{
 			public void onClick(View v) {
@@ -131,9 +133,9 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		findViewById(R.id.draw_small_brush).setOnClickListener(brushSizeSolid);
 	}
 	
+	/* Ajout du gestionnaire d'évenement pour le bouton de Solid */
 	private void setDrawListener()
 	{
-		/* Ajout du gestionnaire d'évenement pour le bouton de Solid */
 		findViewById(R.id.draw).setOnClickListener(new OnClickListener()
 		{
 			public void onClick(View v) {
@@ -174,26 +176,42 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		OnClickListener camCl = new ActiviteCamera(this);
 		findViewById(R.id.TakePicture).setOnClickListener(camCl);
 		
+		/* Ajout des gestionnaires d'évênements pour les boutons de dessins */
 		this.setAlphaListener();
 		this.setDrawListener();
 	}
 	
+	/* initialisation de la surface de dessin avec une image vide */
 	private void initImageView() {
 		ImageView surface = (ImageView) findViewById(R.id.CurrentMap);
 		Bitmap b = Bitmap.createBitmap(surface.getWidth(), surface.getHeight(), Bitmap.Config.ARGB_8888);
 		surface.setImageBitmap(b);
 	}
 	
-	private boolean onTouchAlpha(View surface, MotionEvent event)
+	
+	private boolean drawEvent(View surface, MotionEvent event)
 	{
 		final int factorSize = 20;
-		int size = factorSize*drawAlpha;
+		final int couleurTerre = 0xff9f551e;
+		int size = 0;
+		/* Sélection de la taille de la brosse de dessin */
+		if(drawAlpha != NO_BRUSH)
+		{
+			size = factorSize*drawAlpha;
+		}
+		else
+		{
+			size = factorSize*drawSolid;
+		}
 		int x=0;
 		int y=0;
+		
+		/* récupération de l'image sur laquelle on dessine */
 		Bitmap bitmap = ((BitmapDrawable)((ImageView)surface).getDrawable()).getBitmap();
 		int action = event.getAction();
 		int color;
 		int red,green,blue;
+		/* On ne dessine qu'en cas d'appuie ou de déplacement */
 		switch (action)
 		{
 		case MotionEvent.ACTION_DOWN:
@@ -208,23 +226,35 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		y = (int) event.getY();
 		y = Math.max(0, y);
 		y = Math.min(bitmap.getHeight()-1, y);
+		/* on boucle sur le petit carré de coté "size" autour du doigt */
 		for(int i=(x-size);i<(x+size);i++)
 		{
 			if(i>=0 && i<bitmap.getWidth())
 			{
 				for(int j=(y-size);j<(y+size);j++)
 				{
+					/* On dessine du alpha ou de la terre si on est dans l'image
+					 * et pour sur les points qui forment un cercle de rayon size
+					 * autour du doigt */
 					if(j>=0 && j<bitmap.getHeight() && (Math.sqrt(Math.pow(x-i, 2)+Math.pow(y-j, 2))<size))
 					{
-						color = bitmap.getPixel(i, j);
-						red = Color.red(color);
-						green = Color.green(color);
-						blue = Color.blue(color);
-						bitmap.setPixel(i, j, Color.argb(0,red,green,blue));
+						if(drawAlpha != NO_BRUSH)
+						{
+							color = bitmap.getPixel(i, j);
+							red = Color.red(color);
+							green = Color.green(color);
+							blue = Color.blue(color);
+							bitmap.setPixel(i, j, Color.argb(0,red,green,blue));
+						}
+						else
+						{
+							bitmap.setPixel(i, j, couleurTerre);
+						}
 					}
 				}
 			}
 		}
+		/* On actualise l'image */
 		Bitmap overlay = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), bitmap.getConfig());
 		Canvas c = new Canvas(overlay);
 		c.drawBitmap(bitmap, new Matrix(), null);
@@ -232,50 +262,9 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		return true;
 	}
 	
-	private boolean onTouchSolid(View surface, MotionEvent event)
-	{
-		final int sizeFactor = 20;
-		int size = sizeFactor*drawSolid;
-		int x=0;
-		int y=0;
-		final int couleurTerre = 0xff9f551e;
-		Bitmap bitmap = ((BitmapDrawable)((ImageView)surface).getDrawable()).getBitmap();
-		int action = event.getAction();
-		switch (action)
-		{
-		case MotionEvent.ACTION_DOWN:
-		case MotionEvent.ACTION_MOVE:
-			break;
-		default:
-			return false;
-		}
-		x = (int) event.getX();
-		x = Math.max(0, x);
-		x = Math.min(bitmap.getWidth()-1, x);
-		y = (int) event.getY();
-		y = Math.max(0, y);
-		y = Math.min(bitmap.getHeight()-1, y);
-		for(int i=(x-size);i<(x+size);i++)
-		{
-			if(i>=0 && i<bitmap.getWidth())
-			{
-				for(int j=(y-size);j<(y+size);j++)
-				{
-					if(j>=0 && j<bitmap.getHeight() && (Math.sqrt(Math.pow(x-i, 2)+Math.pow(y-j, 2))<size))
-					{
-						bitmap.setPixel(i, j, couleurTerre);
-					}
-				}
-			}
-		}
-		Bitmap overlay = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), bitmap.getConfig());
-		Canvas c = new Canvas(overlay);
-		c.drawBitmap(bitmap, new Matrix(), null);
-		((ImageView) surface).setImageBitmap(overlay);
-		return true;
-	}
 	
 	public boolean onTouch(View surface, MotionEvent event) {
+		/* Si aucune brosse n'est sélectionnée, on a rien à dessiner */
 		if(drawAlpha == NO_BRUSH && drawSolid == NO_BRUSH)
 		{
 			return false;
@@ -285,30 +274,30 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 			initImageView();
 			initializedImageView = true;
 		}
-		if(drawAlpha != NO_BRUSH)
-		{
-			return onTouchAlpha(surface, event);
-		}
-		else if(drawSolid != NO_BRUSH)
-		{
-			return onTouchSolid(surface, event);
-		}
-		/* Impossible d'arriver ici */
-		return false;
+		return drawEvent(surface,event);
 	}
 	
 	protected void onActivityResult(int requestCode, int resultCode,
             Intent retour) {
+		/* Retour de l'activité fille de prise de photo */
         if ((requestCode == TAKE_PICTURE) && (resultCode == RESULT_OK)) {
-            String photoPath = retour.getStringExtra("image");
+            /* récupération de l'emplacement de stockage de l'image */
+        	String photoPath = retour.getStringExtra("image");
             FileInputStream stream;
+            /* On ouvre l'image */
 			try {
 				stream = new FileInputStream(photoPath);
 				byte data[] = new byte[stream.available()];
 				stream.read(data);
+				
+				/* On met l'image en fond de l'activité */
 				ImageView surface = (ImageView) findViewById(R.id.CurrentMap);
 	            Bitmap b = BitmapFactory.decodeByteArray(data, 0, data.length).copy(Bitmap.Config.ARGB_8888, true);
-	            surface.setImageBitmap(Bitmap.createScaledBitmap(b,surface.getWidth(),surface.getHeight(),false));
+	            Bitmap overlay = Bitmap.createBitmap(surface.getWidth(), surface.getHeight(), b.getConfig());
+	    		Canvas c = new Canvas(overlay);
+	    		c.drawBitmap(b, Math.max(0, (surface.getHeight()-b.getHeight())/2),Math.max(0,(surface.getWidth()-b.getWidth())/2), null);
+	    		((ImageView) surface).setImageBitmap(overlay);
+	            
 	            initializedImageView = true;
 	            stream.close();
 			} catch (FileNotFoundException e) {
