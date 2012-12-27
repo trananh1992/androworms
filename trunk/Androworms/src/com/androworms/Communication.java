@@ -9,22 +9,20 @@ import java.util.List;
  */
 public class Communication {
 	private Client client;
-	private Serveur serveurSecondaire;
-	private Serveur serveurPrimaire;
+	private Serveur serveur;
 	
 	public Communication(boolean hote) {
-		//client  = new Client();
-		serveurSecondaire = new ServeurSecondaire();
+		new ServeurSecondaire();
 		if(hote) {
-			serveurPrimaire = new ServeurPrimaire(this);
+			serveur = new ServeurPrimaire(this);
 		}
 		else {
-			serveurPrimaire = null;
+			serveur = null;
 		}
 	}
 	
-	public void ajouterContactServeurPrimaire(Contact c) {
-		client.setContactServeurPrimaire(c);
+	public void ajouterContactServeur(Contact c) {
+		client.setContactServeur(c);
 	}
 	
 	public void deplacementJoueurDroite(String nomPersonnage) {
