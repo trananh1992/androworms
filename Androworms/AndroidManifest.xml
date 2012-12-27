@@ -27,7 +27,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.androworms.ActiviteCamera" >
+        <activity android:name="com.androworms.ActiviteCamera" android:screenOrientation="landscape">
         </activity>
         <activity android:name="com.androworms.test.TestSlider" >
         </activity>
@@ -36,7 +36,7 @@
             android:label="@string/title_activity_game"
             android:screenOrientation="landscape" >
         </activity>
-        <activity android:name="com.androworms.ActiviteCreationCarte"></activity>
+        <activity android:name="com.androworms.ActiviteCreationCarte" android:screenOrientation="landscape"></activity>
     </application>
 
 </manifest>
