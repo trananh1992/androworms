@@ -7,20 +7,9 @@ public class Client extends Connexion{
 	private Contact contactServeur;
 	
 	// Pour un serveur primaire local.
-	public Client()
-	{
+	public Client(Communication c) {
+		super(c);
 		contactServeur = new Localhost();
-	}
-	
-	// Pour un serveur primaire distant. 
-	public Client(String address)
-	{
-		super();
-	}
-
-	public Client(Contact contactServeur) {
-		super();
-		this.contactServeur = contactServeur;
 	}
 
 	public Contact getContactServeur() {
