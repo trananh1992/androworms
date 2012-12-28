@@ -87,10 +87,23 @@
             android:text="@string/test_camera"
             android:width="100dp" />
 
-        <TextView
-            android:id="@+id/textView2"
+        <Button
+            android:id="@+id/testReseau"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="0.65"
+            android:text="test reseau" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="77dp"
+            android:layout_height="32dp"
             android:text="TextView" />
 
     </LinearLayout>
