@@ -17,6 +17,9 @@ import com.androworms.R;
  */
 public class Paddle extends LinearLayout implements OnTouchListener {
 	
+	private static final int ALPHA_PAS_TRANSPARENT = 255;
+	private static final int ALPHA_SEMI_TRANSPARENT = 128;
+	
 	public Paddle(Context context) {
 		super(context);
 		constructeurPartage(context);
@@ -54,19 +57,19 @@ public class Paddle extends LinearLayout implements OnTouchListener {
 	public boolean onTouch(View v, MotionEvent event) {
 		switch (event.getAction()) {
 			case MotionEvent.ACTION_DOWN:
-				((ImageView)v).setAlpha(128);
+				((ImageView)v).setAlpha(ALPHA_SEMI_TRANSPARENT);
 				break;
 		   case MotionEvent.ACTION_MOVE:
 				// si on bouge et qu'on se retrouve au-dessu du bouton
 				if(event.getX() > 0 && event.getX() < v.getWidth() && event.getY() > 0 && event.getY() < v.getHeight()) {
-					((ImageView)v).setAlpha(128);
+					((ImageView)v).setAlpha(ALPHA_SEMI_TRANSPARENT);
 				}
 				else {
-					((ImageView)v).setAlpha(255);
+					((ImageView)v).setAlpha(ALPHA_PAS_TRANSPARENT);
 				}
 				break;
 			case MotionEvent.ACTION_UP:
-				((ImageView)v).setAlpha(255);
+				((ImageView)v).setAlpha(ALPHA_PAS_TRANSPARENT);
 				break;
 			default:
 				break;
