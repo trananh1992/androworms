@@ -59,4 +59,12 @@ public class Monde {
 			}
 		}
 	}
+	
+	public Personnage getPersonnagePrincipal() {
+		if (this.listePersonnage == null || this.listePersonnage.size() == 0) {
+			return null;
+		} else {
+			return this.listePersonnage.get(0);
+		}
+	}
 }
