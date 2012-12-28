@@ -98,12 +98,13 @@ public class ActiviteAndroworms extends Activity {
 		/* Affiche la vue */
 		setContentView(R.layout.menu_principal);
 		
-		
+		OnClickListener tr = new IHMTestReseau(new Noyau());
 		OnClickListener cl = new ActiviteAndrowormsEvent(this);
 		findViewById(R.id.btn_solo).setOnClickListener(cl);
 		findViewById(R.id.btn_multi).setOnClickListener(cl);
 		findViewById(R.id.btn_menu_score).setOnClickListener(cl);
 		findViewById(R.id.btn_menu_settings).setOnClickListener(cl);
+		findViewById(R.id.testReseau).setOnClickListener(tr);
 		
 		OnClickListener camCl = new ActiviteCreationCarte(this);
 		findViewById(R.id.test_cam).setOnClickListener(camCl);
