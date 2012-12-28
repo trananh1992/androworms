@@ -51,7 +51,6 @@ public class MoteurGraphique extends RelativeLayout {
 	private static final int TAILLE_MATRIX = 9;
 	
 	private PointF positionFond;
-	private PointF positionJoueur1;
 	
 	// Images pour le jeu
 	private Bitmap bmFond;
@@ -98,15 +97,13 @@ public class MoteurGraphique extends RelativeLayout {
 		this.setWillNotDraw(false);
 		this.setClickable(true);
 		positionFond = new PointF(0, 0);
-		positionJoueur1 = new PointF(80, 470);
 		
 		/* Bitmap */
 		try {
 			bmFond = prepareBitmap(getResources().getDrawable(R.drawable.image_fond_640x360), MAP_WIDTH, MAP_HEIGHT);
 			bmTerrain = prepareBitmap(getResources().getDrawable(R.drawable.terrain_jeu_defaut_640x360), MAP_WIDTH, MAP_HEIGHT);
 			bmQuadrillage = prepareBitmap(getResources().getDrawable(R.drawable.image_quadrillage_640x360), MAP_WIDTH, MAP_HEIGHT);
-		} catch(OutOfMemoryError e)
-		{
+		} catch(OutOfMemoryError e) {
 			Log.e(TAG, "Erreur de chargement les bitmaps sont trop lourds");
 			//TODO terminer ou dire quelque chose...
 		}
@@ -153,7 +150,7 @@ public class MoteurGraphique extends RelativeLayout {
 			//TODO Stocker les bitmap pour la performance
 			Bitmap bmPerso = prepareBitmap(getResources().getDrawable(Personnage.getIdImage()),
 											Personnage.JOUEUR_WIDTH,
-											Personnage.JOUEUR_WIDTH);
+											Personnage.JOUEUR_HEIGHT);
 			Bitmap bmObj;
 			
 			for(Personnage p : monde.getListePersonnage())
@@ -201,9 +198,13 @@ public class MoteurGraphique extends RelativeLayout {
 				canvas.drawArc(rect, angle, ANGLE_ONDE_TIR, false, paint);
 			}
 			
-			PointF coinSuperieurGaucheJoueur = transpositionPointSurEcran(positionJoueur1);
-			PointF coinSuperieurDroitJoueur = new PointF(coinSuperieurGaucheJoueur.x + Personnage.JOUEUR_WIDTH, coinSuperieurGaucheJoueur.y);
-			dessinerFleches(coinSuperieurDroitJoueur, canvas, paint, angleBase, distance);
+			PointF positionJoueur = new PointF(monde.getPersonnagePrincipal().getPosition());
+			Log.v(TAG, "le perso principal est à " + positionJoueur.x + "; " + positionJoueur.y);
+			//On place le point au milieu du joueur
+			positionJoueur.offset(Personnage.JOUEUR_WIDTH / 2, Personnage.JOUEUR_HEIGHT / 2);
+			Log.v(TAG, " et le milieu :  " + positionJoueur.x + "; " + positionJoueur.y);
+			//PointF coinSuperieurDroitJoueur = new PointF(coinSuperieurGaucheJoueur.x + Personnage.JOUEUR_WIDTH, coinSuperieurGaucheJoueur.y);
+			dessinerFleches(transpositionPointSurEcran(positionJoueur), canvas, paint, angleBase, distance);
 		}
 	}
 	
@@ -222,12 +223,16 @@ public class MoteurGraphique extends RelativeLayout {
 		}
 		paint.setStrokeWidth(EPAISSEUR_FLECHE_TIR);
 		
+		//La fleche debute en dehors du joueur
+		PointF debutFleche = new PointF();
+		debutFleche.x = (float) (100 * Math.cos(Math.toRadians(angleBase))) + depart.x;
+		debutFleche.y = (float) (100 * Math.sin(Math.toRadians(angleBase))) + depart.y;
 		//Extrémité de la flèche
 		PointF finFleche = new PointF();
 		finFleche.x = (float) (distance * Math.cos(Math.toRadians(angleBase))) + depart.x;
 		finFleche.y = (float) (distance * Math.sin(Math.toRadians(angleBase))) + depart.y;
 		// On dessine la grande ligne
-		canvas.drawLine(depart.x, depart.y, finFleche.x, finFleche.y, paint);
+		canvas.drawLine(debutFleche.x, debutFleche.y, finFleche.x, finFleche.y, paint);
 
 		// Petits traits aux bouts de la flèche
 		PointF ptFleche1  = new PointF(); 
