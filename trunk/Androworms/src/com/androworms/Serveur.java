@@ -7,8 +7,7 @@ import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.util.Log;
 
-public class Serveur extends Connexion implements Runnable
-{
+public class Serveur extends Connexion implements Runnable {
 	private BluetoothServerSocket socketPublique;
 	
 	public Serveur(Communication c) {
@@ -47,8 +46,5 @@ public class Serveur extends Connexion implements Runnable
         	Log.v("Serveur", "Gestion de la socketPublique inefficace!");
         	//Log.v("Serveur", e.getMessage());
         }
-
 	}
-
-
 }

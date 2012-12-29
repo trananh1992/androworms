@@ -69,8 +69,6 @@ public class ActiviteAndroworms extends Activity {
 		Log.v(TAG,"Lancement de l'activité du menu principale");
 		this.setContentView(R.layout.menu_principal);
 		
-		
-		
 		/* Test pour générer une carte à partir d'une photo fixée (path en dur)
 		try {
 			File root = Environment.getExternalStorageDirectory();
@@ -98,6 +96,7 @@ public class ActiviteAndroworms extends Activity {
 		/* Affiche la vue */
 		setContentView(R.layout.menu_principal);
 		
+		/* Evenements */
 		OnClickListener tr = new IHMTestReseau(new Noyau());
 		OnClickListener cl = new ActiviteAndrowormsEvent(this);
 		findViewById(R.id.btn_solo).setOnClickListener(cl);
@@ -108,15 +107,16 @@ public class ActiviteAndroworms extends Activity {
 		
 		OnClickListener camCl = new ActiviteCreationCarte(this);
 		findViewById(R.id.test_cam).setOnClickListener(camCl);
-		
-		
+	}
+	
+	public void afficherInformationsTelephone() {
 		/* Inforamtions sur le téléphone */
 		StringBuffer buf = new StringBuffer();
-		buf.append("Android = " + Informations.getAndroidVersion() + "<br/>");
-		buf.append("<br/>");
-		buf.append("<b>Taille de l'écran</b><br/>");
-		buf.append("WidthPixels = " + Informations.getWidthPixels() + " px<br/>");
-		buf.append("HeightPixels = " + Informations.getHeightPixels() + " px<br/>");
+		buf.append("Android = " + Informations.getAndroidVersion() + RETOUR_LIGNE_HTML);
+		buf.append(RETOUR_LIGNE_HTML);
+		buf.append("<b>Taille de l'écran</b>" + RETOUR_LIGNE_HTML);
+		buf.append("WidthPixels = " + Informations.getWidthPixels() + " px" + RETOUR_LIGNE_HTML);
+		buf.append("HeightPixels = " + Informations.getHeightPixels() + " px" + RETOUR_LIGNE_HTML);
 		buf.append("Taille = ");
 		switch(Informations.getScreenLayoutSizeMask()) {
 		case Configuration.SCREENLAYOUT_SIZE_SMALL:
@@ -135,10 +135,10 @@ public class ActiviteAndroworms extends Activity {
 			buf.append("???");
 			break;
 		}
-		buf.append("<br/>");
-		buf.append("<br/>");
-		buf.append("<b>Densité de l'écran</b><br/>");
-		buf.append("Density = " + Informations.getDensity() + "<br/>");
+		buf.append(RETOUR_LIGNE_HTML);
+		buf.append(RETOUR_LIGNE_HTML);
+		buf.append("<b>Densité de l'écran</b>" + RETOUR_LIGNE_HTML);
+		buf.append("Density = " + Informations.getDensity() + RETOUR_LIGNE_HTML);
 		buf.append("DensityDPI = " + Informations.getDensityDpi() + " dp   (");
 		switch (Informations.getDensityDpi()) {
 		case DisplayMetrics.DENSITY_LOW:
@@ -157,7 +157,7 @@ public class ActiviteAndroworms extends Activity {
 			buf.append("??? -- ???");
 			break;
 		}
-		buf.append(")<br/>");
+		buf.append(")" + RETOUR_LIGNE_HTML);
 		String txtInfo = buf.toString();
 		TextView tv = (TextView)findViewById(R.id.textView2);
 		tv.setText(Html.fromHtml(txtInfo));

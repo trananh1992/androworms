@@ -20,6 +20,8 @@ public class Paddle extends LinearLayout implements OnTouchListener {
 	private static final int ALPHA_PAS_TRANSPARENT = 255;
 	private static final int ALPHA_SEMI_TRANSPARENT = 128;
 	
+	private static final int POSITION_LAYOUT = 128;
+	
 	public Paddle(Context context) {
 		super(context);
 		constructeurPartage(context);
@@ -47,7 +49,7 @@ public class Paddle extends LinearLayout implements OnTouchListener {
 		btnHaut.setOnTouchListener(this);
 		btnDroite.setOnTouchListener(this);
 		
-		LayoutParams paramsLayout = new LinearLayout.LayoutParams(128, 128);
+		LayoutParams paramsLayout = new LinearLayout.LayoutParams(POSITION_LAYOUT, POSITION_LAYOUT);
 		
 		this.addView(btnGauche,paramsLayout);
 		this.addView(btnHaut,paramsLayout);

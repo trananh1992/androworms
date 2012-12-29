@@ -153,13 +153,11 @@ public class MoteurGraphique extends RelativeLayout {
 											Personnage.JOUEUR_HEIGHT);
 			Bitmap bmObj;
 			
-			for(Personnage p : monde.getListePersonnage())
-			{
+			for(Personnage p : monde.getListePersonnage()) {
 				canvas.drawBitmap(bmPerso, p.getPosition().x, p.getPosition().y, null);
 			}
 			
-			for(ObjetSurCarte objSurCarte : monde.getListeObjetCarte())
-			{
+			for(ObjetSurCarte objSurCarte : monde.getListeObjetCarte()) {
 				Objet obj = objSurCarte.getObjet();
 				Point taille = obj.getTailleImage();
 				bmObj = prepareBitmap(getResources().getDrawable(obj.getIdImage()), taille.x, taille.y);
@@ -275,8 +273,7 @@ public class MoteurGraphique extends RelativeLayout {
 	/**
 	 * Libère les bitmap pour libérer de la mémoire
 	 */
-	public void nettoyer()
-	{
+	public void nettoyer() {
 		this.bmFond.recycle();
 		this.bmQuadrillage.recycle();
 		this.bmTerrain.recycle();

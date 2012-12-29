@@ -40,13 +40,13 @@ public class GameActivity extends Activity {
 		/* Récupération du layout de fond */
 		MoteurGraphique moteurGraph = (MoteurGraphique)findViewById(R.id.trlCarte);
 		
-		// ZONE DE TEST
+		// ZONE DE TEST |--> TODO : a déplacer ailleurs !
 		Monde monde = new Monde(null, moteurGraph);
 		List<Personnage> persos = new ArrayList<Personnage>();
-		Personnage p = new Personnage("toto");
+		Personnage p = new Personnage("Toto");
 		p.setPosition(new Point(1500, 980));
 		persos.add(p);
-		p = new Personnage("tux");
+		p = new Personnage("Tux");
 		p.setPosition(new Point(240, 1100));
 		persos.add(p);
 		monde.setListePersonnage(persos);
