@@ -46,23 +46,18 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 	}
 	
 	/* Ajout du gestionnaire d'évenement pour les boutons de taille de brosse Alpha */
-	private void setAlphaBrushSizeListener()
-	{
-		OnClickListener brushSizeAlpha = new OnClickListener()
-		{
+	private void setAlphaBrushSizeListener() {
+		OnClickListener brushSizeAlpha = new OnClickListener() {
 			public void onClick(View v) {
 				drawSolid = NO_BRUSH;
 				drawAlpha = NO_BRUSH;
-				if( v.equals(findViewById(R.id.alpha_small_brush)))
-				{
+				if( v.equals(findViewById(R.id.alpha_small_brush))) {
 					drawAlpha = SMALL_BRUSH;
 				}
-				else if( v.equals(findViewById(R.id.alpha_medium_brush)))
-				{
+				else if( v.equals(findViewById(R.id.alpha_medium_brush))) {
 					drawAlpha = MEDIUM_BRUSH;
 				}
-				else if( v.equals(findViewById(R.id.alpha_big_brush)))
-				{
+				else if( v.equals(findViewById(R.id.alpha_big_brush))) {
 					drawAlpha = BIG_BRUSH;
 				}
 				findViewById(R.id.alpha_small_brush).setVisibility(View.INVISIBLE);
@@ -76,51 +71,41 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 	}
 	
 	/* Ajout du gestionnaire d'évenement pour le bouton de alpha */
-	private void setAlphaListener()
-	{
-		findViewById(R.id.erase_button).setOnClickListener(new OnClickListener()
-		{
+	private void setAlphaListener() {
+		findViewById(R.id.erase_button).setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				findViewById(R.id.draw_small_brush).setVisibility(View.INVISIBLE);
 				findViewById(R.id.draw_medium_brush).setVisibility(View.INVISIBLE);
 				findViewById(R.id.draw_big_brush).setVisibility(View.INVISIBLE);
-				if(findViewById(R.id.alpha_big_brush).getVisibility()==View.VISIBLE)
-				{
+				if(findViewById(R.id.alpha_big_brush).getVisibility()==View.VISIBLE) {
 					findViewById(R.id.alpha_big_brush).setVisibility(View.INVISIBLE);
 					findViewById(R.id.alpha_medium_brush).setVisibility(View.INVISIBLE);
 					findViewById(R.id.alpha_small_brush).setVisibility(View.INVISIBLE);
 					drawAlpha = NO_BRUSH;
 				}
-				else
-				{
+				else {
 					findViewById(R.id.alpha_big_brush).setVisibility(View.VISIBLE);
 					findViewById(R.id.alpha_medium_brush).setVisibility(View.VISIBLE);
 					findViewById(R.id.alpha_small_brush).setVisibility(View.VISIBLE);
 				}
-		}
+			}
 		});
 		this.setAlphaBrushSizeListener();
-		
 	}
 	
 	/* Ajout du gestionnaire d'évenement pour les boutons de taille de brosse Solid */
-	private void setSolidBrushSizeListener()
-	{
-		OnClickListener brushSizeSolid = new OnClickListener()
-		{
+	private void setSolidBrushSizeListener() {
+		OnClickListener brushSizeSolid = new OnClickListener() {
 			public void onClick(View v) {
 				drawSolid = NO_BRUSH;
 				drawAlpha = NO_BRUSH;
-				if( v.equals(findViewById(R.id.draw_small_brush)))
-				{
+				if( v.equals(findViewById(R.id.draw_small_brush))) {
 					drawSolid = SMALL_BRUSH;
 				}
-				else if( v.equals(findViewById(R.id.draw_medium_brush)))
-				{
+				else if( v.equals(findViewById(R.id.draw_medium_brush))) {
 					drawSolid = MEDIUM_BRUSH;
 				}
-				else if( v.equals(findViewById(R.id.draw_big_brush)))
-				{
+				else if( v.equals(findViewById(R.id.draw_big_brush))) {
 					drawSolid = BIG_BRUSH;
 				}
 				findViewById(R.id.draw_big_brush).setVisibility(View.INVISIBLE);
@@ -134,28 +119,24 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 	}
 	
 	/* Ajout du gestionnaire d'évenement pour le bouton de Solid */
-	private void setDrawListener()
-	{
-		findViewById(R.id.draw).setOnClickListener(new OnClickListener()
-		{
+	private void setDrawListener() {
+		findViewById(R.id.draw).setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				findViewById(R.id.alpha_small_brush).setVisibility(View.INVISIBLE);
 				findViewById(R.id.alpha_medium_brush).setVisibility(View.INVISIBLE);
 				findViewById(R.id.alpha_big_brush).setVisibility(View.INVISIBLE);
-				if(findViewById(R.id.draw_big_brush).getVisibility()==View.VISIBLE)
-				{
+				if(findViewById(R.id.draw_big_brush).getVisibility()==View.VISIBLE) {
 					findViewById(R.id.draw_big_brush).setVisibility(View.INVISIBLE);
 					findViewById(R.id.draw_small_brush).setVisibility(View.INVISIBLE);
 					findViewById(R.id.draw_medium_brush).setVisibility(View.INVISIBLE);
 					drawSolid = NO_BRUSH;
 				}
-				else
-				{
+				else {
 					findViewById(R.id.draw_big_brush).setVisibility(View.VISIBLE);
 					findViewById(R.id.draw_small_brush).setVisibility(View.VISIBLE);
 					findViewById(R.id.draw_medium_brush).setVisibility(View.VISIBLE);
 				}
-		}
+			}
 		});
 		this.setSolidBrushSizeListener();
 	}
@@ -195,12 +176,10 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		final int couleurTerre = 0xff9f551e;
 		int size = 0;
 		/* Sélection de la taille de la brosse de dessin */
-		if(drawAlpha != NO_BRUSH)
-		{
+		if(drawAlpha != NO_BRUSH) {
 			size = factorSize*drawAlpha;
 		}
-		else
-		{
+		else {
 			size = factorSize*drawSolid;
 		}
 		int x=0;
@@ -214,11 +193,11 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		/* On ne dessine qu'en cas d'appuie ou de déplacement */
 		switch (action)
 		{
-		case MotionEvent.ACTION_DOWN:
-		case MotionEvent.ACTION_MOVE:
-			break;
-		default:
-			return false;
+			case MotionEvent.ACTION_DOWN:
+			case MotionEvent.ACTION_MOVE:
+				break;
+			default:
+				return false;
 		}
 		x = (int) event.getX();
 		x = Math.max(0, x);
@@ -265,26 +244,23 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 	
 	public boolean onTouch(View surface, MotionEvent event) {
 		/* Si aucune brosse n'est sélectionnée, on a rien à dessiner */
-		if(drawAlpha == NO_BRUSH && drawSolid == NO_BRUSH)
-		{
+		if(drawAlpha == NO_BRUSH && drawSolid == NO_BRUSH) {
 			return false;
 		}
-		if(!initializedImageView)
-		{
+		if(!initializedImageView) {
 			initImageView();
 			initializedImageView = true;
 		}
 		return drawEvent(surface,event);
 	}
 	
-	protected void onActivityResult(int requestCode, int resultCode,
-            Intent retour) {
+	protected void onActivityResult(int requestCode, int resultCode, Intent retour) {
 		/* Retour de l'activité fille de prise de photo */
-        if ((requestCode == TAKE_PICTURE) && (resultCode == RESULT_OK)) {
-            /* récupération de l'emplacement de stockage de l'image */
-        	String photoPath = retour.getStringExtra("image");
-            FileInputStream stream;
-            /* On ouvre l'image */
+		if ((requestCode == TAKE_PICTURE) && (resultCode == RESULT_OK)) {
+			/* récupération de l'emplacement de stockage de l'image */
+			String photoPath = retour.getStringExtra("image");
+			FileInputStream stream;
+			/* On ouvre l'image */
 			try {
 				stream = new FileInputStream(photoPath);
 				byte data[] = new byte[stream.available()];
@@ -292,20 +268,19 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 				
 				/* On met l'image en fond de l'activité */
 				ImageView surface = (ImageView) findViewById(R.id.CurrentMap);
-	            Bitmap b = BitmapFactory.decodeByteArray(data, 0, data.length).copy(Bitmap.Config.ARGB_8888, true);
-	            Bitmap overlay = Bitmap.createBitmap(surface.getWidth(), surface.getHeight(), b.getConfig());
-	    		Canvas c = new Canvas(overlay);
-	    		c.drawBitmap(b, Math.max(0, (surface.getHeight()-b.getHeight())/2),Math.max(0,(surface.getWidth()-b.getWidth())/2), null);
-	    		((ImageView) surface).setImageBitmap(overlay);
-	            
-	            initializedImageView = true;
-	            stream.close();
+				Bitmap b = BitmapFactory.decodeByteArray(data, 0, data.length).copy(Bitmap.Config.ARGB_8888, true);
+				Bitmap overlay = Bitmap.createBitmap(surface.getWidth(), surface.getHeight(), b.getConfig());
+				Canvas c = new Canvas(overlay);
+				c.drawBitmap(b, Math.max(0, (surface.getHeight()-b.getHeight())/2),Math.max(0,(surface.getWidth()-b.getWidth())/2), null);
+				((ImageView) surface).setImageBitmap(overlay);
+				
+				initializedImageView = true;
+				stream.close();
 			} catch (FileNotFoundException e) {
 				finish();
 			} catch (IOException e) {
 				finish();
 			}
-        }
-    }
-
+		}
+	}
 }

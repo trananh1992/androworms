@@ -102,23 +102,23 @@ public class GameActivity extends Activity {
 	public static void updateAffichageMode() {
 		if (tv != null) {
 			switch (mode) {
-			case RIEN:
-				tv.setText("Mode : RIEN");
-				break;
-			case DEPLACEMENT:
-				tv.setText("Mode : DEPLACEMENT");
-				break;
-			case ZOOM:
-				tv.setText("Mode : ZOOM");
-				break;
-			case SELECTION_ARME:
-				tv.setText("Mode : SELECTION_ARME");
-				break;
-			case TIR:
-				tv.setText("Mode : TIR");
-				break;
-			default:
-				break;
+				case RIEN:
+					tv.setText("Mode : RIEN");
+					break;
+				case DEPLACEMENT:
+					tv.setText("Mode : DEPLACEMENT");
+					break;
+				case ZOOM:
+					tv.setText("Mode : ZOOM");
+					break;
+				case SELECTION_ARME:
+					tv.setText("Mode : SELECTION_ARME");
+					break;
+				case TIR:
+					tv.setText("Mode : TIR");
+					break;
+				default:
+					break;
 			}
 		}
 	}

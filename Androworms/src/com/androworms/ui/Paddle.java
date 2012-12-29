@@ -61,7 +61,7 @@ public class Paddle extends LinearLayout implements OnTouchListener {
 			case MotionEvent.ACTION_DOWN:
 				((ImageView)v).setAlpha(ALPHA_SEMI_TRANSPARENT);
 				break;
-		   case MotionEvent.ACTION_MOVE:
+			case MotionEvent.ACTION_MOVE:
 				// si on bouge et qu'on se retrouve au-dessu du bouton
 				if(event.getX() > 0 && event.getX() < v.getWidth() && event.getY() > 0 && event.getY() < v.getHeight()) {
 					((ImageView)v).setAlpha(ALPHA_SEMI_TRANSPARENT);
