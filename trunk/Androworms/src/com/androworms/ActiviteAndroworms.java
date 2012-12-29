@@ -119,21 +119,21 @@ public class ActiviteAndroworms extends Activity {
 		buf.append("HeightPixels = " + Informations.getHeightPixels() + " px" + RETOUR_LIGNE_HTML);
 		buf.append("Taille = ");
 		switch(Informations.getScreenLayoutSizeMask()) {
-		case Configuration.SCREENLAYOUT_SIZE_SMALL:
-			buf.append("SMALL");
-			break;
-		case Configuration.SCREENLAYOUT_SIZE_NORMAL:
-			buf.append("NORMAL");
-			break;
-		case Configuration.SCREENLAYOUT_SIZE_LARGE:
-			buf.append("LARGE");
-			break;
-		case Configuration.SCREENLAYOUT_SIZE_XLARGE:
-			buf.append("XLARGE");
-			break;
-		default:
-			buf.append("???");
-			break;
+			case Configuration.SCREENLAYOUT_SIZE_SMALL:
+				buf.append("SMALL");
+				break;
+			case Configuration.SCREENLAYOUT_SIZE_NORMAL:
+				buf.append("NORMAL");
+				break;
+			case Configuration.SCREENLAYOUT_SIZE_LARGE:
+				buf.append("LARGE");
+				break;
+			case Configuration.SCREENLAYOUT_SIZE_XLARGE:
+				buf.append("XLARGE");
+				break;
+			default:
+				buf.append("???");
+				break;
 		}
 		buf.append(RETOUR_LIGNE_HTML);
 		buf.append(RETOUR_LIGNE_HTML);
@@ -141,21 +141,21 @@ public class ActiviteAndroworms extends Activity {
 		buf.append("Density = " + Informations.getDensity() + RETOUR_LIGNE_HTML);
 		buf.append("DensityDPI = " + Informations.getDensityDpi() + " dp   (");
 		switch (Informations.getDensityDpi()) {
-		case DisplayMetrics.DENSITY_LOW:
-			buf.append("ldpi -- LOW");
-			break;
-		case DisplayMetrics.DENSITY_MEDIUM:
-			buf.append("mdpi -- MEDIUM");
-			break;
-		case DisplayMetrics.DENSITY_HIGH:
-			buf.append("hdpi -- HIGH");
-			break;
-		case DisplayMetrics.DENSITY_XHIGH:
-			buf.append("xhdpi -- XHIGH");
-			break;
-		default:
-			buf.append("??? -- ???");
-			break;
+			case DisplayMetrics.DENSITY_LOW:
+				buf.append("ldpi -- LOW");
+				break;
+			case DisplayMetrics.DENSITY_MEDIUM:
+				buf.append("mdpi -- MEDIUM");
+				break;
+			case DisplayMetrics.DENSITY_HIGH:
+				buf.append("hdpi -- HIGH");
+				break;
+			case DisplayMetrics.DENSITY_XHIGH:
+				buf.append("xhdpi -- XHIGH");
+				break;
+			default:
+				buf.append("??? -- ???");
+				break;
 		}
 		buf.append(")" + RETOUR_LIGNE_HTML);
 		String txtInfo = buf.toString();
@@ -165,24 +165,23 @@ public class ActiviteAndroworms extends Activity {
 	
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		Log.v(TAG,"Nous recevons une réponse d'une activité non Androworms (fonction onActivityResult())");
-		switch (requestCode)
-		{
-		case REQUEST_ENABLE_BT:
-			// On reçois une réponse de l'activation Bluetooth
-			Log.v(TAG,"On reçois une réponse de l'activation Bluetooth (REQUEST_ENABLE_BT)");
-			
-			if (resultCode == Activity.RESULT_OK) {
-				// L'utilisateur a accepté d'activé le Bluetooth
-				Log.v(TAG,"L'utilisateur a dit OK pour l'activation du Bluetooth : Youpii !! on va pouvoir jouer !");
-			}
-			else {
-				// L'utilisateur a refusé d'activer le Bluetooth (ou il s'agit d'une erreur)
-				Log.v(TAG,"L'utilisateur a refusé d'activé le Bluetooth...quelqu'un lui explique que c'est indispensable ? (ou alors il s'agit d'une erreur)");
-			}
-			break;
-		case REQUEST_CONNECT_DEVICE:
-			// Servira à l'Intent de connexion avec ses amis
-			break;
+		switch (requestCode) {
+			case REQUEST_ENABLE_BT:
+				// On reçois une réponse de l'activation Bluetooth
+				Log.v(TAG,"On reçois une réponse de l'activation Bluetooth (REQUEST_ENABLE_BT)");
+				
+				if (resultCode == Activity.RESULT_OK) {
+					// L'utilisateur a accepté d'activé le Bluetooth
+					Log.v(TAG,"L'utilisateur a dit OK pour l'activation du Bluetooth : Youpii !! on va pouvoir jouer !");
+				}
+				else {
+					// L'utilisateur a refusé d'activer le Bluetooth (ou il s'agit d'une erreur)
+					Log.v(TAG,"L'utilisateur a refusé d'activé le Bluetooth...quelqu'un lui explique que c'est indispensable ? (ou alors il s'agit d'une erreur)");
+				}
+				break;
+			case REQUEST_CONNECT_DEVICE:
+				// Servira à l'Intent de connexion avec ses amis
+				break;
 		}
 	}
 }

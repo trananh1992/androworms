@@ -245,7 +245,7 @@ public class MoteurGraphique extends RelativeLayout {
 		path.lineTo(ptFleche1.x, ptFleche1.y);
 		path.moveTo(finFleche.x, finFleche.y);
 		path.lineTo(ptFleche2.x, ptFleche2.y);
-        canvas.drawPath(path, paint);
+		canvas.drawPath(path, paint);
 	}
 	
 	@Override

@@ -69,22 +69,22 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 	/* Callback principal, lorsque l'image au format jpeg est disponible (on l'enregistre) */
 	private Camera.PictureCallback mPictureCallbackJpeg = new Camera.PictureCallback() {
 		public void onPictureTaken(byte[] data, Camera c) {
-				try {
-					/* sauvegarde de la photo */
-					FileOutputStream filoutputStream = new FileOutputStream(photoPath);
-					filoutputStream.write(data);
-					filoutputStream.flush();
-					filoutputStream.close();
-					
-					/* Création de l'intent pour passer à l'activité parent l'endroit où est la photo*/
-					Intent i = new Intent();
-					i.putExtra("image", photoPath.getAbsolutePath().toString());
-					setResult(RESULT_OK,i);
-					
-					/* on force la fin de l'activité*/
-					finish();
-				} catch (IOException e) {
-				}
+			try {
+				/* sauvegarde de la photo */
+				FileOutputStream filoutputStream = new FileOutputStream(photoPath);
+				filoutputStream.write(data);
+				filoutputStream.flush();
+				filoutputStream.close();
+				
+				/* Création de l'intent pour passer à l'activité parent l'endroit où est la photo*/
+				Intent i = new Intent();
+				i.putExtra("image", photoPath.getAbsolutePath().toString());
+				setResult(RESULT_OK,i);
+				
+				/* on force la fin de l'activité*/
+				finish();
+			} catch (IOException e) {
+			}
 		}
 	};
 	/* fonction appelée en cas d'appuie sur le bouton de photo */
@@ -99,8 +99,7 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 			}
 			
 			/* échec lors de la création du dossier */
-			if(!status)
-			{
+			if(!status) {
 				Log.e(TAG,"échec lors de la création du dossier Androworms.");
 				return;
 			}
@@ -136,8 +135,7 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 	}
 	
 	public void requestAutoFocus(Handler handler, int message) {
-		if (camera != null)
-		{
+		if (camera != null) {
 			mAutoFocusHandler = handler;
 			mAutoFocusMessage = message;
 			camera.autoFocus(autoFocusCallback);
@@ -148,8 +146,7 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 		/* la surface de visualisation à été créer, 
 		 * on affiche alors les données de la caméra*/
 		camera = Camera.open();
-		if(camera == null)
-		{
+		if(camera == null) {
 			/* Si l'appareil android ne dispose pas de caméra arrière,
 			 * on ouvre alors la caméra de face */
 			camera = Camera.open(0);
@@ -157,8 +154,7 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 			
 			/* L'appareil ne dispose probablement pas de caméra, 
 			 * ou alors elle est déjà utilisée */
-			if(null == camera)
-			{
+			if(null == camera) {
 				finish();
 			}
 		}
@@ -175,13 +171,11 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 			camera.setPreviewDisplay(holder);
 			Parameters param = camera.getParameters();
 			List<Size> sizes = param.getSupportedPreviewSizes();
-			for(int i=sizes.size()-1; i>=0 ;i--)
-			{
-				if(sizes.get(i).width<=w && sizes.get(i).height<=h)
-				{
+			for(int i=sizes.size()-1; i>=0 ;i--) {
+				if(sizes.get(i).width<=w && sizes.get(i).height<=h) {
 					param.setPreviewSize(sizes.get(i).width, sizes.get(i).height);
-			        camera.setParameters(param);
-			        break;
+					camera.setParameters(param);
+					break;
 				}
 			}
 		} catch (IOException e) {

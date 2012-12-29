@@ -68,67 +68,67 @@ public class EvenementJeu
 		 * (Exemple : doigt A posé sur l'écran (doigt principal) -> doigt B posé sur l'écran -> doigt A levé)
 		 */
 		switch (event.getAction()) {
-		case MotionEvent.ACTION_DOWN:
-			// Action : Appui sur l'écran lorsqu'il n'y a aucun doigt. Ce doigt est donc le doigt principal
-			if (GameActivity.getMode() == GameActivity.RIEN) {
-				GameActivity.setMode(GameActivity.DEPLACEMENT);
-			} else {
-				this.moteurGraph.getPointTir().set(positionNouvelleTouche);
-			}
-			positionAncienneTouche = new PointF(-1, -1);
-			break;
-		
-		case MotionEvent.ACTION_POINTER_DOWN:
-			// Action : Lorsque l'on a un ou plusieurs doigt sur l'écran (et pas le doigt principal) et qu'on appuie avec un doigt
-			if (GameActivity.getMode() == GameActivity.RIEN) {
-				GameActivity.setMode(GameActivity.DEPLACEMENT);
-			} else {
-				this.moteurGraph.getPointTir().set(positionNouvelleTouche);
-			}
-			positionAncienneTouche = new PointF(-1, -1);
-			break;
-		case MotionEvent.ACTION_MOVE:
-			// Action : Un doigt sur l'écran qui bouge
-			if (GameActivity.getMode() == GameActivity.DEPLACEMENT) {
-				// En mode déplacement, position_ancienne_touche n'est jamais égale à -1 sinon erreur
-				
-				float tempX, tempY;
-				
-				tempX = positionNouvelleTouche.x - positionAncienneTouche.x;
-				tempY = positionNouvelleTouche.y - positionAncienneTouche.y;
-				
-				// Accelérer le déplacement quand on fait de grands mouvement ! (à paramètrer plus finement !)
-				if (Math.abs(tempX) > MoteurGraphique.NB_PIXELS_ACCELERATION) {
-					tempX *= MoteurGraphique.COEFF_ACCELERATION;
+			case MotionEvent.ACTION_DOWN:
+				// Action : Appui sur l'écran lorsqu'il n'y a aucun doigt. Ce doigt est donc le doigt principal
+				if (GameActivity.getMode() == GameActivity.RIEN) {
+					GameActivity.setMode(GameActivity.DEPLACEMENT);
+				} else {
+					this.moteurGraph.getPointTir().set(positionNouvelleTouche);
 				}
-				if (Math.abs(tempY) > MoteurGraphique.NB_PIXELS_ACCELERATION) {
-					tempY *= MoteurGraphique.COEFF_ACCELERATION;
-				}
-				
-				this.moteurGraph.getMatrice().postTranslate(tempX, tempY);
+				positionAncienneTouche = new PointF(-1, -1);
+				break;
 			
-				fixTrans();
-			}
-			break;
-		case MotionEvent.ACTION_UP:
-			// Action : Lever du seul doigt sur l'écran. Ce doigt était donc le doigt principal
-			if (GameActivity.getMode() == GameActivity.DEPLACEMENT) {
-				GameActivity.setMode(GameActivity.RIEN);
-			}
-			positionAncienneTouche = new PointF(-1, -1);
-			break;
-		
-		case MotionEvent.ACTION_POINTER_UP:
-			// Action : lorsque que l'on a plusieurs doigts sur l'écran et que l'on lève le doigt principal
-			if (GameActivity.getMode() == GameActivity.DEPLACEMENT) {
-				GameActivity.setMode(GameActivity.RIEN);
-			} else {
-				// TODO : appel de la fonction de calcul du tir
-			}
-			positionAncienneTouche = new PointF(-1, -1);
-			break;
-		default:
-			break;
+			case MotionEvent.ACTION_POINTER_DOWN:
+				// Action : Lorsque l'on a un ou plusieurs doigt sur l'écran (et pas le doigt principal) et qu'on appuie avec un doigt
+				if (GameActivity.getMode() == GameActivity.RIEN) {
+					GameActivity.setMode(GameActivity.DEPLACEMENT);
+				} else {
+					this.moteurGraph.getPointTir().set(positionNouvelleTouche);
+				}
+				positionAncienneTouche = new PointF(-1, -1);
+				break;
+			case MotionEvent.ACTION_MOVE:
+				// Action : Un doigt sur l'écran qui bouge
+				if (GameActivity.getMode() == GameActivity.DEPLACEMENT) {
+					// En mode déplacement, position_ancienne_touche n'est jamais égale à -1 sinon erreur
+					
+					float tempX, tempY;
+					
+					tempX = positionNouvelleTouche.x - positionAncienneTouche.x;
+					tempY = positionNouvelleTouche.y - positionAncienneTouche.y;
+					
+					// Accelérer le déplacement quand on fait de grands mouvement ! (à paramètrer plus finement !)
+					if (Math.abs(tempX) > MoteurGraphique.NB_PIXELS_ACCELERATION) {
+						tempX *= MoteurGraphique.COEFF_ACCELERATION;
+					}
+					if (Math.abs(tempY) > MoteurGraphique.NB_PIXELS_ACCELERATION) {
+						tempY *= MoteurGraphique.COEFF_ACCELERATION;
+					}
+					
+					this.moteurGraph.getMatrice().postTranslate(tempX, tempY);
+				
+					fixTrans();
+				}
+				break;
+			case MotionEvent.ACTION_UP:
+				// Action : Lever du seul doigt sur l'écran. Ce doigt était donc le doigt principal
+				if (GameActivity.getMode() == GameActivity.DEPLACEMENT) {
+					GameActivity.setMode(GameActivity.RIEN);
+				}
+				positionAncienneTouche = new PointF(-1, -1);
+				break;
+			
+			case MotionEvent.ACTION_POINTER_UP:
+				// Action : lorsque que l'on a plusieurs doigts sur l'écran et que l'on lève le doigt principal
+				if (GameActivity.getMode() == GameActivity.DEPLACEMENT) {
+					GameActivity.setMode(GameActivity.RIEN);
+				} else {
+					// TODO : appel de la fonction de calcul du tir
+				}
+				positionAncienneTouche = new PointF(-1, -1);
+				break;
+			default:
+				break;
 		}
 		
 		this.moteurGraph.invalidate();
@@ -213,16 +213,16 @@ public class EvenementJeu
 	//Retourne la valeur à ajouter à la translation pour qu'elle se trouve bien
 	// entre -transMax et 0
 	private float getFixTrans(float trans, float transMax) {
-        //Attention trans est forcement négatif donc il faut qu'il soit entre -transMax et 0
+		//Attention trans est forcement négatif donc il faut qu'il soit entre -transMax et 0
 		if (trans > 0) {
 			//Ca dépasse par le côté gauche ou le haut
-        	return -trans;
+			return -trans;
+		}
+		if (trans < - transMax) {
+			//Ca dépasse par le côté droit ou le bas
+			return -trans - transMax;
         }
-        if (trans < - transMax) {
-        	//Ca dépasse par le côté droit ou le bas
-        	return -trans - transMax;
-        }
-        //Ca dépasse pas
-        return 0;
+		//Ca dépasse pas
+		return 0;
 	}
 }
