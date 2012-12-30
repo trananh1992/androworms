@@ -55,18 +55,18 @@ public class GameActivity extends Activity {
 		// ZONE DE TEST |--> TODO : a déplacer ailleurs !
 		monde = new Monde(null, moteurGraph);
 		List<Personnage> persos = new ArrayList<Personnage>();
-		Personnage p = new Personnage("Toto");
-		p.setPosition(new Point(1500, 980));
+		Personnage p = new Personnage("John Doe");
+		p.setPosition(new Point(820, 470));
 		persos.add(p);
 		p = new Personnage("Tux");
-		p.setPosition(new Point(240, 1100));
+		p.setPosition(new Point(120, 450));
 		persos.add(p);
 		monde.setListePersonnage(persos);
 		List<ObjetSurCarte> objs = new ArrayList<ObjetSurCarte>();
-		Objet o = new Arme("truc", null, 0);
-		ObjetSurCarte obj = new ObjetSurCarte(o, new PointF(100,200));
+		Objet o = new Arme("Hache", null, 0);
+		ObjetSurCarte obj = new ObjetSurCarte(o, new PointF(250,500));
 		objs.add(obj);
-		obj = new ObjetSurCarte(o, new PointF(500, 1000));
+		obj = new ObjetSurCarte(o, new PointF(1000, 500));
 		objs.add(obj);
 		monde.setListeObjetCarte(objs);
 		moteurGraph.setMonde(monde);

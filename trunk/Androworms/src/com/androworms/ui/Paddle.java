@@ -26,10 +26,6 @@ public class Paddle extends LinearLayout implements OnTouchListener {
 	public static final int BOUTON_HAUT = 2;
 	public static final int BOUTON_GAUCHE = 3;
 	
-	private ImageButton btnGauche;
-	private ImageButton btnHaut;
-	private ImageButton btnDroite;
-	
 	private OnTouchListener onTouchListener;
 	
 	public Paddle(Context context) {
@@ -43,9 +39,9 @@ public class Paddle extends LinearLayout implements OnTouchListener {
 	}
 	
 	private void constructeurPartage(Context context) {
-		btnGauche = new ImageButton(context);
-		btnHaut = new ImageButton(context);
-		btnDroite = new ImageButton(context);
+		ImageButton btnGauche = new ImageButton(context);
+		ImageButton btnHaut = new ImageButton(context);
+		ImageButton btnDroite = new ImageButton(context);
 		
 		btnGauche.setImageResource(R.drawable.navigation_gauche);
 		btnHaut.setImageResource(R.drawable.navigation_haut);
@@ -82,31 +78,21 @@ public class Paddle extends LinearLayout implements OnTouchListener {
 		switch (event.getAction()) {
 			case MotionEvent.ACTION_DOWN:
 				((ImageView)v).setAlpha(ALPHA_SEMI_TRANSPARENT);
-				break;
-			case MotionEvent.ACTION_MOVE:
-				// si on bouge et qu'on se retrouve au-dessus du bouton
-				if(event.getX() > 0 && event.getX() < v.getWidth() && event.getY() > 0 && event.getY() < v.getHeight()) {
-					((ImageView)v).setAlpha(ALPHA_SEMI_TRANSPARENT);
-				} else {
-					((ImageView)v).setAlpha(ALPHA_PAS_TRANSPARENT);
+				/* Déclenchement de l'action définit lors de l'utilisation du Paddle */
+				if (this.getOnTouchListener() != null) {
+					this.getOnTouchListener().onTouch(v, event);
 				}
 				break;
 			case MotionEvent.ACTION_UP:
 				((ImageView)v).setAlpha(ALPHA_PAS_TRANSPARENT);
+				/* Déclenchement de l'action définit lors de l'utilisation du Paddle */
+				if (this.getOnTouchListener() != null) {
+					this.getOnTouchListener().onTouch(v, event);
+				}
 				break;
 			default:
 				break;
 		}
-		switch (event.getAction()) {
-		case MotionEvent.ACTION_DOWN:
-		case MotionEvent.ACTION_UP:
-			/* Déclenchement de l'action définit lors de l'utilisation du Paddle */
-			if (this.getOnTouchListener() != null) {
-				this.getOnTouchListener().onTouch(v, event);
-			}
-			break;
-		}
-		
 		return true;
 	}
 }
