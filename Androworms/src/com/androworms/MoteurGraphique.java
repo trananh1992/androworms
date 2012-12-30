@@ -11,6 +11,7 @@ import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
+import android.support.v4.util.LruCache;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.RelativeLayout;
@@ -49,10 +50,13 @@ public class MoteurGraphique extends RelativeLayout {
 	private static final int ANGLE_BOUT_FLECHE_TIR = 45;
 	
 	private static final int TAILLE_MATRIX = 9;
+	//Nombre maximum d'images stockees dans le cache
+	private static final int NB_MAX_IMAGE_CACHE = 10;
 	
 	private PointF positionFond;
 	
 	// Images pour le jeu
+	private LruCache<Integer, Bitmap> memoireCache;
 	private Bitmap bmFond;
 	private Bitmap bmTerrain;
 	private Bitmap bmQuadrillage;
@@ -99,6 +103,9 @@ public class MoteurGraphique extends RelativeLayout {
 		positionFond = new PointF(0, 0);
 		
 		/* Bitmap */
+		// On crée un cache
+	    this.memoireCache = new LruCache<Integer, Bitmap>(NB_MAX_IMAGE_CACHE);
+	    
 		try {
 			bmFond = prepareBitmap(getResources().getDrawable(R.drawable.image_fond_640x360), MAP_WIDTH, MAP_HEIGHT);
 			bmTerrain = prepareBitmap(getResources().getDrawable(R.drawable.terrain_jeu_defaut_640x360), MAP_WIDTH, MAP_HEIGHT);
@@ -147,8 +154,7 @@ public class MoteurGraphique extends RelativeLayout {
 		canvas.drawBitmap(bmQuadrillage, positionFond.x, positionFond.y, null);
 		
 		if (monde != null) {
-			//TODO Stocker les bitmap pour la performance
-			Bitmap bmPerso = prepareBitmap(getResources().getDrawable(Personnage.getIdImage()),
+			Bitmap bmPerso = getBitmap(Personnage.getIdImage(),
 											Personnage.JOUEUR_WIDTH,
 											Personnage.JOUEUR_HEIGHT);
 			Bitmap bmObj;
@@ -160,7 +166,7 @@ public class MoteurGraphique extends RelativeLayout {
 			for(ObjetSurCarte objSurCarte : monde.getListeObjetCarte()) {
 				Objet obj = objSurCarte.getObjet();
 				Point taille = obj.getTailleImage();
-				bmObj = prepareBitmap(getResources().getDrawable(obj.getIdImage()), taille.x, taille.y);
+				bmObj = getBitmap(obj.getIdImage(), taille.x, taille.y);
 				canvas.drawBitmap(bmObj, objSurCarte.getPosition().x, objSurCarte.getPosition().y, null);
 			}
 		}
@@ -270,6 +276,23 @@ public class MoteurGraphique extends RelativeLayout {
 		return result;
 	}
 	
+	private Bitmap getBitmap(int idImage, int width, int heigth) {
+		Bitmap result = this.memoireCache.get(idImage);
+		
+		if (result == null) {
+			//On charge l'image
+			result = prepareBitmap(getResources().getDrawable(idImage), width, heigth);
+			//on la stocke dans la mémoire cache
+			this.memoireCache.put(idImage, result);
+		}
+		
+		if (result == null) {
+			Log.v(TAG, "la resssource n'a pas bien été chargée");
+		}
+		
+		return result;
+	}
+	
 	/**
 	 * Libère les bitmap pour libérer de la mémoire
 	 */
@@ -277,6 +300,8 @@ public class MoteurGraphique extends RelativeLayout {
 		this.bmFond.recycle();
 		this.bmQuadrillage.recycle();
 		this.bmTerrain.recycle();
+		//vide le cache
+		this.memoireCache.evictAll(); 
 	}
 	
 	public Matrix getMatrice() {
