@@ -104,7 +104,7 @@ public class MoteurGraphique extends RelativeLayout {
 		
 		/* Bitmap */
 		// On crée un cache
-	    this.memoireCache = new LruCache<Integer, Bitmap>(NB_MAX_IMAGE_CACHE);
+		this.memoireCache = new LruCache<Integer, Bitmap>(NB_MAX_IMAGE_CACHE);
 	    
 		try {
 			bmFond = prepareBitmap(getResources().getDrawable(R.drawable.image_fond_640x360), MAP_WIDTH, MAP_HEIGHT);
@@ -134,6 +134,10 @@ public class MoteurGraphique extends RelativeLayout {
 		Canvas canvas = new Canvas(bitmap);
 		drawable.draw(canvas);
 		return bitmap;
+	}
+	
+	public void actualiserGraphisme() {
+		invalidate();
 	}
 		
 	@Override
