@@ -221,7 +221,7 @@ public class EvenementJeu
 		if (trans < - transMax) {
 			//Ca dépasse par le côté droit ou le bas
 			return -trans - transMax;
-        }
+		}
 		//Ca dépasse pas
 		return 0;
 	}
