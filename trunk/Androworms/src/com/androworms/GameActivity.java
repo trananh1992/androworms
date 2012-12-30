@@ -106,29 +106,35 @@ public class GameActivity extends Activity {
 		paddle.setOnTouchListener(new OnTouchListener() {
 			
 			private Handler mHandler;
-			private int btn_courrant;
+			private int idBtnCourrant;
 			/* Action lorsque l'on touche un des boutons du Paddle */
 			public boolean onTouch(View v, MotionEvent event) {
 				switch (event.getAction()) {
 					/* Début d'appuie d'un boutton du Paddle */
 					case MotionEvent.ACTION_DOWN:
 						
-						btn_courrant = v.getId();
+						idBtnCourrant = v.getId();
 						/* Je crée un Handler qui va bouger le joueur tous les x secondes s'il reste appuyer dessus */
-						if (mHandler != null) return true;
+						if (mHandler != null) {
+							return true;
+						}
 						mHandler = new Handler();
-						mHandler.postDelayed(mAction, 0);
-						
+						// TODO : le lancement du Thread n'est pas rentable pour faire juste 1 déplacement.
+						// il faudrait mettre le code du déplacement ici, et la création du Thread avec postDelayed sur TEMPS_APPUIE
+						// mais ce code est assez gros, et donc il faudrait faire une fonction qui est appellé ici et depuis le Runnable.
+						// (et mettre un commentaire !)
+						mHandler.post(mAction);
 						break;
 					/* Fin d'appuie d'un boutton du Paddle */
 					case MotionEvent.ACTION_UP:
 						
-						btn_courrant = -1;
+						idBtnCourrant = -1;
 						/* Je supprime le Handler */
-						if (mHandler == null) return true;
+						if (mHandler == null) {
+							return true;
+						}
 						mHandler.removeCallbacks(mAction);
 						mHandler = null;
-						
 						break;
 					default:
 						break;
@@ -139,7 +145,7 @@ public class GameActivity extends Activity {
 			/* Thread pour gérer toutes les x secondes le déplacement du joueur lorsque l'on reste appuyé */
 			Runnable mAction = new Runnable() {
 				public void run() {
-					switch (btn_courrant) {
+					switch (idBtnCourrant) {
 						// Déplacement vers la droite
 						case Paddle.BOUTON_DROITE:
 							Log.v(TAG,"Déplacement vers la droite");
@@ -162,6 +168,7 @@ public class GameActivity extends Activity {
 							monde.getPersonnagePrincipal().setPosition(p2);
 							break;
 						default:
+							Log.v(TAG,"Déplacement default");
 							break;
 					}
 					monde.getMg().actualiserGraphisme();

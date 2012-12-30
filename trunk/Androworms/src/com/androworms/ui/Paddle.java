@@ -3,7 +3,6 @@ package com.androworms.ui;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -30,6 +29,8 @@ public class Paddle extends LinearLayout implements OnTouchListener {
 	private ImageButton btnGauche;
 	private ImageButton btnHaut;
 	private ImageButton btnDroite;
+	
+	private OnTouchListener onTouchListener;
 	
 	public Paddle(Context context) {
 		super(context);
@@ -69,14 +70,15 @@ public class Paddle extends LinearLayout implements OnTouchListener {
 		this.addView(btnDroite,paramsLayout);
 	}
 	
-	public void setOnTouchListener(OnTouchListener l) {
-		btnGauche.setOnTouchListener(l);
-		btnHaut.setOnTouchListener(l);
-		btnDroite.setOnTouchListener(l);
+	public OnTouchListener getOnTouchListener() {
+		return onTouchListener;
+	}
+
+	public void setOnTouchListener(OnTouchListener onTouchListener) {
+		this.onTouchListener = onTouchListener;
 	}
 	
 	public boolean onTouch(View v, MotionEvent event) {
-		Log.v("qds","plop plop plop");
 		switch (event.getAction()) {
 			case MotionEvent.ACTION_DOWN:
 				((ImageView)v).setAlpha(ALPHA_SEMI_TRANSPARENT);
@@ -95,6 +97,16 @@ public class Paddle extends LinearLayout implements OnTouchListener {
 			default:
 				break;
 		}
+		switch (event.getAction()) {
+		case MotionEvent.ACTION_DOWN:
+		case MotionEvent.ACTION_UP:
+			/* Déclenchement de l'action définit lors de l'utilisation du Paddle */
+			if (this.getOnTouchListener() != null) {
+				this.getOnTouchListener().onTouch(v, event);
+			}
+			break;
+		}
+		
 		return true;
 	}
 }

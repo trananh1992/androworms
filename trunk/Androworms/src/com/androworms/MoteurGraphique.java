@@ -25,8 +25,8 @@ public class MoteurGraphique extends RelativeLayout {
 	private static final String TAG = "Androworms.MoteurGraphique";
 	
 	/* Constantes de tailles des composants */
-	public static final int MAP_WIDTH = 2560;
-	public static final int MAP_HEIGHT = 1440;
+	public static final int MAP_WIDTH = 1280;
+	public static final int MAP_HEIGHT = 720;
 	
 	private static final int TAILLE_MAX_TIR = 300;
 	
