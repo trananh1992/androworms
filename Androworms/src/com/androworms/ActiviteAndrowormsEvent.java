@@ -1,9 +1,6 @@
 package com.androworms;
 
-import java.util.Set;
-
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
@@ -26,41 +23,26 @@ public class ActiviteAndrowormsEvent implements OnClickListener {
 			Button b = (Button)arg0;
 			
 			if (b.getId() == R.id.btn_solo) {
+				// Bouton de jeu en mode solo
 				Log.v(TAG,"Lancement du jeu");
 				
 				Intent intent = new Intent(this.activiteAndroworms, GameActivity.class);
 				this.activiteAndroworms.startActivity(intent);
 			}
-			else if (b.getId() == R.id.btn_multi) {	
-				/* Gestion du bluetooth */
-				BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-				if (mBluetoothAdapter == null) {
-					// L'appareil ne supporte pas le Bluetooth
-					Log.v(TAG,"Le téléphone n'est pas compatible bluetooth !");
-				} else {
-					Log.v(TAG,"Le téléphone est compatible bluetooth !");
-					
-					if (!mBluetoothAdapter.isEnabled()) {
-						Log.v(TAG,"Le bluetooth n'est pas activé");
-						Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-						activiteAndroworms.startActivityForResult(enableBtIntent, ActiviteAndroworms.REQUEST_ENABLE_BT);
-					} else {
-						Log.v(TAG,"Le bluetooth est activé");
-						
-						Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
-						// Si le téléphone à des appareils connectés
-						if (pairedDevices.size() > 0) {
-							// Loop through paired devices
-							for (BluetoothDevice device : pairedDevices) {
-								// Add the name and address to an array adapter to show in a ListView
-								Log.v(TAG,"Appareil jumelé : " + device.getName() + " : " + device.getAddress());
-							}
-						}
-					}
-				}
+			else if (b.getId() == R.id.btn_multi) {
+				//Bouton de jeu en mode multi-joueur
 				
+				Intent intent = new Intent(this.activiteAndroworms, ActiviteMultiJoueur.class);
+				this.activiteAndroworms.startActivity(intent);
+			}
+			else if (b.getId() == R.id.btn_menu_score) {
+				// Bouton de gestion des scores
+				new AlertDialog.Builder(activiteAndroworms).setTitle("Androworms").setMessage("La gestion des scores n'est pas encore disponible dans cette version").setNeutralButton("Close", null).show();
+			}
+			else if (b.getId() == R.id.btn_menu_settings) {
+				// Bouton de paramètres
+				new AlertDialog.Builder(activiteAndroworms).setTitle("Androworms").setMessage("Les paramètres ne sont pas encore disponible dans cette version").setNeutralButton("Close", null).show();
 			}
 		}
-		
 	}
 }

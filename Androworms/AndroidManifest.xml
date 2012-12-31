@@ -27,16 +27,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.androworms.ActiviteCamera" android:screenOrientation="landscape">
-        </activity>
-        <activity android:name="com.androworms.test.TestSlider" >
+        <activity
+            android:name="com.androworms.ActiviteCamera"
+            android:screenOrientation="landscape" >
         </activity>
         <activity
             android:name="com.androworms.GameActivity"
             android:label="@string/title_activity_game"
             android:screenOrientation="landscape" >
         </activity>
-        <activity android:name="com.androworms.ActiviteCreationCarte" android:screenOrientation="landscape"></activity>
+        <activity
+            android:name="com.androworms.ActiviteCreationCarte"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name="com.androworms.ActiviteMultiJoueur"
+            android:label="@string/title_activity_multi_joueur"
+            android:screenOrientation="landscape" >
+        </activity>
     </application>
 
 </manifest>
