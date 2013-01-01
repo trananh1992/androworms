@@ -3,17 +3,14 @@
     android:id="@+id/rlGlobale"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-
     <com.androworms.MoteurGraphique
         android:id="@+id/trlCarte"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
     </com.androworms.MoteurGraphique>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
-
         <TextView
             android:id="@+id/score_joueur_1"
             android:layout_width="wrap_content"
@@ -21,7 +18,6 @@
             android:layout_marginLeft="40dp"
             android:layout_marginTop="40dp"
             android:text="@string/score_joueur_1" />
-        
         <TextView
             android:id="@+id/score_joueur_2"
             android:layout_width="wrap_content"
@@ -31,7 +27,6 @@
             android:layout_marginRight="40dp"
             android:layout_marginTop="40dp"
             android:text="@string/score_joueur_2" />
-
         <TextView
             android:id="@+id/mode_jeu"
             android:layout_width="wrap_content"
@@ -39,7 +34,6 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
             android:text="@string/pas_de_donnees" />
-        
 		<com.androworms.ui.Paddle
 	        android:id="@+id/paddle1"
 	        android:layout_width="wrap_content"
@@ -47,116 +41,6 @@
 	        android:layout_alignParentBottom="true"
 	        android:layout_alignParentRight="true" >
 	    </com.androworms.ui.Paddle>
-
-		<SlidingDrawer
-		    android:id="@+id/slidingDrawer1"
-		    android:layout_width="match_parent"
-		    android:layout_height="match_parent"
-		    android:content="@+id/content"
-		    android:handle="@+id/handle"
-		    android:orientation="horizontal" >
-
-		    <Button
-		        android:id="@+id/handle"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:text="@string/Armes" />
-
-		    	<TableLayout
-	            android:id="@+id/content"
-	            android:layout_width="fill_parent"
-	            android:layout_height="fill_parent"
-	            android:orientation="vertical"
-	            android:shrinkColumns="5"
-	            android:stretchColumns="5" >
-	
-	            <TableRow
-	                android:id="@+id/tableRow1"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content" >
-	
-	                <ImageView
-	                    android:id="@+id/imageView1"
-	                    android:layout_width="wrap_content"
-	                    android:layout_height="wrap_content"
-	                    android:contentDescription="@string/Armes"
-	                    android:src="@drawable/hache" />
-	
-	                <ImageView
-	                    android:id="@+id/ImageView04"
-	                    android:layout_width="wrap_content"
-	                    android:layout_height="wrap_content"
-	                    android:contentDescription="@string/Armes"
-	                    android:src="@drawable/hache" />
-	
-	                <ImageView
-	                    android:id="@+id/ImageView03"
-	                    android:layout_width="wrap_content"
-	                    android:layout_height="wrap_content"
-	                    android:contentDescription="@string/Armes"
-	                    android:src="@drawable/hache" />
-	
-	            </TableRow>
-	
-	            <TableRow
-	                android:id="@+id/tableRow2"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content" >
-	
-	                <ImageView
-	                    android:id="@+id/ImageView07"
-	                    android:layout_width="wrap_content"
-	                    android:layout_height="wrap_content"
-	                    android:contentDescription="@string/Armes"
-	                    android:src="@drawable/hache" />
-	
-	                <ImageView
-	                    android:id="@+id/ImageView08"
-	                    android:layout_width="wrap_content"
-	                    android:layout_height="wrap_content"
-	                    android:contentDescription="@string/Armes"
-	                    android:src="@drawable/hache" />
-	
-	                <ImageView
-	                    android:id="@+id/ImageView06"
-	                    android:layout_width="wrap_content"
-	                    android:layout_height="wrap_content"
-	                    android:contentDescription="@string/Armes"
-	                    android:src="@drawable/hache" />
-	
-	            </TableRow>
-	
-	            <TableRow
-	                android:id="@+id/tableRow3"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content" >
-	
-	                <ImageView
-	                    android:id="@+id/ImageView09"
-	                    android:layout_width="wrap_content"
-	                    android:layout_height="wrap_content"
-	                    android:contentDescription="@string/Armes"
-	                    android:src="@drawable/hache" />
-	
-	                <ImageView
-	                    android:id="@+id/ImageView10"
-	                    android:layout_width="wrap_content"
-	                    android:layout_height="wrap_content"
-	                    android:contentDescription="@string/Armes"
-	                    android:src="@drawable/hache" />
-	
-	                <ImageView
-	                    android:id="@+id/ImageView01"
-	                    android:layout_width="wrap_content"
-	                    android:layout_height="wrap_content"
-	                    android:contentDescription="@string/Armes"
-	                    android:src="@drawable/hache" />
-	
-	            </TableRow>
-	
-	        </TableLayout>
-		</SlidingDrawer>
-
 		<ToggleButton
 		    android:id="@+id/toggleButton1"
 		    android:layout_width="wrap_content"
@@ -165,9 +49,96 @@
 		    android:layout_alignParentLeft="true"
 		    android:textOff="@string/mode_tir"
 		    android:textOn="@string/mode_tir" />
-	    
+		<SlidingDrawer
+		    android:id="@+id/selecteur_arme"
+		    android:layout_width="match_parent"
+		    android:layout_height="match_parent"
+		    android:content="@+id/selecteur_arme_contenu"
+		    android:handle="@+id/selecteur_arme_bouton"
+		    android:orientation="horizontal" >
+		    <Button
+		        android:id="@+id/selecteur_arme_bouton"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/Armes" />
+		    	<TableLayout
+	            android:id="@+id/selecteur_arme_contenu"
+	            android:layout_width="fill_parent"
+	            android:layout_height="fill_parent"
+	            android:orientation="vertical"
+	            android:shrinkColumns="5"
+	            android:stretchColumns="5" >
+	            <TableRow
+	                android:id="@+id/tableRow1"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content" >
+	                <ImageView
+	                    android:id="@+id/imageView1"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:contentDescription="@string/Armes"
+	                    android:src="@drawable/hache" />
+	                <ImageView
+	                    android:id="@+id/ImageView04"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:contentDescription="@string/Armes"
+	                    android:src="@drawable/hache" />
+	                <ImageView
+	                    android:id="@+id/ImageView03"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:contentDescription="@string/Armes"
+	                    android:src="@drawable/hache" />
+	            </TableRow>
+	            <TableRow
+	                android:id="@+id/tableRow2"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content" >
+	                <ImageView
+	                    android:id="@+id/ImageView07"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:contentDescription="@string/Armes"
+	                    android:src="@drawable/hache" />
+	                <ImageView
+	                    android:id="@+id/ImageView08"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:contentDescription="@string/Armes"
+	                    android:src="@drawable/hache" />
+	                <ImageView
+	                    android:id="@+id/ImageView06"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:contentDescription="@string/Armes"
+	                    android:src="@drawable/hache" />
+	            </TableRow>
+	            <TableRow
+	                android:id="@+id/tableRow3"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content" >
+	                <ImageView
+	                    android:id="@+id/ImageView09"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:contentDescription="@string/Armes"
+	                    android:src="@drawable/hache" />
+	                <ImageView
+	                    android:id="@+id/ImageView10"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:contentDescription="@string/Armes"
+	                    android:src="@drawable/hache" />
+	                <ImageView
+	                    android:id="@+id/ImageView01"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:contentDescription="@string/Armes"
+	                    android:src="@drawable/hache" />
+	            </TableRow>
+	        </TableLayout>
+		</SlidingDrawer>
+
     </RelativeLayout>
-
-    
-
 </RelativeLayout>

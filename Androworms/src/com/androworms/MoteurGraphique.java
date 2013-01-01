@@ -45,7 +45,7 @@ public class MoteurGraphique extends RelativeLayout {
 	private static final int ANGLE_DEMITOUR = 180;
 	private static final int INCREMENT_ONDE_TIR = 20;
 	private static final int COULEUR_MAXIMUM = 255;
-	private static final float INCREMENT_COULEUR = 1/2;
+	private static final float INCREMENT_COULEUR = 0.5f;
 	private static final int TAILLE_BOUT_FLECHE_TIR = 50;
 	private static final int ANGLE_BOUT_FLECHE_TIR = 45;
 	
@@ -59,7 +59,7 @@ public class MoteurGraphique extends RelativeLayout {
 	private LruCache<Integer, Bitmap> memoireCache;
 	private Bitmap bmFond;
 	private Bitmap bmTerrain;
-	private Bitmap bmQuadrillage;
+//	private Bitmap bmQuadrillage;
 	
 	//Matrice qui gère le zoom et la translation d'une image
 	private Matrix matrix;
@@ -109,7 +109,7 @@ public class MoteurGraphique extends RelativeLayout {
 		try {
 			bmFond = prepareBitmap(getResources().getDrawable(R.drawable.image_fond_640x360), MAP_WIDTH, MAP_HEIGHT);
 			bmTerrain = prepareBitmap(getResources().getDrawable(R.drawable.terrain_jeu_defaut_640x360), MAP_WIDTH, MAP_HEIGHT);
-			bmQuadrillage = prepareBitmap(getResources().getDrawable(R.drawable.image_quadrillage_640x360), MAP_WIDTH, MAP_HEIGHT);
+//			bmQuadrillage = prepareBitmap(getResources().getDrawable(R.drawable.image_quadrillage_640x360), MAP_WIDTH, MAP_HEIGHT);
 		} catch(OutOfMemoryError e) {
 			Log.e(TAG, "Erreur de chargement les bitmaps sont trop lourds");
 			//TODO terminer ou dire quelque chose...
@@ -155,12 +155,10 @@ public class MoteurGraphique extends RelativeLayout {
 		canvas.drawBitmap(bmTerrain, positionFond.x, positionFond.y, null);
 		
 		// Dessin du quadrillage pour les tests
-		canvas.drawBitmap(bmQuadrillage, positionFond.x, positionFond.y, null);
+//		canvas.drawBitmap(bmQuadrillage, positionFond.x, positionFond.y, null);
 		
 		if (monde != null) {
-			Bitmap bmPerso = getBitmap(Personnage.getIdImage(),
-											Personnage.JOUEUR_WIDTH,
-											Personnage.JOUEUR_HEIGHT);
+			Bitmap bmPerso = getBitmap(Personnage.getIdImage(), Personnage.JOUEUR_WIDTH, Personnage.JOUEUR_HEIGHT);
 			Bitmap bmObj;
 			
 			for(Personnage p : monde.getListePersonnage()) {
@@ -224,11 +222,15 @@ public class MoteurGraphique extends RelativeLayout {
 	public void dessinerFleches(PointF depart, Canvas canvas, Paint paint, float angleBase, float distance) {
 		
 		// flèche de tir sur le bonhomme
-		if (distance >= COULEUR_MAXIMUM / INCREMENT_COULEUR ) {
+		if (distance >= COULEUR_MAXIMUM / INCREMENT_COULEUR) {
 			paint.setColor(Color.rgb(COULEUR_MAXIMUM,0,0));
+			Log.v(TAG,"[A] Couleur : " + Integer.toHexString(paint.getColor())+"    ; distance = "+distance);
 		} else {
-			paint.setColor(Color.rgb(COULEUR_MAXIMUM, COULEUR_MAXIMUM-(int)(distance * INCREMENT_COULEUR),0));
+			paint.setColor(Color.rgb(COULEUR_MAXIMUM, COULEUR_MAXIMUM - (int)(distance * INCREMENT_COULEUR),0));
+			Log.v(TAG,"[B] Couleur : " + Integer.toHexString(paint.getColor())+"    ; distance = "+distance);
+			Log.v(TAG,"=="+(distance * INCREMENT_COULEUR));
 		}
+		
 		paint.setStrokeWidth(EPAISSEUR_FLECHE_TIR);
 		
 		//La fleche debute en dehors du joueur
@@ -302,7 +304,7 @@ public class MoteurGraphique extends RelativeLayout {
 	 */
 	public void nettoyer() {
 		this.bmFond.recycle();
-		this.bmQuadrillage.recycle();
+//		this.bmQuadrillage.recycle();
 		this.bmTerrain.recycle();
 		//vide le cache
 		this.memoireCache.evictAll(); 

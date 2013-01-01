@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.SlidingDrawer;
 import android.widget.SlidingDrawer.OnDrawerCloseListener;
 import android.widget.SlidingDrawer.OnDrawerOpenListener;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -85,7 +87,7 @@ public class GameActivity extends Activity {
 		});
 		
 		/* Selecteur d'armes */
-		SlidingDrawer sd = (SlidingDrawer)findViewById(R.id.slidingDrawer1);
+		SlidingDrawer sd = (SlidingDrawer)findViewById(R.id.selecteur_arme);
 		sd.setOnDrawerOpenListener(new OnDrawerOpenListener() {
 			public void onDrawerOpened() {
 				setMode(SELECTION_ARME);
@@ -96,6 +98,10 @@ public class GameActivity extends Activity {
 				setMode(RIEN);
 			}
 		});
+		TableLayout tl = (TableLayout)findViewById(R.id.selecteur_arme_contenu);
+		tl.setBackgroundColor(Color.WHITE);
+		tl.getBackground().setAlpha(80);
+		
 		
 		/* Affichage du mode de jeu */
 		tv = (TextView)findViewById(R.id.mode_jeu);

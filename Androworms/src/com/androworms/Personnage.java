@@ -47,6 +47,6 @@ public class Personnage {
 	}
 	
 	public static int getIdImage() {
-		return R.drawable.logo_android_robot;
+		return R.drawable.android_face;
 	}
 }
