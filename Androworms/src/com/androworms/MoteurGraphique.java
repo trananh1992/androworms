@@ -235,12 +235,14 @@ public class MoteurGraphique extends RelativeLayout {
 		
 		//La fleche debute en dehors du joueur
 		PointF debutFleche = new PointF();
-		debutFleche.x = (float) (100 * Math.cos(Math.toRadians(angleBase))) + depart.x;
-		debutFleche.y = (float) (100 * Math.sin(Math.toRadians(angleBase))) + depart.y;
+		//On cherche à ne pas mettre la flèche sur le joueur
+		float tailleJoueur = zoomPointSurEcran(new PointF(Personnage.JOUEUR_WIDTH / 2, Personnage.JOUEUR_WIDTH / 2)).length(); 
+		debutFleche.x = (float) (tailleJoueur * Math.cos(Math.toRadians(angleBase))) + depart.x;
+		debutFleche.y = (float) (tailleJoueur * Math.sin(Math.toRadians(angleBase))) + depart.y;
 		//Extrémité de la flèche
 		PointF finFleche = new PointF();
-		finFleche.x = (float) (distance * Math.cos(Math.toRadians(angleBase))) + depart.x;
-		finFleche.y = (float) (distance * Math.sin(Math.toRadians(angleBase))) + depart.y;
+		finFleche.x = (float) ((distance + tailleJoueur) * Math.cos(Math.toRadians(angleBase))) + depart.x;
+		finFleche.y = (float) ((distance + tailleJoueur) * Math.sin(Math.toRadians(angleBase))) + depart.y;
 		// On dessine la grande ligne
 		canvas.drawLine(debutFleche.x, debutFleche.y, finFleche.x, finFleche.y, paint);
 
@@ -278,6 +280,21 @@ public class MoteurGraphique extends RelativeLayout {
 		float scaleY = mm[Matrix.MSCALE_Y];
 		
 		PointF result = new PointF(pt.x  * scaleX + transX, pt.y  * scaleY + transY);
+		
+		return result;
+	}
+	
+	/** Retourne les coordonnées d'un point avec juste le zoom associé.
+	 * @param pt : Point de l'objet relative à la carte
+	 * @return : Point de l'objet relative à l'écran
+	 */
+	private PointF zoomPointSurEcran(PointF pt) {
+		float[] mm = new float[TAILLE_MATRIX];
+		matrix.getValues(mm);
+		float scaleX = mm[Matrix.MSCALE_X];
+		float scaleY = mm[Matrix.MSCALE_Y];
+		
+		PointF result = new PointF(pt.x  * scaleX, pt.y  * scaleY);
 		
 		return result;
 	}
