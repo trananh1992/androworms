@@ -1,14 +1,14 @@
 package com.androworms;
 
 
-public class Client extends Connexion{
+public class Client extends Communication {
 	
 	// Ce contact communique seulement avec le serveur primaire 
 	private Contact contactServeur;
 	
 	// Pour un serveur primaire local.
-	public Client(Communication c) {
-		super(c);
+	public Client(ConnexionDistante n) {
+		super(n);
 		contactServeur = new Localhost();
 	}
 

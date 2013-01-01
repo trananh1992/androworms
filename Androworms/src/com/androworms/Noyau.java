@@ -10,18 +10,43 @@ import android.util.Log;
 public class Noyau {
 
 	// private ihm...
-	private Communication communication;
+	private static final String TAG_NOYAU = "Androworms.Noyau";
+	private Connexion connexion;
+	private String nomPersonnage;
 
 	
 	public Noyau() {
-		communication = new Communication(this);
+	}
+	
+	public String getNomPersonnage() {
+		return nomPersonnage;
+	}
+
+	public void setNomPersonnage(String nomPersonnage) {
+		this.nomPersonnage = nomPersonnage;
+	}
+
+	public void CreationPartieLocale() {
+		connexion = new ConnexionLocale(this);
+	}
+	
+	public void CreationPartieDistante() {
+		connexion = new ConnexionDistante(this);
+	}
+	
+	public void deplacementJoueurFromIHM(int move) {
+		if( move == 0 )
+			connexion.deplacementJoueurDroite(nomPersonnage);
+		else connexion.deplacementJoueurGauche(nomPersonnage);
+
+	}
+	
+	public void deplacementJoueurDroite(String personnage) {
+		// Impacter le monde de ce changement		
 	}
 	
 	public void testReseau() {
-		Log.v("Noyau", "Lancement de TestReseau");
-		if(communication.testBluetooth()) {
-			communication.lancementServeur();			
-		}
+		Log.v(TAG_NOYAU, "TestReseau n'est plus valide !");
 	}
 	
 
