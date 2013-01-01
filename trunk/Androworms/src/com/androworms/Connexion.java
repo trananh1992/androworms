@@ -2,21 +2,33 @@ package com.androworms;
 
 
 
-public class Connexion {
+public abstract class Connexion {
 
-	private Communication communication;
+	private Noyau noyau;
 	
-	public Connexion(Communication c) {
-		this.setCommunication(c);
+	public Connexion(Noyau c) {
+		noyau = c;
+	}
+	
+	
+	
+	public Noyau getNoyau() {
+		return noyau;
 	}
 
-	public Communication getCommunication() {
-		return communication;
+
+
+	public void setNoyau(Noyau noyau) {
+		this.noyau = noyau;
 	}
 
-	public void setCommunication(Communication communication) {
-		this.communication = communication;
-	}
+
+
+	public abstract void deplacementJoueurDroite(String nomPersonnage);
+	public abstract void deplacementJoueurGauche(String nomPersonnage);
+	public abstract void deplacementJoueurSaut(String nomPersonnage);
+	
+
 	
 
 }
