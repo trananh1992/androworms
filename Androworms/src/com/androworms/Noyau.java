@@ -30,14 +30,17 @@ public class Noyau {
 		connexion = new ConnexionLocale(this);
 	}
 	
-	public void CreationPartieDistante() {
+	public void creationPartieDistante() {
 		connexion = new ConnexionDistante(this);
 	}
 	
 	public void deplacementJoueurFromIHM(int move) {
-		if( move == 0 )
+		if( move == 0 ) {
 			connexion.deplacementJoueurDroite(nomPersonnage);
-		else connexion.deplacementJoueurGauche(nomPersonnage);
+		}
+		else {
+			connexion.deplacementJoueurGauche(nomPersonnage);
+		}
 
 	}
 	
