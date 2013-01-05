@@ -13,6 +13,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -160,6 +161,13 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		/* Ajout des gestionnaires d'évênements pour les boutons de dessins */
 		this.setAlphaListener();
 		this.setDrawListener();
+		
+		findViewById(R.id.alpha_auto).setOnClickListener(new OnClickListener() {
+			public void onClick(View v)
+			{
+				autoAlpha();
+			}
+		});
 	}
 	
 	/* initialisation de la surface de dessin avec une image vide */
@@ -169,6 +177,100 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		surface.setImageBitmap(b);
 	}
 	
+	public void autoAlpha1()
+	{
+		ImageView surface = (ImageView) findViewById(R.id.CurrentMap);
+		Bitmap b = ((BitmapDrawable)((ImageView)surface).getDrawable()).getBitmap();
+		int height = b.getHeight();
+		int width = b.getWidth();
+		Bitmap transformed = Bitmap.createBitmap(width,height,Bitmap.Config.ARGB_8888);
+		int i,j;
+		int color;
+		final int seuil = 150;
+		final int nComponents = 3;
+		final int maxComponentValue = 255;
+		Log.v("autoAlpha", "begin computing alpha");
+		for(i=0;i<width;i++)
+		{
+			for(j=0;j<height;j++)
+			{
+				color = b.getPixel(i, j);
+				int blue = Color.blue(color);
+				int red = Color.red(color);
+				int green = Color.green(color);
+				if(((red + green + blue)/nComponents)>seuil)
+				{
+					transformed.setPixel(i, j, Color.argb(0,red,green,blue));
+				}
+				else
+				{
+					transformed.setPixel(i, j, Color.argb(maxComponentValue,red,green,blue));
+				}
+			}
+		}
+		Log.v("autoAlpha", "Done computing alpha");
+		Bitmap overlay = Bitmap.createBitmap(transformed.getWidth(), transformed.getHeight(), transformed.getConfig());
+		Canvas c = new Canvas(overlay);
+		c.drawBitmap(transformed, new Matrix(), null);
+		((ImageView) surface).setImageBitmap(overlay);
+	}
+	
+	public void autoAlpha2()
+	{
+		ImageView surface = (ImageView) findViewById(R.id.CurrentMap);
+		Bitmap b = ((BitmapDrawable)((ImageView)surface).getDrawable()).getBitmap();
+		int height = b.getHeight();
+		int width = b.getWidth();
+		Bitmap transformed = Bitmap.createBitmap(width,height,Bitmap.Config.ARGB_8888);
+		int i,j;
+		int color;
+		int seuil = 0;
+		final int nComponents = 3;
+		final int maxComponentValue = 255;
+		Log.v("autoAlpha", "begin computing alpha");
+		for(i=0;i<width;i++)
+		{
+			for(j=(height/2);j<height;j++)
+			{
+				color = b.getPixel(i, j);
+				int blue = Color.blue(color);
+				int red = Color.red(color);
+				int green = Color.green(color);
+				seuil += ((red + green + blue)/nComponents);
+			}
+		}
+		seuil/=(width*(height/2));
+		Log.e("autoAlpha","seuil "+seuil);
+		for(i=0;i<width;i++)
+		{
+			for(j=0;j<height;j++)
+			{
+				color = b.getPixel(i, j);
+				int blue = Color.blue(color);
+				int red = Color.red(color);
+				int green = Color.green(color);
+				if(((red + green + blue)/nComponents)>seuil)
+				{
+					transformed.setPixel(i, j, Color.argb(0,red,green,blue));
+				}
+				else
+				{
+					transformed.setPixel(i, j, Color.argb(maxComponentValue,red,green,blue));
+				}
+			}
+		}
+		Log.v("autoAlpha", "Done computing alpha");
+		Bitmap overlay = Bitmap.createBitmap(transformed.getWidth(), transformed.getHeight(), transformed.getConfig());
+		Canvas c = new Canvas(overlay);
+		c.drawBitmap(transformed, new Matrix(), null);
+		((ImageView) surface).setImageBitmap(overlay);
+	}
+	
+	private void autoAlpha()
+	{
+		autoAlpha1();
+		//autoAlpha2();
+	}
 	
 	private boolean drawEvent(View surface, MotionEvent event)
 	{

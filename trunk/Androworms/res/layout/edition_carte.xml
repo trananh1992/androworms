@@ -104,4 +104,13 @@
             android:visibility="invisible" />
     </LinearLayout>
 
+    <ImageButton
+        android:id="@+id/alpha_auto"
+        android:contentDescription="@+id/alpha_auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/alphaLinearLayout"
+        android:layout_alignRight="@+id/TakePicture"
+        android:src="@drawable/ic_auto" />
+
 </RelativeLayout>
