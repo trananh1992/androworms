@@ -61,8 +61,8 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 				dlg.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
 						String value = edit.getText().toString();
-					  	Log.e("input dialog",value);
-					  	/* on crée le dossier pour stocker la photo */
+						Log.e("input dialog",value);
+						/* on crée le dossier pour stocker la photo */
 						File root = Environment.getExternalStorageDirectory();
 						File androworms = new File(root,"Androworms");
 						boolean status = true;
@@ -93,14 +93,13 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 							Log.e("CreationCarte","IO Exception");
 						}
 						finish();
-					  }
-					});
+					}
+				});
 				dlg.setNegativeButton("No", new DialogInterface.OnClickListener() {
-					  public void onClick(DialogInterface dialog, int whichButton) {
-						  finish();
-					  }
-					});
-
+					public void onClick(DialogInterface dialog, int whichButton) {
+						finish();
+					}
+				});
 				dlg.show();
 			}
 			return super.onKeyDown(keyCode, event);
