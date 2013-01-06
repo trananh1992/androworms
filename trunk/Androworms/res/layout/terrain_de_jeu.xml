@@ -49,6 +49,17 @@
 		    android:layout_alignParentLeft="true"
 		    android:textOff="@string/mode_tir"
 		    android:textOn="@string/mode_tir" />
+
+		<ToggleButton
+		    android:id="@+id/toggleButton2"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentBottom="true"
+		    android:layout_alignParentLeft="true"
+		    android:layout_marginLeft="80dp"
+		    android:textOff="Paddle"
+		    android:textOn="Paddle" />
+
 		<SlidingDrawer
 		    android:id="@+id/selecteur_arme"
 		    android:layout_width="match_parent"

@@ -80,13 +80,31 @@ public class GameActivity extends Activity {
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if (!isChecked && mode == TIR) {
 					setMode(RIEN);
+					findViewById(R.id.toggleButton2).setEnabled(true);
 				} else if (isChecked && mode != SELECTION_ARME) {
 					setMode(TIR);
+					findViewById(R.id.toggleButton2).setEnabled(false);
 				}
 			}
 		});
 		
-		/* Selecteur d'armes */
+		/* Mode déplacement */
+		ToggleButton tgb2 = (ToggleButton)findViewById(R.id.toggleButton2);
+		tgb2.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if (isChecked) {
+					findViewById(R.id.paddle1).setVisibility(View.VISIBLE);
+					findViewById(R.id.toggleButton1).setEnabled(false);
+				} else {
+					findViewById(R.id.paddle1).setVisibility(View.INVISIBLE);
+					findViewById(R.id.toggleButton1).setEnabled(true);
+				}
+			}
+		});
+		// par défaut, le Paddle est caché
+		findViewById(R.id.paddle1).setVisibility(View.INVISIBLE);
+		
+		/* Sélecteur d'armes */
 		SlidingDrawer sd = (SlidingDrawer)findViewById(R.id.selecteur_arme);
 		sd.setOnDrawerOpenListener(new OnDrawerOpenListener() {
 			public void onDrawerOpened() {
