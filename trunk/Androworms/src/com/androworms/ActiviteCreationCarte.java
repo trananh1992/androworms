@@ -177,7 +177,7 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		surface.setImageBitmap(b);
 	}
 	
-	public void autoAlpha1()
+	private void autoAlpha4()
 	{
 		ImageView surface = (ImageView) findViewById(R.id.CurrentMap);
 		Bitmap b = ((BitmapDrawable)((ImageView)surface).getDrawable()).getBitmap();
@@ -185,8 +185,10 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		int width = b.getWidth();
 		Bitmap transformed = Bitmap.createBitmap(width,height,Bitmap.Config.ARGB_8888);
 		int i,j;
-		int color;
-		final int seuil = 150;
+		int dark = b.getPixel(0,0);
+		int densityD = (Color.red(dark)+Color.green(dark)+Color.blue(dark))/3;
+		int light = b.getPixel(0,0);
+		int densityL = (Color.red(light)+Color.green(light)+Color.blue(light))/3;
 		final int nComponents = 3;
 		final int maxComponentValue = 255;
 		Log.v("autoAlpha", "begin computing alpha");
@@ -194,72 +196,36 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		{
 			for(j=0;j<height;j++)
 			{
-				color = b.getPixel(i, j);
-				int blue = Color.blue(color);
-				int red = Color.red(color);
-				int green = Color.green(color);
-				if(((red + green + blue)/nComponents)>seuil)
+				int color = b.getPixel(i, j);
+				int density = (Color.red(color)+Color.green(color)+Color.blue(color))/nComponents;
+				if(density<densityL)
 				{
-					transformed.setPixel(i, j, Color.argb(0,red,green,blue));
+					light = color;
+					densityL = density;
 				}
-				else
+				else if(density > densityD)
 				{
-					transformed.setPixel(i, j, Color.argb(maxComponentValue,red,green,blue));
+					dark = color;
+					densityD = density;
 				}
 			}
 		}
-		Log.v("autoAlpha", "Done computing alpha");
-		Bitmap overlay = Bitmap.createBitmap(transformed.getWidth(), transformed.getHeight(), transformed.getConfig());
-		Canvas c = new Canvas(overlay);
-		c.drawBitmap(transformed, new Matrix(), null);
-		((ImageView) surface).setImageBitmap(overlay);
-	}
-	
-	public void autoAlpha2()
-	{
-		ImageView surface = (ImageView) findViewById(R.id.CurrentMap);
-		Bitmap b = ((BitmapDrawable)((ImageView)surface).getDrawable()).getBitmap();
-		int height = b.getHeight();
-		int width = b.getWidth();
-		Bitmap transformed = Bitmap.createBitmap(width,height,Bitmap.Config.ARGB_8888);
-		int i,j;
-		int color;
-		int seuil = 0;
-		final int nComponents = 3;
-		final int maxComponentValue = 255;
-		Log.v("autoAlpha", "begin computing alpha");
-		for(i=0;i<width;i++)
-		{
-			for(j=(height/2);j<height;j++)
-			{
-				color = b.getPixel(i, j);
-				int blue = Color.blue(color);
-				int red = Color.red(color);
-				int green = Color.green(color);
-				seuil += ((red + green + blue)/nComponents);
-			}
-		}
-		seuil/=(width*(height/2));
-		Log.e("autoAlpha","seuil "+seuil);
 		for(i=0;i<width;i++)
 		{
 			for(j=0;j<height;j++)
 			{
-				color = b.getPixel(i, j);
-				int blue = Color.blue(color);
-				int red = Color.red(color);
-				int green = Color.green(color);
-				if(((red + green + blue)/nComponents)>seuil)
+				int color = b.getPixel(i, j);
+				int density = (Color.red(color)+Color.green(color)+Color.blue(color))/nComponents;
+				if(Math.abs(densityL-density)<Math.abs(densityD-density))
 				{
-					transformed.setPixel(i, j, Color.argb(0,red,green,blue));
+					transformed.setPixel(i, j, Color.argb(maxComponentValue, Color.red(color), Color.green(color), Color.blue(color)));
 				}
 				else
 				{
-					transformed.setPixel(i, j, Color.argb(maxComponentValue,red,green,blue));
+					transformed.setPixel(i, j, Color.argb(0, Color.red(color), Color.green(color), Color.blue(color)));
 				}
 			}
 		}
-		Log.v("autoAlpha", "Done computing alpha");
 		Bitmap overlay = Bitmap.createBitmap(transformed.getWidth(), transformed.getHeight(), transformed.getConfig());
 		Canvas c = new Canvas(overlay);
 		c.drawBitmap(transformed, new Matrix(), null);
@@ -268,8 +234,7 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 	
 	private void autoAlpha()
 	{
-		autoAlpha1();
-		//autoAlpha2();
+		autoAlpha4();
 	}
 	
 	private boolean drawEvent(View surface, MotionEvent event)
