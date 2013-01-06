@@ -1,10 +1,14 @@
 package com.androworms;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,11 +17,14 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 public class ActiviteCreationCarte extends Activity implements OnClickListener,OnTouchListener {
@@ -30,12 +37,75 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 	private int drawAlpha = 0;
 	private int drawSolid = 0;
 	private boolean initializedImageView = false;
+	private boolean mustSave = false;
 	
 	/* Gestionnaire d'évênement permettant le lancement de cette activité */
 	public void onClick(View arg0) {
 		Intent intent = new Intent(this.activiteMenuPrincipal, ActiviteCreationCarte.class);
 		this.activiteMenuPrincipal.startActivity(intent);
 		
+	}
+	
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if(mustSave)
+			{
+				AlertDialog.Builder dlg = new AlertDialog.Builder(this);
+				
+				dlg.setTitle("Save current map ?");
+				dlg.setMessage("Type map name:");
+				
+				final EditText edit = new EditText(this);
+				dlg.setView(edit);
+				
+				dlg.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						String value = edit.getText().toString();
+					  	Log.e("input dialog",value);
+					  	/* on crée le dossier pour stocker la photo */
+						File root = Environment.getExternalStorageDirectory();
+						File androworms = new File(root,"Androworms");
+						boolean status = true;
+						if (!androworms.exists()) {
+							status = androworms.mkdir();
+						}
+						
+						/* échec lors de la création du dossier */
+						if(!status) {
+							Log.e("fichier","échec lors de la création du dossier Androworms.");
+							return;
+						}
+						
+						/* création du path complet vers la photo */
+						File photoPath = new File(androworms,value);
+						/* sauvegarde de la photo */
+						FileOutputStream filoutputStream;
+						try {
+							filoutputStream = new FileOutputStream(photoPath);
+							ImageView surface = (ImageView) findViewById(R.id.CurrentMap);
+							Bitmap b = ((BitmapDrawable)((ImageView)surface).getDrawable()).getBitmap();
+							b.compress(Bitmap.CompressFormat.PNG, 100, filoutputStream);
+							filoutputStream.flush();
+							filoutputStream.close();
+						} catch (FileNotFoundException e) {
+							Log.e("CreationCarte","file not found");
+						} catch (IOException e) {
+							Log.e("CreationCarte","IO Exception");
+						}
+						finish();
+					  }
+					});
+				dlg.setNegativeButton("No", new DialogInterface.OnClickListener() {
+					  public void onClick(DialogInterface dialog, int whichButton) {
+						  finish();
+					  }
+					});
+
+				dlg.show();
+			}
+			return super.onKeyDown(keyCode, event);
+		}
+		return false;
 	}
 	
 	public ActiviteCreationCarte(ActiviteAndroworms activiteMenuPrincipal) {
@@ -185,18 +255,23 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		int width = b.getWidth();
 		Bitmap transformed = Bitmap.createBitmap(width,height,Bitmap.Config.ARGB_8888);
 		int i,j;
-		int dark = b.getPixel(0,0);
-		int densityD = (Color.red(dark)+Color.green(dark)+Color.blue(dark))/3;
-		int light = b.getPixel(0,0);
-		int densityL = (Color.red(light)+Color.green(light)+Color.blue(light))/3;
 		final int nComponents = 3;
 		final int maxComponentValue = 255;
+		int dark = b.getPixel(0,0);
+		int densityD = (Color.red(dark)+Color.green(dark)+Color.blue(dark))/nComponents;
+		int light = b.getPixel(0,0);
+		int densityL = (Color.red(light)+Color.green(light)+Color.blue(light))/nComponents;
+		
 		Log.v("autoAlpha", "begin computing alpha");
 		for(i=0;i<width;i++)
 		{
 			for(j=0;j<height;j++)
 			{
 				int color = b.getPixel(i, j);
+				if(Color.alpha(color)!=255)
+				{
+					continue;
+				}
 				int density = (Color.red(color)+Color.green(color)+Color.blue(color))/nComponents;
 				if(density<densityL)
 				{
@@ -215,6 +290,10 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 			for(j=0;j<height;j++)
 			{
 				int color = b.getPixel(i, j);
+				if(Color.alpha(color)!=255)
+				{
+					continue;
+				}
 				int density = (Color.red(color)+Color.green(color)+Color.blue(color))/nComponents;
 				if(Math.abs(densityL-density)<Math.abs(densityD-density))
 				{
@@ -235,6 +314,7 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 	private void autoAlpha()
 	{
 		autoAlpha4();
+		mustSave = true;
 	}
 	
 	private boolean drawEvent(View surface, MotionEvent event)
@@ -251,7 +331,7 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		}
 		int x=0;
 		int y=0;
-		
+		mustSave = true;
 		/* récupération de l'image sur laquelle on dessine */
 		Bitmap bitmap = ((BitmapDrawable)((ImageView)surface).getDrawable()).getBitmap();
 		int action = event.getAction();
@@ -343,6 +423,7 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 				
 				initializedImageView = true;
 				stream.close();
+				new File(photoPath).delete();
 			} catch (FileNotFoundException e) {
 				finish();
 			} catch (IOException e) {
