@@ -49,4 +49,13 @@ public class Personnage {
 	public static int getIdImage() {
 		return R.drawable.android_face;
 	}
+
+	public void deplacementDroite(int y) {
+		position.set(position.x+1, y);
+	}
+
+	public void deplacementGauche(int y) {
+		position.set(position.x-1, y);
+		
+	}
 }

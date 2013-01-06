@@ -6,7 +6,6 @@ package com.androworms;
  */
 public class MoteurPhysique {
 	
-	private MoteurGraphique mg;
 	private Noyau noyau;
 	
 	public MoteurPhysique(Noyau n) {
@@ -15,7 +14,6 @@ public class MoteurPhysique {
 	
 	public MoteurPhysique(MoteurGraphique mg, Noyau noyau) {
 		super();
-		this.mg = mg;
 		this.noyau = noyau;
 	}	
 }
