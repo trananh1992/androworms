@@ -13,6 +13,9 @@ public class Noyau {
 	private static final String TAG_NOYAU = "Androworms.Noyau";
 	private Connexion connexion;
 	private String nomPersonnage;
+	private Monde monde;
+	private MoteurPhysique physique;
+	private MoteurGraphique graphique;
 
 	
 	public Noyau() {
@@ -26,8 +29,11 @@ public class Noyau {
 		this.nomPersonnage = nomPersonnage;
 	}
 
-	public void CreationPartieLocale() {
+	public void creationPartieLocale() {
 		connexion = new ConnexionLocale(this);
+		physique = new MoteurPhysique(this);
+		monde = new Monde(physique);
+		
 	}
 	
 	public void creationPartieDistante() {
@@ -45,7 +51,12 @@ public class Noyau {
 	}
 	
 	public void deplacementJoueurDroite(String personnage) {
-		// Impacter le monde de ce changement		
+		// Impacter le monde de ce changement
+		monde.deplacementJoueurDroite(personnage);
+	}
+	public void deplacementJoueurGauche(String personnage) {
+		// Impacter le monde de ce changement
+		monde.deplacementJoueurGauche(personnage);
 	}
 	
 	public void testReseau() {
