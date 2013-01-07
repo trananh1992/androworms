@@ -192,8 +192,10 @@ public class MoteurGraphique extends RelativeLayout {
 			
 			float angleBase = ((float)(Math.atan2 (deplacement.y, deplacement.x)* ANGLE_DEMITOUR /Math.PI));
 			// Ajustement de l'angle
-			float angle = angleBase + ANGLE_DEMITOUR; //demi tour
-			angle -= ANGLE_ONDE_TIR / 2; //pour centrer l'onde sur le doigt
+			// On fait un demi-tour pour orienter l'onde dans l'autre sens
+			float angle = angleBase + ANGLE_DEMITOUR; 
+			// on centre l'onde en la décalant de la moitié de l'angle affiché
+			angle -= ANGLE_ONDE_TIR / 2; 
 			
 			// Onde violette
 			paint.setColor(Color.MAGENTA);
