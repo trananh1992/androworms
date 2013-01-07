@@ -102,7 +102,6 @@ public class ActiviteMultiJoueur extends Activity {
 				lv.setAdapter(adapter);
 			}
 		} else {
-			values = new String[0];
 			adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
 			adapter.clear();
 			lv.setAdapter(adapter);
