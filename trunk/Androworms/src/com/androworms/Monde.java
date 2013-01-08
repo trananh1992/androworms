@@ -6,7 +6,9 @@ import java.util.List;
 import android.util.Log;
 
 public class Monde {
-	private static final String TAG= "Androworms.Monde";
+	
+	private static final String TAG = "Androworms.Monde";
+	
 	private MoteurPhysique mp;
 	private MoteurGraphique mg;
 	private List<Personnage> listePersonnage;
@@ -34,8 +36,6 @@ public class Monde {
 		return mp;
 	}
 	
-	
-
 	public MoteurGraphique getMg() {
 		return mg;
 	}

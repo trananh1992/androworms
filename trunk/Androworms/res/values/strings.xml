@@ -39,5 +39,7 @@
     <string name="titre_multi_joueur">Androworms - Multi-Joueurs</string>
     <string name="actualiser">Actualiser</string>
     <string name="title_activity_activite_parametres">ActiviteParametres</string>
+    <string name="pseudo">Pseudo</string>
+    <string name="image_perso">Image perso</string>
 
 </resources>
