@@ -30,10 +30,10 @@
                     android:id="@+id/textView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Pseudo" />
+                    android:text="@string/pseudo" />
 
                 <EditText
-                    android:id="@+id/editText1"
+                    android:id="@+id/pseudo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -63,6 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
+            android:contentDescription="@string/image_perso"
             android:src="@drawable/android_face" />
 
     </LinearLayout>

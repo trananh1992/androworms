@@ -41,8 +41,6 @@ public class ActiviteAndrowormsEvent implements OnClickListener {
 			}
 			else if (b.getId() == R.id.btn_menu_settings) {
 				// Bouton de paramètres
-				//new AlertDialog.Builder(activiteAndroworms).setTitle("Androworms").setMessage("Les paramètres ne sont pas encore disponible dans cette version").setNeutralButton("Close", null).show();
-				
 				Intent intent = new Intent(this.activiteAndroworms, ActiviteParametres.class);
 				this.activiteAndroworms.startActivity(intent);
 			}
