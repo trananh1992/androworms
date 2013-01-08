@@ -1,6 +1,5 @@
 package com.androworms;
 
-import android.graphics.Point;
 import android.graphics.PointF;
 
 /*

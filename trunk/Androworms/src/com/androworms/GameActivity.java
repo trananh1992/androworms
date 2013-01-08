@@ -60,7 +60,7 @@ public class GameActivity extends Activity {
 		p.setPosition(new PointF(820, 470));
 		persos.add(p);
 		p = new Personnage("Tux");
-		p.setPosition(new PointF(120, 450));     //p.setPosition(new PointF(20, 50));
+		p.setPosition(new PointF(120, 450));
 		persos.add(p);
 		monde.setListePersonnage(persos);
 		List<ObjetSurCarte> objs = new ArrayList<ObjetSurCarte>();
