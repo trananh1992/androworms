@@ -5,7 +5,6 @@ import java.util.List;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.graphics.Point;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.os.Handler;
@@ -58,10 +57,10 @@ public class GameActivity extends Activity {
 		monde = new Monde(null, moteurGraph);
 		List<Personnage> persos = new ArrayList<Personnage>();
 		Personnage p = new Personnage("John Doe");
-		p.setPosition(new Point(820, 470));
+		p.setPosition(new PointF(820, 470));
 		persos.add(p);
 		p = new Personnage("Tux");
-		p.setPosition(new Point(120, 450));
+		p.setPosition(new PointF(120, 450));     //p.setPosition(new PointF(20, 50));
 		persos.add(p);
 		monde.setListePersonnage(persos);
 		List<ObjetSurCarte> objs = new ArrayList<ObjetSurCarte>();
@@ -173,21 +172,21 @@ public class GameActivity extends Activity {
 						// Déplacement vers la droite
 						case Paddle.BOUTON_DROITE:
 							Log.v(TAG,"Déplacement vers la droite");
-							Point p1 = monde.getPersonnagePrincipal().getPosition();
+							PointF p1 = monde.getPersonnagePrincipal().getPosition();
 							p1.offset(DEPLACEMENT_JOUEUR, 0);
 							monde.getPersonnagePrincipal().setPosition(p1);
 							break;
 						// Déplacement vers le haut
 						case Paddle.BOUTON_HAUT:
 							Log.v(TAG,"Déplacement vers la haut");
-							Point p3 = monde.getPersonnagePrincipal().getPosition();
+							PointF p3 = monde.getPersonnagePrincipal().getPosition();
 							p3.offset(0, -DEPLACEMENT_JOUEUR);
 							monde.getPersonnagePrincipal().setPosition(p3);
 							break;
 						// Déplacement vers la gauche
 						case Paddle.BOUTON_GAUCHE:
 							Log.v(TAG,"Déplacement vers la gauche");
-							Point p2 = monde.getPersonnagePrincipal().getPosition();
+							PointF p2 = monde.getPersonnagePrincipal().getPosition();
 							p2.offset(-DEPLACEMENT_JOUEUR, 0);
 							monde.getPersonnagePrincipal().setPosition(p2);
 							break;
