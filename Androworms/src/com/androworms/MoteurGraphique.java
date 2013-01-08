@@ -58,8 +58,6 @@ public class MoteurGraphique extends RelativeLayout {
 	//Nombre maximum d'images stockees dans le cache
 	private static final int NB_MAX_IMAGE_CACHE = 10;
 	
-	private PointF positionFond;
-	
 	// Images pour le jeu
 	private LruCache<Integer, Bitmap> memoireCache;
 	private Bitmap bmFond;
@@ -112,7 +110,6 @@ public class MoteurGraphique extends RelativeLayout {
 		GameActivity.setMode(GameActivity.RIEN);
 		this.setWillNotDraw(false);
 		this.setClickable(true);
-		positionFond = new PointF(0, 0);
 		
 		/* Bitmap */
 		// On crée un cache
@@ -230,9 +227,6 @@ public class MoteurGraphique extends RelativeLayout {
 		
 		//Quand on a modifié tous les imageView on peut dessiner
 		super.dispatchDraw(canvas);
-		
-		
-		
 		
 		
 		// Apres le dessin des views, on rajoute le dessins des objets pour le tir
@@ -432,13 +426,13 @@ public class MoteurGraphique extends RelativeLayout {
 				//On rajoute dans le layout
 				this.addView(imgV);
 				//On garde la référence pour le zoom et translation
-			    images.add(imgV);
+				images.add(imgV);
 			    
 			    
 			    // TODO : c'est pas bien, il faut changer ça avec une meilleur gestion des ID
-			    imgV.setId(id);
-			    p.setId(id);
-			    id++;
+				imgV.setId(id);
+				p.setId(id);
+				id++;
 			}
 
 			id = 2000;
@@ -449,14 +443,14 @@ public class MoteurGraphique extends RelativeLayout {
 				imgV = new ImageView(this.context);
 				imgV.setImageBitmap(bmObj);
 				imgV.setScaleType(ScaleType.MATRIX);
-			    this.addView(imgV);
-			    images.add(imgV);
+				this.addView(imgV);
+				images.add(imgV);
 			    
 			    // TODO : c'est pas bien, il faut changer ça avec une meilleur gestion des ID
-			    imgV.setId(id);
-			    objSurCarte.setId(id);
+				imgV.setId(id);
+				objSurCarte.setId(id);
 
-			    id++;
+				id++;
 			}
 			
 			this.invalidate();
