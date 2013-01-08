@@ -1,8 +1,7 @@
 package com.androworms;
 
 import android.graphics.Point;
-
-
+import android.graphics.PointF;
 
 /*
  * Cette classe contient toutes les informations
@@ -17,17 +16,16 @@ public class Personnage {
 	 * accessoire
 	 */
 
-	public static final int JOUEUR_WIDTH = 180;
-	public static final int JOUEUR_HEIGHT = 173;
+	public static final int JOUEUR_WIDTH = 162;
+	public static final int JOUEUR_HEIGHT = 214;
 	
 	private String nom;
-	private Point position;
-
-
+	private PointF position;
+	private int id;
 	
 	public Personnage(String nom) {
 		this.nom = nom;
-		position = new Point();
+		position = new PointF();
 	}
 
 	public String getNom() {
@@ -38,11 +36,11 @@ public class Personnage {
 		this.nom = nom;
 	}
 
-	public Point getPosition() {
+	public PointF getPosition() {
 		return position;
 	}
 
-	public void setPosition(Point position) {
+	public void setPosition(PointF position) {
 		this.position = position;
 	}
 	
@@ -56,6 +54,13 @@ public class Personnage {
 
 	public void deplacementGauche(int y) {
 		position.set(position.x-1, y);
-		
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }

@@ -1,5 +1,8 @@
 package com.androworms;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -14,6 +17,8 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.util.LruCache;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.RelativeLayout;
 
 /** Ce composant graphique est un RelativeLayout personnalisé pour Androworms.
@@ -63,6 +68,7 @@ public class MoteurGraphique extends RelativeLayout {
 	
 	//Matrice qui gère le zoom et la translation d'une image
 	private Matrix matrix;
+	private float[] mm;
 
 	// TIR
 	// position du début du tir
@@ -73,6 +79,10 @@ public class MoteurGraphique extends RelativeLayout {
 	
 	private Monde monde;
 	
+	private Context context;
+	private ImageView fond;
+	private ImageView terrain;
+	private List<ImageView> images;
 	
 	public MoteurGraphique(Context context) {
 		super(context);
@@ -97,6 +107,8 @@ public class MoteurGraphique extends RelativeLayout {
 	private void constructeurPartage(Context context) {
 		Log.v(TAG, "constructeurPartage()");
 		
+		this.context = context;
+		
 		GameActivity.setMode(GameActivity.RIEN);
 		this.setWillNotDraw(false);
 		this.setClickable(true);
@@ -115,8 +127,17 @@ public class MoteurGraphique extends RelativeLayout {
 			//TODO terminer ou dire quelque chose...
 		}
 		
+		fond = new ImageView(context);
+		fond.setImageBitmap(bmFond);
+		
+		terrain = new ImageView(context);
+		terrain.setImageBitmap(bmTerrain);
+		
+		
 		//on crée une nouvelle matrice
 		matrix = new Matrix();
+		//On crée un tableau ici pour la performance
+		this.mm = new float[TAILLE_MATRIX];
 		
 		pointTir = new PointF(-1, -1);
 		positionTouche = new PointF(-1, -1);
@@ -124,8 +145,17 @@ public class MoteurGraphique extends RelativeLayout {
 		/* évenements */
 		setOnTouchListener(new EvenementJeu(context, this));
 		
-		float[] m = new float[TAILLE_MATRIX];
-		matrix.getValues(m);
+		matrix.getValues(mm);
+		
+		fond.setScaleType(ScaleType.MATRIX);
+		terrain.setScaleType(ScaleType.MATRIX);
+		fond.setImageMatrix(matrix);
+		terrain.setImageMatrix(matrix);
+		this.addView(fond);
+		this.addView(terrain);
+		
+		images = new ArrayList<ImageView>();
+		
 	}
 	
 	private static Bitmap prepareBitmap(Drawable drawable, int width, int height) {
@@ -142,38 +172,70 @@ public class MoteurGraphique extends RelativeLayout {
 		
 	@Override
 	protected void onDraw(Canvas canvas) {
-		
+		super.onDraw(canvas);
 	}
 	
 	@Override
 	protected void dispatchDraw(Canvas canvas) {
-		// Application de la matrice avec la translation et le zoom
-		canvas.setMatrix(matrix);
+		// on applique une matrice au fond (trans + scale)
+		fond.setImageMatrix(matrix);
+		terrain.setImageMatrix(matrix);
 		
-		// Dessin des objets du jeu
-		canvas.drawBitmap(bmFond, positionFond.x, positionFond.y, null);
-		canvas.drawBitmap(bmTerrain, positionFond.x, positionFond.y, null);
+		matrix.getValues(mm);
+		float scaleX = mm[Matrix.MSCALE_X];
+		float scaleY = mm[Matrix.MSCALE_Y];
 		
-		// Dessin du quadrillage pour les tests
-//		canvas.drawBitmap(bmQuadrillage, positionFond.x, positionFond.y, null);
+		// on copie la matrice appliquée au fond pour faire une custom sur les imageview
+		// cette matrice n'a pas de trans mais juste un scale
+		//le trans est fait sur le composant
+		Matrix matrixZoom = new Matrix();
+		matrixZoom.postScale(scaleX, scaleY);
 		
-		if (monde != null) {
-			Bitmap bmPerso = getBitmap(Personnage.getIdImage(), Personnage.JOUEUR_WIDTH, Personnage.JOUEUR_HEIGHT);
-			Bitmap bmObj;
-			
-			for(Personnage p : monde.getListePersonnage()) {
-				canvas.drawBitmap(bmPerso, p.getPosition().x, p.getPosition().y, null);
+		int i = 0;
+		List<Personnage> persos = monde.getListePersonnage();
+		List<ObjetSurCarte> objs = monde.getListeObjetCarte();
+		boolean objEnCours = false;
+		ObjetSurCarte obj;
+		PointF pp;
+		Point taille;
+		
+		for(ImageView v : this.images) {
+
+			if (i == persos.size()){
+				i = 0;
+				objEnCours = true;
 			}
 			
-			for(ObjetSurCarte objSurCarte : monde.getListeObjetCarte()) {
-				Objet obj = objSurCarte.getObjet();
-				Point taille = obj.getTailleImage();
-				bmObj = getBitmap(obj.getIdImage(), taille.x, taille.y);
-				canvas.drawBitmap(bmObj, objSurCarte.getPosition().x, objSurCarte.getPosition().y, null);
+			if (objEnCours) {
+				obj = objs.get(i);
+				pp = transpositionPointSurEcran(obj.getPosition());
+				taille = obj.getObjet().getTailleImage();
+				//Calcul du carré où afficher l'image
+				v.layout((int) pp.x,
+						(int) pp.y, 
+						(int)( pp.x + taille.x * scaleX),
+						(int)( pp.y + taille.y * scaleY));
+			} else {
+				pp = transpositionPointSurEcran(persos.get(i).getPosition());
+				//Calcul du carré où afficher l'image
+				v.layout((int) pp.x,
+						(int) pp.y, 
+						(int)( pp.x + Personnage.JOUEUR_WIDTH * scaleX),
+						(int)( pp.y + Personnage.JOUEUR_HEIGHT * scaleY));
 			}
+			
+			v.setImageMatrix(matrixZoom);
+			i++;
 		}
 		
-		// Dessin des objets pour le tir
+		//Quand on a modifié tous les imageView on peut dessiner
+		super.dispatchDraw(canvas);
+		
+		
+		
+		
+		
+		// Apres le dessin des views, on rajoute le dessins des objets pour le tir
 		if (GameActivity.getMode() == GameActivity.TIR) {
 			// Pour le tir, on a pas de translation ni de zoom
 			Matrix m = new Matrix();
@@ -200,13 +262,14 @@ public class MoteurGraphique extends RelativeLayout {
 			// Onde violette
 			paint.setColor(Color.MAGENTA);
 			RectF rect = new RectF();
-			for (int i=0;(i<=distance && i < TAILLE_MAX_TIR);i+= INCREMENT_ONDE_TIR) {
-				rect.set(pointTir.x - i, pointTir.y - i,
-						pointTir.x + i, pointTir.y + i);
+			for (int i1=0;(i1<=distance && i1 < TAILLE_MAX_TIR);i1+= INCREMENT_ONDE_TIR) {
+				rect.set(pointTir.x - i1, pointTir.y - i1,
+						pointTir.x + i1, pointTir.y + i1);
 				canvas.drawArc(rect, angle, ANGLE_ONDE_TIR, false, paint);
 			}
 			
-			PointF positionJoueur = new PointF(monde.getPersonnagePrincipal().getPosition());
+			PointF positionJoueur = new PointF();
+			positionJoueur.set(monde.getPersonnagePrincipal().getPosition());
 			Log.v(TAG, "le perso principal est à " + positionJoueur.x + "; " + positionJoueur.y);
 			//On place le point au milieu du joueur
 			positionJoueur.offset(Personnage.JOUEUR_WIDTH / 2, Personnage.JOUEUR_HEIGHT / 2);
@@ -274,8 +337,7 @@ public class MoteurGraphique extends RelativeLayout {
 	 * @return : Point de l'objet relative à l'écran
 	 */
 	private PointF transpositionPointSurEcran(PointF pt) {
-		float[] mm = new float[TAILLE_MATRIX];
-		matrix.getValues(mm);
+		matrix.getValues(this.mm);
 		float transX = mm[Matrix.MTRANS_X];
 		float transY = mm[Matrix.MTRANS_Y];
 		float scaleX = mm[Matrix.MSCALE_X];
@@ -291,8 +353,7 @@ public class MoteurGraphique extends RelativeLayout {
 	 * @return : Point de l'objet relative à l'écran
 	 */
 	private PointF zoomPointSurEcran(PointF pt) {
-		float[] mm = new float[TAILLE_MATRIX];
-		matrix.getValues(mm);
+		matrix.getValues(this.mm);
 		float scaleX = mm[Matrix.MSCALE_X];
 		float scaleY = mm[Matrix.MSCALE_Y];
 		
@@ -347,5 +408,58 @@ public class MoteurGraphique extends RelativeLayout {
 	
 	public void setMonde(Monde monde) {
 		this.monde = monde;
+		
+		for(ImageView v : this.images)
+		{
+			this.removeView(v);
+		}
+		
+		ImageView imgV;
+		Bitmap bmObj;
+		
+		if (monde != null)
+		{
+			Bitmap bmPerso = getBitmap(Personnage.getIdImage(), Personnage.JOUEUR_WIDTH, Personnage.JOUEUR_HEIGHT);
+
+			int id = 1000;
+			for(Personnage p : monde.getListePersonnage()) {
+				//On ne fait que charger l'image, le positionnement sera fait dans dispatchDraw
+				imgV = new ImageView(this.context);
+				//On dessine le personnage
+				imgV.setImageBitmap(bmPerso);
+				//Pour pouvoir ensuite appliquer une matrice
+				imgV.setScaleType(ScaleType.MATRIX);
+				//On rajoute dans le layout
+				this.addView(imgV);
+				//On garde la référence pour le zoom et translation
+			    images.add(imgV);
+			    
+			    
+			    // TODO : c'est pas bien, il faut changer ça avec une meilleur gestion des ID
+			    imgV.setId(id);
+			    p.setId(id);
+			    id++;
+			}
+
+			id = 2000;
+			for(ObjetSurCarte objSurCarte : monde.getListeObjetCarte()) {
+				Objet obj = objSurCarte.getObjet();
+				Point taille = obj.getTailleImage();
+				bmObj = getBitmap(obj.getIdImage(), taille.x, taille.y);
+				imgV = new ImageView(this.context);
+				imgV.setImageBitmap(bmObj);
+				imgV.setScaleType(ScaleType.MATRIX);
+			    this.addView(imgV);
+			    images.add(imgV);
+			    
+			    // TODO : c'est pas bien, il faut changer ça avec une meilleur gestion des ID
+			    imgV.setId(id);
+			    objSurCarte.setId(id);
+
+			    id++;
+			}
+			
+			this.invalidate();
+		}
 	}
 }
