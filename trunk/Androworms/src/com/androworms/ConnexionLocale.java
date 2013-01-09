@@ -14,7 +14,7 @@ public class ConnexionLocale extends Connexion {
 	}
 
 	public void deplacementJoueurGauche(String nomPersonnage) {
-
+		getNoyau().deplacementJoueurGauche(nomPersonnage);
 	} 
 	
 	public void deplacementJoueurSaut(String nomPersonnage) {

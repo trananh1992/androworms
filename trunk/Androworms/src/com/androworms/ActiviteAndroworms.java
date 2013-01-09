@@ -102,7 +102,7 @@ public class ActiviteAndroworms extends Activity {
 		// Evenements sur les boutons de TEST
 		OnClickListener camCl = new ActiviteCreationCarte(this);
 		findViewById(R.id.test_cam).setOnClickListener(camCl);
-		OnClickListener tr = new IHMTestReseau(new Noyau());
+		OnClickListener tr = new IHMTestReseau(new Noyau(null));
 		findViewById(R.id.testReseau).setOnClickListener(tr);
 		
 		// Afficher els informations du téléphone
