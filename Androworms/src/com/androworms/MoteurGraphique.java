@@ -46,7 +46,7 @@ public class MoteurGraphique extends RelativeLayout {
 	private static final int EPAISSEUR_FLECHE_TIR = 30;
 	private static final int EPAISSEUR_ONDE_TIR = 10;
 	private static final float ANGLE_ONDE_TIR = 30f;
-	private static final int ANGLE_DEMITOUR = 180;
+	public static final int ANGLE_DEMITOUR = 180;
 	private static final int INCREMENT_ONDE_TIR = 20;
 	private static final int COULEUR_MAXIMUM = 255;
 	private static final float INCREMENT_COULEUR = 0.5f;
@@ -74,6 +74,7 @@ public class MoteurGraphique extends RelativeLayout {
 	private PointF positionTouche;
 	
 	private Noyau noyau;
+	private EvenementJeu evtJeu;
 	
 	private Context context;
 	private ImageView fond;
@@ -144,7 +145,8 @@ public class MoteurGraphique extends RelativeLayout {
 		positionTouche = new PointF(-1, -1);
 		
 		/* évenements */
-		setOnTouchListener(new EvenementJeu(context, this, noyau));
+		evtJeu = new EvenementJeu(context, this);
+		setOnTouchListener(evtJeu);
 		
 		matrix.getValues(mm);
 		
@@ -178,6 +180,9 @@ public class MoteurGraphique extends RelativeLayout {
 		
 	@Override
 	protected void dispatchDraw(Canvas canvas) {
+		
+		Log.v(TAG, "dispatchDraw");
+		
 		// on applique une matrice au fond (trans + scale)
 		fond.setImageMatrix(matrix);
 		terrain.setImageMatrix(matrix);
@@ -238,8 +243,9 @@ public class MoteurGraphique extends RelativeLayout {
 		
 		
 		// Apres le dessin des views, on rajoute le dessins des objets pour le tir
-		if (GameActivity.getMode() == GameActivity.TIR) {
+		if (GameActivity.getMode() == GameActivity.TIR_EN_COURS) {
 			// Pour le tir, on a pas de translation ni de zoom
+			Log.v(TAG, "On dessine les trucs");
 			Matrix m = new Matrix();
 			canvas.setMatrix(m);
 			
@@ -423,6 +429,7 @@ public class MoteurGraphique extends RelativeLayout {
 	public void setNoyau(Noyau noyau) {
 		this.noyau = noyau;
 		Monde monde = this.noyau.getMonde();
+		this.evtJeu.setNoyau(noyau);
 		
 		for(ImageView v : this.images)
 		{

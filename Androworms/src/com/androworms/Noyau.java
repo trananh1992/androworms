@@ -103,7 +103,7 @@ public class Noyau {
 
 	public void effectuerTir(float puissance, float angle) {
 		// TODO Auto-generated method stub
-		
+		Log.v(TAG_NOYAU, "On tire");
 	}
 	
 	/*

@@ -33,9 +33,8 @@ public class EvenementJeu
 	//zoom qui dépend de zoomMin
 	private float zoomMax; 
 		
-	public EvenementJeu(Context ctx, MoteurGraphique mg, Noyau n) {
+	public EvenementJeu(Context ctx, MoteurGraphique mg) {
 		this.moteurGraph = mg;
-		this.noyau = n;
 		
 		positionNouvelleTouche = new PointF(-1, -1);
 		positionAncienneTouche = new PointF(-1, -1);
@@ -54,6 +53,10 @@ public class EvenementJeu
 		mg.getMatrice().postScale(scaleCourant, scaleCourant, 0, 0);
 	}
 	
+	public void setNoyau(Noyau noyau) {
+		this.noyau = noyau;
+	}
+
 	public boolean onTouch(View v, MotionEvent event) {
 		
 		positionAncienneTouche.set(positionNouvelleTouche);
@@ -75,7 +78,9 @@ public class EvenementJeu
 				// Action : Appui sur l'écran lorsqu'il n'y a aucun doigt. Ce doigt est donc le doigt principal
 				if (GameActivity.getMode() == GameActivity.RIEN) {
 					GameActivity.setMode(GameActivity.DEPLACEMENT);
-				} else {
+				} else if (GameActivity.getMode() == GameActivity.TIR 
+						||  GameActivity.getMode() == GameActivity.TIR_EN_COURS) {
+					GameActivity.setMode(GameActivity.TIR_EN_COURS);
 					this.moteurGraph.getPointTir().set(positionNouvelleTouche);
 				}
 				positionAncienneTouche = new PointF(-1, -1);
@@ -118,6 +123,15 @@ public class EvenementJeu
 				if (GameActivity.getMode() == GameActivity.DEPLACEMENT) {
 					GameActivity.setMode(GameActivity.RIEN);
 				}
+				if (GameActivity.getMode() == GameActivity.TIR_EN_COURS) {
+					GameActivity.setMode(GameActivity.TIR);
+					PointF deplacement = new PointF(this.moteurGraph.getPointTir().x - positionNouvelleTouche.x,
+							this.moteurGraph.getPointTir().y - positionNouvelleTouche.y);
+					float distance = deplacement.length();
+					float angle = ((float)(Math.atan2 (deplacement.y, deplacement.x)* MoteurGraphique.ANGLE_DEMITOUR /Math.PI));
+				
+					noyau.effectuerTir(distance, angle);
+				}
 				positionAncienneTouche = new PointF(-1, -1);
 				break;
 			
@@ -125,13 +139,6 @@ public class EvenementJeu
 				// Action : lorsque que l'on a plusieurs doigts sur l'écran et que l'on lève le doigt principal
 				if (GameActivity.getMode() == GameActivity.DEPLACEMENT) {
 					GameActivity.setMode(GameActivity.RIEN);
-				} else {
-					PointF deplacement = new PointF(this.moteurGraph.getPointTir().x - positionNouvelleTouche.x,
-							this.moteurGraph.getPointTir().y - positionNouvelleTouche.y);
-					float distance = deplacement.length();
-					float angle = ((float)(Math.atan2 (deplacement.y, deplacement.x)* 180 /Math.PI));
-					
-					noyau.effectuerTir(distance, angle);
 				}
 				positionAncienneTouche = new PointF(-1, -1);
 				break;
@@ -146,7 +153,8 @@ public class EvenementJeu
 	// Début d'une session de zoom
 	@Override
 	public boolean onScaleBegin(ScaleGestureDetector detector) {
-		if (GameActivity.getMode() != GameActivity.TIR) {
+		if (GameActivity.getMode() != GameActivity.TIR
+				&& GameActivity.getMode() != GameActivity.TIR_EN_COURS) {
 			GameActivity.setMode(GameActivity.ZOOM);
 			return true;
 		} else {
