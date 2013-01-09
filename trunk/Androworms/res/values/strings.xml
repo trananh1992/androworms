@@ -41,5 +41,6 @@
     <string name="title_activity_activite_parametres">ActiviteParametres</string>
     <string name="pseudo">Pseudo</string>
     <string name="image_perso">Image perso</string>
+    <string name="enregistrer">Enregistrer</string>
 
 </resources>
