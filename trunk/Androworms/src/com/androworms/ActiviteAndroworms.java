@@ -1,6 +1,7 @@
 package com.androworms;
 
 import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.Html;
@@ -43,7 +44,10 @@ public class ActiviteAndroworms extends Activity {
 		tvDevelopers = (TextView)findViewById(R.id.textView3);
 		tvDevelopers.setText(Html.fromHtml(txtDev));
 		
-		
+		//Dans les vieilles version d'android, il faut charger le bluetooth depuis une activité
+		// avant de pouvoir l'utiliser en background
+		// cf : http://code.google.com/p/android/issues/detail?id=16587
+		BluetoothAdapter.getDefaultAdapter();
 		
 		final Chargement ch = new Chargement();
 		ch.execute(this);

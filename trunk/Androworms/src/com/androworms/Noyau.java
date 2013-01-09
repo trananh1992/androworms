@@ -11,9 +11,9 @@ import android.util.Log;
 public class Noyau {
 
 	// private ihm...
-	public final static int DEPLACEMENT_DROITE = 0;
-	public final static int DEPLACEMENT_GAUCHE = 1;
-	public final static int DEPLACEMENT_HAUT = 2;
+	public static final int DEPLACEMENT_DROITE = 0;
+	public static final int DEPLACEMENT_GAUCHE = 1;
+	public static final int DEPLACEMENT_HAUT = 2;
 	
 	private static final String TAG_NOYAU = "Androworms.Noyau";
 	private Connexion connexion;
