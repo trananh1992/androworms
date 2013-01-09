@@ -27,6 +27,7 @@ public class GameActivity extends Activity {
 	public static final int ZOOM = 2;
 	public static final int SELECTION_ARME = 3;
 	public static final int TIR = 4;
+	public static final int TIR_EN_COURS = 5;
 	
 	private static TextView tv;
 	private Noyau noyau;
@@ -50,7 +51,7 @@ public class GameActivity extends Activity {
 		ToggleButton tgb = (ToggleButton) findViewById(R.id.toggleButton1);
 		tgb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if (!isChecked && mode == TIR) {
+				if (!isChecked && (mode == TIR || mode == TIR_EN_COURS)) {
 					setMode(RIEN);
 					findViewById(R.id.toggleButton2).setEnabled(true);
 				} else if (isChecked && mode != SELECTION_ARME) {
@@ -129,6 +130,9 @@ public class GameActivity extends Activity {
 					break;
 				case TIR:
 					tv.setText("Mode : TIR");
+					break;
+				case TIR_EN_COURS:
+					tv.setText("Mode : TIR_EN_COURS");
 					break;
 				default:
 					break;
