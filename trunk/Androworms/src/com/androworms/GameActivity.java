@@ -43,7 +43,7 @@ public class GameActivity extends Activity {
 		/* Récupération du layout de fond */
 		MoteurGraphique moteurGraph = (MoteurGraphique)findViewById(R.id.trlCarte);
 		
-		noyau = new Noyau(moteurGraph);
+		noyau = new Noyau(getBaseContext(), moteurGraph);
 		
 		moteurGraph.setNoyau(noyau);
 		

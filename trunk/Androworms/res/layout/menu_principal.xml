@@ -75,12 +75,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/test_camera"
                 android:width="100dp" />
-
-            <Button
-                android:id="@+id/testReseau"
-                android:layout_width="130dp"
-                android:layout_height="wrap_content"
-                android:text="@string/test_reseau" />
         </LinearLayout>
     </LinearLayout>
 

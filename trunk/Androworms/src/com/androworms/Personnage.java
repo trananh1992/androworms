@@ -15,7 +15,7 @@ public class Personnage extends ElementSurCarte {
 	 * accessoire
 	 */
 	
-	public static final int TAILLE_DEPLACEMENT_JOUEUR = 20;
+	public static final int TAILLE_DEPLACEMENT_JOUEUR = 10;
 	private String nom;
 	private int id;
 

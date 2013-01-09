@@ -1,5 +1,6 @@
 package com.androworms;
 
+import android.content.Context;
 import android.graphics.PointF;
 import android.util.Log;
 
@@ -24,7 +25,7 @@ public class Noyau {
 	private MoteurGraphique graphique;
 
 	
-	public Noyau(MoteurGraphique mg) {
+	public Noyau(Context context, MoteurGraphique mg) {
 		// ZONE DE TEST |--> TODO : a déplacer ailleurs !
 		monde = new Monde();
 		this.graphique = mg;
@@ -34,7 +35,7 @@ public class Noyau {
 		monde.addPersonnage(johnDoe);
 		
 		Personnage tux = new Personnage("Tux", ii);
-		tux.setPosition(new PointF(120, 450));
+		tux.setPosition(new PointF(120, 0));
 		monde.addPersonnage(tux);
 
 		ImageInformation iiObjetCarte = new ImageInformation(R.drawable.hache, 139, 95);
@@ -44,11 +45,14 @@ public class Noyau {
 		monde.addObjetSurCarte(obj);
 		obj = new ObjetSurCarte(o, new PointF(1000, 500), iiObjetCarte);
 		monde.addObjetSurCarte(obj);
+		
+		monde.setTerrain(context.getResources().getDrawable(R.drawable.terrain_jeu_defaut_640x360), 1280, 720);
 		//FIN ZONE DE TEST
 		
 		connexion = new ConnexionLocale(this);
 		this.nomPersonnage = "Tux";
 		physique = new MoteurPhysique(this, monde);
+		
 	}
 	
 	public String getNomPersonnage() {
@@ -57,6 +61,10 @@ public class Noyau {
 
 	public void setNomPersonnage(String nomPersonnage) {
 		this.nomPersonnage = nomPersonnage;
+	}
+	
+	public void actualiserGraphisme() {
+		graphique.actualiserGraphisme();
 	}
 
 	public void creationPartieLocale() {
@@ -75,7 +83,7 @@ public class Noyau {
 	 * Gestion des messages venanat de l'IHM 
 	 */
 	public void sautJoueurDroiteFromIHM() {
-		
+		physique.gravite();
 	}
 	
 	public void sautJoueurGaucheFromIHM() {
