@@ -1,8 +1,5 @@
 package com.androworms;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.graphics.PointF;
 import android.util.Log;
 
@@ -29,9 +26,8 @@ public class Noyau {
 	
 	public Noyau(MoteurGraphique mg) {
 		// ZONE DE TEST |--> TODO : a déplacer ailleurs !
-		monde = new Monde(null, mg);
+		monde = new Monde();
 		this.graphique = mg;
-		List<Personnage> persos = new ArrayList<Personnage>();
 		ImageInformation ii = new ImageInformation(R.drawable.android_face, 162, 214 );
 		Personnage johnDoe = new Personnage("John Doe", ii);
 		johnDoe.setPosition(new PointF(820, 470));

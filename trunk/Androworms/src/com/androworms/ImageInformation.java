@@ -1,9 +1,9 @@
 package com.androworms;
 
 public class ImageInformation {
-	public int width;
-	public int height;
-	public int idImage;
+	private int width;
+	private int height;
+	private int idImage;
 	
 	public ImageInformation(){}
 	
