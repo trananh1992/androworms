@@ -3,6 +3,9 @@ package com.androworms;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 
 public class ActiviteParametres extends Activity {
@@ -19,11 +22,19 @@ public class ActiviteParametres extends Activity {
 		
 		String pseudo = settings.getString("pseudo", "vide");
 		
-		EditText tv = (EditText)findViewById(R.id.pseudo);
-		tv.setText(pseudo);
+		EditText et = (EditText)findViewById(R.id.pseudo);
+		et.setText(pseudo);
+		
+		/* Bouton enregistrer */
+		Button btn = (Button)findViewById(R.id.btn_enregistrer);
+		btn.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				finish();
+			}
+		});
 	}
 	
-	protected void onStop(){
+	protected void onStop() {
 		super.onStop();
 		// Sauvegarde des préférences
 		EditText tv = (EditText)findViewById(R.id.pseudo);
