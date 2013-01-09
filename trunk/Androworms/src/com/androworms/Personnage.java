@@ -6,7 +6,7 @@ import android.graphics.PointF;
  * Cette classe contient toutes les informations
  * sur le personnage utiliser par un joueur.
  */
-public class Personnage {
+public class Personnage extends ElementSurCarte {
 	/*
 	 * Propriete de personnage.
 	 * Image du personnage
@@ -14,18 +14,15 @@ public class Personnage {
 	 * chapeau 
 	 * accessoire
 	 */
-
-	public static final int JOUEUR_WIDTH = 162;
-	public static final int JOUEUR_HEIGHT = 214;
+	
 	public static final int TAILLE_DEPLACEMENT_JOUEUR = 20;
-	
 	private String nom;
-	private PointF position;
 	private int id;
+
 	
-	public Personnage(String nom) {
+	public Personnage(String nom, ImageInformation ii) {
+		super(new PointF(), ii);
 		this.nom = nom;
-		position = new PointF();
 	}
 
 	public String getNom() {
@@ -35,25 +32,17 @@ public class Personnage {
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-
-	public PointF getPosition() {
-		return position;
-	}
-
-	public void setPosition(PointF position) {
-		this.position = position;
-	}
 	
 	public static int getIdImage() {
 		return R.drawable.android_face;
 	}
 
 	public void deplacementDroite() {
-		position.set(position.x + TAILLE_DEPLACEMENT_JOUEUR, position.y);
+		setPosition(getPosition().x + TAILLE_DEPLACEMENT_JOUEUR, getPosition().y);
 	}
 
 	public void deplacementGauche() {
-		position.set(position.x - TAILLE_DEPLACEMENT_JOUEUR, position.y);
+		setPosition(getPosition().x - TAILLE_DEPLACEMENT_JOUEUR, getPosition().y);
 	}
 	
 	public int getId() {

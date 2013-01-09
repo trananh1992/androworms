@@ -1,13 +1,21 @@
 package com.androworms;
 
-import android.graphics.Point;
+
+import android.graphics.PointF;
 
 public abstract class Objet  {
 	private String nom;
-
+	private ImageInformation imageTerrain;
+	
 	public Objet(String nom) {
+		this.nom = nom ;
+		imageTerrain =  new ImageInformation();
+	}
+
+	public Objet(String nom, ImageInformation ii ) {
 		super();
 		this.nom = nom;
+		this.imageTerrain = ii;
 	}
 
 	public String getNom() {
@@ -18,7 +26,17 @@ public abstract class Objet  {
 		this.nom = nom;
 	}
 	
-	public abstract int getIdImage();
+	public int getImageTerrain() {
+		return imageTerrain.getIdImage();
+	}
 	
-	public abstract Point getTailleImage();
+	public void setImageTerrain(int idImage, int height, int width) {
+		imageTerrain.setIdImage(idImage);
+		imageTerrain.setHeight(height);
+		imageTerrain.setWidth(width);		
+	}
+	
+	public PointF getTailleImageTerrain() {
+		return new PointF(imageTerrain.getWidth(), imageTerrain.getHeight());
+	}
 }

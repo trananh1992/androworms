@@ -32,24 +32,27 @@ public class Noyau {
 		monde = new Monde(null, mg);
 		this.graphique = mg;
 		List<Personnage> persos = new ArrayList<Personnage>();
-		Personnage p = new Personnage("John Doe");
-		p.setPosition(new PointF(820, 470));
-		persos.add(p);
-		p = new Personnage("Tux");
-		p.setPosition(new PointF(120, 450));
-		persos.add(p);
-		monde.setListePersonnage(persos);
-		List<ObjetSurCarte> objs = new ArrayList<ObjetSurCarte>();
-		Objet o = new Arme("Hache", null, 0);
-		ObjetSurCarte obj = new ObjetSurCarte(o, new PointF(250,500));
-		objs.add(obj);
-		obj = new ObjetSurCarte(o, new PointF(1000, 500));
-		objs.add(obj);
-		monde.setListeObjetCarte(objs);
+		ImageInformation ii = new ImageInformation(R.drawable.android_face, 162, 214 );
+		Personnage johnDoe = new Personnage("John Doe", ii);
+		johnDoe.setPosition(new PointF(820, 470));
+		monde.addPersonnage(johnDoe);
+		
+		Personnage tux = new Personnage("Tux", ii);
+		tux.setPosition(new PointF(120, 450));
+		monde.addPersonnage(tux);
+
+		ImageInformation iiObjetCarte = new ImageInformation(R.drawable.hache, 139, 95);
+		Objet o = new Arme("Hache");
+		o.setImageTerrain(R.drawable.hache, 139, 95);
+		ObjetSurCarte obj = new ObjetSurCarte(o, new PointF(250,500), iiObjetCarte);
+		monde.addObjetSurCarte(obj);
+		obj = new ObjetSurCarte(o, new PointF(1000, 500), iiObjetCarte);
+		monde.addObjetSurCarte(obj);
 		//FIN ZONE DE TEST
 		
 		connexion = new ConnexionLocale(this);
 		this.nomPersonnage = "Tux";
+		physique = new MoteurPhysique(this, monde);
 	}
 	
 	public String getNomPersonnage() {
@@ -62,8 +65,9 @@ public class Noyau {
 
 	public void creationPartieLocale() {
 		connexion = new ConnexionLocale(this);
-		physique = new MoteurPhysique(this);
-		monde = new Monde(physique);
+		monde = new Monde();
+		physique = new MoteurPhysique(this, monde);
+
 		
 	}
 	
@@ -71,32 +75,39 @@ public class Noyau {
 		connexion = new ConnexionDistante(this);
 	}
 	
-	public void deplacementJoueurFromIHM(int move) {
-		switch(move) {
-			case DEPLACEMENT_DROITE : 
-				connexion.deplacementJoueurDroite(nomPersonnage);
-				break;
-			case DEPLACEMENT_GAUCHE : 
-				connexion.deplacementJoueurGauche(nomPersonnage);
-				break;
-			case DEPLACEMENT_HAUT : 
-				//connexion.deplacementJoueurHaut(nomPersonnage);
-				break;
-			default :
-				break;
-		}
+	/*
+	 * Gestion des messages venanat de l'IHM 
+	 */
+	public void sautJoueurDroiteFromIHM() {
+		
+	}
+	
+	public void sautJoueurGaucheFromIHM() {
+		
+	}
+	
+	public void deplacementJoueurDroiteFromIHM() {
+		connexion.deplacementJoueurDroite(nomPersonnage);
+	}
+	
+	public void deplacementJoueurGaucheFromIHM() {
+		connexion.deplacementJoueurGauche(nomPersonnage);
 	}
 	
 	public void deplacementJoueurDroite(String personnage) {
 		// Impacter le monde de ce changement
-		monde.deplacementJoueurDroite(personnage);
+		physique.deplacementJoueurDroite(personnage);
 		this.graphique.actualiserGraphisme();
 	}
 	public void deplacementJoueurGauche(String personnage) {
 		// Impacter le monde de ce changement
-		monde.deplacementJoueurGauche(personnage);
+		physique.deplacementJoueurGauche(personnage);
 		this.graphique.actualiserGraphisme();
 	}
+	
+	/*
+	 * Gestion des tests.
+	 */
 	
 	public void testReseau() {
 		Log.v(TAG_NOYAU, "TestReseau n'est plus valide !");

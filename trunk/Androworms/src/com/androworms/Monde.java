@@ -9,15 +9,13 @@ public class Monde {
 	
 	private static final String TAG = "Androworms.Monde";
 	
-	private MoteurPhysique mp;
 	private MoteurGraphique mg;
 	private List<Personnage> listePersonnage;
 	private List<ObjetSurCarte> listeObjetCarte;
 	private List<Objet> tousLesObjets;
 	
-	public Monde(MoteurPhysique mp) {
+	public Monde() {
 		super();
-		this.mp = mp;
 		tousLesObjets = new ArrayList<Objet>();
 		listePersonnage = new ArrayList<Personnage>();
 		listeObjetCarte = new ArrayList<ObjetSurCarte>();
@@ -25,15 +23,10 @@ public class Monde {
 	
 	public Monde(MoteurPhysique mp, MoteurGraphique mg) {
 		super();
-		this.mp = mp;
 		this.mg = mg;
 		tousLesObjets = new ArrayList<Objet>();
 		listePersonnage = new ArrayList<Personnage>();
 		listeObjetCarte = new ArrayList<ObjetSurCarte>();
-	}
-
-	public MoteurPhysique getMp() {
-		return mp;
 	}
 	
 	public MoteurGraphique getMg() {
@@ -42,10 +35,6 @@ public class Monde {
 
 	public void setMg(MoteurGraphique mg) {
 		this.mg = mg;
-	}
-
-	public void setMp(MoteurPhysique mp) {
-		this.mp = mp;
 	}
 
 	public List<Personnage> getListePersonnage() {
@@ -62,6 +51,18 @@ public class Monde {
 
 	public void setListeObjetCarte(List<ObjetSurCarte> listeObjetCarte) {
 		this.listeObjetCarte = listeObjetCarte;
+	}
+	
+	public void addPersonnage(String nom, ImageInformation ii) {
+		addPersonnage(new Personnage(nom, ii));
+	}
+	
+	public void addPersonnage(Personnage p) {
+		listePersonnage.add(p);
+	}
+	
+	public void addObjetSurCarte(ObjetSurCarte osc) {
+		listeObjetCarte.add(osc);
 	}
 	
 	public void ajouterMunition(String nomObjet, int nombre) {
@@ -81,7 +82,7 @@ public class Monde {
 		}
 	}
 	
-	private Personnage getPersonnage(String Nom) {
+	public Personnage getPersonnage(String Nom) {
 		for(int i =0; i < listePersonnage.size(); i++) {
 			if(Nom.compareTo(listePersonnage.get(i).getNom()) == 0) {
 				return listePersonnage.get(i);				
@@ -89,20 +90,6 @@ public class Monde {
 		}
 		Log.v(TAG, "Le personnage n'a pas été trouvé.");
 		return null;
-	}
-
-	public void deplacementJoueurDroite(String personnage) {
-		/// Il faudra faire passer ce mouvement à droite dans le moteur physique.
-		// La coordonné en y sera affecté si besoin est.
-		getPersonnage(personnage).deplacementDroite();
-				
-	}
-	
-	public void deplacementJoueurGauche(String personnage) {
-		/// Il faudra faire passer ce mouvement à gauche dans le moteur physique.
-		// La coordonné en y sera affecté si besoin est.
-		getPersonnage(personnage).deplacementGauche();
-				
 	}
 	
 }
