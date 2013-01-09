@@ -144,7 +144,7 @@ public class GameActivity extends Activity {
 			}
 			
 			/* Thread pour gérer toutes les x secondes le déplacement du joueur lorsque l'on reste appuyé */
-			Runnable mAction = new Runnable() {
+			private Runnable mAction = new Runnable() {
 				public void run() {
 					switch (idBtnCourrant) {
 						// Déplacement vers la droite
@@ -167,7 +167,6 @@ public class GameActivity extends Activity {
 							Log.v(TAG,"Déplacement default");
 							break;
 					}
-					//monde.getMg().actualiserGraphisme();
 					mHandler.postDelayed(this, TEMPS_APPUIE);
 				}
 			};

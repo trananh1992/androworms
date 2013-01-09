@@ -167,11 +167,6 @@ public class MoteurGraphique extends RelativeLayout {
 	}
 		
 	@Override
-	protected void onDraw(Canvas canvas) {
-		super.onDraw(canvas);
-	}
-	
-	@Override
 	protected void dispatchDraw(Canvas canvas) {
 		// on applique une matrice au fond (trans + scale)
 		fond.setImageMatrix(matrix);
