@@ -18,6 +18,7 @@ public class EvenementJeu
 	private static final int TAILLE_MATRIX = 9;
 	
 	private MoteurGraphique moteurGraph;
+	private Noyau noyau;
 	
 	// Traquer le mouvement
 	private PointF positionAncienneTouche;
@@ -32,8 +33,10 @@ public class EvenementJeu
 	//zoom qui dépend de zoomMin
 	private float zoomMax; 
 		
-	public EvenementJeu(Context ctx, MoteurGraphique mg) {
+	public EvenementJeu(Context ctx, MoteurGraphique mg, Noyau n) {
 		this.moteurGraph = mg;
+		this.noyau = n;
+		
 		positionNouvelleTouche = new PointF(-1, -1);
 		positionAncienneTouche = new PointF(-1, -1);
 		
@@ -123,7 +126,12 @@ public class EvenementJeu
 				if (GameActivity.getMode() == GameActivity.DEPLACEMENT) {
 					GameActivity.setMode(GameActivity.RIEN);
 				} else {
-					// TODO : appel de la fonction de calcul du tir
+					PointF deplacement = new PointF(this.moteurGraph.getPointTir().x - positionNouvelleTouche.x,
+							this.moteurGraph.getPointTir().y - positionNouvelleTouche.y);
+					float distance = deplacement.length();
+					float angle = ((float)(Math.atan2 (deplacement.y, deplacement.x)* 180 /Math.PI));
+					
+					noyau.effectuerTir(distance, angle);
 				}
 				positionAncienneTouche = new PointF(-1, -1);
 				break;

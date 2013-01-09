@@ -3,11 +3,8 @@ package com.androworms;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.SlidingDrawer;
@@ -17,7 +14,7 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import com.androworms.ui.Paddle;
+import com.androworms.ui.ClavierDirectionnel;
 
 public class GameActivity extends Activity {
 	
@@ -33,10 +30,8 @@ public class GameActivity extends Activity {
 	
 	private static TextView tv;
 	private Noyau noyau;
-	
-	/* Gestion du déplacement du joueur avec le Paddle */
-	private static final int TEMPS_APPUIE = 60;
-	
+
+
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.v(TAG,"Start");
@@ -52,7 +47,7 @@ public class GameActivity extends Activity {
 		moteurGraph.setNoyau(noyau);
 		
 		/* Mode TIR */
-		ToggleButton tgb = (ToggleButton)findViewById(R.id.toggleButton1);
+		ToggleButton tgb = (ToggleButton) findViewById(R.id.toggleButton1);
 		tgb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if (!isChecked && mode == TIR) {
@@ -70,17 +65,17 @@ public class GameActivity extends Activity {
 		tgb2.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if (isChecked) {
-					findViewById(R.id.paddle1).setVisibility(View.VISIBLE);
+					findViewById(R.id.clavier).setVisibility(View.VISIBLE);
 					findViewById(R.id.toggleButton1).setEnabled(false);
 				} else {
-					findViewById(R.id.paddle1).setVisibility(View.INVISIBLE);
+					findViewById(R.id.clavier).setVisibility(View.INVISIBLE);
 					findViewById(R.id.toggleButton1).setEnabled(true);
 				}
 			}
 		});
-		// par défaut, le Paddle est caché
-		findViewById(R.id.paddle1).setVisibility(View.INVISIBLE);
-		
+		// par défaut, le clavier est caché
+		findViewById(R.id.clavier).setVisibility(View.INVISIBLE);
+
 		/* Sélecteur d'armes */
 		SlidingDrawer sd = (SlidingDrawer)findViewById(R.id.selecteur_arme);
 		sd.setOnDrawerOpenListener(new OnDrawerOpenListener() {
@@ -101,76 +96,10 @@ public class GameActivity extends Activity {
 		/* Affichage du mode de jeu */
 		tv = (TextView)findViewById(R.id.mode_jeu);
 		updateAffichageMode();
-		
-		/* Gestion du Paddle */
-		Paddle paddle = (Paddle)findViewById(R.id.paddle1);
-		paddle.setOnTouchListener(new OnTouchListener() {
-			
-			private Handler mHandler;
-			private int idBtnCourrant;
-			/* Action lorsque l'on touche un des boutons du Paddle */
-			public boolean onTouch(View v, MotionEvent event) {
-				switch (event.getAction()) {
-					/* Début d'appuie d'un boutton du Paddle */
-					case MotionEvent.ACTION_DOWN:
-						
-						idBtnCourrant = v.getId();
-						/* Je crée un Handler qui va bouger le joueur tous les x secondes s'il reste appuyer dessus */
-						if (mHandler != null) {
-							return true;
-						}
-						mHandler = new Handler();
-						// TODO : le lancement du Thread n'est pas rentable pour faire juste 1 déplacement.
-						// il faudrait mettre le code du déplacement ici, et la création du Thread avec postDelayed sur TEMPS_APPUIE
-						// mais ce code est assez gros, et donc il faudrait faire une fonction qui est appellé ici et depuis le Runnable.
-						// (et mettre un commentaire !)
-						mHandler.post(mAction);
-						break;
-					/* Fin d'appuie d'un boutton du Paddle */
-					case MotionEvent.ACTION_UP:
-						
-						idBtnCourrant = -1;
-						/* Je supprime le Handler */
-						if (mHandler == null) {
-							return true;
-						}
-						mHandler.removeCallbacks(mAction);
-						mHandler = null;
-						break;
-					default:
-						break;
-				}
-				return true;
-			}
-			
-			/* Thread pour gérer toutes les x secondes le déplacement du joueur lorsque l'on reste appuyé */
-			private Runnable mAction = new Runnable() {
-				public void run() {
-					switch (idBtnCourrant) {
-						// Déplacement vers la droite
-						case Paddle.BOUTON_DROITE:
-							Log.v(TAG,"Déplacement vers la droite");
-							noyau.deplacementJoueurDroiteFromIHM();
-							break;
-						// Déplacement vers le haut
-						case Paddle.BOUTON_HAUT:
-							Log.v(TAG,"Déplacement vers la haut");
-							noyau.sautJoueurDroiteFromIHM();
 
-							break;
-						// Déplacement vers la gauche
-						case Paddle.BOUTON_GAUCHE:
-							Log.v(TAG,"Déplacement vers la gauche");
-							noyau.deplacementJoueurGaucheFromIHM();
-							break;
-						default:
-							Log.v(TAG,"Déplacement default");
-							break;
-					}
-					mHandler.postDelayed(this, TEMPS_APPUIE);
-				}
-			};
-		});
+		/* Gestion du clavier*/
+		ClavierDirectionnel clavier = (ClavierDirectionnel) findViewById(R.id.clavier);
+		clavier.setOnTouchListener(new EvenementClavier(noyau));
 	}
 	
 	

@@ -100,6 +100,11 @@ public class Noyau {
 		physique.deplacementJoueurGauche(personnage);
 		this.graphique.actualiserGraphisme();
 	}
+
+	public void effectuerTir(float puissance, float angle) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	/*
 	 * Gestion des tests.

@@ -15,7 +15,7 @@ import com.androworms.R;
 /** Paddle de boutons pour gérer le déplacement
  *
  */
-public class Paddle extends LinearLayout implements OnTouchListener {
+public class ClavierDirectionnel extends LinearLayout implements OnTouchListener {
 	
 	private static final int ALPHA_PAS_TRANSPARENT = 255;
 	private static final int ALPHA_SEMI_TRANSPARENT = 128;
@@ -28,12 +28,12 @@ public class Paddle extends LinearLayout implements OnTouchListener {
 	
 	private OnTouchListener onTouchListener;
 	
-	public Paddle(Context context) {
+	public ClavierDirectionnel(Context context) {
 		super(context);
 		constructeurPartage(context);
 	}
 	
-	public Paddle(Context context, AttributeSet attrs) {
+	public ClavierDirectionnel(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		constructeurPartage(context);
 	}
