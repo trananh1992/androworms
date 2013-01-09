@@ -51,7 +51,6 @@ public class GameActivity extends Activity {
 		
 		moteurGraph.setNoyau(noyau);
 		
-		
 		/* Mode TIR */
 		ToggleButton tgb = (ToggleButton)findViewById(R.id.toggleButton1);
 		tgb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -151,17 +150,18 @@ public class GameActivity extends Activity {
 						// Déplacement vers la droite
 						case Paddle.BOUTON_DROITE:
 							Log.v(TAG,"Déplacement vers la droite");
-							noyau.deplacementJoueurFromIHM(Noyau.DEPLACEMENT_DROITE);
+							noyau.deplacementJoueurDroiteFromIHM();
 							break;
 						// Déplacement vers le haut
 						case Paddle.BOUTON_HAUT:
 							Log.v(TAG,"Déplacement vers la haut");
-							noyau.deplacementJoueurFromIHM(Noyau.DEPLACEMENT_HAUT);
+							noyau.sautJoueurDroiteFromIHM();
+
 							break;
 						// Déplacement vers la gauche
 						case Paddle.BOUTON_GAUCHE:
 							Log.v(TAG,"Déplacement vers la gauche");
-							noyau.deplacementJoueurFromIHM(Noyau.DEPLACEMENT_GAUCHE);
+							noyau.deplacementJoueurGaucheFromIHM();
 							break;
 						default:
 							Log.v(TAG,"Déplacement default");

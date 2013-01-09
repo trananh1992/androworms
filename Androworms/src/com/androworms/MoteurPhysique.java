@@ -7,13 +7,32 @@ package com.androworms;
 public class MoteurPhysique {
 	
 	private Noyau noyau;
+	private Monde monde;
 	
-	public MoteurPhysique(Noyau n) {
+	public MoteurPhysique(Noyau n, Monde monde) {
 		this.noyau = n;
+		this.monde = monde;
 	}
 	
-	public MoteurPhysique(MoteurGraphique mg, Noyau noyau) {
-		super();
-		this.noyau = noyau;
+
+	public void deplacementJoueurDroite(String personnage) {
+		Personnage p = monde.getPersonnage(personnage);
+		p.deplacementDroite();		
+	}
+
+	public void deplacementJoueurGauche(String personnage) {
+		Personnage p = monde.getPersonnage(personnage);
+		p.deplacementGauche();
+		
 	}	
+	
+	public void sautJoueurDroite() {
+		
+	}
+	
+	public void sautJoueurGauche() {
+		
+	}
+	
+	
 }

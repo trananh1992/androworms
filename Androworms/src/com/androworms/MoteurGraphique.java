@@ -194,7 +194,7 @@ public class MoteurGraphique extends RelativeLayout {
 		boolean objEnCours = false;
 		ObjetSurCarte obj;
 		PointF pp;
-		Point taille;
+		PointF taille;
 		
 		for(ImageView v : this.images) {
 
@@ -206,7 +206,7 @@ public class MoteurGraphique extends RelativeLayout {
 			if (objEnCours) {
 				obj = objs.get(i);
 				pp = transpositionPointSurEcran(obj.getPosition());
-				taille = obj.getObjet().getTailleImage();
+				taille = obj.getObjet().getTailleImageTerrain();
 				//Calcul du carré où afficher l'image
 				v.layout((int) pp.x,
 						(int) pp.y, 
@@ -217,8 +217,8 @@ public class MoteurGraphique extends RelativeLayout {
 				//Calcul du carré où afficher l'image
 				v.layout((int) pp.x,
 						(int) pp.y, 
-						(int)( pp.x + Personnage.JOUEUR_WIDTH * scaleX),
-						(int)( pp.y + Personnage.JOUEUR_HEIGHT * scaleY));
+						(int)( pp.x + persos.get(i).getWidthImageTerrain() * scaleX),
+						(int)( pp.y + persos.get(i).getHeightImageTerrain() * scaleY));
 			}
 			
 			v.setImageMatrix(matrixZoom);
@@ -263,10 +263,11 @@ public class MoteurGraphique extends RelativeLayout {
 			}
 			
 			PointF positionJoueur = new PointF();
-			positionJoueur.set(noyau.getMonde().getPersonnagePrincipal().getPosition());
+			Personnage persoPrincipal = noyau.getMonde().getPersonnagePrincipal();
+			positionJoueur.set(persoPrincipal.getPosition());
 			Log.v(TAG, "le perso principal est à " + positionJoueur.x + "; " + positionJoueur.y);
 			//On place le point au milieu du joueur
-			positionJoueur.offset(Personnage.JOUEUR_WIDTH / 2, Personnage.JOUEUR_HEIGHT / 2);
+			positionJoueur.offset(persoPrincipal.getWidthImageTerrain() / 2, persoPrincipal.getHeightImageTerrain() / 2);
 			Log.v(TAG, " et le milieu :  " + positionJoueur.x + "; " + positionJoueur.y);
 			//PointF coinSuperieurDroitJoueur = new PointF(coinSuperieurGaucheJoueur.x + Personnage.JOUEUR_WIDTH, coinSuperieurGaucheJoueur.y);
 			dessinerFleches(transpositionPointSurEcran(positionJoueur), canvas, paint, angleBase, distance);
@@ -294,8 +295,9 @@ public class MoteurGraphique extends RelativeLayout {
 		
 		//La fleche debute en dehors du joueur
 		PointF debutFleche = new PointF();
+		Personnage persoPrincipal = noyau.getMonde().getPersonnagePrincipal();
 		//On cherche à ne pas mettre la flèche sur le joueur
-		float tailleJoueur = zoomPointSurEcran(new PointF(Personnage.JOUEUR_WIDTH / 2, Personnage.JOUEUR_WIDTH / 2)).length(); 
+		float tailleJoueur = zoomPointSurEcran(new PointF(persoPrincipal.getWidthImageTerrain() / 2, persoPrincipal.getHeightImageTerrain() / 2)).length(); 
 		debutFleche.x = (float) (tailleJoueur * Math.cos(Math.toRadians(angleBase))) + depart.x;
 		debutFleche.y = (float) (tailleJoueur * Math.sin(Math.toRadians(angleBase))) + depart.y;
 		//Extrémité de la flèche
@@ -414,7 +416,8 @@ public class MoteurGraphique extends RelativeLayout {
 		
 		if (monde != null)
 		{
-			Bitmap bmPerso = getBitmap(Personnage.getIdImage(), Personnage.JOUEUR_WIDTH, Personnage.JOUEUR_HEIGHT);
+			Personnage persoPrincipal = noyau.getMonde().getPersonnagePrincipal();
+			Bitmap bmPerso = getBitmap(Personnage.getIdImage(), persoPrincipal.getWidthImageTerrain(), persoPrincipal.getHeightImageTerrain());
 
 			int id = 1000;
 			for(Personnage p : monde.getListePersonnage()) {
@@ -439,8 +442,8 @@ public class MoteurGraphique extends RelativeLayout {
 			id = 2000;
 			for(ObjetSurCarte objSurCarte : monde.getListeObjetCarte()) {
 				Objet obj = objSurCarte.getObjet();
-				Point taille = obj.getTailleImage();
-				bmObj = getBitmap(obj.getIdImage(), taille.x, taille.y);
+				PointF taille = obj.getTailleImageTerrain();
+				bmObj = getBitmap(obj.getImageTerrain(), (int)taille.x, (int)taille.y);
 				imgV = new ImageView(this.context);
 				imgV.setImageBitmap(bmObj);
 				imgV.setScaleType(ScaleType.MATRIX);

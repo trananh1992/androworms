@@ -2,14 +2,13 @@ package com.androworms;
 
 import android.graphics.PointF;
 
-public class ObjetSurCarte {
+public class ObjetSurCarte extends ElementSurCarte{
 	private Objet objet;
-	private PointF position;
 	private int id;
 	
-	public ObjetSurCarte(Objet o, PointF p) {
+	public ObjetSurCarte(Objet o, PointF p, ImageInformation ii) {
+		super(p, ii);
 		this.objet = o;
-		this.position = p;
 	}
 
 	public Objet getObjet() {
@@ -18,14 +17,6 @@ public class ObjetSurCarte {
 
 	public void setObjet(Objet objet) {
 		this.objet = objet;
-	}
-
-	public PointF getPosition() {
-		return position;
-	}
-
-	public void setPosition(PointF position) {
-		this.position = position;
 	}
 
 	public int getId() {
