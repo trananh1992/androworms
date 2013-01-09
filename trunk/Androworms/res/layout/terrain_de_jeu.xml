@@ -34,13 +34,13 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
             android:text="@string/pas_de_donnees" />
-		<com.androworms.ui.Paddle
-	        android:id="@+id/paddle1"
+		<com.androworms.ui.ClavierDirectionnel
+	        android:id="@+id/clavier"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_alignParentBottom="true"
 	        android:layout_alignParentRight="true" >
-	    </com.androworms.ui.Paddle>
+	    </com.androworms.ui.ClavierDirectionnel>
 		<ToggleButton
 		    android:id="@+id/toggleButton1"
 		    android:layout_width="wrap_content"

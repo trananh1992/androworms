@@ -144,7 +144,7 @@ public class MoteurGraphique extends RelativeLayout {
 		positionTouche = new PointF(-1, -1);
 		
 		/* évenements */
-		setOnTouchListener(new EvenementJeu(context, this));
+		setOnTouchListener(new EvenementJeu(context, this, noyau));
 		
 		matrix.getValues(mm);
 		
@@ -246,39 +246,18 @@ public class MoteurGraphique extends RelativeLayout {
 			PointF deplacement = new PointF(pointTir.x - positionTouche.x,
 					 pointTir.y - positionTouche.y);
 			float distance = deplacement.length();
-					
-			// Mise en place des outils de dessins
-			Paint paint = new Paint();
-			paint.setStrokeWidth(EPAISSEUR_ONDE_TIR);
-			paint.setAntiAlias(true);
-			paint.setStrokeCap(Paint.Cap.ROUND);
-			paint.setStyle(Paint.Style.STROKE);
+			
 			
 			float angleBase = ((float)(Math.atan2 (deplacement.y, deplacement.x)* ANGLE_DEMITOUR /Math.PI));
-			// Ajustement de l'angle
-			// On fait un demi-tour pour orienter l'onde dans l'autre sens
-			float angle = angleBase + ANGLE_DEMITOUR; 
-			// on centre l'onde en la décalant de la moitié de l'angle affiché
-			angle -= ANGLE_ONDE_TIR / 2; 
 			
-			// Onde violette
-			paint.setColor(Color.MAGENTA);
-			RectF rect = new RectF();
-			for (int i1=0;(i1<=distance && i1 < TAILLE_MAX_TIR);i1+= INCREMENT_ONDE_TIR) {
-				rect.set(pointTir.x - i1, pointTir.y - i1,
-						pointTir.x + i1, pointTir.y + i1);
-				canvas.drawArc(rect, angle, ANGLE_ONDE_TIR, false, paint);
-			}
 			
-			PointF positionJoueur = new PointF();
-			Personnage persoPrincipal = noyau.getMonde().getPersonnagePrincipal();
-			positionJoueur.set(persoPrincipal.getPosition());
-			Log.v(TAG, "le perso principal est à " + positionJoueur.x + "; " + positionJoueur.y);
-			//On place le point au milieu du joueur
-			positionJoueur.offset((float)persoPrincipal.getWidthImageTerrain() / 2, (float)persoPrincipal.getHeightImageTerrain() / 2);
-			Log.v(TAG, " et le milieu :  " + positionJoueur.x + "; " + positionJoueur.y);
-			//PointF coinSuperieurDroitJoueur = new PointF(coinSuperieurGaucheJoueur.x + Personnage.JOUEUR_WIDTH, coinSuperieurGaucheJoueur.y);
-			dessinerFleches(transpositionPointSurEcran(positionJoueur), canvas, paint, angleBase, distance);
+			// Mise en place des outils de dessins
+			Paint paint = new Paint();
+			paint.setAntiAlias(true);
+			paint.setStrokeCap(Paint.Cap.ROUND);
+			
+			dessinerOnde(canvas, paint, angleBase, distance);
+			dessinerFleches(canvas, paint, angleBase, distance);
 		}
 	}
 	
@@ -287,7 +266,39 @@ public class MoteurGraphique extends RelativeLayout {
 	 * @param paint
 	 * @param distance
 	 */
-	public void dessinerFleches(PointF depart, Canvas canvas, Paint paint, float angleBase, float distance) {
+	public void dessinerOnde(Canvas canvas, Paint paint, float angleBase, float distance) {
+		paint.setStrokeWidth(EPAISSEUR_ONDE_TIR);
+		paint.setStyle(Paint.Style.STROKE);
+		
+		// Ajustement de l'angle
+		// On fait un demi-tour pour orienter l'onde dans l'autre sens
+		float angle = angleBase + ANGLE_DEMITOUR; 
+		// on centre l'onde en la décalant de la moitié de l'angle affiché
+		angle -= ANGLE_ONDE_TIR / 2; 
+		
+		paint.setColor(Color.MAGENTA);
+		RectF rect = new RectF();
+		for (int i1=0;(i1<=distance && i1 < TAILLE_MAX_TIR);i1+= INCREMENT_ONDE_TIR) {
+			rect.set(pointTir.x - i1, pointTir.y - i1,
+					pointTir.x + i1, pointTir.y + i1);
+			canvas.drawArc(rect, angle, ANGLE_ONDE_TIR, false, paint);
+		}
+	}
+	
+	/** Fonction qui dessine une flèche sur le bonhomme
+	 * @param canvas
+	 * @param paint
+	 * @param distance
+	 */
+	public void dessinerFleches( Canvas canvas, Paint paint, float angleBase, float distance) {
+		PointF ptMilieuJoueur = new PointF();
+		Personnage persoPrincipal = noyau.getMonde().getPersonnagePrincipal();
+		ptMilieuJoueur.set(persoPrincipal.getPosition());
+		
+		//On place le point au milieu du joueur
+		ptMilieuJoueur.offset((float)persoPrincipal.getWidthImageTerrain() / 2, (float)persoPrincipal.getHeightImageTerrain() / 2);
+		
+		PointF depart = transpositionPointSurEcran(ptMilieuJoueur);
 		
 		// flèche de tir sur le bonhomme
 		if (distance >= COULEUR_MAXIMUM / INCREMENT_COULEUR) {
@@ -303,7 +314,6 @@ public class MoteurGraphique extends RelativeLayout {
 		
 		//La fleche debute en dehors du joueur
 		PointF debutFleche = new PointF();
-		Personnage persoPrincipal = noyau.getMonde().getPersonnagePrincipal();
 		//On cherche à ne pas mettre la flèche sur le joueur
 		float tailleJoueur = zoomPointSurEcran(new PointF((float)persoPrincipal.getWidthImageTerrain() / 2, (float)persoPrincipal.getHeightImageTerrain() / 2)).length(); 
 		debutFleche.x = (float) (tailleJoueur * Math.cos(Math.toRadians(angleBase))) + depart.x;
