@@ -75,7 +75,7 @@ public class MoteurGraphique extends RelativeLayout {
 	//position touchée en ce moment (ou dernière position touchée)
 	private PointF positionTouche;
 	
-	private Monde monde;
+	private Noyau noyau;
 	
 	private Context context;
 	private ImageView fond;
@@ -189,8 +189,8 @@ public class MoteurGraphique extends RelativeLayout {
 		matrixZoom.postScale(scaleX, scaleY);
 		
 		int i = 0;
-		List<Personnage> persos = monde.getListePersonnage();
-		List<ObjetSurCarte> objs = monde.getListeObjetCarte();
+		List<Personnage> persos = noyau.getMonde().getListePersonnage();
+		List<ObjetSurCarte> objs = noyau.getMonde().getListeObjetCarte();
 		boolean objEnCours = false;
 		ObjetSurCarte obj;
 		PointF pp;
@@ -263,7 +263,7 @@ public class MoteurGraphique extends RelativeLayout {
 			}
 			
 			PointF positionJoueur = new PointF();
-			positionJoueur.set(monde.getPersonnagePrincipal().getPosition());
+			positionJoueur.set(noyau.getMonde().getPersonnagePrincipal().getPosition());
 			Log.v(TAG, "le perso principal est à " + positionJoueur.x + "; " + positionJoueur.y);
 			//On place le point au milieu du joueur
 			positionJoueur.offset(Personnage.JOUEUR_WIDTH / 2, Personnage.JOUEUR_HEIGHT / 2);
@@ -400,8 +400,9 @@ public class MoteurGraphique extends RelativeLayout {
 		this.positionTouche = ptTouche;
 	}
 	
-	public void setMonde(Monde monde) {
-		this.monde = monde;
+	public void setNoyau(Noyau noyau) {
+		this.noyau = noyau;
+		Monde monde = this.noyau.getMonde();
 		
 		for(ImageView v : this.images)
 		{

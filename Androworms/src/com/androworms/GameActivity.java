@@ -1,11 +1,7 @@
 package com.androworms;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.graphics.Color;
-import android.graphics.PointF;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -36,11 +32,9 @@ public class GameActivity extends Activity {
 	public static final int TIR = 4;
 	
 	private static TextView tv;
-	
-	private Monde monde;
+	private Noyau noyau;
 	
 	/* Gestion du déplacement du joueur avec le Paddle */
-	private static final int DEPLACEMENT_JOUEUR = 20;
 	private static final int TEMPS_APPUIE = 60;
 	
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,25 +47,10 @@ public class GameActivity extends Activity {
 		/* Récupération du layout de fond */
 		MoteurGraphique moteurGraph = (MoteurGraphique)findViewById(R.id.trlCarte);
 		
-		// ZONE DE TEST |--> TODO : a déplacer ailleurs !
-		monde = new Monde(null, moteurGraph);
-		List<Personnage> persos = new ArrayList<Personnage>();
-		Personnage p = new Personnage("John Doe");
-		p.setPosition(new PointF(820, 470));
-		persos.add(p);
-		p = new Personnage("Tux");
-		p.setPosition(new PointF(120, 450));
-		persos.add(p);
-		monde.setListePersonnage(persos);
-		List<ObjetSurCarte> objs = new ArrayList<ObjetSurCarte>();
-		Objet o = new Arme("Hache", null, 0);
-		ObjetSurCarte obj = new ObjetSurCarte(o, new PointF(250,500));
-		objs.add(obj);
-		obj = new ObjetSurCarte(o, new PointF(1000, 500));
-		objs.add(obj);
-		monde.setListeObjetCarte(objs);
-		moteurGraph.setMonde(monde);
-		//FIN ZONE DE TEST
+		noyau = new Noyau(moteurGraph);
+		
+		moteurGraph.setNoyau(noyau);
+		
 		
 		/* Mode TIR */
 		ToggleButton tgb = (ToggleButton)findViewById(R.id.toggleButton1);
@@ -172,29 +151,23 @@ public class GameActivity extends Activity {
 						// Déplacement vers la droite
 						case Paddle.BOUTON_DROITE:
 							Log.v(TAG,"Déplacement vers la droite");
-							PointF p1 = monde.getPersonnagePrincipal().getPosition();
-							p1.offset(DEPLACEMENT_JOUEUR, 0);
-							monde.getPersonnagePrincipal().setPosition(p1);
+							noyau.deplacementJoueurFromIHM(Noyau.DEPLACEMENT_DROITE);
 							break;
 						// Déplacement vers le haut
 						case Paddle.BOUTON_HAUT:
 							Log.v(TAG,"Déplacement vers la haut");
-							PointF p3 = monde.getPersonnagePrincipal().getPosition();
-							p3.offset(0, -DEPLACEMENT_JOUEUR);
-							monde.getPersonnagePrincipal().setPosition(p3);
+							noyau.deplacementJoueurFromIHM(Noyau.DEPLACEMENT_HAUT);
 							break;
 						// Déplacement vers la gauche
 						case Paddle.BOUTON_GAUCHE:
 							Log.v(TAG,"Déplacement vers la gauche");
-							PointF p2 = monde.getPersonnagePrincipal().getPosition();
-							p2.offset(-DEPLACEMENT_JOUEUR, 0);
-							monde.getPersonnagePrincipal().setPosition(p2);
+							noyau.deplacementJoueurFromIHM(Noyau.DEPLACEMENT_GAUCHE);
 							break;
 						default:
 							Log.v(TAG,"Déplacement default");
 							break;
 					}
-					monde.getMg().actualiserGraphisme();
+					//monde.getMg().actualiserGraphisme();
 					mHandler.postDelayed(this, TEMPS_APPUIE);
 				}
 			};

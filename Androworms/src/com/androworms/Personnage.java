@@ -17,6 +17,7 @@ public class Personnage {
 
 	public static final int JOUEUR_WIDTH = 162;
 	public static final int JOUEUR_HEIGHT = 214;
+	public static final int TAILLE_DEPLACEMENT_JOUEUR = 20;
 	
 	private String nom;
 	private PointF position;
@@ -47,12 +48,12 @@ public class Personnage {
 		return R.drawable.android_face;
 	}
 
-	public void deplacementDroite(int y) {
-		position.set(position.x+1, y);
+	public void deplacementDroite() {
+		position.set(position.x + TAILLE_DEPLACEMENT_JOUEUR, position.y);
 	}
 
-	public void deplacementGauche(int y) {
-		position.set(position.x-1, y);
+	public void deplacementGauche() {
+		position.set(position.x - TAILLE_DEPLACEMENT_JOUEUR, position.y);
 	}
 	
 	public int getId() {

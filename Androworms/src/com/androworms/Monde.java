@@ -94,14 +94,14 @@ public class Monde {
 	public void deplacementJoueurDroite(String personnage) {
 		/// Il faudra faire passer ce mouvement à droite dans le moteur physique.
 		// La coordonné en y sera affecté si besoin est.
-		getPersonnage(personnage).deplacementDroite((int)getPersonnage(personnage).getPosition().y);
+		getPersonnage(personnage).deplacementDroite();
 				
 	}
 	
 	public void deplacementJoueurGauche(String personnage) {
 		/// Il faudra faire passer ce mouvement à gauche dans le moteur physique.
 		// La coordonné en y sera affecté si besoin est.
-		getPersonnage(personnage).deplacementGauche((int)getPersonnage(personnage).getPosition().y);
+		getPersonnage(personnage).deplacementGauche();
 				
 	}
 	
