@@ -61,7 +61,6 @@ public class MoteurGraphique extends RelativeLayout {
 	private LruCache<Integer, Bitmap> memoireCache;
 	private Bitmap bmFond;
 	private Bitmap bmTerrain;
-//	private Bitmap bmQuadrillage;
 	
 	//Matrice qui gère le zoom et la translation d'une image
 	private Matrix matrix;
@@ -80,6 +79,11 @@ public class MoteurGraphique extends RelativeLayout {
 	private ImageView fond;
 	private ImageView terrain;
 	private List<ImageView> images;
+	
+	//DEBUG
+	private boolean DEBUG_QUADRILLAGE = false;
+	private Bitmap bmQuadrillage;
+	private ImageView quadrillage;
 	
 	public MoteurGraphique(Context context) {
 		super(context);
@@ -117,7 +121,7 @@ public class MoteurGraphique extends RelativeLayout {
 		try {
 			bmFond = prepareBitmap(getResources().getDrawable(R.drawable.image_fond_640x360), MAP_WIDTH, MAP_HEIGHT);
 			bmTerrain = prepareBitmap(getResources().getDrawable(R.drawable.terrain_jeu_defaut_640x360), MAP_WIDTH, MAP_HEIGHT);
-//			bmQuadrillage = prepareBitmap(getResources().getDrawable(R.drawable.image_quadrillage_640x360), MAP_WIDTH, MAP_HEIGHT);
+			bmQuadrillage = prepareBitmap(getResources().getDrawable(R.drawable.image_quadrillage_640x360), MAP_WIDTH, MAP_HEIGHT);
 		} catch(OutOfMemoryError e) {
 			Log.e(TAG, "Erreur de chargement les bitmaps sont trop lourds");
 			//TODO terminer ou dire quelque chose...
@@ -125,9 +129,10 @@ public class MoteurGraphique extends RelativeLayout {
 		
 		fond = new ImageView(context);
 		fond.setImageBitmap(bmFond);
-		
 		terrain = new ImageView(context);
 		terrain.setImageBitmap(bmTerrain);
+		quadrillage = new ImageView(context);
+		quadrillage.setImageBitmap(bmQuadrillage);
 		
 		
 		//on crée une nouvelle matrice
@@ -145,10 +150,15 @@ public class MoteurGraphique extends RelativeLayout {
 		
 		fond.setScaleType(ScaleType.MATRIX);
 		terrain.setScaleType(ScaleType.MATRIX);
+		quadrillage.setScaleType(ScaleType.MATRIX);
 		fond.setImageMatrix(matrix);
 		terrain.setImageMatrix(matrix);
+		quadrillage.setImageMatrix(matrix);
 		this.addView(fond);
 		this.addView(terrain);
+		if (DEBUG_QUADRILLAGE) {
+			this.addView(quadrillage);
+		}
 		
 		images = new ArrayList<ImageView>();
 		
@@ -171,6 +181,10 @@ public class MoteurGraphique extends RelativeLayout {
 		// on applique une matrice au fond (trans + scale)
 		fond.setImageMatrix(matrix);
 		terrain.setImageMatrix(matrix);
+		
+		if (DEBUG_QUADRILLAGE) {
+			quadrillage.setImageMatrix(matrix);
+		}
 		
 		matrix.getValues(mm);
 		float scaleX = mm[Matrix.MSCALE_X];
@@ -374,7 +388,7 @@ public class MoteurGraphique extends RelativeLayout {
 	 */
 	public void nettoyer() {
 		this.bmFond.recycle();
-//		this.bmQuadrillage.recycle();
+		this.bmQuadrillage.recycle();
 		this.bmTerrain.recycle();
 		//vide le cache
 		this.memoireCache.evictAll(); 
