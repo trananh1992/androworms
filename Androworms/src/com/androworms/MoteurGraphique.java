@@ -10,7 +10,6 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
@@ -267,7 +266,7 @@ public class MoteurGraphique extends RelativeLayout {
 			positionJoueur.set(persoPrincipal.getPosition());
 			Log.v(TAG, "le perso principal est à " + positionJoueur.x + "; " + positionJoueur.y);
 			//On place le point au milieu du joueur
-			positionJoueur.offset(persoPrincipal.getWidthImageTerrain() / 2, persoPrincipal.getHeightImageTerrain() / 2);
+			positionJoueur.offset((float)persoPrincipal.getWidthImageTerrain() / 2, (float)persoPrincipal.getHeightImageTerrain() / 2);
 			Log.v(TAG, " et le milieu :  " + positionJoueur.x + "; " + positionJoueur.y);
 			//PointF coinSuperieurDroitJoueur = new PointF(coinSuperieurGaucheJoueur.x + Personnage.JOUEUR_WIDTH, coinSuperieurGaucheJoueur.y);
 			dessinerFleches(transpositionPointSurEcran(positionJoueur), canvas, paint, angleBase, distance);
@@ -297,7 +296,7 @@ public class MoteurGraphique extends RelativeLayout {
 		PointF debutFleche = new PointF();
 		Personnage persoPrincipal = noyau.getMonde().getPersonnagePrincipal();
 		//On cherche à ne pas mettre la flèche sur le joueur
-		float tailleJoueur = zoomPointSurEcran(new PointF(persoPrincipal.getWidthImageTerrain() / 2, persoPrincipal.getHeightImageTerrain() / 2)).length(); 
+		float tailleJoueur = zoomPointSurEcran(new PointF((float)persoPrincipal.getWidthImageTerrain() / 2, (float)persoPrincipal.getHeightImageTerrain() / 2)).length(); 
 		debutFleche.x = (float) (tailleJoueur * Math.cos(Math.toRadians(angleBase))) + depart.x;
 		debutFleche.y = (float) (tailleJoueur * Math.sin(Math.toRadians(angleBase))) + depart.y;
 		//Extrémité de la flèche

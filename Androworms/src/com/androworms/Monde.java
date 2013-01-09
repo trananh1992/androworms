@@ -21,13 +21,6 @@ public class Monde {
 		listeObjetCarte = new ArrayList<ObjetSurCarte>();
 	}
 	
-	public Monde(MoteurPhysique mp, MoteurGraphique mg) {
-		super();
-		this.mg = mg;
-		tousLesObjets = new ArrayList<Objet>();
-		listePersonnage = new ArrayList<Personnage>();
-		listeObjetCarte = new ArrayList<ObjetSurCarte>();
-	}
 	
 	public MoteurGraphique getMg() {
 		return mg;
