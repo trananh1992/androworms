@@ -3,12 +3,16 @@ package com.androworms;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 
 public class Monde {
 	
 	private static final String TAG = "Androworms.Monde";
 	
+	private Bitmap terrain;
 	private MoteurGraphique mg;
 	private List<Personnage> listePersonnage;
 	private List<ObjetSurCarte> listeObjetCarte;
@@ -21,6 +25,16 @@ public class Monde {
 		listeObjetCarte = new ArrayList<ObjetSurCarte>();
 	}
 	
+	public void setTerrain(Drawable drawable, int width, int height){
+		terrain = Bitmap.createBitmap(width, height,Bitmap.Config.ARGB_8888);
+		drawable.setBounds(0, 0, width, height);
+		Canvas canvas = new Canvas(terrain);
+		drawable.draw(canvas);
+	}
+	
+	public Bitmap getTerrain() {
+		return terrain;
+	}
 	
 	public MoteurGraphique getMg() {
 		return mg;
@@ -56,6 +70,10 @@ public class Monde {
 	
 	public void addObjetSurCarte(ObjetSurCarte osc) {
 		listeObjetCarte.add(osc);
+	}
+	
+	public int nombrePersonnage() {
+		return listePersonnage.size();
 	}
 	
 	public void ajouterMunition(String nomObjet, int nombre) {

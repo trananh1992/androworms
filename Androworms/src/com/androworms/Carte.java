@@ -12,6 +12,7 @@ import java.io.IOException;
 public class Carte {
 	private static final String TAG = "Androworms.Carte.Evenements";
 	private Bitmap transformed;
+	
 	public Carte(byte[] data) {
 		Bitmap b = BitmapFactory.decodeByteArray(data, 0, data.length);
 		
