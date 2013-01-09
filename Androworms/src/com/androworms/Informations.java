@@ -10,7 +10,8 @@ import android.util.DisplayMetrics;
  */
 public final class Informations {
 	
-	private static final String ANDROID_VERSION = Build.VERSION.SDK;
+	private static final String ANDROID_VERSION = Build.VERSION.RELEASE;
+	private static final int ANDROID_SDK = Build.VERSION.SDK_INT;
 	private static int widthPixels = -1;
 	private static int heightPixels = -1;
 	private static int screenLayoutSizeMask = -1;
@@ -39,6 +40,10 @@ public final class Informations {
 
 	public static String getAndroidVersion() {
 		return ANDROID_VERSION;
+	}
+
+	public static int getAndroidSdk() {
+		return ANDROID_SDK;
 	}
 
 	public static int getWidthPixels() {

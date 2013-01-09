@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
@@ -30,8 +29,6 @@ public class ActiviteAndroworms extends Activity {
 		/* Affiche la vue */
 		setContentView(R.layout.splash_screen);
 		
-		
-		
 		/* Affiche la liste des développeurs */
 		String[] listeDev = getResources().getStringArray(R.array.liste_developpeurs);
 		StringBuffer buf = new StringBuffer();
@@ -44,26 +41,23 @@ public class ActiviteAndroworms extends Activity {
 		tvDevelopers = (TextView)findViewById(R.id.textView3);
 		tvDevelopers.setText(Html.fromHtml(txtDev));
 		
+		/* Appel au BluetoothAdapter */
 		//Dans les vieilles version d'android, il faut charger le bluetooth depuis une activité
 		// avant de pouvoir l'utiliser en background
 		// cf : http://code.google.com/p/android/issues/detail?id=16587
 		BluetoothAdapter.getDefaultAdapter();
 		
+		/* Démarrage du Thread qui charge les données nécessaires à l'application */
 		final Chargement ch = new Chargement();
 		ch.execute(this);
 		
+		/* Gestion de l'utilisateur qui touche l'écran pour passer le SplashScreen */
 		LinearLayout ll = (LinearLayout)findViewById(R.id.LinearLayout2);
 		ll.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				ch.finish();
 			}
 		});
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_main, menu);
-		return true;
 	}
 	
 	public void chargerMenuPrincipal() {
@@ -114,9 +108,11 @@ public class ActiviteAndroworms extends Activity {
 	}
 	
 	public void afficherInformationsTelephone() {
-		/* Inforamtions sur le téléphone */
+		/* Informations sur le téléphone */
 		StringBuffer buf = new StringBuffer();
-		buf.append("Android = " + Informations.getAndroidVersion() + RETOUR_LIGNE_HTML);
+		buf.append("<b>Android</b>" + RETOUR_LIGNE_HTML);
+		buf.append("Version = " + Informations.getAndroidVersion() + RETOUR_LIGNE_HTML);
+		buf.append("SDK = " + Informations.getAndroidSdk() + RETOUR_LIGNE_HTML);
 		buf.append(RETOUR_LIGNE_HTML);
 		buf.append("<b>Taille de l'écran</b>" + RETOUR_LIGNE_HTML);
 		buf.append("WidthPixels = " + Informations.getWidthPixels() + " px" + RETOUR_LIGNE_HTML);

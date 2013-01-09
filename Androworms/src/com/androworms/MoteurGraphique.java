@@ -81,7 +81,7 @@ public class MoteurGraphique extends RelativeLayout {
 	private List<ImageView> images;
 	
 	//DEBUG
-	private boolean DEBUG_QUADRILLAGE = false;
+	private static final boolean DEBUG_QUADRILLAGE = false;
 	private Bitmap bmQuadrillage;
 	private ImageView quadrillage;
 	
