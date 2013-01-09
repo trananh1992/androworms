@@ -59,21 +59,13 @@ public class MoteurPhysique {
 
 	// On teste si le personnage n'a rien sous les pieds.
 	// Renvoie vrai si le personnage vole et faux si non.
+	// TODO : la fonction ne prends qu'un point de reference
 	public boolean personnageVolant(Personnage p) {
-		if(!collision((int)p.getPosition().x, p.getHeightImageTerrain()+(int)p.getPosition().y) ) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return (!collision((int)p.getPosition().x, p.getHeightImageTerrain()+(int)p.getPosition().y));
 	}
 	
 	public boolean collision(int x, int y) {
-		if(Color.alpha(monde.getTerrain().getPixel(x, y)) > 0)
-		{
-			return true;
-		}
-		else return false;
+		return Color.alpha(monde.getTerrain().getPixel(x, y)) > 0;	
 	}
 	
 	public boolean collision(PointF p) {
