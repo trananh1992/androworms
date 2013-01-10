@@ -111,24 +111,24 @@ public class ActiviteMultiJoueur extends Activity {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		Log.v(TAG,"Nous recevons une réponse d'une activité non Androworms (fonction onActivityResult())");
 		switch (requestCode) {
-			case REQUEST_ENABLE_BT:
-				// On reçois une réponse de l'activation Bluetooth
-				Log.v(TAG,"On reçois une réponse de l'activation Bluetooth (REQUEST_ENABLE_BT)");
+		case REQUEST_ENABLE_BT:
+			// On reçois une réponse de l'activation Bluetooth
+			Log.v(TAG,"On reçois une réponse de l'activation Bluetooth (REQUEST_ENABLE_BT)");
+			
+			if (resultCode == Activity.RESULT_OK) {
+				// L'utilisateur a accepté d'activé le Bluetooth
+				Log.v(TAG,"L'utilisateur a dit OK pour l'activation du Bluetooth : Youpii !! on va pouvoir jouer !");
 				
-				if (resultCode == Activity.RESULT_OK) {
-					// L'utilisateur a accepté d'activé le Bluetooth
-					Log.v(TAG,"L'utilisateur a dit OK pour l'activation du Bluetooth : Youpii !! on va pouvoir jouer !");
-					
-					// On actualise la liste des appareils Bluetooth reliées
-					actualiserListeAppareilBluetooth();
-				} else {
-					// L'utilisateur a refusé d'activer le Bluetooth (ou il s'agit d'une erreur)
-					Log.v(TAG,"L'utilisateur a refusé d'activé le Bluetooth...quelqu'un lui explique que c'est indispensable ? (ou alors il s'agit d'une erreur)");
-				}
-				break;
-			case REQUEST_CONNECT_DEVICE:
-				// Servira à l'Intent de connexion avec ses amis
-				break;
+				// On actualise la liste des appareils Bluetooth reliées
+				actualiserListeAppareilBluetooth();
+			} else {
+				// L'utilisateur a refusé d'activer le Bluetooth (ou il s'agit d'une erreur)
+				Log.v(TAG,"L'utilisateur a refusé d'activé le Bluetooth...quelqu'un lui explique que c'est indispensable ? (ou alors il s'agit d'une erreur)");
+			}
+			break;
+		case REQUEST_CONNECT_DEVICE:
+			// Servira à l'Intent de connexion avec ses amis
+			break;
 		}
 	}
 }

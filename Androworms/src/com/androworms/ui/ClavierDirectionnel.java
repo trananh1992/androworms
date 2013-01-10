@@ -76,22 +76,22 @@ public class ClavierDirectionnel extends LinearLayout implements OnTouchListener
 	
 	public boolean onTouch(View v, MotionEvent event) {
 		switch (event.getAction()) {
-			case MotionEvent.ACTION_DOWN:
-				((ImageView)v).setAlpha(ALPHA_SEMI_TRANSPARENT);
-				/* Déclenchement de l'action définit lors de l'utilisation du Paddle */
-				if (this.getOnTouchListener() != null) {
-					this.getOnTouchListener().onTouch(v, event);
-				}
-				break;
-			case MotionEvent.ACTION_UP:
-				((ImageView)v).setAlpha(ALPHA_PAS_TRANSPARENT);
-				/* Déclenchement de l'action définit lors de l'utilisation du Paddle */
-				if (this.getOnTouchListener() != null) {
-					this.getOnTouchListener().onTouch(v, event);
-				}
-				break;
-			default:
-				break;
+		case MotionEvent.ACTION_DOWN:
+			((ImageView)v).setAlpha(ALPHA_SEMI_TRANSPARENT);
+			/* Déclenchement de l'action définit lors de l'utilisation du Paddle */
+			if (this.getOnTouchListener() != null) {
+				this.getOnTouchListener().onTouch(v, event);
+			}
+			break;
+		case MotionEvent.ACTION_UP:
+			((ImageView)v).setAlpha(ALPHA_PAS_TRANSPARENT);
+			/* Déclenchement de l'action définit lors de l'utilisation du Paddle */
+			if (this.getOnTouchListener() != null) {
+				this.getOnTouchListener().onTouch(v, event);
+			}
+			break;
+		default:
+			break;
 		}
 		return true;
 	}

@@ -76,23 +76,23 @@ public class EvenementJeu
 		 * (Exemple : doigt A posé sur l'écran (doigt principal) -> doigt B posé sur l'écran -> doigt A levé)
 		 */
 		switch (event.getActionMasked()) {
-			case MotionEvent.ACTION_DOWN:
-				actionAppuiPremierDoigt();
-				break;
-			case MotionEvent.ACTION_POINTER_DOWN:
-				actionAppuiDoigtSupplementaire();
-				break;
-			case MotionEvent.ACTION_MOVE:
-				actionDeplacementDoigt();
-				break;
-			case MotionEvent.ACTION_UP:
-				actionLeveeDoigtUnique();
-				break;
-			case MotionEvent.ACTION_POINTER_UP:
-				actionLeveeDoigt();
-				break;
-			default:
-				break;
+		case MotionEvent.ACTION_DOWN:
+			actionAppuiPremierDoigt();
+			break;
+		case MotionEvent.ACTION_POINTER_DOWN:
+			actionAppuiDoigtSupplementaire();
+			break;
+		case MotionEvent.ACTION_MOVE:
+			actionDeplacementDoigt();
+			break;
+		case MotionEvent.ACTION_UP:
+			actionLeveeDoigtUnique();
+			break;
+		case MotionEvent.ACTION_POINTER_UP:
+			actionLeveeDoigt();
+			break;
+		default:
+			break;
 		}
 		
 		this.moteurGraph.actualiserGraphisme();

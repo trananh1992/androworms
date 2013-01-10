@@ -339,11 +339,11 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		/* On ne dessine qu'en cas d'appuie ou de déplacement */
 		switch (action)
 		{
-			case MotionEvent.ACTION_DOWN:
-			case MotionEvent.ACTION_MOVE:
-				break;
-			default:
-				return false;
+		case MotionEvent.ACTION_DOWN:
+		case MotionEvent.ACTION_MOVE:
+			break;
+		default:
+			return false;
 		}
 		x = (int) event.getX();
 		x = Math.max(0, x);
