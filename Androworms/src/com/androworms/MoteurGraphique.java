@@ -108,7 +108,7 @@ public class MoteurGraphique extends RelativeLayout {
 		
 		this.context = context;
 		
-		ActivityJeu.setMode(ActivityJeu.RIEN);
+		ActiviteJeu.setMode(ActiviteJeu.RIEN);
 		this.setWillNotDraw(false);
 		this.setClickable(true);
 		
@@ -198,7 +198,6 @@ public class MoteurGraphique extends RelativeLayout {
 						(int)( pp.x + taille.x),
 						(int)( pp.y + taille.y));
 			} else {
-		//		pp = transpositionPointSurEcran(persos.get(i).getPosition());
 				pp = persos.get(i).getPosition();
 				//Calcul du carré où afficher l'image
 				v.layout((int) pp.x,
@@ -207,7 +206,6 @@ public class MoteurGraphique extends RelativeLayout {
 						(int)( pp.y + persos.get(i).getHeightImageTerrain()));
 			}
 			
-		//	v.setImageMatrix(matrixZoom);
 			i++;
 		}
 		
@@ -216,7 +214,7 @@ public class MoteurGraphique extends RelativeLayout {
 		
 		
 		// Apres le dessin des views, on rajoute le dessins des objets pour le tir
-		if (ActivityJeu.getMode() == ActivityJeu.TIR_EN_COURS) {
+		if (ActiviteJeu.getMode() == ActiviteJeu.TIR_EN_COURS) {
 			// Pour le tir, on a pas de translation ni de zoom
 			Log.v(TAG, "On dessine les trucs");
 			Matrix m = new Matrix();
@@ -377,8 +375,10 @@ public class MoteurGraphique extends RelativeLayout {
 	 */
 	public void nettoyer() {
 		this.bmFond.recycle();
-		this.bmQuadrillage.recycle();
 		this.bmTerrain.recycle();
+		if (DEBUG_QUADRILLAGE) {
+			this.bmQuadrillage.recycle();
+		}
 		//vide le cache
 		this.memoireCache.evictAll(); 
 	}

@@ -76,11 +76,11 @@ public class EvenementJeu
 		switch (event.getAction()) {
 			case MotionEvent.ACTION_DOWN:
 				// Action : Appui sur l'écran lorsqu'il n'y a aucun doigt. Ce doigt est donc le doigt principal
-				if (ActivityJeu.getMode() == ActivityJeu.RIEN) {
-					ActivityJeu.setMode(ActivityJeu.DEPLACEMENT);
-				} else if (ActivityJeu.getMode() == ActivityJeu.TIR 
-						||  ActivityJeu.getMode() == ActivityJeu.TIR_EN_COURS) {
-					ActivityJeu.setMode(ActivityJeu.TIR_EN_COURS);
+				if (ActiviteJeu.getMode() == ActiviteJeu.RIEN) {
+					ActiviteJeu.setMode(ActiviteJeu.DEPLACEMENT);
+				} else if (ActiviteJeu.getMode() == ActiviteJeu.TIR 
+						||  ActiviteJeu.getMode() == ActiviteJeu.TIR_EN_COURS) {
+					ActiviteJeu.setMode(ActiviteJeu.TIR_EN_COURS);
 					this.moteurGraph.getPointTir().set(positionNouvelleTouche);
 				}
 				positionAncienneTouche = new PointF(-1, -1);
@@ -88,8 +88,8 @@ public class EvenementJeu
 			
 			case MotionEvent.ACTION_POINTER_DOWN:
 				// Action : Lorsque l'on a un ou plusieurs doigt sur l'écran (et pas le doigt principal) et qu'on appuie avec un doigt
-				if (ActivityJeu.getMode() == ActivityJeu.RIEN) {
-					ActivityJeu.setMode(ActivityJeu.DEPLACEMENT);
+				if (ActiviteJeu.getMode() == ActiviteJeu.RIEN) {
+					ActiviteJeu.setMode(ActiviteJeu.DEPLACEMENT);
 				} else {
 					this.moteurGraph.getPointTir().set(positionNouvelleTouche);
 				}
@@ -97,7 +97,7 @@ public class EvenementJeu
 				break;
 			case MotionEvent.ACTION_MOVE:
 				// Action : Un doigt sur l'écran qui bouge
-				if (ActivityJeu.getMode() == ActivityJeu.DEPLACEMENT) {
+				if (ActiviteJeu.getMode() == ActiviteJeu.DEPLACEMENT) {
 					// En mode déplacement, position_ancienne_touche n'est jamais égale à -1 sinon erreur
 					
 					float tempX, tempY;
@@ -120,11 +120,11 @@ public class EvenementJeu
 				break;
 			case MotionEvent.ACTION_UP:
 				// Action : Lever du seul doigt sur l'écran. Ce doigt était donc le doigt principal
-				if (ActivityJeu.getMode() == ActivityJeu.DEPLACEMENT) {
-					ActivityJeu.setMode(ActivityJeu.RIEN);
+				if (ActiviteJeu.getMode() == ActiviteJeu.DEPLACEMENT) {
+					ActiviteJeu.setMode(ActiviteJeu.RIEN);
 				}
-				if (ActivityJeu.getMode() == ActivityJeu.TIR_EN_COURS) {
-					ActivityJeu.setMode(ActivityJeu.TIR);
+				if (ActiviteJeu.getMode() == ActiviteJeu.TIR_EN_COURS) {
+					ActiviteJeu.setMode(ActiviteJeu.TIR);
 					PointF deplacement = new PointF(this.moteurGraph.getPointTir().x - positionNouvelleTouche.x,
 							this.moteurGraph.getPointTir().y - positionNouvelleTouche.y);
 					float distance = deplacement.length();
@@ -137,8 +137,8 @@ public class EvenementJeu
 			
 			case MotionEvent.ACTION_POINTER_UP:
 				// Action : lorsque que l'on a plusieurs doigts sur l'écran et que l'on lève le doigt principal
-				if (ActivityJeu.getMode() == ActivityJeu.DEPLACEMENT) {
-					ActivityJeu.setMode(ActivityJeu.RIEN);
+				if (ActiviteJeu.getMode() == ActiviteJeu.DEPLACEMENT) {
+					ActiviteJeu.setMode(ActiviteJeu.RIEN);
 				}
 				positionAncienneTouche = new PointF(-1, -1);
 				break;
@@ -153,9 +153,9 @@ public class EvenementJeu
 	// Début d'une session de zoom
 	@Override
 	public boolean onScaleBegin(ScaleGestureDetector detector) {
-		if (ActivityJeu.getMode() != ActivityJeu.TIR
-				&& ActivityJeu.getMode() != ActivityJeu.TIR_EN_COURS) {
-			ActivityJeu.setMode(ActivityJeu.ZOOM);
+		if (ActiviteJeu.getMode() != ActiviteJeu.TIR
+				&& ActiviteJeu.getMode() != ActiviteJeu.TIR_EN_COURS) {
+			ActiviteJeu.setMode(ActiviteJeu.ZOOM);
 			return true;
 		} else {
 			return false;
@@ -165,7 +165,7 @@ public class EvenementJeu
 	// Changement de zoom
 	@Override
 	public boolean onScale(ScaleGestureDetector detector) {
-		if (ActivityJeu.getMode() == ActivityJeu.ZOOM) {
+		if (ActiviteJeu.getMode() == ActiviteJeu.ZOOM) {
 			// Scale sur cette évenement
 			float mScaleFactor = detector.getScaleFactor();
 			
@@ -197,7 +197,7 @@ public class EvenementJeu
 	// A la fin d'une session de zoom
 	@Override
 	public void onScaleEnd(ScaleGestureDetector detector) {
-		ActivityJeu.setMode(ActivityJeu.RIEN);
+		ActiviteJeu.setMode(ActiviteJeu.RIEN);
 	}
 	
 	/** Fonction qui corrige la translation si elle dépasse
