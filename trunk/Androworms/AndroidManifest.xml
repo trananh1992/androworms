@@ -33,7 +33,7 @@
             android:screenOrientation="landscape" >
         </activity>
         <activity
-            android:name="com.androworms.ActivityJeu"
+            android:name="com.androworms.ActiviteJeu"
             android:label="@string/title_activity_game"
             android:screenOrientation="landscape" >
         </activity>
