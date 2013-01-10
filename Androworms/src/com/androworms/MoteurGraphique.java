@@ -111,7 +111,7 @@ public class MoteurGraphique extends RelativeLayout {
 		
 		this.context = context;
 		
-		GameActivity.setMode(GameActivity.RIEN);
+		ActivityJeu.setMode(ActivityJeu.RIEN);
 		this.setWillNotDraw(false);
 		this.setClickable(true);
 		
@@ -243,7 +243,7 @@ public class MoteurGraphique extends RelativeLayout {
 		
 		
 		// Apres le dessin des views, on rajoute le dessins des objets pour le tir
-		if (GameActivity.getMode() == GameActivity.TIR_EN_COURS) {
+		if (ActivityJeu.getMode() == ActivityJeu.TIR_EN_COURS) {
 			// Pour le tir, on a pas de translation ni de zoom
 			Log.v(TAG, "On dessine les trucs");
 			Matrix m = new Matrix();
