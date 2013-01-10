@@ -60,10 +60,12 @@ public class EvenementJeu
 	public boolean onTouch(View v, MotionEvent event) {
 		
 		positionAncienneTouche.set(positionNouvelleTouche);
+		//On n'a ici que la position du doigt principal
 		positionNouvelleTouche = new PointF(event.getX(), event.getY());
 		//on renseigne la touche dans le moteur graphique pour le dessin du tir
 		this.moteurGraph.setPositionTouche(positionNouvelleTouche);
 		
+		//On lance la détection du zoom
 		mScaleDetector.onTouchEvent(event);
 		
 		/*       Gestion des doigts
@@ -73,82 +75,98 @@ public class EvenementJeu
 		 * Le doigt principale est toujours le doigt d'ID 0. Il est donc possible que à un moment il n'y ai pas de doigt principal sur l'écran.
 		 * (Exemple : doigt A posé sur l'écran (doigt principal) -> doigt B posé sur l'écran -> doigt A levé)
 		 */
-		switch (event.getAction()) {
+		switch (event.getActionMasked()) {
 			case MotionEvent.ACTION_DOWN:
-				// Action : Appui sur l'écran lorsqu'il n'y a aucun doigt. Ce doigt est donc le doigt principal
-				if (ActiviteJeu.getMode() == ActiviteJeu.RIEN) {
-					ActiviteJeu.setMode(ActiviteJeu.DEPLACEMENT);
-				} else if (ActiviteJeu.getMode() == ActiviteJeu.TIR 
-						||  ActiviteJeu.getMode() == ActiviteJeu.TIR_EN_COURS) {
-					ActiviteJeu.setMode(ActiviteJeu.TIR_EN_COURS);
-					this.moteurGraph.getPointTir().set(positionNouvelleTouche);
-				}
-				positionAncienneTouche = new PointF(-1, -1);
+				actionAppuiPremierDoigt();
 				break;
-			
 			case MotionEvent.ACTION_POINTER_DOWN:
-				// Action : Lorsque l'on a un ou plusieurs doigt sur l'écran (et pas le doigt principal) et qu'on appuie avec un doigt
-				if (ActiviteJeu.getMode() == ActiviteJeu.RIEN) {
-					ActiviteJeu.setMode(ActiviteJeu.DEPLACEMENT);
-				} else {
-					this.moteurGraph.getPointTir().set(positionNouvelleTouche);
-				}
-				positionAncienneTouche = new PointF(-1, -1);
+				actionAppuiDoigtSupplementaire();
 				break;
 			case MotionEvent.ACTION_MOVE:
-				// Action : Un doigt sur l'écran qui bouge
-				if (ActiviteJeu.getMode() == ActiviteJeu.DEPLACEMENT) {
-					// En mode déplacement, position_ancienne_touche n'est jamais égale à -1 sinon erreur
-					
-					float tempX, tempY;
-					
-					tempX = positionNouvelleTouche.x - positionAncienneTouche.x;
-					tempY = positionNouvelleTouche.y - positionAncienneTouche.y;
-					
-					// Accelérer le déplacement quand on fait de grands mouvement ! (à paramètrer plus finement !)
-					if (Math.abs(tempX) > MoteurGraphique.NB_PIXELS_ACCELERATION) {
-						tempX *= MoteurGraphique.COEFF_ACCELERATION;
-					}
-					if (Math.abs(tempY) > MoteurGraphique.NB_PIXELS_ACCELERATION) {
-						tempY *= MoteurGraphique.COEFF_ACCELERATION;
-					}
-					
-					this.moteurGraph.getMatrice().postTranslate(tempX, tempY);
-				
-					fixTrans();
-				}
+				actionDeplacementDoigt();
 				break;
 			case MotionEvent.ACTION_UP:
-				// Action : Lever du seul doigt sur l'écran. Ce doigt était donc le doigt principal
-				if (ActiviteJeu.getMode() == ActiviteJeu.DEPLACEMENT) {
-					ActiviteJeu.setMode(ActiviteJeu.RIEN);
-				}
-				if (ActiviteJeu.getMode() == ActiviteJeu.TIR_EN_COURS) {
-					ActiviteJeu.setMode(ActiviteJeu.TIR);
-					PointF deplacement = new PointF(this.moteurGraph.getPointTir().x - positionNouvelleTouche.x,
-							this.moteurGraph.getPointTir().y - positionNouvelleTouche.y);
-					float distance = deplacement.length();
-					float angle = ((float)(Math.atan2 (deplacement.y, deplacement.x)* MoteurGraphique.ANGLE_DEMITOUR /Math.PI));
-				
-					noyau.effectuerTir(distance, angle);
-				}
-				positionAncienneTouche = new PointF(-1, -1);
+				actionLeveeDoigtUnique();
 				break;
-			
 			case MotionEvent.ACTION_POINTER_UP:
-				// Action : lorsque que l'on a plusieurs doigts sur l'écran et que l'on lève le doigt principal
-				if (ActiviteJeu.getMode() == ActiviteJeu.DEPLACEMENT) {
-					ActiviteJeu.setMode(ActiviteJeu.RIEN);
-				}
-				positionAncienneTouche = new PointF(-1, -1);
+				actionLeveeDoigt();
 				break;
 			default:
 				break;
 		}
 		
-		this.moteurGraph.invalidate();
+		this.moteurGraph.actualiserGraphisme();
 		return true;
 	}
+	
+	private void actionAppuiPremierDoigt() {
+		// Action : Appui sur l'écran lorsqu'il n'y a aucun doigt. Ce doigt est donc le doigt principal
+		if (ActiviteJeu.getMode() == ActiviteJeu.RIEN) {
+			//on passe en mode translation
+			ActiviteJeu.setMode(ActiviteJeu.DEPLACEMENT);
+		} else if (ActiviteJeu.getMode() == ActiviteJeu.TIR 
+				||  ActiviteJeu.getMode() == ActiviteJeu.TIR_EN_COURS) {
+			//on commence à tirer ou on continue le tir
+			ActiviteJeu.setMode(ActiviteJeu.TIR_EN_COURS);
+			this.moteurGraph.getPointTir().set(positionNouvelleTouche);
+		}
+		positionAncienneTouche = new PointF(-1, -1);
+	}
+	
+	private void actionAppuiDoigtSupplementaire() {
+		// Action : Lorsque l'on a un ou plusieurs doigt sur l'écran
+		// et qu'on appuie avec un doigt supplémentaire
+		// Géré par le zoom
+	}
+	
+	private void actionDeplacementDoigt() {
+		// Action : Un doigt sur l'écran qui bouge
+		if (ActiviteJeu.getMode() == ActiviteJeu.DEPLACEMENT) {
+			// En mode déplacement, position_ancienne_touche n'est jamais égale à -1 sinon erreur
+			
+			float tempX, tempY;
+			
+			tempX = positionNouvelleTouche.x - positionAncienneTouche.x;
+			tempY = positionNouvelleTouche.y - positionAncienneTouche.y;
+			
+			// Accelérer le déplacement quand on fait de grands mouvement ! (à paramètrer plus finement !)
+			if (Math.abs(tempX) > MoteurGraphique.NB_PIXELS_ACCELERATION) {
+				tempX *= MoteurGraphique.COEFF_ACCELERATION;
+			}
+			if (Math.abs(tempY) > MoteurGraphique.NB_PIXELS_ACCELERATION) {
+				tempY *= MoteurGraphique.COEFF_ACCELERATION;
+			}
+			
+			this.moteurGraph.getMatrice().postTranslate(tempX, tempY);
+		
+			fixTrans();
+		}
+	}
+	
+	private void actionLeveeDoigtUnique() {
+		// Action : Levée du dernier doigt sur l'écran.
+		if (ActiviteJeu.getMode() == ActiviteJeu.DEPLACEMENT) {
+			//on finit la translation
+			ActiviteJeu.setMode(ActiviteJeu.RIEN);
+		}
+		if (ActiviteJeu.getMode() == ActiviteJeu.TIR_EN_COURS) {
+			//on finit le tir
+			ActiviteJeu.setMode(ActiviteJeu.TIR);
+			PointF deplacement = new PointF(this.moteurGraph.getPointTir().x - positionNouvelleTouche.x,
+					this.moteurGraph.getPointTir().y - positionNouvelleTouche.y);
+			float distance = deplacement.length();
+			float angle = ((float)(Math.atan2 (deplacement.y, deplacement.x)* MoteurGraphique.ANGLE_DEMITOUR /Math.PI));
+		
+			noyau.effectuerTir(distance, angle);
+		}
+		positionAncienneTouche = new PointF(-1, -1);
+	}
+	
+	private void actionLeveeDoigt() {
+		// Action : lorsque que l'on a plusieurs doigts sur l'écran et que l'on lève un doigt
+		// Géré par le zoom
+	}
+	
 	
 	// Début d'une session de zoom
 	@Override
