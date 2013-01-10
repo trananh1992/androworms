@@ -118,21 +118,21 @@ public class ActiviteAndroworms extends Activity {
 		buf.append("HeightPixels = " + Informations.getHeightPixels() + " px" + RETOUR_LIGNE_HTML);
 		buf.append("Taille = ");
 		switch(Informations.getScreenLayoutSizeMask()) {
-			case Configuration.SCREENLAYOUT_SIZE_SMALL:
-				buf.append("SMALL");
-				break;
-			case Configuration.SCREENLAYOUT_SIZE_NORMAL:
-				buf.append("NORMAL");
-				break;
-			case Configuration.SCREENLAYOUT_SIZE_LARGE:
-				buf.append("LARGE");
-				break;
-			case Configuration.SCREENLAYOUT_SIZE_XLARGE:
-				buf.append("XLARGE");
-				break;
-			default:
-				buf.append("???");
-				break;
+		case Configuration.SCREENLAYOUT_SIZE_SMALL:
+			buf.append("SMALL");
+			break;
+		case Configuration.SCREENLAYOUT_SIZE_NORMAL:
+			buf.append("NORMAL");
+			break;
+		case Configuration.SCREENLAYOUT_SIZE_LARGE:
+			buf.append("LARGE");
+			break;
+		case Configuration.SCREENLAYOUT_SIZE_XLARGE:
+			buf.append("XLARGE");
+			break;
+		default:
+			buf.append("???");
+			break;
 		}
 		buf.append(RETOUR_LIGNE_HTML);
 		buf.append(RETOUR_LIGNE_HTML);
@@ -140,21 +140,21 @@ public class ActiviteAndroworms extends Activity {
 		buf.append("Density = " + Informations.getDensity() + RETOUR_LIGNE_HTML);
 		buf.append("DensityDPI = " + Informations.getDensityDpi() + " dp   (");
 		switch (Informations.getDensityDpi()) {
-			case DisplayMetrics.DENSITY_LOW:
-				buf.append("ldpi -- LOW");
-				break;
-			case DisplayMetrics.DENSITY_MEDIUM:
-				buf.append("mdpi -- MEDIUM");
-				break;
-			case DisplayMetrics.DENSITY_HIGH:
-				buf.append("hdpi -- HIGH");
-				break;
-			case DisplayMetrics.DENSITY_XHIGH:
-				buf.append("xhdpi -- XHIGH");
-				break;
-			default:
-				buf.append("??? -- ???");
-				break;
+		case DisplayMetrics.DENSITY_LOW:
+			buf.append("ldpi -- LOW");
+			break;
+		case DisplayMetrics.DENSITY_MEDIUM:
+			buf.append("mdpi -- MEDIUM");
+			break;
+		case DisplayMetrics.DENSITY_HIGH:
+			buf.append("hdpi -- HIGH");
+			break;
+		case DisplayMetrics.DENSITY_XHIGH:
+			buf.append("xhdpi -- XHIGH");
+			break;
+		default:
+			buf.append("??? -- ???");
+			break;
 		}
 		buf.append(")" + RETOUR_LIGNE_HTML);
 		buf.append(RETOUR_LIGNE_HTML);
