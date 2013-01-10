@@ -35,7 +35,7 @@ public class Noyau {
 		monde.addPersonnage(johnDoe);
 		
 		Personnage tux = new Personnage("Tux", ii);
-		tux.setPosition(new PointF(120, 0));
+		tux.setPosition(new PointF(120, 450));
 		monde.addPersonnage(tux);
 
 		ImageInformation iiObjetCarte = new ImageInformation(R.drawable.hache, 139, 95);

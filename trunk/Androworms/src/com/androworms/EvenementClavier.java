@@ -65,31 +65,31 @@ public class EvenementClavier implements OnTouchListener {
 				break;
 			default:
 				break;
-			}
+		}
 		return true;
 	}
 	
 	private class ThreadTraitementAction implements Runnable {
 		public void run() {
 			switch (idBtnCourrant) {
-			// Déplacement vers la droite
-			case ClavierDirectionnel.BOUTON_DROITE:
-				Log.v(TAG, "Déplacement vers la droite");
-				noyau.deplacementJoueurDroiteFromIHM();
-				break;
-			// Déplacement vers le haut
-			case ClavierDirectionnel.BOUTON_HAUT:
-				Log.v(TAG, "Déplacement vers la haut");
-				noyau.sautJoueurDroiteFromIHM();
-				break;
-			// Déplacement vers la gauche
-			case ClavierDirectionnel.BOUTON_GAUCHE:
-				Log.v(TAG, "Déplacement vers la gauche");
-				noyau.deplacementJoueurGaucheFromIHM();
-				break;
-			default:
-				Log.v(TAG, "Déplacement default");
-				break;
+				// Déplacement vers la droite
+				case ClavierDirectionnel.BOUTON_DROITE:
+					Log.v(TAG, "Déplacement vers la droite");
+					noyau.deplacementJoueurDroiteFromIHM();
+					break;
+				// Déplacement vers le haut
+				case ClavierDirectionnel.BOUTON_HAUT:
+					Log.v(TAG, "Déplacement vers la haut");
+					noyau.sautJoueurDroiteFromIHM();
+					break;
+				// Déplacement vers la gauche
+				case ClavierDirectionnel.BOUTON_GAUCHE:
+					Log.v(TAG, "Déplacement vers la gauche");
+					noyau.deplacementJoueurGaucheFromIHM();
+					break;
+				default:
+					Log.v(TAG, "Déplacement default");
+					break;
 			}
 			mHandler.postDelayed(this, TEMPS_APPUIE);
 		}

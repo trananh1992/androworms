@@ -16,7 +16,7 @@ import android.widget.ToggleButton;
 
 import com.androworms.ui.ClavierDirectionnel;
 
-public class GameActivity extends Activity {
+public class ActivityJeu extends Activity {
 	
 	private static final String TAG = "TESTAndroworms.GameActivity";
 	
@@ -145,7 +145,7 @@ public class GameActivity extends Activity {
 	}
 	
 	public static void setMode(int mode) {
-		GameActivity.mode = mode;
+		ActivityJeu.mode = mode;
 		updateAffichageMode();
 	}
 }

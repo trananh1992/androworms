@@ -26,7 +26,7 @@ public class ActiviteAndrowormsEvent implements OnClickListener {
 				// Bouton de jeu en mode solo
 				Log.v(TAG,"Lancement du jeu");
 				
-				Intent intent = new Intent(this.activiteAndroworms, GameActivity.class);
+				Intent intent = new Intent(this.activiteAndroworms, ActivityJeu.class);
 				this.activiteAndroworms.startActivity(intent);
 			}
 			else if (b.getId() == R.id.btn_multi) {
