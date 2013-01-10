@@ -17,7 +17,6 @@ import android.support.v4.util.LruCache;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
 import android.widget.RelativeLayout;
 
 /** Ce composant graphique est un RelativeLayout personnalisé pour Androworms.
@@ -58,7 +57,7 @@ public class MoteurGraphique extends RelativeLayout {
 	private static final int NB_MAX_IMAGE_CACHE = 10;
 	
 	// Images pour le jeu
-	private LruCache<Integer, Bitmap> memoireCache;
+	private static LruCache<Integer, Bitmap> memoireCache;
 	private Bitmap bmFond;
 	private Bitmap bmTerrain;
 	
@@ -77,7 +76,7 @@ public class MoteurGraphique extends RelativeLayout {
 	private EvenementJeu evtJeu;
 	
 	private Context context;
-	private List<ImageView> images;
+	private List<ImageSurCarte> images;
 	
 	//DEBUG
 	private static final boolean DEBUG_QUADRILLAGE = false;
@@ -114,13 +113,15 @@ public class MoteurGraphique extends RelativeLayout {
 		
 		/* Bitmap */
 		// On crée un cache
-		this.memoireCache = new LruCache<Integer, Bitmap>(NB_MAX_IMAGE_CACHE);
+		if (memoireCache == null) {
+			memoireCache = new LruCache<Integer, Bitmap>(NB_MAX_IMAGE_CACHE);
+		}
 	    
 		try {
-			bmFond = prepareBitmap(getResources().getDrawable(R.drawable.image_fond_640x360), MAP_WIDTH, MAP_HEIGHT);
+			bmFond = getBitmap(context, R.drawable.image_fond_640x360, MAP_WIDTH, MAP_HEIGHT);
 			
 			if (DEBUG_QUADRILLAGE) {
-				bmQuadrillage = prepareBitmap(getResources().getDrawable(R.drawable.image_quadrillage_640x360), MAP_WIDTH, MAP_HEIGHT);
+				bmQuadrillage = getBitmap(context, R.drawable.image_quadrillage_640x360, MAP_WIDTH, MAP_HEIGHT);
 			}
 		} catch(OutOfMemoryError e) {
 			Log.e(TAG, "Erreur de chargement les bitmaps sont trop lourds");
@@ -140,7 +141,7 @@ public class MoteurGraphique extends RelativeLayout {
 		setOnTouchListener(evtJeu);
 		
 		matrix.getValues(mm);
-		images = new ArrayList<ImageView>();
+		images = new ArrayList<ImageSurCarte>();
 		
 	}
 	
@@ -159,8 +160,6 @@ public class MoteurGraphique extends RelativeLayout {
 	@Override
 	protected void dispatchDraw(Canvas canvas) {
 		
-		Log.v(TAG, "dispatchDraw");
-		
 		// Application de la matrice avec la translation et le zoom à tout le canvas
 		canvas.setMatrix(matrix);
 		// Dessin des objets du jeu
@@ -173,40 +172,8 @@ public class MoteurGraphique extends RelativeLayout {
 			canvas.drawBitmap(bmQuadrillage, 0, 0, null);
 		}
 		
-		int i = 0;
-		List<Personnage> persos = noyau.getMonde().getListePersonnage();
-		List<ObjetSurCarte> objs = noyau.getMonde().getListeObjetCarte();
-		boolean objEnCours = false;
-		ObjetSurCarte obj;
-		PointF pp;
-		PointF taille;
-		
-		for(ImageView v : this.images) {
-
-			if (i == persos.size()){
-				i = 0;
-				objEnCours = true;
-			}
-			
-			if (objEnCours) {
-				obj = objs.get(i);
-				pp = obj.getPosition();
-				taille = obj.getObjet().getTailleImageTerrain();
-				//Calcul du carré où afficher l'image
-				v.layout((int) pp.x,
-						(int) pp.y, 
-						(int)( pp.x + taille.x),
-						(int)( pp.y + taille.y));
-			} else {
-				pp = persos.get(i).getPosition();
-				//Calcul du carré où afficher l'image
-				v.layout((int) pp.x,
-						(int) pp.y, 
-						(int)( pp.x + persos.get(i).getWidthImageTerrain()),
-						(int)( pp.y + persos.get(i).getHeightImageTerrain()));
-			}
-			
-			i++;
+		for(ImageSurCarte v : this.images) {
+			v.actualiser();
 		}
 		
 		//Quand on a modifié tous les imageView on peut dessiner
@@ -216,7 +183,6 @@ public class MoteurGraphique extends RelativeLayout {
 		// Apres le dessin des views, on rajoute le dessins des objets pour le tir
 		if (ActiviteJeu.getMode() == ActiviteJeu.TIR_EN_COURS) {
 			// Pour le tir, on a pas de translation ni de zoom
-			Log.v(TAG, "On dessine les trucs");
 			Matrix m = new Matrix();
 			canvas.setMatrix(m);
 			
@@ -318,11 +284,6 @@ public class MoteurGraphique extends RelativeLayout {
 		canvas.drawPath(path, paint);
 	}
 	
-	@Override
-	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-	}
-	
 	/** Retourne les coordonnées d'un point avec la translation et le zoom associé.
 	 * @param pt : Point de l'objet relative à la carte
 	 * @return : Point de l'objet relative à l'écran
@@ -353,14 +314,14 @@ public class MoteurGraphique extends RelativeLayout {
 		return result;
 	}
 	
-	private Bitmap getBitmap(int idImage, int width, int heigth) {
-		Bitmap result = this.memoireCache.get(idImage);
+	public static Bitmap getBitmap(Context ctx, int idImage, int width, int heigth) {
+		Bitmap result = memoireCache.get(idImage);
 		
 		if (result == null) {
 			//On charge l'image
-			result = prepareBitmap(getResources().getDrawable(idImage), width, heigth);
+			result = prepareBitmap(ctx.getResources().getDrawable(idImage), width, heigth);
 			//on la stocke dans la mémoire cache
-			this.memoireCache.put(idImage, result);
+			memoireCache.put(idImage, result);
 		}
 		
 		if (result == null) {
@@ -380,7 +341,7 @@ public class MoteurGraphique extends RelativeLayout {
 			this.bmQuadrillage.recycle();
 		}
 		//vide le cache
-		this.memoireCache.evictAll(); 
+		memoireCache.evictAll(); 
 	}
 	
 	public Matrix getMatrice() {
@@ -409,40 +370,27 @@ public class MoteurGraphique extends RelativeLayout {
 			this.removeView(v);
 		}
 		
-		ImageView imgV;
-		Bitmap bmObj;
 		
 		if (monde != null) {
 			bmTerrain = monde.getTerrain();
 			
-			Personnage persoPrincipal = noyau.getMonde().getPersonnagePrincipal();
-			Bitmap bmPerso = getBitmap(Personnage.getIdImage(), persoPrincipal.getWidthImageTerrain(), persoPrincipal.getHeightImageTerrain());
-
 			for(Personnage p : monde.getListePersonnage()) {
-				//On ne fait que charger l'image, le positionnement sera fait dans dispatchDraw
-				imgV = new ImageView(this.context);
-				//On dessine le personnage
-				imgV.setImageBitmap(bmPerso);
-				//Pour pouvoir ensuite appliquer une matrice
-				imgV.setScaleType(ScaleType.MATRIX);
+				ImageSurCarte imgSurCarte = new ImageSurCarte(this.context, p);
 				//On rajoute dans le layout
-				this.addView(imgV);
+				this.addView(imgSurCarte);
 				//On garde la référence pour le zoom et translation
-				images.add(imgV);
+				images.add(imgSurCarte);
 			}
 			
 			for(ObjetSurCarte objSurCarte : monde.getListeObjetCarte()) {
-				Objet obj = objSurCarte.getObjet();
-				PointF taille = obj.getTailleImageTerrain();
-				bmObj = getBitmap(obj.getImageTerrain(), (int)taille.x, (int)taille.y);
-				imgV = new ImageView(this.context);
-				imgV.setImageBitmap(bmObj);
-				imgV.setScaleType(ScaleType.MATRIX);
-				this.addView(imgV);
-				images.add(imgV);
+				ImageSurCarte imgSurCarte = new ImageSurCarte(this.context, objSurCarte);
+				//On rajoute dans le layout
+				this.addView(imgSurCarte);
+				//On garde la référence pour le zoom et translation
+				images.add(imgSurCarte);
 			}
 			
-			this.invalidate();
+			this.actualiserGraphisme();
 		}
 	}
 }
