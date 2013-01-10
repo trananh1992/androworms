@@ -17,7 +17,6 @@ public class Personnage extends ElementSurCarte {
 	
 	public static final int TAILLE_DEPLACEMENT_JOUEUR = 10;
 	private String nom;
-	private int id;
 
 	
 	public Personnage(String nom, ImageInformation ii) {
@@ -43,13 +42,5 @@ public class Personnage extends ElementSurCarte {
 
 	public void deplacementGauche() {
 		setPosition(getPosition().x - TAILLE_DEPLACEMENT_JOUEUR, getPosition().y);
-	}
-	
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 }

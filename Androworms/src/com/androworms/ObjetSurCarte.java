@@ -4,7 +4,6 @@ import android.graphics.PointF;
 
 public class ObjetSurCarte extends ElementSurCarte{
 	private Objet objet;
-	private int id;
 	
 	public ObjetSurCarte(Objet o, PointF p, ImageInformation ii) {
 		super(p, ii);
@@ -17,13 +16,5 @@ public class ObjetSurCarte extends ElementSurCarte{
 
 	public void setObjet(Objet objet) {
 		this.objet = objet;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 }
