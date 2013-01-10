@@ -77,14 +77,11 @@ public class MoteurGraphique extends RelativeLayout {
 	private EvenementJeu evtJeu;
 	
 	private Context context;
-	private ImageView fond;
-	private ImageView terrain;
 	private List<ImageView> images;
 	
 	//DEBUG
 	private static final boolean DEBUG_QUADRILLAGE = false;
 	private Bitmap bmQuadrillage;
-	private ImageView quadrillage;
 	
 	public MoteurGraphique(Context context) {
 		super(context);
@@ -121,20 +118,14 @@ public class MoteurGraphique extends RelativeLayout {
 	    
 		try {
 			bmFond = prepareBitmap(getResources().getDrawable(R.drawable.image_fond_640x360), MAP_WIDTH, MAP_HEIGHT);
-			bmTerrain = prepareBitmap(getResources().getDrawable(R.drawable.terrain_jeu_defaut_640x360), MAP_WIDTH, MAP_HEIGHT);
-			bmQuadrillage = prepareBitmap(getResources().getDrawable(R.drawable.image_quadrillage_640x360), MAP_WIDTH, MAP_HEIGHT);
+			
+			if (DEBUG_QUADRILLAGE) {
+				bmQuadrillage = prepareBitmap(getResources().getDrawable(R.drawable.image_quadrillage_640x360), MAP_WIDTH, MAP_HEIGHT);
+			}
 		} catch(OutOfMemoryError e) {
 			Log.e(TAG, "Erreur de chargement les bitmaps sont trop lourds");
 			//TODO terminer ou dire quelque chose...
 		}
-		
-		fond = new ImageView(context);
-		fond.setImageBitmap(bmFond);
-		terrain = new ImageView(context);
-		terrain.setImageBitmap(bmTerrain);
-		quadrillage = new ImageView(context);
-		quadrillage.setImageBitmap(bmQuadrillage);
-		
 		
 		//on crée une nouvelle matrice
 		matrix = new Matrix();
@@ -149,19 +140,6 @@ public class MoteurGraphique extends RelativeLayout {
 		setOnTouchListener(evtJeu);
 		
 		matrix.getValues(mm);
-		
-		fond.setScaleType(ScaleType.MATRIX);
-		terrain.setScaleType(ScaleType.MATRIX);
-		quadrillage.setScaleType(ScaleType.MATRIX);
-		fond.setImageMatrix(matrix);
-		terrain.setImageMatrix(matrix);
-		quadrillage.setImageMatrix(matrix);
-		this.addView(fond);
-		this.addView(terrain);
-		if (DEBUG_QUADRILLAGE) {
-			this.addView(quadrillage);
-		}
-		
 		images = new ArrayList<ImageView>();
 		
 	}
@@ -183,23 +161,17 @@ public class MoteurGraphique extends RelativeLayout {
 		
 		Log.v(TAG, "dispatchDraw");
 		
-		// on applique une matrice au fond (trans + scale)
-		fond.setImageMatrix(matrix);
-		terrain.setImageMatrix(matrix);
-		
-		if (DEBUG_QUADRILLAGE) {
-			quadrillage.setImageMatrix(matrix);
+		// Application de la matrice avec la translation et le zoom à tout le canvas
+		canvas.setMatrix(matrix);
+		// Dessin des objets du jeu
+		canvas.drawBitmap(bmFond, 0, 0, null);
+		if (bmTerrain != null) {
+			canvas.drawBitmap(bmTerrain, 0, 0, null);
 		}
 		
-		matrix.getValues(mm);
-		float scaleX = mm[Matrix.MSCALE_X];
-		float scaleY = mm[Matrix.MSCALE_Y];
-		
-		// on copie la matrice appliquée au fond pour faire une custom sur les imageview
-		// cette matrice n'a pas de trans mais juste un scale
-		//le trans est fait sur le composant
-		Matrix matrixZoom = new Matrix();
-		matrixZoom.postScale(scaleX, scaleY);
+		if (DEBUG_QUADRILLAGE) {
+			canvas.drawBitmap(bmQuadrillage, 0, 0, null);
+		}
 		
 		int i = 0;
 		List<Personnage> persos = noyau.getMonde().getListePersonnage();
@@ -218,23 +190,24 @@ public class MoteurGraphique extends RelativeLayout {
 			
 			if (objEnCours) {
 				obj = objs.get(i);
-				pp = transpositionPointSurEcran(obj.getPosition());
+				pp = obj.getPosition();
 				taille = obj.getObjet().getTailleImageTerrain();
 				//Calcul du carré où afficher l'image
 				v.layout((int) pp.x,
 						(int) pp.y, 
-						(int)( pp.x + taille.x * scaleX),
-						(int)( pp.y + taille.y * scaleY));
+						(int)( pp.x + taille.x),
+						(int)( pp.y + taille.y));
 			} else {
-				pp = transpositionPointSurEcran(persos.get(i).getPosition());
+		//		pp = transpositionPointSurEcran(persos.get(i).getPosition());
+				pp = persos.get(i).getPosition();
 				//Calcul du carré où afficher l'image
 				v.layout((int) pp.x,
 						(int) pp.y, 
-						(int)( pp.x + persos.get(i).getWidthImageTerrain() * scaleX),
-						(int)( pp.y + persos.get(i).getHeightImageTerrain() * scaleY));
+						(int)( pp.x + persos.get(i).getWidthImageTerrain()),
+						(int)( pp.y + persos.get(i).getHeightImageTerrain()));
 			}
 			
-			v.setImageMatrix(matrixZoom);
+		//	v.setImageMatrix(matrixZoom);
 			i++;
 		}
 		
@@ -439,12 +412,12 @@ public class MoteurGraphique extends RelativeLayout {
 		ImageView imgV;
 		Bitmap bmObj;
 		
-		if (monde != null)
-		{
+		if (monde != null) {
+			bmTerrain = monde.getTerrain();
+			
 			Personnage persoPrincipal = noyau.getMonde().getPersonnagePrincipal();
 			Bitmap bmPerso = getBitmap(Personnage.getIdImage(), persoPrincipal.getWidthImageTerrain(), persoPrincipal.getHeightImageTerrain());
 
-			int id = 1000;
 			for(Personnage p : monde.getListePersonnage()) {
 				//On ne fait que charger l'image, le positionnement sera fait dans dispatchDraw
 				imgV = new ImageView(this.context);
@@ -456,15 +429,8 @@ public class MoteurGraphique extends RelativeLayout {
 				this.addView(imgV);
 				//On garde la référence pour le zoom et translation
 				images.add(imgV);
-			    
-			    
-			    // TODO : c'est pas bien, il faut changer ça avec une meilleur gestion des ID
-				imgV.setId(id);
-				p.setId(id);
-				id++;
 			}
-
-			id = 2000;
+			
 			for(ObjetSurCarte objSurCarte : monde.getListeObjetCarte()) {
 				Objet obj = objSurCarte.getObjet();
 				PointF taille = obj.getTailleImageTerrain();
@@ -474,12 +440,6 @@ public class MoteurGraphique extends RelativeLayout {
 				imgV.setScaleType(ScaleType.MATRIX);
 				this.addView(imgV);
 				images.add(imgV);
-			    
-			    // TODO : c'est pas bien, il faut changer ça avec une meilleur gestion des ID
-				imgV.setId(id);
-				objSurCarte.setId(id);
-
-				id++;
 			}
 			
 			this.invalidate();
