@@ -40,10 +40,12 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 	private boolean initializedImageView = false;
 	private boolean mustSave = false;
 	private Canvas drawCanvas = null;
+	private Bitmap upCalc = null;
 	static final int COULEUR_TERRE = 0xff9f551e;
 	static final int COULEUR_CIEL = 0xff77B5FE;
 	static final String TAG = "ActiviteCreationCarte";
 	static final int MAX_COLOR_VALUE = 255;
+	static final int COULEUR_HERBE = 0xff00ff00;//0xff458B00  0xff00ff00;
 	
 	/* Gestionnaire d'évênement permettant le lancement de cette activité */
 	public void onClick(View arg0) {
@@ -134,6 +136,8 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 				dlg.setMessage("Type map name:");
 				
 				final EditText edit = new EditText(this);
+				//edit.setLines(1);
+				edit.setSingleLine();
 				dlg.setView(edit);
 				dlg.setNegativeButton("No", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
@@ -145,7 +149,10 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 					public void onClick(DialogInterface dialog, int whichButton) {
 						String value = edit.getText().toString();
 						/* on crée le dossier pour stocker la photo */
-						saveMap(value);
+						if(value.length()>0)
+						{
+							saveMap(value);
+						}
 						finish();
 					}
 				});
@@ -291,10 +298,10 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 	private void initImageView() {
 		ImageView surface = (ImageView) findViewById(R.id.CurrentMap);
 		Bitmap b = Bitmap.createBitmap(surface.getWidth(), surface.getHeight(), Bitmap.Config.ARGB_8888);
-		Bitmap overlay = Bitmap.createBitmap(b.getWidth(), b.getHeight(), b.getConfig());
-		drawCanvas = new Canvas(overlay);
+		upCalc = Bitmap.createBitmap(b.getWidth(), b.getHeight(), b.getConfig());
+		drawCanvas = new Canvas(upCalc);
 		drawCanvas.drawBitmap(b, null, new Rect(0,0,drawCanvas.getWidth(),drawCanvas.getHeight()), null);
-		surface.setImageBitmap(overlay);
+		surface.setImageBitmap(upCalc);
 	}
 	
 	private void separeAlpha(int width, int height, Bitmap base, int densityL, int densityD)
@@ -380,6 +387,8 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 	private boolean drawEvent(View surface, MotionEvent event)
 	{
 		final int factorSize = 20;
+		final int echantillonage = 25;
+		final float tailleHerbe = 10f;
 		int size = 0;
 		/* Sélection de la taille de la brosse de dessin */
 		if(drawAlpha != NO_BRUSH) {
@@ -422,6 +431,27 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 			paint.setStyle(Paint.Style.FILL);
 			paint.setColor(COULEUR_TERRE);
 			drawCanvas.drawCircle(x, y, size, paint);
+			for(int i=0;i<(2*echantillonage*Math.PI);i++)
+			{
+				double radian = ((double) size)+(tailleHerbe/2);
+				double cos = Math.cos((double)i/echantillonage);
+				double sin = Math.sin((double)i/echantillonage);
+				int xG = (int) ((double)x+(double)(radian*cos));
+				int yG = (int) ((double)y+(double)(radian*sin));
+				if(yG>=drawCanvas.getHeight() || yG<0 || xG>= drawCanvas.getWidth() || xG<0)
+				{
+					continue;
+				}
+				Paint paint2 = new Paint();
+				paint2.setColor(COULEUR_HERBE);
+				paint2.setStrokeWidth(tailleHerbe);
+				paint2.setStyle(Paint.Style.FILL_AND_STROKE);
+				int currentColor = upCalc.getPixel(xG, yG);
+				if(currentColor!=COULEUR_TERRE && currentColor!=COULEUR_HERBE)
+				{
+					drawCanvas.drawPoint(xG, yG, paint2);
+				}
+			}
 		}
 		((ImageView) surface).draw(drawCanvas);
 		((ImageView) surface).invalidate();
