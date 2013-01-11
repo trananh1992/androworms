@@ -38,9 +38,9 @@ public class Noyau {
 		tux.setPosition(new PointF(120, 450));
 		monde.addPersonnage(tux);
 
-		ImageInformation iiObjetCarte = new ImageInformation(R.drawable.hache, 139, 95);
+		ImageInformation iiObjetCarte = new ImageInformation(R.drawable.arme_hache, 139, 95);
 		Objet o = new Arme("Hache");
-		o.setImageTerrain(R.drawable.hache, 139, 95);
+		o.setImageTerrain(R.drawable.arme_hache, 139, 95);
 		ObjetSurCarte obj = new ObjetSurCarte(o, new PointF(250,500), iiObjetCarte);
 		monde.addObjetSurCarte(obj);
 		obj = new ObjetSurCarte(o, new PointF(1000, 500), iiObjetCarte);
