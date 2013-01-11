@@ -27,17 +27,25 @@ public class Noyau {
 
 	
 	public Noyau(Context context, MoteurGraphique mg) {
-		// ZONE DE TEST |--> TODO : a déplacer ailleurs !
-		monde = new Monde();
-		this.graphique = mg;
+
+		test(context);
+		graphique = mg;
+
+		
+	}
+	
+	// Cette fonction sera à supprimer lorsque l'on en aura plus besoin.
+	public void test(Context context) {
+
+		creationPartieLocale();
 		ImageInformation ii = new ImageInformation(R.drawable.android_face, 162, 214 );
 		Personnage johnDoe = new Personnage("John Doe", ii);
-		johnDoe.setPosition(new PointF(820, 470));
-		monde.addPersonnage(johnDoe);
-		
+		johnDoe.setPosition(new PointF(240, 0));
+
 		Personnage tux = new Personnage("Tux", ii);
-		tux.setPosition(new PointF(120, 450));
+		tux.setPosition(new PointF(120, 200));
 		monde.addPersonnage(tux);
+		monde.addPersonnage(johnDoe);
 
 		ImageInformation iiObjetCarte = new ImageInformation(R.drawable.arme_hache, 139, 95);
 		Objet o = new Arme("Hache");
@@ -49,12 +57,8 @@ public class Noyau {
 		
 		Bitmap b = ((BitmapDrawable)context.getResources().getDrawable(R.drawable.terrain_jeu_defaut_640x360)).getBitmap();
 		monde.setTerrain(b, 1280, 720);
-		//FIN ZONE DE TEST
-		
-		connexion = new ConnexionLocale(this);
+
 		this.nomPersonnage = "Tux";
-		physique = new MoteurPhysique(this, monde);
-		
 	}
 	
 	public String getNomPersonnage() {
