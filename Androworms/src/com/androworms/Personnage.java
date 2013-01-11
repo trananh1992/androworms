@@ -15,7 +15,7 @@ public class Personnage extends ElementSurCarte {
 	 * accessoire
 	 */
 	
-	public static final int TAILLE_DEPLACEMENT_JOUEUR = 10;
+
 	private String nom;
 
 	
@@ -36,11 +36,22 @@ public class Personnage extends ElementSurCarte {
 		return R.drawable.android_face;
 	}
 
-	public void deplacementDroite() {
-		setPosition(getPosition().x + TAILLE_DEPLACEMENT_JOUEUR, getPosition().y);
+	public void deplacementDroite(int pas, int max) {
+		if( getPosition().x + pas > max ) {
+			setPosition(max, getPosition().y);
+		}
+		else {
+			setPosition(getPosition().x + pas, getPosition().y);
+		}
 	}
 
-	public void deplacementGauche() {
-		setPosition(getPosition().x - TAILLE_DEPLACEMENT_JOUEUR, getPosition().y);
+	public void deplacementGauche(int pas, int min) {
+		if(getPosition().x - pas < min) {
+			setPosition(min, getPosition().y);
+		}
+		else {
+			setPosition(getPosition().x - pas, getPosition().y);
+		}
+
 	}
 }
