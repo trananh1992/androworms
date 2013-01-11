@@ -14,7 +14,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Environment;
@@ -38,6 +39,9 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 	private int drawSolid = 0;
 	private boolean initializedImageView = false;
 	private boolean mustSave = false;
+	Canvas drawCanvas = null;
+	private final int couleurTerre = 0xff9f551e;
+	private final int couleurCiel = 0xff77B5FE;
 	
 	/* Gestionnaire d'évênement permettant le lancement de cette activité */
 	public void onClick(View arg0) {
@@ -82,9 +86,41 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 						FileOutputStream filoutputStream;
 						try {
 							filoutputStream = new FileOutputStream(photoPath);
+							ImageView background = (ImageView) findViewById(R.id.background);
+							BitmapDrawable drawable = (BitmapDrawable) background.getDrawable();
+							Bitmap backgroundBitmap = null;
+							if(null != drawable)
+							{
+								backgroundBitmap = drawable.getBitmap();
+							}
 							ImageView surface = (ImageView) findViewById(R.id.CurrentMap);
 							Bitmap b = ((BitmapDrawable)((ImageView)surface).getDrawable()).getBitmap();
-							b.compress(Bitmap.CompressFormat.PNG, 100, filoutputStream);
+							Bitmap result = null;
+							/* fustion des calques si il y en à deux */
+							if(backgroundBitmap!=null)
+							{
+								result = backgroundBitmap.copy(Bitmap.Config.ARGB_8888,true);
+							}
+							else
+							{
+								result = Bitmap.createBitmap(b.getWidth(), b.getHeight(), Bitmap.Config.ARGB_8888);
+							}
+							for(int i=0;i<b.getWidth();i++)
+							{
+								for(int j=0;j<b.getHeight();j++)
+								{
+									int color = b.getPixel(i, j);
+									if (color == couleurCiel)
+									{
+										result.setPixel(i, j, 0);
+									}
+									else if (Color.alpha(color) != 0)
+									{
+										result.setPixel(i, j, color);
+									}
+								}
+							}
+							result.compress(Bitmap.CompressFormat.PNG, 100, filoutputStream);
 							filoutputStream.flush();
 							filoutputStream.close();
 						} catch (FileNotFoundException e) {
@@ -214,12 +250,11 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		final int blueSkyColor = 0xff77B5FE;
 		
 		/* Affiche la vue par défaut */
 		setContentView(R.layout.edition_carte);
 		ImageView surface = (ImageView) findViewById(R.id.CurrentMap);
-		((ImageView)findViewById(R.id.background)).setBackgroundColor(blueSkyColor);
+		((ImageView)findViewById(R.id.background)).setBackgroundColor(couleurCiel);
 		
 		surface.setOnTouchListener(this);
 		
@@ -243,24 +278,39 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 	private void initImageView() {
 		ImageView surface = (ImageView) findViewById(R.id.CurrentMap);
 		Bitmap b = Bitmap.createBitmap(surface.getWidth(), surface.getHeight(), Bitmap.Config.ARGB_8888);
-		surface.setImageBitmap(b);
+		Bitmap overlay = Bitmap.createBitmap(b.getWidth(), b.getHeight(), b.getConfig());
+		drawCanvas = new Canvas(overlay);
+		//drawCanvas.drawBitmap(b, Math.max(0, (surface.getHeight()-b.getHeight())/2),Math.max(0,(surface.getWidth()-b.getWidth())/2), null);
+		drawCanvas.drawBitmap(b, null, new Rect(0,0,drawCanvas.getWidth(),drawCanvas.getHeight()), null);
+		surface.setImageBitmap(overlay);
 	}
 	
 	private void autoAlpha4()
 	{
 		ImageView surface = (ImageView) findViewById(R.id.CurrentMap);
-		Bitmap b = ((BitmapDrawable)((ImageView)surface).getDrawable()).getBitmap();
+		BitmapDrawable drawable = ((BitmapDrawable)((ImageView)findViewById(R.id.background)).getDrawable());
+		if( null == drawable)
+		{
+			return;
+		}
+		Bitmap b = drawable.getBitmap();
+		if( null == b)
+		{
+			return;
+		}
 		int height = b.getHeight();
 		int width = b.getWidth();
-		Bitmap transformed = Bitmap.createBitmap(width,height,Bitmap.Config.ARGB_8888);
 		int i,j;
 		final int nComponents = 3;
-		final int maxComponentValue = 255;
 		int dark = b.getPixel(0,0);
 		int densityD = (Color.red(dark)+Color.green(dark)+Color.blue(dark))/nComponents;
 		int light = b.getPixel(0,0);
 		int densityL = (Color.red(light)+Color.green(light)+Color.blue(light))/nComponents;
-		
+		if(!initializedImageView)
+		{
+			initImageView();
+			initializedImageView = true;
+		}
 		Log.v("autoAlpha", "begin computing alpha");
 		for(i=0;i<width;i++)
 		{
@@ -289,25 +339,17 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 			for(j=0;j<height;j++)
 			{
 				int color = b.getPixel(i, j);
-				if(Color.alpha(color)!=255)
-				{
-					continue;
-				}
 				int density = (Color.red(color)+Color.green(color)+Color.blue(color))/nComponents;
-				if(Math.abs(densityL-density)<Math.abs(densityD-density))
+				if(Math.abs(densityL-density)>Math.abs(densityD-density))
 				{
-					transformed.setPixel(i, j, Color.argb(maxComponentValue, Color.red(color), Color.green(color), Color.blue(color)));
-				}
-				else
-				{
-					transformed.setPixel(i, j, Color.argb(0, Color.red(color), Color.green(color), Color.blue(color)));
+					Paint paint = new Paint();
+					paint.setColor(couleurCiel);
+					drawCanvas.drawPoint(i, j, paint);
 				}
 			}
 		}
-		Bitmap overlay = Bitmap.createBitmap(transformed.getWidth(), transformed.getHeight(), transformed.getConfig());
-		Canvas c = new Canvas(overlay);
-		c.drawBitmap(transformed, new Matrix(), null);
-		((ImageView) surface).setImageBitmap(overlay);
+		((ImageView) surface).draw(drawCanvas);
+		((ImageView) surface).invalidate();
 	}
 	
 	private void autoAlpha()
@@ -319,7 +361,6 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 	private boolean drawEvent(View surface, MotionEvent event)
 	{
 		final int factorSize = 20;
-		final int couleurTerre = 0xff9f551e;
 		int size = 0;
 		/* Sélection de la taille de la brosse de dessin */
 		if(drawAlpha != NO_BRUSH) {
@@ -334,8 +375,6 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		/* récupération de l'image sur laquelle on dessine */
 		Bitmap bitmap = ((BitmapDrawable)((ImageView)surface).getDrawable()).getBitmap();
 		int action = event.getAction();
-		int color;
-		int red,green,blue;
 		/* On ne dessine qu'en cas d'appuie ou de déplacement */
 		switch (action)
 		{
@@ -351,39 +390,22 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		y = (int) event.getY();
 		y = Math.max(0, y);
 		y = Math.min(bitmap.getHeight()-1, y);
-		/* on boucle sur le petit carré de coté "size" autour du doigt */
-		for(int i=(x-size);i<(x+size);i++)
+		if(drawAlpha != NO_BRUSH)
 		{
-			if(i>=0 && i<bitmap.getWidth())
-			{
-				for(int j=(y-size);j<(y+size);j++)
-				{
-					/* On dessine du alpha ou de la terre si on est dans l'image
-					 * et pour sur les points qui forment un cercle de rayon size
-					 * autour du doigt */
-					if(j>=0 && j<bitmap.getHeight() && (Math.sqrt(Math.pow(x-i, 2)+Math.pow(y-j, 2))<size))
-					{
-						if(drawAlpha != NO_BRUSH)
-						{
-							color = bitmap.getPixel(i, j);
-							red = Color.red(color);
-							green = Color.green(color);
-							blue = Color.blue(color);
-							bitmap.setPixel(i, j, Color.argb(0,red,green,blue));
-						}
-						else
-						{
-							bitmap.setPixel(i, j, couleurTerre);
-						}
-					}
-				}
-			}
+			Paint paint = new Paint();
+			paint.setStyle(Paint.Style.FILL);
+			paint.setColor(couleurCiel);
+			drawCanvas.drawCircle(x, y, size, paint);
 		}
-		/* On actualise l'image */
-		Bitmap overlay = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), bitmap.getConfig());
-		Canvas c = new Canvas(overlay);
-		c.drawBitmap(bitmap, new Matrix(), null);
-		((ImageView) surface).setImageBitmap(overlay);
+		else
+		{
+			Paint paint = new Paint();
+			paint.setStyle(Paint.Style.FILL);
+			paint.setColor(couleurTerre);
+			drawCanvas.drawCircle(x, y, size, paint);
+		}
+		((ImageView) surface).draw(drawCanvas);
+		((ImageView) surface).invalidate();
 		return true;
 	}
 	
@@ -418,9 +440,7 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 				Bitmap overlay = Bitmap.createBitmap(surface.getWidth(), surface.getHeight(), b.getConfig());
 				Canvas c = new Canvas(overlay);
 				c.drawBitmap(b, Math.max(0, (surface.getHeight()-b.getHeight())/2),Math.max(0,(surface.getWidth()-b.getWidth())/2), null);
-				((ImageView) surface).setImageBitmap(overlay);
-				
-				initializedImageView = true;
+				((ImageView)findViewById(R.id.background)).setImageBitmap(overlay);
 				stream.close();
 				new File(photoPath).delete();
 			} catch (FileNotFoundException e) {
