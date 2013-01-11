@@ -45,7 +45,8 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 	static final int COULEUR_CIEL = 0xff77B5FE;
 	static final String TAG = "ActiviteCreationCarte";
 	static final int MAX_COLOR_VALUE = 255;
-	static final int COULEUR_HERBE = 0xff00ff00;//0xff458B00  0xff00ff00;
+	/* couleur herbe foncée : 0xff458B00  couleur fluo : 0xff00ff00;*/
+	static final int COULEUR_HERBE = 0xff00ff00;
 	
 	/* Gestionnaire d'évênement permettant le lancement de cette activité */
 	public void onClick(View arg0) {
@@ -136,7 +137,6 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 				dlg.setMessage("Type map name:");
 				
 				final EditText edit = new EditText(this);
-				//edit.setLines(1);
 				edit.setSingleLine();
 				dlg.setView(edit);
 				dlg.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -391,10 +391,12 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		final float tailleHerbe = 10f;
 		int size = 0;
 		/* Sélection de la taille de la brosse de dessin */
-		if(drawAlpha != NO_BRUSH) {
+		if(drawAlpha != NO_BRUSH)
+		{
 			size = factorSize*drawAlpha;
 		}
-		else {
+		else
+		{
 			size = factorSize*drawSolid;
 		}
 		int x=0;
@@ -438,7 +440,8 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 				double sin = Math.sin((double)i/echantillonage);
 				int xG = (int) ((double)x+(double)(radian*cos));
 				int yG = (int) ((double)y+(double)(radian*sin));
-				if(yG>=drawCanvas.getHeight() || yG<0 || xG>= drawCanvas.getWidth() || xG<0)
+				int currentColor = upCalc.getPixel(xG, yG);
+				if(yG>=drawCanvas.getHeight() || yG<0 || xG>= drawCanvas.getWidth() || xG<0 || currentColor==COULEUR_TERRE || currentColor==COULEUR_HERBE)
 				{
 					continue;
 				}
@@ -446,11 +449,6 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 				paint2.setColor(COULEUR_HERBE);
 				paint2.setStrokeWidth(tailleHerbe);
 				paint2.setStyle(Paint.Style.FILL_AND_STROKE);
-				int currentColor = upCalc.getPixel(xG, yG);
-				if(currentColor!=COULEUR_TERRE && currentColor!=COULEUR_HERBE)
-				{
-					drawCanvas.drawPoint(xG, yG, paint2);
-				}
 			}
 		}
 		((ImageView) surface).draw(drawCanvas);
@@ -496,15 +494,24 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 				{
 					Log.e(TAG,"Unable to delete temporary file");
 				}
-			} catch (FileNotFoundException e) {
+			} catch (FileNotFoundException e)
+			{
 				finish();
-			} catch (IOException e) {
+			} catch (IOException e)
+			{
 				finish();
 			}
-			finally {
-		        try {
-		            if (stream!=null) stream.close();
-		        } catch (Exception e){
+			finally
+			{
+		        try
+		        {
+		            if (stream!=null)
+		            {
+		            	stream.close();
+		            }
+		        }
+		        catch (Exception e)
+		        {
 		        }
 		    }
 		}
