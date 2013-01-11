@@ -1,9 +1,10 @@
 package com.androworms;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.PointF;
 import android.util.Log;
-
+import android.graphics.drawable.BitmapDrawable;
 
 /*
  * Le noyau gere tous les interactions.
@@ -46,7 +47,8 @@ public class Noyau {
 		obj = new ObjetSurCarte(o, new PointF(1000, 500), iiObjetCarte);
 		monde.addObjetSurCarte(obj);
 		
-		monde.setTerrain(context.getResources().getDrawable(R.drawable.terrain_jeu_defaut_640x360), 1280, 720);
+		Bitmap b = ((BitmapDrawable)context.getResources().getDrawable(R.drawable.terrain_jeu_defaut_640x360)).getBitmap();
+		monde.setTerrain(b, 1280, 720);
 		//FIN ZONE DE TEST
 		
 		connexion = new ConnexionLocale(this);

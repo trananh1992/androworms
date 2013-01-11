@@ -12,7 +12,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.RectF;
-import android.graphics.drawable.Drawable;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v4.util.LruCache;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -145,12 +145,8 @@ public class MoteurGraphique extends RelativeLayout {
 		
 	}
 	
-	private static Bitmap prepareBitmap(Drawable drawable, int width, int height) {
-		Bitmap bitmap = Bitmap.createBitmap(width, height,Bitmap.Config.ARGB_8888);
-		drawable.setBounds(0, 0, width, height);
-		Canvas canvas = new Canvas(bitmap);
-		drawable.draw(canvas);
-		return bitmap;
+	private static Bitmap prepareBitmap(Bitmap b, int width, int height) {
+		return Bitmap.createScaledBitmap(b, width, height, true);
 	}
 	
 	public void actualiserGraphisme() {
@@ -319,7 +315,8 @@ public class MoteurGraphique extends RelativeLayout {
 		
 		if (result == null) {
 			//On charge l'image
-			result = prepareBitmap(ctx.getResources().getDrawable(idImage), width, heigth);
+			Bitmap b = ((BitmapDrawable)ctx.getResources().getDrawable(idImage)).getBitmap();
+			result = prepareBitmap(b, width, heigth);
 			//on la stocke dans la mémoire cache
 			memoireCache.put(idImage, result);
 		}
