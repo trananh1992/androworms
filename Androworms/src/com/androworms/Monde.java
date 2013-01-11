@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 
 public class Monde {
@@ -25,11 +23,8 @@ public class Monde {
 		listeObjetCarte = new ArrayList<ObjetSurCarte>();
 	}
 	
-	public void setTerrain(Drawable drawable, int width, int height){
-		terrain = Bitmap.createBitmap(width, height,Bitmap.Config.ARGB_8888);
-		drawable.setBounds(0, 0, width, height);
-		Canvas canvas = new Canvas(terrain);
-		drawable.draw(canvas);
+	public void setTerrain(Bitmap b, int width, int height){
+		terrain = Bitmap.createScaledBitmap(b, width, height, true);
 	}
 	
 	public Bitmap getTerrain() {
