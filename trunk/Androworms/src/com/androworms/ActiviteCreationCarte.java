@@ -39,15 +39,83 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 	private int drawSolid = 0;
 	private boolean initializedImageView = false;
 	private boolean mustSave = false;
-	Canvas drawCanvas = null;
-	private final int couleurTerre = 0xff9f551e;
-	private final int couleurCiel = 0xff77B5FE;
+	private Canvas drawCanvas = null;
+	static final int couleurTerre = 0xff9f551e;
+	static final int couleurCiel = 0xff77B5FE;
+	static final String TAG = "ActiviteCreationCarte";
+	static final int maxColorValue = 255;
 	
 	/* Gestionnaire d'évênement permettant le lancement de cette activité */
 	public void onClick(View arg0) {
 		Intent intent = new Intent(this.activiteMenuPrincipal, ActiviteCreationCarte.class);
 		this.activiteMenuPrincipal.startActivity(intent);
 		
+	}
+	
+	private void saveMap(String name)
+	{
+		final int compression = 100;
+		File root = Environment.getExternalStorageDirectory();
+		File androworms = new File(root,"Androworms");
+		boolean status = true;
+		if (!androworms.exists()) {
+			status = androworms.mkdir();
+		}
+		
+		/* échec lors de la création du dossier */
+		if(!status) {
+			Log.e(TAG,"échec lors de la création du dossier Androworms.");
+			return;
+		}
+		
+		/* création du path complet vers la photo */
+		File photoPath = new File(androworms,name);
+		/* sauvegarde de la photo */
+		FileOutputStream filoutputStream;
+		try {
+			filoutputStream = new FileOutputStream(photoPath);
+			ImageView background = (ImageView) findViewById(R.id.background);
+			BitmapDrawable drawable = (BitmapDrawable) background.getDrawable();
+			Bitmap backgroundBitmap = null;
+			if(null != drawable)
+			{
+				backgroundBitmap = drawable.getBitmap();
+			}
+			ImageView surface = (ImageView) findViewById(R.id.CurrentMap);
+			Bitmap b = ((BitmapDrawable)((ImageView)surface).getDrawable()).getBitmap();
+			Bitmap result = null;
+			/* fustion des calques si il y en à deux */
+			if(backgroundBitmap!=null)
+			{
+				result = backgroundBitmap.copy(Bitmap.Config.ARGB_8888,true);
+			}
+			else
+			{
+				result = Bitmap.createBitmap(b.getWidth(), b.getHeight(), Bitmap.Config.ARGB_8888);
+			}
+			for(int i=0;i<b.getWidth();i++)
+			{
+				for(int j=0;j<b.getHeight();j++)
+				{
+					int color = b.getPixel(i, j);
+					if (color == couleurCiel)
+					{
+						result.setPixel(i, j, 0);
+					}
+					else if (Color.alpha(color) != 0)
+					{
+						result.setPixel(i, j, color);
+					}
+				}
+			}
+			result.compress(Bitmap.CompressFormat.PNG, compression, filoutputStream);
+			filoutputStream.flush();
+			filoutputStream.close();
+		} catch (FileNotFoundException e) {
+			Log.e(TAG,"file not found");
+		} catch (IOException e) {
+			Log.e(TAG,"IO Exception");
+		}
 	}
 	
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -61,78 +129,17 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 				
 				final EditText edit = new EditText(this);
 				dlg.setView(edit);
+				dlg.setNegativeButton("No", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						finish();
+					}
+				});
 				
 				dlg.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
 						String value = edit.getText().toString();
-						Log.e("input dialog",value);
 						/* on crée le dossier pour stocker la photo */
-						File root = Environment.getExternalStorageDirectory();
-						File androworms = new File(root,"Androworms");
-						boolean status = true;
-						if (!androworms.exists()) {
-							status = androworms.mkdir();
-						}
-						
-						/* échec lors de la création du dossier */
-						if(!status) {
-							Log.e("fichier","échec lors de la création du dossier Androworms.");
-							return;
-						}
-						
-						/* création du path complet vers la photo */
-						File photoPath = new File(androworms,value);
-						/* sauvegarde de la photo */
-						FileOutputStream filoutputStream;
-						try {
-							filoutputStream = new FileOutputStream(photoPath);
-							ImageView background = (ImageView) findViewById(R.id.background);
-							BitmapDrawable drawable = (BitmapDrawable) background.getDrawable();
-							Bitmap backgroundBitmap = null;
-							if(null != drawable)
-							{
-								backgroundBitmap = drawable.getBitmap();
-							}
-							ImageView surface = (ImageView) findViewById(R.id.CurrentMap);
-							Bitmap b = ((BitmapDrawable)((ImageView)surface).getDrawable()).getBitmap();
-							Bitmap result = null;
-							/* fustion des calques si il y en à deux */
-							if(backgroundBitmap!=null)
-							{
-								result = backgroundBitmap.copy(Bitmap.Config.ARGB_8888,true);
-							}
-							else
-							{
-								result = Bitmap.createBitmap(b.getWidth(), b.getHeight(), Bitmap.Config.ARGB_8888);
-							}
-							for(int i=0;i<b.getWidth();i++)
-							{
-								for(int j=0;j<b.getHeight();j++)
-								{
-									int color = b.getPixel(i, j);
-									if (color == couleurCiel)
-									{
-										result.setPixel(i, j, 0);
-									}
-									else if (Color.alpha(color) != 0)
-									{
-										result.setPixel(i, j, color);
-									}
-								}
-							}
-							result.compress(Bitmap.CompressFormat.PNG, 100, filoutputStream);
-							filoutputStream.flush();
-							filoutputStream.close();
-						} catch (FileNotFoundException e) {
-							Log.e("CreationCarte","file not found");
-						} catch (IOException e) {
-							Log.e("CreationCarte","IO Exception");
-						}
-						finish();
-					}
-				});
-				dlg.setNegativeButton("No", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int whichButton) {
+						saveMap(value);
 						finish();
 					}
 				});
@@ -280,7 +287,6 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		Bitmap b = Bitmap.createBitmap(surface.getWidth(), surface.getHeight(), Bitmap.Config.ARGB_8888);
 		Bitmap overlay = Bitmap.createBitmap(b.getWidth(), b.getHeight(), b.getConfig());
 		drawCanvas = new Canvas(overlay);
-		//drawCanvas.drawBitmap(b, Math.max(0, (surface.getHeight()-b.getHeight())/2),Math.max(0,(surface.getWidth()-b.getWidth())/2), null);
 		drawCanvas.drawBitmap(b, null, new Rect(0,0,drawCanvas.getWidth(),drawCanvas.getHeight()), null);
 		surface.setImageBitmap(overlay);
 	}
@@ -311,13 +317,12 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 			initImageView();
 			initializedImageView = true;
 		}
-		Log.v("autoAlpha", "begin computing alpha");
 		for(i=0;i<width;i++)
 		{
 			for(j=0;j<height;j++)
 			{
 				int color = b.getPixel(i, j);
-				if(Color.alpha(color)!=255)
+				if(Color.alpha(color)!=maxColorValue)
 				{
 					continue;
 				}
@@ -442,7 +447,11 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 				c.drawBitmap(b, Math.max(0, (surface.getHeight()-b.getHeight())/2),Math.max(0,(surface.getWidth()-b.getWidth())/2), null);
 				((ImageView)findViewById(R.id.background)).setImageBitmap(overlay);
 				stream.close();
-				new File(photoPath).delete();
+				boolean success = new File(photoPath).delete();
+				if(!success)
+				{
+					Log.e(TAG,"Unable to delete temporary file");
+				}
 			} catch (FileNotFoundException e) {
 				finish();
 			} catch (IOException e) {

@@ -126,14 +126,6 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 		return false;
 	}
 	
-	protected void onResume() {
-		super.onResume();
-	}
-	
-	protected void onStop() {
-		super.onStop();
-	}
-	
 	public void requestAutoFocus(Handler handler, int message) {
 		if (camera != null) {
 			mAutoFocusHandler = handler;
