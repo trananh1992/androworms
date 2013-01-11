@@ -440,15 +440,19 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 				double sin = Math.sin((double)i/echantillonage);
 				int xG = (int) ((double)x+(double)(radian*cos));
 				int yG = (int) ((double)y+(double)(radian*sin));
-				int currentColor = upCalc.getPixel(xG, yG);
-				if(yG>=drawCanvas.getHeight() || yG<0 || xG>= drawCanvas.getWidth() || xG<0 || currentColor==COULEUR_TERRE || currentColor==COULEUR_HERBE)
+				if(yG>=drawCanvas.getHeight() || yG<0 || xG>= drawCanvas.getWidth() || xG<0 )
 				{
 					continue;
 				}
 				Paint paint2 = new Paint();
 				paint2.setColor(COULEUR_HERBE);
-				paint2.setStrokeWidth(tailleHerbe);
 				paint2.setStyle(Paint.Style.FILL_AND_STROKE);
+				paint2.setStrokeWidth(tailleHerbe);
+				int currentColor = upCalc.getPixel(xG, yG);
+				if(currentColor!=COULEUR_TERRE && currentColor!=COULEUR_HERBE)
+				{
+					drawCanvas.drawPoint(xG, yG, paint2);
+				}
 			}
 		}
 		((ImageView) surface).draw(drawCanvas);
