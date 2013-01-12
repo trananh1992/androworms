@@ -78,10 +78,6 @@ public class MoteurGraphique extends RelativeLayout {
 	private Context context;
 	private List<ImageSurCarte> images;
 	
-	//DEBUG
-	private static final boolean DEBUG_QUADRILLAGE = false;
-	private Bitmap bmQuadrillage;
-	
 	public MoteurGraphique(Context context) {
 		super(context);
 		constructeurPartage(context);
@@ -118,11 +114,7 @@ public class MoteurGraphique extends RelativeLayout {
 		}
 	    
 		try {
-			bmFond = getBitmap(context, R.drawable.image_fond_640x360, MAP_WIDTH, MAP_HEIGHT);
-			
-			if (DEBUG_QUADRILLAGE) {
-				bmQuadrillage = getBitmap(context, R.drawable.image_quadrillage_640x360, MAP_WIDTH, MAP_HEIGHT);
-			}
+			bmFond = getBitmap(context, R.drawable.image_fond, MAP_WIDTH, MAP_HEIGHT);
 		} catch(OutOfMemoryError e) {
 			Log.e(TAG, "Erreur de chargement les bitmaps sont trop lourds");
 			//TODO terminer ou dire quelque chose...
@@ -162,10 +154,6 @@ public class MoteurGraphique extends RelativeLayout {
 		canvas.drawBitmap(bmFond, 0, 0, null);
 		if (bmTerrain != null) {
 			canvas.drawBitmap(bmTerrain, 0, 0, null);
-		}
-		
-		if (DEBUG_QUADRILLAGE) {
-			canvas.drawBitmap(bmQuadrillage, 0, 0, null);
 		}
 		
 		for(ImageSurCarte v : this.images) {
@@ -334,9 +322,6 @@ public class MoteurGraphique extends RelativeLayout {
 	public void nettoyer() {
 		this.bmFond.recycle();
 		this.bmTerrain.recycle();
-		if (DEBUG_QUADRILLAGE) {
-			this.bmQuadrillage.recycle();
-		}
 		//vide le cache
 		memoireCache.evictAll(); 
 	}

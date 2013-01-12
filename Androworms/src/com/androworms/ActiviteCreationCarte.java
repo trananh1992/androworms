@@ -494,30 +494,23 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 				((ImageView)findViewById(R.id.background)).setImageBitmap(overlay);
 				stream.close();
 				boolean success = new File(photoPath).delete();
-				if(!success)
-				{
+				if(!success) {
 					Log.e(TAG,"Unable to delete temporary file");
 				}
-			} catch (FileNotFoundException e)
-			{
+			} catch (FileNotFoundException e) {
 				finish();
-			} catch (IOException e)
-			{
+			} catch (IOException e) {
 				finish();
 			}
-			finally
-			{
-		        try
-		        {
-		            if (stream!=null)
-		            {
-		            	stream.close();
-		            }
-		        }
-		        catch (Exception e)
-		        {
-		        }
-		    }
+			finally {
+				try {
+					if (stream!=null) {
+						stream.close();
+					}
+				}
+				catch (Exception e) {
+				}
+			}
 		}
 	}
 }
