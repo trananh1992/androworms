@@ -38,7 +38,7 @@ public class Noyau {
 	public void test(Context context) {
 
 		creationPartieLocale();
-		ImageInformation ii = new ImageInformation(R.drawable.android_face, 162, 214 );
+		ImageInformation ii = new ImageInformation(R.drawable.test_android_face, 162, 214 );
 		Personnage johnDoe = new Personnage("John Doe", ii);
 		johnDoe.setPosition(new PointF(240, 0));
 
@@ -55,7 +55,7 @@ public class Noyau {
 		obj = new ObjetSurCarte(o, new PointF(1000, 500), iiObjetCarte);
 		monde.addObjetSurCarte(obj);
 		
-		Bitmap b = ((BitmapDrawable)context.getResources().getDrawable(R.drawable.terrain_jeu_defaut_640x360)).getBitmap();
+		Bitmap b = ((BitmapDrawable)context.getResources().getDrawable(R.drawable.terrain_jeu_defaut_2)).getBitmap();
 		monde.setTerrain(b, 1280, 720);
 
 		this.nomPersonnage = "Tux";

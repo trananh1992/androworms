@@ -33,7 +33,7 @@ public class Personnage extends ElementSurCarte {
 	}
 	
 	public static int getIdImage() {
-		return R.drawable.android_face;
+		return R.drawable.test_android_face;
 	}
 
 	public void deplacementDroite(int pas, int max) {
