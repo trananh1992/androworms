@@ -1,6 +1,7 @@
 package com.androworms;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.PointF;
 import android.util.Log;
@@ -42,7 +43,10 @@ public class Noyau {
 		Personnage johnDoe = new Personnage("John Doe", ii);
 		johnDoe.setPosition(new PointF(240, 0));
 
-		Personnage tux = new Personnage("Tux", ii);
+		SharedPreferences settings = context.getSharedPreferences(ActiviteParametres.PREFS_NAME, 0);
+		String pseudo = settings.getString("pseudo", "Joueur1");
+		
+		Personnage tux = new Personnage(pseudo, ii);
 		tux.setPosition(new PointF(120, 200));
 		monde.addPersonnage(tux);
 		monde.addPersonnage(johnDoe);
@@ -58,7 +62,7 @@ public class Noyau {
 		Bitmap b = ((BitmapDrawable)context.getResources().getDrawable(R.drawable.terrain_jeu_defaut_3)).getBitmap();
 		monde.setTerrain(b, 1280, 720);
 
-		this.nomPersonnage = "Tux";
+		this.nomPersonnage = pseudo;
 	}
 	
 	public String getNomPersonnage() {
