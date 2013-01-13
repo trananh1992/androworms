@@ -55,7 +55,7 @@ public class Noyau {
 		obj = new ObjetSurCarte(o, new PointF(1000, 500), iiObjetCarte);
 		monde.addObjetSurCarte(obj);
 		
-		Bitmap b = ((BitmapDrawable)context.getResources().getDrawable(R.drawable.terrain_jeu_defaut_2)).getBitmap();
+		Bitmap b = ((BitmapDrawable)context.getResources().getDrawable(R.drawable.terrain_jeu_defaut_3)).getBitmap();
 		monde.setTerrain(b, 1280, 720);
 
 		this.nomPersonnage = "Tux";
