@@ -2,6 +2,7 @@ package com.androworms;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.Html;
@@ -64,30 +65,6 @@ public class ActiviteAndroworms extends Activity {
 		Log.v(TAG,"Lancement de l'activité du menu principale");
 		this.setContentView(R.layout.menu_principal);
 		
-		/* Test pour générer une carte à partir d'une photo fixée (path en dur)
-		try {
-			File root = Environment.getExternalStorageDirectory();
-			File androworms = new File(root,"Androworms");
-			if (!androworms.exists()) {
-				androworms.mkdir();
-			}
-			File photo = new File(androworms,"maPhoto2.png");
-			File inputTest = new File(androworms,"inputTest.jpg");
-			
-			FileInputStream input = new FileInputStream(inputTest);
-			byte data2[];
-			data2 = new byte[input.available()];
-			input.read(data2);
-			Carte carte = new Carte(data2);
-			
-			carte.save(photo.getAbsolutePath());
-			input.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		//*/
-		
-		
 		/* Affiche la vue */
 		setContentView(R.layout.menu_principal);
 		
@@ -98,10 +75,10 @@ public class ActiviteAndroworms extends Activity {
 		findViewById(R.id.btn_menu_score).setOnClickListener(cl);
 		findViewById(R.id.btn_menu_settings).setOnClickListener(cl);
 		// Evenements sur les boutons de TEST
-		OnClickListener camCl = new ActiviteCreationCarte(this);
-		findViewById(R.id.test_cam).setOnClickListener(camCl);
-		
-		
+		//OnClickListener camCl = new ActiviteCreationCarte(this);
+		//findViewById(R.id.test_cam).setOnClickListener(camCl);
+		TestClassListener testL = new TestClassListener(this);
+		findViewById(R.id.test_cam).setOnClickListener(testL); 
 		// Afficher els informations du téléphone
 		afficherInformationsTelephone();
 	}
@@ -164,5 +141,21 @@ public class ActiviteAndroworms extends Activity {
 		String txtInfo = buf.toString();
 		TextView tv = (TextView)findViewById(R.id.textView2);
 		tv.setText(Html.fromHtml(txtInfo));
+	}
+	
+	private class TestClassListener implements OnClickListener
+	{
+		private ActiviteAndroworms parent;
+		public TestClassListener(ActiviteAndroworms p)
+		{
+			parent = p;
+		}
+		@Override
+		public void onClick(View v)
+		{
+			Intent intent = new Intent(parent, ActiviteChoixOption.class);
+			this.parent.startActivity(intent);
+		}
+		
 	}
 }
