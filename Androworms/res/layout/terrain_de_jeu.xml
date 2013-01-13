@@ -94,13 +94,13 @@
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
 	                    android:contentDescription="@string/Armes"
-	                    android:src="@drawable/arme_hache" />
+	                    android:src="@drawable/arme_bazooka" />
 	                <ImageView
 	                    android:id="@+id/ImageView03"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
 	                    android:contentDescription="@string/Armes"
-	                    android:src="@drawable/arme_hache" />
+	                    android:src="@drawable/arme_mine" />
 	            </TableRow>
 	            <TableRow
 	                android:id="@+id/tableRow2"
@@ -117,13 +117,13 @@
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
 	                    android:contentDescription="@string/Armes"
-	                    android:src="@drawable/arme_hache" />
+	                    android:src="@drawable/arme_bazooka" />
 	                <ImageView
 	                    android:id="@+id/ImageView06"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
 	                    android:contentDescription="@string/Armes"
-	                    android:src="@drawable/arme_hache" />
+	                    android:src="@drawable/arme_pistolet" />
 	            </TableRow>
 	            <TableRow
 	                android:id="@+id/tableRow3"
@@ -140,13 +140,13 @@
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
 	                    android:contentDescription="@string/Armes"
-	                    android:src="@drawable/arme_hache" />
+	                    android:src="@drawable/arme_bazooka" />
 	                <ImageView
 	                    android:id="@+id/ImageView01"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
 	                    android:contentDescription="@string/Armes"
-	                    android:src="@drawable/arme_hache" />
+	                    android:src="@drawable/arme_pistolet" />
 	            </TableRow>
 	        </TableLayout>
 		</SlidingDrawer>

@@ -20,8 +20,6 @@ public class ClavierDirectionnel extends LinearLayout implements OnTouchListener
 	private static final int ALPHA_PAS_TRANSPARENT = 255;
 	private static final int ALPHA_SEMI_TRANSPARENT = 128;
 	
-	private static final int POSITION_LAYOUT = 128;
-	
 	public static final int BOUTON_DROITE = 1;
 	public static final int BOUTON_HAUT = 2;
 	public static final int BOUTON_GAUCHE = 3;
@@ -59,11 +57,9 @@ public class ClavierDirectionnel extends LinearLayout implements OnTouchListener
 		btnHaut.setOnTouchListener(this);
 		btnDroite.setOnTouchListener(this);
 		
-		LayoutParams paramsLayout = new LinearLayout.LayoutParams(POSITION_LAYOUT, POSITION_LAYOUT);
-		
-		this.addView(btnGauche,paramsLayout);
-		this.addView(btnHaut,paramsLayout);
-		this.addView(btnDroite,paramsLayout);
+		this.addView(btnGauche);
+		this.addView(btnHaut);
+		this.addView(btnDroite);
 	}
 	
 	public OnTouchListener getOnTouchListener() {
