@@ -150,7 +150,7 @@ public class ActiviteAndroworms extends Activity {
 		{
 			parent = p;
 		}
-		@Override
+		
 		public void onClick(View v)
 		{
 			Intent intent = new Intent(parent, ActiviteChoixOption.class);

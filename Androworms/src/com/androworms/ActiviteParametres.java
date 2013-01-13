@@ -20,9 +20,10 @@ public class ActiviteParametres extends Activity {
 		// Chargement des préférences
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 		
-		String pseudo = settings.getString("pseudo", "vide");
+		String pseudo = settings.getString("pseudo", "");
 		
 		EditText et = (EditText)findViewById(R.id.pseudo);
+		et.setHint("Pseudo");
 		et.setText(pseudo);
 		
 		/* Bouton enregistrer */

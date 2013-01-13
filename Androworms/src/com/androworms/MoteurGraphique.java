@@ -342,6 +342,8 @@ public class MoteurGraphique extends RelativeLayout {
 		this.positionTouche = ptTouche;
 	}
 	
+	/* Méthodes à appeler depuis le noyau */
+	
 	public void setNoyau(Noyau noyau) {
 		this.noyau = noyau;
 		Monde monde = this.noyau.getMonde();
@@ -357,7 +359,7 @@ public class MoteurGraphique extends RelativeLayout {
 			bmTerrain = monde.getTerrain();
 			
 			for(Personnage p : monde.getListePersonnage()) {
-				ImageSurCarte imgSurCarte = new ImageSurCarte(this.context, p);
+				ImageSurCarte imgSurCarte = new ImageSurCarte(this.context, p, this);
 				//On rajoute dans le layout
 				this.addView(imgSurCarte);
 				//On garde la référence pour le zoom et translation
@@ -365,7 +367,7 @@ public class MoteurGraphique extends RelativeLayout {
 			}
 			
 			for(ObjetSurCarte objSurCarte : monde.getListeObjetCarte()) {
-				ImageSurCarte imgSurCarte = new ImageSurCarte(this.context, objSurCarte);
+				ImageSurCarte imgSurCarte = new ImageSurCarte(this.context, objSurCarte, this);
 				//On rajoute dans le layout
 				this.addView(imgSurCarte);
 				//On garde la référence pour le zoom et translation
@@ -373,6 +375,22 @@ public class MoteurGraphique extends RelativeLayout {
 			}
 			
 			this.actualiserGraphisme();
+		}
+	}
+	
+	public void ajouterElementSurCarte(ElementSurCarte elt) {
+		ImageSurCarte imgSurCarte = new ImageSurCarte(this.context, elt, this);
+		//On rajoute dans le layout
+		this.addView(imgSurCarte);
+		//On garde la référence pour le zoom et translation
+		images.add(imgSurCarte);
+	}
+	
+	public void supprimerElementSurCarte(ElementSurCarte elt) {
+		for(ImageSurCarte img : this.images) {
+			if (img.getElement() == elt) {
+				this.removeView(img);
+			}
 		}
 	}
 }
