@@ -51,6 +51,7 @@
             android:label="@string/title_activity_activite_parametres"
             android:screenOrientation="landscape" >
         </activity>
+        <activity android:name="ActiviteChoixOption" android:screenOrientation="landscape"></activity>
     </application>
 
 </manifest>

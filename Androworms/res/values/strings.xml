@@ -42,5 +42,6 @@
     <string name="pseudo">Pseudo</string>
     <string name="image_perso">Image perso</string>
     <string name="enregistrer">Enregistrer</string>
+    <string name="lancer">Lancer</string>
 
 </resources>

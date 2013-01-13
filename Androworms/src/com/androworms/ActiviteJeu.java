@@ -1,8 +1,13 @@
 package com.androworms;
 
+import java.io.File;
+
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -44,7 +49,20 @@ public class ActiviteJeu extends Activity {
 		MoteurGraphique moteurGraph = (MoteurGraphique)findViewById(R.id.trlCarte);
 		
 		noyau = new Noyau(getBaseContext(), moteurGraph);
-		
+		Bundle bundle = this.getIntent().getExtras();
+		if(bundle != null)
+		{
+			String map = (String) bundle.get("map");
+			if(map!=null && map.length()>0)
+			{
+				Log.e("started activite jeu","with map "+map);
+				Monde m = noyau.getMonde();
+				File root = Environment.getExternalStorageDirectory();
+				File sd = new File(root,"Androworms/"+map);
+				Bitmap b = BitmapFactory.decodeFile(sd.getAbsolutePath());
+				m.setTerrain(b, 1280, 720);
+			}
+		}
 		moteurGraph.setNoyau(noyau);
 		
 		/* Mode TIR */

@@ -5,4 +5,5 @@
     <string name="pas_de_donnees">No data</string>
     <string name="joueur1">Player 1</string>
     <string name="joueur2">Player 2</string>
+    <string name="lancer">Start</string>
 </resources>

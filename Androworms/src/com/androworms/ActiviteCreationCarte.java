@@ -106,7 +106,7 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 			ImageView surface = (ImageView) findViewById(R.id.CurrentMap);
 			Bitmap b = ((BitmapDrawable)((ImageView)surface).getDrawable()).getBitmap();
 			Bitmap result = null;
-			/* fustion des calques si il y en à deux */
+			/* fusion des calques si il y en à deux */
 			if(backgroundBitmap!=null)
 			{
 				result = backgroundBitmap.copy(Bitmap.Config.ARGB_8888,true);
@@ -141,6 +141,10 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 				dlg.setView(edit);
 				dlg.setNegativeButton("No", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
+						/* Création de l'intent pour passer à l'activité parent l'endroit où est la photo*/
+						Intent i = new Intent();
+						i.putExtra("image", "");
+						setResult(RESULT_OK,i);
 						finish();
 					}
 				});
@@ -153,6 +157,10 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 						{
 							saveMap(value);
 						}
+						/* Création de l'intent pour passer à l'activité parent l'endroit où est la photo*/
+						Intent i = new Intent();
+						i.putExtra("image", value);
+						setResult(RESULT_OK,i);
 						finish();
 					}
 				});
