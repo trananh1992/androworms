@@ -1,8 +1,6 @@
 package com.androworms;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,49 +12,43 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
-public class ActiviteChoixOption extends Activity
-{
+public class ActiviteChoixOption extends Activity {
 	private String carte;
-	public void onCreate(Bundle savedInstanceState)
-	{
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		/* Affiche la vue par défaut */
 		setContentView(R.layout.choix_options);
 		
 		File root = Environment.getExternalStorageDirectory();
 		File sd = new File(root,"Androworms");
-
-	     //gets a list of the files
-	     File[] sdDirList = sd.listFiles(); 
-	     Log.e("test","sdDirList "+sdDirList+" "+sdDirList.length);
-	     Spinner mapChooser = (Spinner)findViewById(R.id.mapChooser);
-	     ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.text_view_spinner);
-	     int i = 0;
-	     for(i=0;i<sdDirList.length;i++)
-	     {
-	    	 Log.e("test","adding item");
-	    	 adapter.add(sdDirList[i].getName());
-	    	 Log.e("test","added item "+sdDirList[i].getName());
-	     }
-	     adapter.add("Create new");
-	     Log.e("ActiviteChoixOption","setting");
-	     adapter.notifyDataSetChanged();
-	     mapChooser.setAdapter(adapter);
-	     mapChooser.setOnItemSelectedListener(new OnItemSelectedListener()
-	     {
-			public void onItemSelected(AdapterView<?> arg0, View arg1,
-					int arg2, long arg3)
+		
+		//gets a list of the files
+		File[] sdDirList = sd.listFiles(); 
+		Log.e("test","sdDirList "+sdDirList+" "+sdDirList.length);
+		Spinner mapChooser = (Spinner)findViewById(R.id.mapChooser);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.text_view_spinner);
+		int i = 0;
+		for(i=0;i<sdDirList.length;i++) {
+			Log.e("test","adding item");
+			adapter.add(sdDirList[i].getName());
+			Log.e("test","added item "+sdDirList[i].getName());
+		}
+		adapter.add("Create new");
+		Log.e("ActiviteChoixOption","setting");
+		adapter.notifyDataSetChanged();
+		mapChooser.setAdapter(adapter);
+		mapChooser.setOnItemSelectedListener(new OnItemSelectedListener() {
+			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3)
 			{
 				if(arg2 != (arg0.getAdapter().getCount()-1))
 				{
-					AfficheCarte((String)arg0.getAdapter().getItem(arg2));
+					afficheCarte((String)arg0.getAdapter().getItem(arg2));
 				}
 				else
 				{
@@ -65,20 +57,20 @@ public class ActiviteChoixOption extends Activity
 			}
 			public void onNothingSelected(AdapterView<?> arg0) {
 			}
-	     });
-	    Button btn = (Button) findViewById(R.id.startGame);
-	    btn.setOnClickListener(new OnClickListener(){
-
+		});
+		Button btn = (Button) findViewById(R.id.startGame);
+		btn.setOnClickListener(new OnClickListener(){
+			
 			public void onClick(View arg0)
 			{
 				lanceLeJeu();
 			}
-	    	
-	    });
-	     Log.e("ActiviteChoixOption","setted");
+			
+		});
+		Log.e("ActiviteChoixOption","setted");
 	}
 	
-	private void AfficheCarte(String map)
+	private void afficheCarte(String map)
 	{
 		carte = map;
 		ImageView v = (ImageView)findViewById(R.id.chosen_map);
