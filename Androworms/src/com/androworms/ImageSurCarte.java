@@ -5,12 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.PointF;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
-import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 
 public class ImageSurCarte extends ImageView {
 	private static final String TAG = "ImageSurCarte";
@@ -108,5 +104,4 @@ public class ImageSurCarte extends ImageView {
 		
 		this.anciennePosition.set(ptCourant);
 	}
-
 }
