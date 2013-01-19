@@ -30,7 +30,6 @@ public class ActiviteChoixOption extends Activity {
 		
 		//gets a list of the files
 		File[] sdDirList = sd.listFiles(); 
-		//Log.e("test","sdDirList "+sdDirList+" "+sdDirList.length);
 		Spinner mapChooser = (Spinner)findViewById(R.id.mapChooser);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.text_view_spinner);
 		int i = 0;
