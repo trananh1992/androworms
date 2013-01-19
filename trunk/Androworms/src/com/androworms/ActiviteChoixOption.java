@@ -30,14 +30,16 @@ public class ActiviteChoixOption extends Activity {
 		
 		//gets a list of the files
 		File[] sdDirList = sd.listFiles(); 
-		Log.e("test","sdDirList "+sdDirList+" "+sdDirList.length);
+		//Log.e("test","sdDirList "+sdDirList+" "+sdDirList.length);
 		Spinner mapChooser = (Spinner)findViewById(R.id.mapChooser);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.text_view_spinner);
 		int i = 0;
-		for(i=0;i<sdDirList.length;i++) {
-			Log.e("test","adding item");
-			adapter.add(sdDirList[i].getName());
-			Log.e("test","added item "+sdDirList[i].getName());
+		if (sdDirList != null) {
+			for(i=0;i<sdDirList.length;i++) {
+				Log.e("test","adding item");
+				adapter.add(sdDirList[i].getName());
+				Log.e("test","added item "+sdDirList[i].getName());
+			}
 		}
 		adapter.add("Create new");
 		Log.e("ActiviteChoixOption","setting");
