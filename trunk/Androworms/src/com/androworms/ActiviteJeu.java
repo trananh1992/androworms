@@ -121,12 +121,10 @@ public class ActiviteJeu extends Activity {
 		clavier.setOnTouchListener(new EvenementClavier(noyau));
 	}
 	
-	
-	/* Appelée quand l'activité n'est plus affichée
-	 */
-	protected void onStop() {
-		super.onStop();
-		Log.v(TAG, "GameActivity stop");
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		Log.v(TAG, "ActiviteJeu destroy");
 		MoteurGraphique moteurGraph = (MoteurGraphique)findViewById(R.id.trlCarte);
 		moteurGraph.nettoyer();
 	}
