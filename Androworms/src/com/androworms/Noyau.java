@@ -50,14 +50,6 @@ public class Noyau {
 		tux.setPosition(new PointF(120, 200));
 		monde.addPersonnage(tux);
 		monde.addPersonnage(johnDoe);
-
-		ImageInformation iiObjetCarte = new ImageInformation(R.drawable.arme_hache, 139, 95);
-		Objet o = new Arme("Hache");
-		//o.setImageTerrain(R.drawable.arme_hache, 139, 95);
-		//ObjetSurCarte obj = new ObjetSurCarte(o, new PointF(250,500), iiObjetCarte);
-		//monde.addObjetSurCarte(obj);
-		//obj = new ObjetSurCarte(o, new PointF(1000, 500), iiObjetCarte);
-		//monde.addObjetSurCarte(obj);
 		
 		Bitmap b = ((BitmapDrawable)context.getResources().getDrawable(R.drawable.terrain_jeu_defaut_3)).getBitmap();
 		monde.setTerrain(b, 1280, 720);
