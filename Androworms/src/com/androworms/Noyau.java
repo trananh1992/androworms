@@ -41,7 +41,7 @@ public class Noyau {
 		creationPartieLocale();
 		ImageInformation ii = new ImageInformation(R.drawable.test_android_face, 162, 214 );
 		Personnage johnDoe = new Personnage("John Doe", ii);
-		johnDoe.setPosition(new PointF(240, 0));
+		johnDoe.setPosition(new PointF(300, 0));
 
 		SharedPreferences settings = context.getSharedPreferences(ActiviteParametres.PREFS_NAME, 0);
 		String pseudo = settings.getString("pseudo", "Joueur1");
@@ -53,11 +53,11 @@ public class Noyau {
 
 		ImageInformation iiObjetCarte = new ImageInformation(R.drawable.arme_hache, 139, 95);
 		Objet o = new Arme("Hache");
-		o.setImageTerrain(R.drawable.arme_hache, 139, 95);
-		ObjetSurCarte obj = new ObjetSurCarte(o, new PointF(250,500), iiObjetCarte);
-		monde.addObjetSurCarte(obj);
-		obj = new ObjetSurCarte(o, new PointF(1000, 500), iiObjetCarte);
-		monde.addObjetSurCarte(obj);
+		//o.setImageTerrain(R.drawable.arme_hache, 139, 95);
+		//ObjetSurCarte obj = new ObjetSurCarte(o, new PointF(250,500), iiObjetCarte);
+		//monde.addObjetSurCarte(obj);
+		//obj = new ObjetSurCarte(o, new PointF(1000, 500), iiObjetCarte);
+		//monde.addObjetSurCarte(obj);
 		
 		Bitmap b = ((BitmapDrawable)context.getResources().getDrawable(R.drawable.terrain_jeu_defaut_3)).getBitmap();
 		monde.setTerrain(b, 1280, 720);

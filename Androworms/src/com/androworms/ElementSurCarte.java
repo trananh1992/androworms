@@ -21,6 +21,14 @@ public abstract class ElementSurCarte {
 		this.position = position;
 	}
 	
+	public ImageInformation getImageInformation() {
+		return imageTerrain;
+	}
+	
+	public void setImageTerrain(ImageInformation imageTerrain) {
+		this.imageTerrain = imageTerrain;
+	}
+
 	public void setPosition(float x, float y) {
 		position.x = x;
 		position.y = y;
