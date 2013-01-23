@@ -44,7 +44,6 @@ public class MoteurPhysique {
 		int decalage = decalagePositionPersonnage( (int)x,(int)(p.getHeightImageTerrain()+p.getPosition().y));
 		if( decalage < HAUTEUR_DEPLACEMENT_JOUEUR && !estEnCollision(p) ) {
 			p.setPosition(new PointF(x, p.getPosition().y-decalage));
-			//p.setPosition(x, y-decalage);
 		}
 		
 		gravite(p);
@@ -69,7 +68,7 @@ public class MoteurPhysique {
 	private boolean estEnCollision(Personnage personnage) {
 		for(int i = 0; i < monde.nombrePersonnage(); i++) {
 			Personnage p = monde.getListePersonnage().get(i);
-			if( p != personnage && personnage.estEnCollision(p)) {
+			if( p.equals(personnage) && personnage.estEnCollision(p)) {
 				return true;
 			}
 		}
