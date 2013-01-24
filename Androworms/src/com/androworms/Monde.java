@@ -88,9 +88,9 @@ public class Monde {
 		}
 	}
 	
-	public Personnage getPersonnage(String Nom) {
+	public Personnage getPersonnage(String nom) {
 		for(int i =0; i < listePersonnage.size(); i++) {
-			if(Nom.compareTo(listePersonnage.get(i).getNom()) == 0) {
+			if(nom.compareTo(listePersonnage.get(i).getNom()) == 0) {
 				return listePersonnage.get(i);				
 			}
 		}

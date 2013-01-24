@@ -28,6 +28,14 @@ public class Personnage extends ElementSurCarte {
 		this.nom = nom;
 	}
 	
+	public Personnage clone() {
+		Personnage result= new Personnage(getNom(), getImageInformation());
+		result.setPosition(getPosition().x, getPosition().y);
+		return result;
+	}
+
+	
+	
 	public List<PointF> getEnveloppeConvexeHaut() {
 		List<PointF> result = new ArrayList<PointF>();
 		result.add(getPosition());
