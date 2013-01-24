@@ -12,6 +12,7 @@ public abstract class Contact {
 	private BluetoothSocket socket;
 	private BluetoothDevice device;
 	private UUID uuid;
+	private static final String TAG = "Androworms.Contact";
 	
 	public Contact() {
 	}
@@ -55,7 +56,7 @@ public abstract class Contact {
 			tmp = bd.createRfcommSocketToServiceRecord(getUuid());
 		} catch (IOException e) { 
 			tmp = null;
-			Log.v("Localhost", "Impossible de creer une socket vers le matériel local");
+			Log.v(TAG, "Impossible de creer une socket vers le matériel local");
 		}
 		setSocket(tmp);		
 	}
@@ -70,12 +71,8 @@ public abstract class Contact {
 			getSocket().connect();
 		} catch (IOException connectException) {
 			// Unable to connect; close the socket and get out
-			Log.v("Contact", "Impossible connecter la socket !");
-			try {
-				getSocket().close();
-			} catch (IOException closeException) {
-				Log.v("Contact", "Impossible de refermée la socket !");
-			}
+			Log.v(TAG, "Impossible connecter la socket !");
+			cancel();
 			return;
 		}
 	}
@@ -84,6 +81,8 @@ public abstract class Contact {
 	public void cancel() {
 		try {
 			getSocket().close();
-		} catch (IOException e) { }
+		} catch (IOException e) { 
+			Log.v(TAG, "Impossible de refermée la socket !");
+		}
 	}
 }

@@ -12,7 +12,7 @@ public class MoteurPhysique {
 	private Noyau noyau;
 	private Monde monde;
 	public static final int TAILLE_DEPLACEMENT_JOUEUR = 1;
-	public static final int HAUTEUR_DEPLACEMENT_JOUEUR = 8;
+	public static final int HAUTEUR_DEPLACEMENT_JOUEUR = 20;
 	
 	public MoteurPhysique(Noyau n, Monde monde) {
 		this.noyau = n;
@@ -38,41 +38,45 @@ public class MoteurPhysique {
 	}
 
 	public void deplacementJoueurDroite(String personnage) {
-		Personnage p = monde.getPersonnage(personnage);
-		// On peut aller tout a droite mais faut garder de la place pour que le joueur reste dans l'image
-		float x = min(p.getPosition().x+TAILLE_DEPLACEMENT_JOUEUR, monde.getTerrain().getWidth()-p.getWidthImageTerrain());
-		int decalage = decalagePositionPersonnage( (int)x,(int)(p.getHeightImageTerrain()+p.getPosition().y));
-		if( decalage < HAUTEUR_DEPLACEMENT_JOUEUR && !estEnCollision(p) ) {
-			p.setPosition(new PointF(x, p.getPosition().y-decalage));
-		}
-		
-		gravite(p);
-		noyau.actualiserGraphisme();
+		deplacementJoueur(personnage, TAILLE_DEPLACEMENT_JOUEUR);
 	}
 	
 	public void deplacementJoueurGauche(String personnage) {
-		Personnage p = monde.getPersonnage(personnage);
-		// Minimum 0 car il ne fait pas que le personnage sorte de l'image.
-		float x = max(p.getPosition().x-TAILLE_DEPLACEMENT_JOUEUR, 0);
-		affecterDeplacementJoueur(p, x, p.getPosition().y);
-		gravite(p);
+		deplacementJoueur(personnage, -TAILLE_DEPLACEMENT_JOUEUR);
 	}
 	
-	private void affecterDeplacementJoueur(Personnage p, float x, float y) {
-		int decalage = decalagePositionPersonnage( (int)x, (int)(p.getHeightImageTerrain()+y));
-		if( decalage < HAUTEUR_DEPLACEMENT_JOUEUR ) {
-			p.setPosition(x, y-decalage);
+	public void deplacementJoueur(String personnage, int addToX) {
+		Personnage pOld = monde.getPersonnage(personnage);
+		Personnage pNew = pOld.clone();
+		pNew.setPosition(pNew.getPosition().x + addToX, pNew.getPosition().y);
+		ajusterY(pNew);
+		pNew = validationDeplacement(pOld, pNew);
+		pOld.setPosition(new PointF(pNew.getPosition().x, pNew.getPosition().y));
+		gravite(pOld);
+		noyau.actualiserGraphisme();
+	}
+	
+	private Personnage validationDeplacement(Personnage pOld, Personnage pNew) {
+		float decalage = pOld.getPosition().y - pNew.getPosition().y;
+		if( decalage < HAUTEUR_DEPLACEMENT_JOUEUR && !estEnCollision(pNew)) {
+			return pNew;
 		}
+		return pOld;
 	}
 	
 	private boolean estEnCollision(Personnage personnage) {
 		for(int i = 0; i < monde.nombrePersonnage(); i++) {
 			Personnage p = monde.getListePersonnage().get(i);
-			if( p.equals(personnage) && personnage.estEnCollision(p)) {
+			if( p.getNom().compareTo(personnage.getNom()) != 0 && personnage.estEnCollision(p)) {
 				return true;
 			}
 		}
 		return false;
+	}
+	
+	private void ajusterY( Personnage p) {
+		int decalage = decalagePositionPersonnage((int)p.getPosition().x,(int)(p.getHeightImageTerrain()+p.getPosition().y));
+		p.setPosition(p.getPosition().x, p.getPosition().y - decalage);
 	}
 	
 	// Cette fonction retoune la position optimal de y,
@@ -106,13 +110,6 @@ public class MoteurPhysique {
 		}
 		noyau.actualiserGraphisme();
 	}		
-	
-
-	// Return vrai si le point "p" est inclus dans le rectangle forme par les points a et b
-	private boolean estDansRectangle(PointF p, PointF a, PointF b) {
-		return (  min(a.x, b.x) <= p.x && p.x < max(a.x, b.x) 
-				&& min(a.y, b.y) <= p.y && p.y < max(a.y, b.y));
-	}
 
 	// On teste si le personnage n'a rien sous les pieds.
 	// Renvoie vrai si le personnage vole et faux si non.
@@ -137,6 +134,10 @@ public class MoteurPhysique {
 	
 	public void sautJoueurGauche() {
 		
+	}
+	
+	public boolean sortieDuTerrain(Personnage p) {
+		return false;
 	}
 	
 	
