@@ -1,4 +1,4 @@
-package com.androworms;
+package com.androworms.utile;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.res.Configuration;

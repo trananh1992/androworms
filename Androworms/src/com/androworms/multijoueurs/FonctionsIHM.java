@@ -23,8 +23,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import com.androworms.Informations;
 import com.androworms.R;
+import com.androworms.utile.Informations;
 
 public class FonctionsIHM {
 	
