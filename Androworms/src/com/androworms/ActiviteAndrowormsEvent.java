@@ -1,5 +1,7 @@
 package com.androworms;
 
+import com.androworms.multijoueurs.ActiviteMultiJoueur;
+
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.util.Log;

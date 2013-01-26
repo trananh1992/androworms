@@ -19,18 +19,18 @@
         android:orientation="horizontal" >
 
         <ImageButton
-            android:id="@+id/imgbtn_bluetooth"
+            android:id="@+id/imgbtn_bluetooth_serveur"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
             android:src="@drawable/bluetooth" />
 
         <ImageButton
-            android:id="@+id/imgbtn_deux_joueurs"
+            android:id="@+id/imgbtn_bluetooth_client"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
-            android:src="@drawable/deux_joueurs" />
+            android:src="@drawable/bluetooth" />
 
     </LinearLayout>
 
