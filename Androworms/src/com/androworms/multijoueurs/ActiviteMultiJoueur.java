@@ -26,7 +26,7 @@ public class ActiviteMultiJoueur extends Activity {
 	
 	// Identifiant (généré aléatoirement) pour Androworms.
 	// Il sert à établir la connexion Bluetooth entre 2 appareils
-	public static UUID ANDROWORMS_UUID = UUID.fromString("c2d080da-7610-4dde-96c1-01406eb4b24b");
+	public static final UUID ANDROWORMS_UUID = UUID.fromString("c2d080da-7610-4dde-96c1-01406eb4b24b");
 	
 	// Adaptateur du Bluetooth
 	public static BluetoothAdapter mBluetoothAdapter;
@@ -36,15 +36,16 @@ public class ActiviteMultiJoueur extends Activity {
 	public static final int DUREE_VISIBILITE_BLUETOOTH = 40;
 	
 	// Listes des appareils Bluetooth jumélés et à proximité
-	public static ArrayList<BluetoothDevice> appareilJumele;
-	public static ArrayList<BluetoothDevice> appareilProximite;
+	public ArrayList<BluetoothDevice> appareilJumele;
+	public ArrayList<BluetoothDevice> appareilProximite;
 	
 	// Codes de demande de l'Intent sur l'activation/visibilité du Bluetooth
 	public static final int DEMANDE_ACTIVATION_BLUETOOTH = 1;
 	public static final int DEMANDE_VISIBILITE_BLUETOOTH = 2;
 	
-	
-	public static boolean estRegister = false;
+	// Mis à vrai si on est Bluetooth > Serveur et qu'on lance le serveur.
+	// Dans le OnDetroy(), il faut pouvoir savoir si on a lancé le serveur ou pas pour l'arreter.
+	public boolean estServeurLance = false;
 	
 	private FonctionsIHM fonctionsIHM;
 	
@@ -68,23 +69,24 @@ public class ActiviteMultiJoueur extends Activity {
 		/* Choix entre Bluetooth et 2 joueurs */
 		setContentView(R.layout.multi_joueur);
 		
+		EvenementMultiJoueur evenementMultiJoueur = new EvenementMultiJoueur(this);
 		// Bouton partie Bluetooth
 		ImageButton imgbtnBluetooth = (ImageButton)findViewById(R.id.imgbtn_bluetooth);
-		imgbtnBluetooth.setOnClickListener(new EvenementMultiJoueur(this));
+		imgbtnBluetooth.setOnClickListener(evenementMultiJoueur);
 		// Bouton partie Multi-joueurs
 		ImageButton imgbtnDeuxJoueurs = (ImageButton)findViewById(R.id.imgbtn_deux_joueurs);
-		imgbtnDeuxJoueurs.setOnClickListener(new EvenementMultiJoueur(this));
+		imgbtnDeuxJoueurs.setOnClickListener(evenementMultiJoueur);
 	}
 	
 	/** Changement de vue entre le choix "Bluetooth/2-joueurs" vers "Bluetooth Client/Serveur" **/
-	public void changerVue() {
+	public void changerVue(EvenementMultiJoueur evenementMultiJoueur) {
 		setContentView(R.layout.multi_joueur_bluetooth);
 		
 		ImageButton imgbtnBluetoothServeur = (ImageButton)findViewById(R.id.imgbtn_bluetooth_serveur);
-		imgbtnBluetoothServeur.setOnClickListener(new EvenementMultiJoueur(this));
+		imgbtnBluetoothServeur.setOnClickListener(evenementMultiJoueur);
 		
 		ImageButton imgbtnBluetoothClient = (ImageButton)findViewById(R.id.imgbtn_bluetooth_client);
-		imgbtnBluetoothClient.setOnClickListener(new EvenementMultiJoueur(this));
+		imgbtnBluetoothClient.setOnClickListener(evenementMultiJoueur);
 	}
 	
 	/** Démarrage du serveur Bluetooth **/
@@ -165,7 +167,7 @@ public class ActiviteMultiJoueur extends Activity {
 					// TODO : eventuellement mettre cette appreil en tête de liste.
 					//        1) C'est comme ça que fait le système Android
 					//        2) Statistiquement, un appareil jumélée et Bluetooth-proximité a de fortes chances d'être un joueur potentielle
-					ActiviteMultiJoueur.appareilProximite.add(device);
+					appareilProximite.add(device);
 					Log.v(TAG,"...en plus je l'avais pas encore !");
 				} else {
 					Log.v(TAG,"...en fait, je l'avais déjà !");
@@ -185,11 +187,11 @@ public class ActiviteMultiJoueur extends Activity {
 	};
 	
 	public void ActualisationMinuteur() {
-		TextView tv_maVisibilite = (TextView)findViewById(R.id.tv_maVisibilite);
+		TextView tvMaVisibilite = (TextView)findViewById(R.id.tv_maVisibilite);
 		ProgressBar pb_minuteur = (ProgressBar)findViewById(R.id.pb_Minuteur);
 		
 		pb_minuteur.setVisibility(View.VISIBLE);
-		tv_maVisibilite.setText("Ma visibilité : ");
+		tvMaVisibilite.setText("Ma visibilité : ");
 	}
 	
 	@Override
@@ -215,10 +217,10 @@ public class ActiviteMultiJoueur extends Activity {
 		}
 		
 		
-		if (estRegister) {
+		if (estServeurLance) {
 			// On supprime le receiver qui permet de trouver les appareils Bluetooth à proximité
 			this.unregisterReceiver(mReceiver);
-			estRegister = false;
+			estServeurLance = false;
 		}
 	}
 
