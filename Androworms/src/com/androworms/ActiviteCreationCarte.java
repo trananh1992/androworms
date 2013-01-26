@@ -55,8 +55,7 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		
 	}
 	
-	private void fusionnerCalques(Bitmap result,Bitmap base)
-	{
+	private void fusionnerCalques(Bitmap result,Bitmap base) {
 		for(int i=0;i<base.getWidth();i++)
 		{
 			for(int j=0;j<base.getHeight();j++)
@@ -74,8 +73,7 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		}
 	}
 	
-	private void saveMap(String name)
-	{
+	private void saveMap(String name) {
 		final int compression = 100;
 		File root = Environment.getExternalStorageDirectory();
 		File androworms = new File(root,"Androworms");
@@ -179,7 +177,7 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		super();
 	}
 	
-	/* Ajout du gestionnaire d'évenement pour les boutons de taille de brosse Alpha */
+	/** Ajout du gestionnaire d'évenement pour les boutons de taille de brosse Alpha */
 	private void setAlphaBrushSizeListener() {
 		OnClickListener brushSizeAlpha = new OnClickListener() {
 			public void onClick(View v) {
@@ -204,7 +202,7 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		findViewById(R.id.alpha_small_brush).setOnClickListener(brushSizeAlpha);
 	}
 	
-	/* Ajout du gestionnaire d'évenement pour le bouton de alpha */
+	/** Ajout du gestionnaire d'évenement pour le bouton de alpha */
 	private void setAlphaListener() {
 		findViewById(R.id.erase_button).setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -227,7 +225,7 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		this.setAlphaBrushSizeListener();
 	}
 	
-	/* Ajout du gestionnaire d'évenement pour les boutons de taille de brosse Solid */
+	/** Ajout du gestionnaire d'évenement pour les boutons de taille de brosse Solid */
 	private void setSolidBrushSizeListener() {
 		OnClickListener brushSizeSolid = new OnClickListener() {
 			public void onClick(View v) {
@@ -252,7 +250,7 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		findViewById(R.id.draw_small_brush).setOnClickListener(brushSizeSolid);
 	}
 	
-	/* Ajout du gestionnaire d'évenement pour le bouton de Solid */
+	/** Ajout du gestionnaire d'évenement pour le bouton de Solid */
 	private void setDrawListener() {
 		findViewById(R.id.draw).setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -302,7 +300,7 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		});
 	}
 	
-	/* initialisation de la surface de dessin avec une image vide */
+	/** Initialisation de la surface de dessin avec une image vide */
 	private void initImageView() {
 		ImageView surface = (ImageView) findViewById(R.id.CurrentMap);
 		Bitmap b = Bitmap.createBitmap(surface.getWidth(), surface.getHeight(), Bitmap.Config.ARGB_8888);
@@ -312,8 +310,7 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		surface.setImageBitmap(upCalc);
 	}
 	
-	private void separeAlpha(int width, int height, Bitmap base, int densityL, int densityD)
-	{
+	private void separeAlpha(int width, int height, Bitmap base, int densityL, int densityD) {
 		int i,j;
 		final int nComponents = 3;
 		for(i=0;i<width;i++)
@@ -332,8 +329,7 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		}
 	}
 	
-	private void autoAlpha4()
-	{
+	private void autoAlpha4() {
 		ImageView surface = (ImageView) findViewById(R.id.CurrentMap);
 		BitmapDrawable drawable = ((BitmapDrawable)((ImageView)findViewById(R.id.background)).getDrawable());
 		if( null == drawable)
@@ -386,14 +382,12 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 		((ImageView) surface).invalidate();
 	}
 	
-	private void autoAlpha()
-	{
+	private void autoAlpha() {
 		autoAlpha4();
 		mustSave = true;
 	}
 	
-	private boolean drawEvent(View surface, MotionEvent event)
-	{
+	private boolean drawEvent(View surface, MotionEvent event) {
 		final int factorSize = 20;
 		final int echantillonage = 25;
 		final float tailleHerbe = 10f;

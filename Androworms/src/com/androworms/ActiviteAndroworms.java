@@ -63,6 +63,7 @@ public class ActiviteAndroworms extends Activity {
 		});
 	}
 	
+	/** Chargement du menu principal quand le SplashScreen est fini */
 	public void chargerMenuPrincipal() {
 		Log.v(TAG,"Lancement de l'activité du menu principale");
 		this.setContentView(R.layout.menu_principal);
