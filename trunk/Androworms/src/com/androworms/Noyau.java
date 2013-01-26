@@ -7,7 +7,7 @@ import android.graphics.PointF;
 import android.util.Log;
 import android.graphics.drawable.BitmapDrawable;
 
-/*
+/**
  * Le noyau gere tous les interactions.
  * Echange entre IHM/reseau/moteurGraphique.
  */
@@ -28,14 +28,11 @@ public class Noyau {
 
 	
 	public Noyau(Context context, MoteurGraphique mg) {
-
 		test(context);
 		graphique = mg;
-
-		
 	}
 	
-	// Cette fonction sera à supprimer lorsque l'on en aura plus besoin.
+	/** Cette fonction sera à supprimer lorsque l'on en aura plus besoin. */
 	public void test(Context context) {
 
 		creationPartieLocale();
@@ -73,17 +70,13 @@ public class Noyau {
 		connexion = new ConnexionLocale(this);
 		monde = new Monde();
 		physique = new MoteurPhysique(this, monde);
-
-		
 	}
 	
 	public void creationPartieDistante() {
 		connexion = new ConnexionDistante(this);
 	}
 	
-	/*
-	 * Gestion des messages venanat de l'IHM 
-	 */
+	/** Gestion des messages venanat de l'IHM */
 	public void sautJoueurDroiteFromIHM() {
 		physique.gravite();
 	}
@@ -116,10 +109,7 @@ public class Noyau {
 		Log.v(TAG_NOYAU, "On tire");
 	}
 	
-	/*
-	 * Gestion des tests.
-	 */
-	
+	/** Gestion des tests. */
 	public void testReseau() {
 		Log.v(TAG_NOYAU, "TestReseau n'est plus valide !");
 	}
@@ -127,6 +117,4 @@ public class Noyau {
 	public Monde getMonde() {
 		return monde;
 	}
-	
-	
 }

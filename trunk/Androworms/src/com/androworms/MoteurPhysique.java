@@ -3,7 +3,7 @@ package com.androworms;
 import android.graphics.Color;
 import android.graphics.PointF;
 
-/*
+/**
  * Cette classe génère la physique du jeu.
  * C'est a dire les chutes, projections --> les trajectoires.
  */
@@ -79,7 +79,7 @@ public class MoteurPhysique {
 		p.setPosition(p.getPosition().x, p.getPosition().y - decalage);
 	}
 	
-	// Cette fonction retoune la position optimal de y,
+	/** Cette fonction retoune la position optimal de y. */
 	private int decalagePositionPersonnage( int x, int y ) {
 		int decalage =0;
 		while(y >= 0 && collision(x, y)) {
@@ -88,10 +88,8 @@ public class MoteurPhysique {
 		}	
 		return decalage;
 	}
-
-
 	
-	// Cette fonction verifie que la gravite est respectee.
+	/** Cette fonction verifie que la gravite est respectee. */
 	public void gravite() {
 		for(int i = 0; i < monde.nombrePersonnage(); i++) {
 			Personnage p = monde.getListePersonnage().get(i);
@@ -102,19 +100,19 @@ public class MoteurPhysique {
 		}
 		noyau.actualiserGraphisme();
 	}
-	// Cette fonction verifie que toutes les regles de la physique implementees
-	// sont respectees.
+	
+	/** Cette fonction verifie que toutes les regles de la physique implementees sont respectees. */
 	public void gravite(Personnage p) {
 		while(personnageVolant(p)) {
 			p.setPosition(p.getPosition().x, p.getPosition().y+1);
 		}
 		noyau.actualiserGraphisme();
 	}		
-
-	// On teste si le personnage n'a rien sous les pieds.
-	// Renvoie vrai si le personnage vole et faux si non.
-	// TODO : la fonction ne prends qu'un point de reference
+	
+	/** On teste si le personnage n'a rien sous les pieds.
+	    Renvoie vrai si le personnage vole et faux si non. */
 	public boolean personnageVolant(Personnage p) {
+		// TODO : la fonction ne prends qu'un point de reference
 		return (!collision((int)p.getPosition().x, p.getHeightImageTerrain()+(int)p.getPosition().y)
 				&& monde.getTerrain().getHeight() - (p.getHeightImageTerrain()+(int)p.getPosition().y) > 1);
 	}
@@ -122,7 +120,6 @@ public class MoteurPhysique {
 	public boolean collision(int x, int y) {
 		return Color.alpha(monde.getTerrain().getPixel(x, y)) > 0;	
 	}
-	
 	
 	public boolean collision(PointF p) {
 		return collision((int)p.x, (int)p.y);
@@ -139,6 +136,4 @@ public class MoteurPhysique {
 	public boolean sortieDuTerrain(Personnage p) {
 		return false;
 	}
-	
-	
 }

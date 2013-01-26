@@ -5,9 +5,7 @@ import java.util.List;
 
 import android.graphics.PointF;
 
-/*
- * Cette classe contient toutes les informations
- * sur le personnage utiliser par un joueur.
+/** Cette classe contient toutes les informations sur le personnage utilisé par un joueur.
  */
 public class Personnage extends ElementSurCarte {
 	/*
@@ -17,11 +15,7 @@ public class Personnage extends ElementSurCarte {
 	 * chapeau 
 	 * accessoire
 	 */
-	
-
 	private String nom;
-
-
 	
 	public Personnage(String nom, ImageInformation ii) {
 		super(new PointF(), ii);
@@ -33,8 +27,6 @@ public class Personnage extends ElementSurCarte {
 		result.setPosition(getPosition().x, getPosition().y);
 		return result;
 	}
-
-	
 	
 	public List<PointF> getEnveloppeConvexeHaut() {
 		List<PointF> result = new ArrayList<PointF>();
@@ -84,7 +76,7 @@ public class Personnage extends ElementSurCarte {
 			setPosition(getPosition().x + pas, getPosition().y);
 		}
 	}
-
+	
 	public void deplacementGauche(int pas, int min) {
 		if(getPosition().x - pas < min) {
 			setPosition(min, getPosition().y);
@@ -92,11 +84,9 @@ public class Personnage extends ElementSurCarte {
 		else {
 			setPosition(getPosition().x - pas, getPosition().y);
 		}
-
 	}
 	
-	
-	// Test si le personnage courant est en dessous du personnage p.
+	/** Test si le personnage courant est en dessous du personnage p. */
 	public boolean estEnDessous(Personnage p) {
 		List<PointF> reference = getEnveloppeConvexeHaut();
 		List<PointF> comparateur = p.getEnveloppeConvexeBas();
@@ -110,7 +100,7 @@ public class Personnage extends ElementSurCarte {
 		return true;
 	}
 	
-	// Test si le personnage courant est en dessus du personnage p.
+	/** Test si le personnage courant est en dessus du personnage p. */
 	public boolean estAuDessus(Personnage p) {
 		List<PointF> reference = getEnveloppeConvexeBas();
 		List<PointF> comparateur = p.getEnveloppeConvexeHaut();
@@ -124,7 +114,7 @@ public class Personnage extends ElementSurCarte {
 		return true;
 	}
 	
-	//Test si le personnage courant est a gauche du personnage p.
+	/** Test si le personnage courant est a gauche du personnage p. */
 	public boolean estAGauche(Personnage p) {
 		List<PointF> reference = getEnveloppeConvexeDroite();
 		List<PointF> comparateur = p.getEnveloppeConvexeGauche();
@@ -137,7 +127,8 @@ public class Personnage extends ElementSurCarte {
 		}
 		return true;
 	}
-	//Test si le personnage courant est a droite du personnage p.
+	
+	/** Test si le personnage courant est a droite du personnage p. */
 	public boolean estADroite(Personnage p) {
 		List<PointF> reference = getEnveloppeConvexeGauche();
 		List<PointF> comparateur = p.getEnveloppeConvexeDroite();
@@ -151,7 +142,7 @@ public class Personnage extends ElementSurCarte {
 		return true;
 	}
 	
-	// Test si le personnage est en collision avec un autre.
+	/** Test si le personnage est en collision avec un autre. */
 	public boolean estEnCollision(Personnage p) {
 		return !(estEnDessous(p) || estAuDessus(p) || estADroite(p) || estAGauche(p));
 	}

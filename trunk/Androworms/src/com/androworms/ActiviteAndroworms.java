@@ -58,7 +58,7 @@ public class ActiviteAndroworms extends Activity {
 		LinearLayout ll = (LinearLayout)findViewById(R.id.LinearLayout2);
 		ll.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				ch.finish();
+				ch.terminerChargement();
 			}
 		});
 	}

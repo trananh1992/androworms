@@ -48,7 +48,7 @@ public class ActiviteCreationCarte extends Activity implements OnClickListener,O
 	/* couleur herbe foncée : 0xff458B00  couleur fluo : 0xff00ff00;*/
 	static final int COULEUR_HERBE = 0xff00ff00;
 	
-	/* Gestionnaire d'évênement permettant le lancement de cette activité */
+	/** Gestionnaire d'évênement permettant le lancement de cette activité */
 	public void onClick(View arg0) {
 		Intent intent = new Intent(this.activiteMenuPrincipal, ActiviteCreationCarte.class);
 		this.activiteMenuPrincipal.startActivity(intent);
