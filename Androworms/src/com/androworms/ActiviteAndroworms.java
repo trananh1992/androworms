@@ -1,14 +1,10 @@
 package com.androworms;
 
-import com.androworms.utile.Informations;
-
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -77,88 +73,22 @@ public class ActiviteAndroworms extends Activity {
 		findViewById(R.id.btn_multi).setOnClickListener(cl);
 		findViewById(R.id.btn_menu_score).setOnClickListener(cl);
 		findViewById(R.id.btn_menu_settings).setOnClickListener(cl);
+		
 		// Evenements sur les boutons de TEST
-		//OnClickListener camCl = new ActiviteCreationCarte(this);
-		//findViewById(R.id.test_cam).setOnClickListener(camCl);
 		TestClassListener testL = new TestClassListener(this);
-		findViewById(R.id.test_cam).setOnClickListener(testL); 
-		// Afficher els informations du téléphone
-		afficherInformationsTelephone();
+		findViewById(R.id.test_cam).setOnClickListener(testL);
+		findViewById(R.id.btn_DEBUG).setOnClickListener(cl);
 	}
 	
-	public void afficherInformationsTelephone() {
-		/* Informations sur le téléphone */
-		StringBuffer buf = new StringBuffer();
-		buf.append("<b>Android</b>" + RETOUR_LIGNE_HTML);
-		buf.append("Version = " + Informations.getAndroidVersion() + RETOUR_LIGNE_HTML);
-		buf.append("SDK = " + Informations.getAndroidSdk() + RETOUR_LIGNE_HTML);
-		buf.append(RETOUR_LIGNE_HTML);
-		buf.append("<b>Taille de l'écran</b>" + RETOUR_LIGNE_HTML);
-		buf.append("WidthPixels = " + Informations.getWidthPixels() + " px" + RETOUR_LIGNE_HTML);
-		buf.append("HeightPixels = " + Informations.getHeightPixels() + " px" + RETOUR_LIGNE_HTML);
-		buf.append("Taille = ");
-		switch(Informations.getScreenLayoutSizeMask()) {
-		case Configuration.SCREENLAYOUT_SIZE_SMALL:
-			buf.append("SMALL");
-			break;
-		case Configuration.SCREENLAYOUT_SIZE_NORMAL:
-			buf.append("NORMAL");
-			break;
-		case Configuration.SCREENLAYOUT_SIZE_LARGE:
-			buf.append("LARGE");
-			break;
-		case Configuration.SCREENLAYOUT_SIZE_XLARGE:
-			buf.append("XLARGE");
-			break;
-		default:
-			buf.append("???");
-			break;
-		}
-		buf.append(RETOUR_LIGNE_HTML);
-		buf.append(RETOUR_LIGNE_HTML);
-		buf.append("<b>Densité de l'écran</b>" + RETOUR_LIGNE_HTML);
-		buf.append("Density = " + Informations.getDensity() + RETOUR_LIGNE_HTML);
-		buf.append("DensityDPI = " + Informations.getDensityDpi() + " dp   (");
-		switch (Informations.getDensityDpi()) {
-		case DisplayMetrics.DENSITY_LOW:
-			buf.append("ldpi -- LOW");
-			break;
-		case DisplayMetrics.DENSITY_MEDIUM:
-			buf.append("mdpi -- MEDIUM");
-			break;
-		case DisplayMetrics.DENSITY_HIGH:
-			buf.append("hdpi -- HIGH");
-			break;
-		case DisplayMetrics.DENSITY_XHIGH:
-			buf.append("xhdpi -- XHIGH");
-			break;
-		default:
-			buf.append("??? -- ???");
-			break;
-		}
-		buf.append(")" + RETOUR_LIGNE_HTML);
-		buf.append(RETOUR_LIGNE_HTML);
-		buf.append("<b>Bluetooth</b>" + RETOUR_LIGNE_HTML);
-		buf.append("Compatible Bluetooth : " + Informations.isCompatibleBluetooth() + RETOUR_LIGNE_HTML);
-		buf.append("Bluetooth On (valeur au démarrage de l'apps) : " + Informations.isBluetoothOn() + RETOUR_LIGNE_HTML);
-		String txtInfo = buf.toString();
-		TextView tv = (TextView)findViewById(R.id.textView2);
-		tv.setText(Html.fromHtml(txtInfo));
-	}
-	
-	private class TestClassListener implements OnClickListener
-	{
+	private class TestClassListener implements OnClickListener {
 		private ActiviteAndroworms parent;
-		public TestClassListener(ActiviteAndroworms p)
-		{
+		public TestClassListener(ActiviteAndroworms p) {
 			parent = p;
 		}
 		
-		public void onClick(View v)
-		{
+		public void onClick(View v) {
 			Intent intent = new Intent(parent, ActiviteChoixOption.class);
 			this.parent.startActivity(intent);
 		}
-		
 	}
 }
