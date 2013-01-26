@@ -298,25 +298,21 @@ public class FonctionsIHM {
 		Log.v(TAG, "REFRESH de l'interface : Bluetooth > Client");
 		
 		/** Définition des composants **/
-		ToggleButton tg_etatBluetooth = (ToggleButton)activiteMultiJoueur.findViewById(R.id.tg_EtatBluetoothC);
-		Button btn_connexion = (Button)activiteMultiJoueur.findViewById(R.id.btn_connexion);
+		ToggleButton tgEtatBluetooth = (ToggleButton)activiteMultiJoueur.findViewById(R.id.tg_EtatBluetoothC);
+		Button btnConnexion = (Button)activiteMultiJoueur.findViewById(R.id.btn_connexion);
 		
 		/** Configuration des composants **/
 		// Désactivé si l'appareil est pas compatible Bluetooth :: TODO encore utile ??
-		tg_etatBluetooth.setEnabled(Informations.isCompatibleBluetooth());
+		tgEtatBluetooth.setEnabled(Informations.isCompatibleBluetooth());
 		// Coché si le Bluetooth est déjà activé
-		tg_etatBluetooth.setChecked(Informations.isBluetoothOn());
+		tgEtatBluetooth.setChecked(Informations.isBluetoothOn());
 		
 		
 		if (Informations.isBluetoothOn()) {
-			
 			rafraichirListeAppareils();
-		} else {
-			// rien....pour le moment !
 		}
 		
-		
-		btn_connexion.setEnabled(true);
+		btnConnexion.setEnabled(true);
 	}
 	
 	/** Liste les appareils bluetooth jumélés **/
