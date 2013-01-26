@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 
-import com.androworms.Informations;
 import com.androworms.R;
+import com.androworms.utile.Informations;
 
 public class EvenementMultiJoueur implements OnClickListener {
 	

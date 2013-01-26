@@ -1,5 +1,7 @@
 package com.androworms;
 
+import com.androworms.utile.Informations;
+
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
