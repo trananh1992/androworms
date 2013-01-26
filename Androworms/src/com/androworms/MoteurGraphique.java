@@ -33,15 +33,15 @@ public class MoteurGraphique extends RelativeLayout {
 	
 	private static final int TAILLE_MAX_TIR = 300;
 	
-	//Valeurs du zoom maximum et du zoom de lancement en fonction du zoom minimum
+	// Valeurs du zoom maximum et du zoom de lancement en fonction du zoom minimum
 	public static final float ZOOM_MAX_MULT = 4;
 	public static final float ZOOM_DEBUT_MULT = 2;
 	
-	//Constantes pour l'accélération de la translation en cas de mouvement rapide
+	// Constantes pour l'accélération de la translation en cas de mouvement rapide
 	public static final int NB_PIXELS_ACCELERATION = 10;
 	public static final int COEFF_ACCELERATION = 3;
 	
-	//Constantes qui servent pour dessiner un tir en cours
+	// Constantes qui servent pour dessiner un tir en cours
 	private static final int EPAISSEUR_FLECHE_TIR = 30;
 	private static final int EPAISSEUR_ONDE_TIR = 10;
 	private static final float ANGLE_ONDE_TIR = 30f;
@@ -53,7 +53,7 @@ public class MoteurGraphique extends RelativeLayout {
 	private static final int ANGLE_BOUT_FLECHE_TIR = 45;
 	
 	private static final int TAILLE_MATRIX = 9;
-	//Nombre maximum d'images stockees dans le cache
+	// Nombre maximum d'images stockees dans le cache
 	private static final int NB_MAX_IMAGE_CACHE = 10;
 	
 	// Images pour le jeu
@@ -61,7 +61,7 @@ public class MoteurGraphique extends RelativeLayout {
 	private Bitmap bmFond;
 	private Bitmap bmTerrain;
 	
-	//Matrice qui gère le zoom et la translation d'une image
+	// Matrice qui gère le zoom et la translation d'une image
 	private Matrix matrix;
 	private float[] mm;
 
@@ -69,7 +69,7 @@ public class MoteurGraphique extends RelativeLayout {
 	// position du début du tir
 	private PointF pointTir;
 	
-	//position touchée en ce moment (ou dernière position touchée)
+	// position touchée en ce moment (ou dernière position touchée)
 	private PointF positionTouche;
 	
 	private Noyau noyau;

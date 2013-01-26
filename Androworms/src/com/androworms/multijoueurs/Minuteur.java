@@ -14,18 +14,23 @@ public class Minuteur extends AsyncTask<ActiviteMultiJoueur, Integer, Boolean> {
 	private static final String TAG = "Minuteur";
 	private ActiviteMultiJoueur activiteMultiJoueur;
 	
+	private static final int CENT_POUR_CENT = 100;
+	private static final int SEC_EN_MS = 1000;
+	
 	@Override
 	protected Boolean doInBackground(ActiviteMultiJoueur... params) {
 		this.activiteMultiJoueur = params[0];
-		Log.v(TAG, "doInBackground()");
-		
 		try {
-			int i = 100;
+			int i = CENT_POUR_CENT;
 			while (i>0) {
 				synchronized(this) {
-					wait(ActiviteMultiJoueur.DUREE_VISIBILITE_BLUETOOTH * 10);
+					// La valeur ActiviteMultiJoueur.DUREE_VISIBILITE_BLUETOOTH est en seconde, alors que le wait() prend des milisecondes.
+					// On attendre 1 centième de DUREE_VISIBILITE_BLUETOOTH pour avancer de 1%.
+					wait(ActiviteMultiJoueur.DUREE_VISIBILITE_BLUETOOTH * SEC_EN_MS / CENT_POUR_CENT);
 				}
+				// On publie la progression du minuteur
 				publishProgress(i);
+				// On avance de 1%
 				i--;
 			}
 		} catch (InterruptedException e) {
@@ -37,18 +42,14 @@ public class Minuteur extends AsyncTask<ActiviteMultiJoueur, Integer, Boolean> {
 	
 	@Override
 	protected void onProgressUpdate(Integer... progress) {
-		// Pour afficher la progression
-		Log.v(TAG,"onProgressUpdate() --> "+progress[0]); 
-		
+		// Durant le minuteur, on actualise en fonction de la progression
 		ProgressBar pbMinuteur = (ProgressBar)activiteMultiJoueur.findViewById(R.id.pb_Minuteur);
 		pbMinuteur.setProgress(progress[0]);
 	}
 	
 	@Override
 	protected void onPostExecute(Boolean result) {
-		// A la fin de l'opération
-		Log.v(TAG,"onPostExecute()");
-		
+		// A la fin du minuteur
 		ProgressBar pbMinuteur = (ProgressBar)activiteMultiJoueur.findViewById(R.id.pb_Minuteur);
 		pbMinuteur.setProgress(0);
 	}

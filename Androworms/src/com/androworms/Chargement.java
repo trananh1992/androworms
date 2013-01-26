@@ -63,8 +63,8 @@ public class Chargement extends AsyncTask<ActiviteAndroworms, Integer, Boolean> 
 		activiteAndroworms.chargerMenuPrincipal();
 	}
 	
-	public void finish() {
-		Log.v(TAG,"Toucher !");
+	/** Lorsque l'utilisateur appuie sur l'écran pour passer le splashScreen */
+	public void terminerChargement() {
 		if (this.chargementFini) {
 			synchronized(this) {
 				this.notify();

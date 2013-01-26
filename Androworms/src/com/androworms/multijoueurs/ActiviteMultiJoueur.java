@@ -33,7 +33,7 @@ public class ActiviteMultiJoueur extends Activity {
 	
 	// Partie Bluetooth > Serveur : pour faire une animation du temps restant de la visibilité Bluetooth
 	private Minuteur ch;
-	public static final int DUREE_VISIBILITE_BLUETOOTH = 40;
+	public static final int DUREE_VISIBILITE_BLUETOOTH = 120;
 	
 	// Listes des appareils Bluetooth jumélés et à proximité
 	public ArrayList<BluetoothDevice> appareilJumele;
