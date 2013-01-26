@@ -43,7 +43,7 @@
             android:screenOrientation="landscape" >
         </activity>
         <activity
-            android:name="com.androworms.ActiviteMultiJoueur"
+            android:name="com.androworms.multijoueurs.ActiviteMultiJoueur"
             android:label="@string/title_activity_multi_joueur"
             android:screenOrientation="landscape" >
         </activity>
