@@ -37,8 +37,8 @@ public class Minuteur extends AsyncTask<ActiviteMultiJoueur, Integer, Boolean> {
 		// Pour afficher la progression
 		Log.v(TAG,"onProgressUpdate() --> "+progress[0]); 
 		
-		ProgressBar pb_minuteur = (ProgressBar)activiteMultiJoueur.findViewById(R.id.pb_Minuteur);
-		pb_minuteur.setProgress(progress[0]);
+		ProgressBar pbMinuteur = (ProgressBar)activiteMultiJoueur.findViewById(R.id.pb_Minuteur);
+		pbMinuteur.setProgress(progress[0]);
 	}
 	
 	@Override

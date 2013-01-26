@@ -46,7 +46,7 @@ public class ActiviteMultiJoueur extends Activity {
 	
 	public static boolean estRegister = false;
 	
-	private Fonctions_IHM fonctions_IHM;
+	private FonctionsIHM fonctionsIHM;
 	
 	public boolean isServeur = false;
 	
@@ -63,17 +63,17 @@ public class ActiviteMultiJoueur extends Activity {
 		// Récupération de l'adaptateur Bluetooth
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		
-		fonctions_IHM  = new Fonctions_IHM(this);
+		fonctionsIHM  = new FonctionsIHM(this);
 		
 		/* Choix entre Bluetooth et 2 joueurs */
 		setContentView(R.layout.multi_joueur);
 		
 		// Bouton partie Bluetooth
-		ImageButton imgbtn_bluetooth = (ImageButton)findViewById(R.id.imgbtn_bluetooth);
-		imgbtn_bluetooth.setOnClickListener(new EvenementMultiJoueur(this));
+		ImageButton imgbtnBluetooth = (ImageButton)findViewById(R.id.imgbtn_bluetooth);
+		imgbtnBluetooth.setOnClickListener(new EvenementMultiJoueur(this));
 		// Bouton partie Multi-joueurs
-		ImageButton imgbtn_deux_joueurs = (ImageButton)findViewById(R.id.imgbtn_deux_joueurs);
-		imgbtn_deux_joueurs.setOnClickListener(new EvenementMultiJoueur(this));
+		ImageButton imgbtnDeuxJoueurs = (ImageButton)findViewById(R.id.imgbtn_deux_joueurs);
+		imgbtnDeuxJoueurs.setOnClickListener(new EvenementMultiJoueur(this));
 	}
 	
 	/** Changement de vue entre le choix "Bluetooth/2-joueurs" vers "Bluetooth Client/Serveur" **/
@@ -88,14 +88,14 @@ public class ActiviteMultiJoueur extends Activity {
 	}
 	
 	/** Démarrage du serveur Bluetooth **/
-	public void start_bluetooth_serveur() {
+	public void demarrerServeurBluetooth() {
 		Log.d(TAG, "DEMARAGE DU SERVEUR BLUETOOTH");
 		sb = new ServeurBluetooth(this);
 		sb.start();
 	}
 	
 	/** Démarrage du client Bluetooth **/
-	public void start_bluetooth_client(BluetoothDevice device) {
+	public void demarrerClientBluetooth(BluetoothDevice device) {
 		Log.d(TAG, "DEMARAGE DU CLIENT BLUETOOTH");
 		cb = new ClientBluetooth(device);
 		cb.start();
@@ -111,7 +111,7 @@ public class ActiviteMultiJoueur extends Activity {
 				// L'utilisateur a accepté d'activé le Bluetooth
 				if (isServeur) {
 					// Si on est le serveur, on peut le démarrer
-					start_bluetooth_serveur();
+					demarrerServeurBluetooth();
 				}
 			} else {
 				// L'utilisateur a refusé d'activer le Bluetooth (ou il s'agit d'une erreur)
@@ -120,9 +120,9 @@ public class ActiviteMultiJoueur extends Activity {
 			
 			// On actualise l'interface graphique dans les deux cas (sinon, le ToggleButton se met quand même à ON)
 			if (isServeur) {
-				fonctions_IHM.actualisationInterfaceBluetoothServeur();
+				fonctionsIHM.actualisationInterfaceBluetoothServeur();
 			} else {
-				fonctions_IHM.actualisationInterfaceBluetoothClient();
+				fonctionsIHM.actualisationInterfaceBluetoothClient();
 			}
 			
 			break;
@@ -171,7 +171,7 @@ public class ActiviteMultiJoueur extends Activity {
 					Log.v(TAG,"...en fait, je l'avais déjà !");
 				}
 				
-				fonctions_IHM.actualisationInterfaceBluetoothClient();
+				fonctionsIHM.actualisationInterfaceBluetoothClient();
 			} else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
 				// TODO : si aucun element : afficher "pas d'appareil à proximité"
 				
@@ -204,25 +204,25 @@ public class ActiviteMultiJoueur extends Activity {
 	}
 	
 	@Override
-    protected void onDestroy() {
-        super.onDestroy();
-        
-        Log.v(TAG,"onDestroy()");
-        
-        // On s'assure de désactiver l'analyse des périphériques Bluetooth
-        if (mBluetoothAdapter != null) {
-        	mBluetoothAdapter.cancelDiscovery();
-        }
-        
-        
-        if (estRegister) {
-	        // On supprime le receiver qui permet de trouver les appareils Bluetooth à proximité
-	        this.unregisterReceiver(mReceiver);
-	        estRegister = false;
-        }
-    }
+	protected void onDestroy() {
+		super.onDestroy();
+		
+		Log.v(TAG,"onDestroy()");
+		
+		// On s'assure de désactiver l'analyse des périphériques Bluetooth
+		if (mBluetoothAdapter != null) {
+			mBluetoothAdapter.cancelDiscovery();
+		}
+		
+		
+		if (estRegister) {
+			// On supprime le receiver qui permet de trouver les appareils Bluetooth à proximité
+			this.unregisterReceiver(mReceiver);
+			estRegister = false;
+		}
+	}
 
-	public Fonctions_IHM getFonctions_IHM() {
-		return fonctions_IHM;
+	public FonctionsIHM getFonctionsIHM() {
+		return fonctionsIHM;
 	}
 }

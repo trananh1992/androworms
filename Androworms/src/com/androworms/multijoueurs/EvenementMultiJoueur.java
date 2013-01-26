@@ -46,7 +46,7 @@ public class EvenementMultiJoueur implements OnClickListener {
 				activiteMultiJoueur.setContentView(R.layout.multi_joueur_bluetooth_serveur);
 				
 				/* Chargement des composants */
-				activiteMultiJoueur.getFonctions_IHM().chargementInterfaceBluetoothServeur();
+				activiteMultiJoueur.getFonctionsIHM().chargementInterfaceBluetoothServeur();
 				/* Actualisation des elements graphiques *///DELETE ?
 				//activiteMultiJoueur.getFonctions_IHM().refresh_UI_multijoueur_bluetooth_serveur();
 			}
@@ -59,7 +59,7 @@ public class EvenementMultiJoueur implements OnClickListener {
 				activiteMultiJoueur.setContentView(R.layout.multi_joueur_bluetooth_client);
 				
 				/* Chargement des composants */
-				activiteMultiJoueur.getFonctions_IHM().chargementInterfaceBluetoothClient();
+				activiteMultiJoueur.getFonctionsIHM().chargementInterfaceBluetoothClient();
 				/* Actualisation des elements graphiques *///DELETE ?
 				//activiteMultiJoueur.getFonctions_IHM().refresh_UI_multijoueur_bluetooth_client();
 			}

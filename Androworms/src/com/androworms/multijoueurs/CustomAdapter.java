@@ -14,17 +14,17 @@ import android.widget.BaseAdapter;
 import com.androworms.R;
 
 public class CustomAdapter extends BaseAdapter {
-	// [Header] Apareils A
+	// [Titre] Appareils A
 	//          bla
 	//          bla
 	//          bla
-	// [Header] Apareils B
+	// [Titre] Appareils B
 	//          bla
 	public static final String TAG = "DFKSeparatedListAdapter";
 	
 	public final Map<String, Adapter> sections = new LinkedHashMap<String, Adapter>();
 	public final ArrayAdapter<String> titres;
-	public final static int TYPE_SECTION_HEADER = 0;
+	public static final int TYPE_SECTION_HEADER = 0;
 
 	public CustomAdapter(Context context) {
 		// On crée une liste contenant les titres de sections
@@ -45,11 +45,12 @@ public class CustomAdapter extends BaseAdapter {
 			int size = adapter.getCount() + 1;
 
 			// check if position inside this section
-			if (position == 0)
+			if (position == 0) {
 				return section;
-			if (position < size)
+			}
+			if (position < size) {
 				return adapter.getItem(position - 1);
-
+			}
 			// otherwise jump into next section
 			position -= size;
 		}
@@ -59,30 +60,20 @@ public class CustomAdapter extends BaseAdapter {
 	public int getCount() {
 		// total together all sections, plus one for each section header
 		int total = 0;
-		for (Adapter adapter : this.sections.values())
+		for (Adapter adapter : this.sections.values()) {
 			total += adapter.getCount() + 1;
-		Log.v(TAG,"getCount() = "+total);
-		return total;
-		
-		
-	/*	int total = 0;
-		total += 1;// Section 1 : Appareils juméles
-		total += NombreAppareilsJumeles;
-		if (isAppareilsProximiteVisible()) {
-			total += 1; // Section 2 : Appareils à proximité
-			total += Math.max(1,0);// Si aucun appareil à proximité : il y a quand même un message
-			// Si ya des appreils à proximité, alors on prendra cette valeur (FIXME : à remplacer par le zéro)
 		}
 		Log.v(TAG,"getCount() = "+total);
-		return total;*/
+		return total;
 	}
 
 	@Override
 	public int getViewTypeCount() {
 		// assume that headers count as one, then total all sections
 		int total = 1;
-		for (Adapter adapter : this.sections.values())
+		for (Adapter adapter : this.sections.values()) {
 			total += adapter.getViewTypeCount();
+		}
 		return total;
 	}
 
@@ -94,10 +85,12 @@ public class CustomAdapter extends BaseAdapter {
 			int size = adapter.getCount() + 1;
 
 			// check if position inside this section
-			if (position == 0)
+			if (position == 0) {
 				return TYPE_SECTION_HEADER;
-			if (position < size)
+			}
+			if (position < size) {
 				return type + adapter.getItemViewType(position - 1);
+			}
 
 			// otherwise jump into next section
 			position -= size;
@@ -124,10 +117,12 @@ public class CustomAdapter extends BaseAdapter {
 			int size = adapter.getCount() + 1;
 
 			// check if position inside this section
-			if (position == 0)
+			if (position == 0) {
 				return titres.getView(sectionnum, convertView, parent);
-			if (position < size)
+			}
+			if (position < size) {
 				return adapter.getView(position - 1, convertView, parent);
+			}
 
 			// otherwise jump into next section
 			position -= size;

@@ -26,12 +26,12 @@ import android.widget.ToggleButton;
 import com.androworms.Informations;
 import com.androworms.R;
 
-public class Fonctions_IHM {
+public class FonctionsIHM {
 	
 	private static final String TAG = "Fonctions_IHM";
 	private ActiviteMultiJoueur activiteMultiJoueur;
 	
-	public Fonctions_IHM(ActiviteMultiJoueur activiteMultiJoueur) {
+	public FonctionsIHM(ActiviteMultiJoueur activiteMultiJoueur) {
 		this.activiteMultiJoueur = activiteMultiJoueur;
 	}
 	
@@ -40,9 +40,9 @@ public class Fonctions_IHM {
 		Log.v(TAG, "Chargement de l'interface : Bluetooth > Serveur");
 		
 		// Définition des composants
-		ToggleButton tg_etatBluetooth = (ToggleButton)activiteMultiJoueur.findViewById(R.id.tg_EtatBluetoothS);
-		Button btn_demarrerPartie = (Button)activiteMultiJoueur.findViewById(R.id.btn_demarrerPartie);
-		Button btn_MontrerBluetooth = (Button)activiteMultiJoueur.findViewById(R.id.btn_MontrerBluetooth);
+		ToggleButton tgEtatBluetooth = (ToggleButton)activiteMultiJoueur.findViewById(R.id.tg_EtatBluetoothS);
+		Button btnDemarrerPartie = (Button)activiteMultiJoueur.findViewById(R.id.btn_demarrerPartie);
+		Button btnMontrerBluetooth = (Button)activiteMultiJoueur.findViewById(R.id.btn_MontrerBluetooth);
 		
 		// Actualisation des
 		actualisationInterfaceBluetoothServeur();
@@ -50,7 +50,7 @@ public class Fonctions_IHM {
 		
 		
 		/** Actions sur les composants **/
-		tg_etatBluetooth.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+		tgEtatBluetooth.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			// TODO : ce bouton peux être faux si :
 			// - on lance Androworms (Bluetooth OFF)
 			// - On active le Bluetooth avec le bouton
@@ -85,11 +85,11 @@ public class Fonctions_IHM {
 		});
 		
 		/* Montrer Bluetooth */
-		btn_MontrerBluetooth.setOnClickListener(new OnClickListener() {
+		btnMontrerBluetooth.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				Log.v(TAG, "On rendre le Bluetooth visible pour x secondes");
 				Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-				discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, ActiviteMultiJoueur.DUREE_VISIBILITE_BLUETOOTH); // DUREE_VISIBILITE_BLUETOOTH/1000
+				discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, ActiviteMultiJoueur.DUREE_VISIBILITE_BLUETOOTH);
 				//startActivity(discoverableIntent);
 				activiteMultiJoueur.startActivityForResult(discoverableIntent, ActiviteMultiJoueur.DEMANDE_VISIBILITE_BLUETOOTH);
 				
@@ -105,7 +105,7 @@ public class Fonctions_IHM {
 		
 		
 		/* On démarrer la partie */
-		btn_demarrerPartie.setOnClickListener(new OnClickListener() {
+		btnDemarrerPartie.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				Log.v(TAG,"On démarre la partie ?");
 				if (activiteMultiJoueur.sb == null) {
@@ -123,7 +123,7 @@ public class Fonctions_IHM {
 		
 		/** Démarrage du serveur Bluetooth **/
 		if (Informations.isBluetoothOn()) {
-			activiteMultiJoueur.start_bluetooth_serveur();
+			activiteMultiJoueur.demarrerServeurBluetooth();
 		}
 	}
 	
@@ -132,20 +132,20 @@ public class Fonctions_IHM {
 		Log.v(TAG, "Actualisation de l'interface : Bluetooth > Serveur");
 		
 		/** Définition des composants **/
-		ToggleButton tg_etatBluetooth = (ToggleButton)activiteMultiJoueur.findViewById(R.id.tg_EtatBluetoothS);
-		TextView tv_monNomBluetooth = (TextView)activiteMultiJoueur.findViewById(R.id.tv_monNomBluetooth);
-		TextView tv_maVisibilite = (TextView)activiteMultiJoueur.findViewById(R.id.tv_maVisibilite);
-		TextView tv_information = (TextView)activiteMultiJoueur.findViewById(R.id.tv_information);
-		Button btn_MontrerBluetooth = (Button)activiteMultiJoueur.findViewById(R.id.btn_MontrerBluetooth);
-		ProgressBar pb_minuteur = (ProgressBar)activiteMultiJoueur.findViewById(R.id.pb_Minuteur);
-		ProgressBar pb_AttenteConnexion = (ProgressBar)activiteMultiJoueur.findViewById(R.id.pb_AttenteConnexion);
-		TextView tv_AttenteConnexion = (TextView)activiteMultiJoueur.findViewById(R.id.tv_AttenteConnexion);
+		ToggleButton tgEtatBluetooth = (ToggleButton)activiteMultiJoueur.findViewById(R.id.tg_EtatBluetoothS);
+		TextView tvMonNomBluetooth = (TextView)activiteMultiJoueur.findViewById(R.id.tv_monNomBluetooth);
+		TextView tvMaVisibilite = (TextView)activiteMultiJoueur.findViewById(R.id.tv_maVisibilite);
+		TextView tvInformation = (TextView)activiteMultiJoueur.findViewById(R.id.tv_information);
+		Button btnMontrerBluetooth = (Button)activiteMultiJoueur.findViewById(R.id.btn_MontrerBluetooth);
+		ProgressBar pbMinuteur = (ProgressBar)activiteMultiJoueur.findViewById(R.id.pb_Minuteur);
+		ProgressBar pbAttenteConnexion = (ProgressBar)activiteMultiJoueur.findViewById(R.id.pb_AttenteConnexion);
+		TextView tvAttenteConnexion = (TextView)activiteMultiJoueur.findViewById(R.id.tv_AttenteConnexion);
 		
 		/** Configuration des composants **/
 		// Désactivé si l'appareil est pas compatible Bluetooth :: TODO encore utile ??
-		tg_etatBluetooth.setEnabled(Informations.isCompatibleBluetooth());
+		tgEtatBluetooth.setEnabled(Informations.isCompatibleBluetooth());
 		// Coché si le Bluetooth est déjà activé
-		tg_etatBluetooth.setChecked(Informations.isBluetoothOn());
+		tgEtatBluetooth.setChecked(Informations.isBluetoothOn());
 		
 		//btn_demarrerPartie.setEnabled(false);
 				
@@ -153,44 +153,44 @@ public class Fonctions_IHM {
 			// Le Bluetooth n'est pas actif
 			
 			// Elements visible + configuration
-			tv_information.setVisibility(View.VISIBLE);
-			tv_information.setText("Veuillez activer le Bluetooth pour pouvoir jouer !");
+			tvInformation.setVisibility(View.VISIBLE);
+			tvInformation.setText("Veuillez activer le Bluetooth pour pouvoir jouer !");
 			
 			// Elements masqués
-			btn_MontrerBluetooth.setVisibility(View.INVISIBLE);
-			tv_monNomBluetooth.setVisibility(View.INVISIBLE);
-			tv_maVisibilite.setVisibility(View.INVISIBLE);
-			pb_minuteur.setVisibility(View.INVISIBLE);
-			pb_AttenteConnexion.setVisibility(View.INVISIBLE);
-			tv_AttenteConnexion.setVisibility(View.INVISIBLE);
+			btnMontrerBluetooth.setVisibility(View.INVISIBLE);
+			tvMonNomBluetooth.setVisibility(View.INVISIBLE);
+			tvMaVisibilite.setVisibility(View.INVISIBLE);
+			pbMinuteur.setVisibility(View.INVISIBLE);
+			pbAttenteConnexion.setVisibility(View.INVISIBLE);
+			tvAttenteConnexion.setVisibility(View.INVISIBLE);
 			
 		} else {
 			// Le Bluetooth est actif
 			
 			
 			// Elements visible + configuration
-			btn_MontrerBluetooth.setVisibility(View.VISIBLE);
+			btnMontrerBluetooth.setVisibility(View.VISIBLE);
 			
-			tv_monNomBluetooth.setVisibility(View.VISIBLE);
-			tv_monNomBluetooth.setText("Mon nom : "+ActiviteMultiJoueur.mBluetoothAdapter.getName());
+			tvMonNomBluetooth.setVisibility(View.VISIBLE);
+			tvMonNomBluetooth.setText("Mon nom : "+ActiviteMultiJoueur.mBluetoothAdapter.getName());
 			
-			tv_maVisibilite.setVisibility(View.VISIBLE);
+			tvMaVisibilite.setVisibility(View.VISIBLE);
 			String tt = "Ma visibilité : ";
 			if (ActiviteMultiJoueur.mBluetoothAdapter.getScanMode() == BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
 				tt += "visible";
 			} else {
 				tt += "invisible";
 			}
-			tv_maVisibilite.setText(tt);
+			tvMaVisibilite.setText(tt);
 			
-			pb_minuteur.setVisibility(View.INVISIBLE);
+			pbMinuteur.setVisibility(View.INVISIBLE);
 			
-			pb_AttenteConnexion.setVisibility(View.VISIBLE);
-			tv_AttenteConnexion.setVisibility(View.VISIBLE);
+			pbAttenteConnexion.setVisibility(View.VISIBLE);
+			tvAttenteConnexion.setVisibility(View.VISIBLE);
 			
 			
 			// Elements masqués
-			tv_information.setVisibility(View.INVISIBLE);
+			tvInformation.setVisibility(View.INVISIBLE);
 		}
 	}
 
@@ -199,10 +199,10 @@ public class Fonctions_IHM {
 		Log.v(TAG, "Chargement de l'interface : Bluetooth > Client");
 		
 		/** Définition des composants **/
-		ToggleButton tg_etatBluetooth = (ToggleButton)activiteMultiJoueur.findViewById(R.id.tg_EtatBluetoothC);
-		final Button btn_analyse = (Button)activiteMultiJoueur.findViewById(R.id.btn_analyse);
-		final ListView lv = (ListView)activiteMultiJoueur.findViewById(R.id.liste_appareils_bluetooth);
-		ProgressBar pb = (ProgressBar)activiteMultiJoueur.findViewById(R.id.pb_bluetooth_analyse);
+		ToggleButton tgEtatBluetooth = (ToggleButton)activiteMultiJoueur.findViewById(R.id.tg_EtatBluetoothC);
+		final Button btnAnalyse = (Button)activiteMultiJoueur.findViewById(R.id.btn_analyse);
+		final ListView lvAppareilsBluetooth = (ListView)activiteMultiJoueur.findViewById(R.id.liste_appareils_bluetooth);
+		ProgressBar pbBluetoothAnalyse = (ProgressBar)activiteMultiJoueur.findViewById(R.id.pb_bluetooth_analyse);
 		
 		/** Init des listes des appareils **/
 		ActiviteMultiJoueur.appareilJumele = new ArrayList<BluetoothDevice>();
@@ -214,7 +214,7 @@ public class Fonctions_IHM {
 		actualisationInterfaceBluetoothClient();
 		
 		/** Création des évenements sur les composants graphiques **/
-		tg_etatBluetooth.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+		tgEtatBluetooth.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			// TODO : ce bouton peux être faux si :
 			// - on lance Androworms (Bluetooth OFF)
 			// - On active le Bluetooth avec le bouton
@@ -249,7 +249,7 @@ public class Fonctions_IHM {
 		});
 		
 		/* Bouton d'analyse */
-		btn_analyse.setOnClickListener(new OnClickListener() {
+		btnAnalyse.setOnClickListener(new OnClickListener() {
 			// On click sur le bouton "Analyse"
 			public void onClick(View v) {
 				
@@ -271,7 +271,7 @@ public class Fonctions_IHM {
 				}
 				
 				
-				btn_analyse.setEnabled(false);
+				btnAnalyse.setEnabled(false);
 			}
 		});
 		IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
@@ -281,16 +281,16 @@ public class Fonctions_IHM {
 		ActiviteMultiJoueur.estRegister = true;
 		
 		/* Selection dans la liste */
-		lv.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-		lv.setOnItemClickListener(new OnItemClickListener() {
+		lvAppareilsBluetooth.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+		lvAppareilsBluetooth.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parentView, View childView, int position, long id) {
-				Log.v(TAG,"selection de : "+lv.getItemAtPosition(position));
-				activiteMultiJoueur.start_bluetooth_client((BluetoothDevice)lv.getItemAtPosition(position));
+				Log.v(TAG,"selection de : "+lvAppareilsBluetooth.getItemAtPosition(position));
+				activiteMultiJoueur.demarrerClientBluetooth((BluetoothDevice)lvAppareilsBluetooth.getItemAtPosition(position));
 			}
 		});
 		
 		
-		pb.setVisibility(View.INVISIBLE);
+		pbBluetoothAnalyse.setVisibility(View.INVISIBLE);
 	}
 	
 	/** Actualisation de l'interface Bluetooth > Client **/
@@ -320,7 +320,7 @@ public class Fonctions_IHM {
 	}
 	
 	/** Liste les appareils bluetooth jumélés **/
-	public void listerAppareilsJumeles() { // OK
+	public void listerAppareilsJumeles() {
 		Set<BluetoothDevice> pairedDevices = ActiviteMultiJoueur.mBluetoothAdapter.getBondedDevices();
 		if (pairedDevices.size() > 0) {
 			ActiviteMultiJoueur.appareilJumele.clear();
