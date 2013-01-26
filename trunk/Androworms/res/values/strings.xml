@@ -43,5 +43,6 @@
     <string name="image_perso">Image perso</string>
     <string name="enregistrer">Enregistrer</string>
     <string name="lancer">Lancer</string>
-
+    <string name="title_activity_debug">Debug</string>
+	<string name="menu_DEBUG">Informations DEBUG</string>
 </resources>

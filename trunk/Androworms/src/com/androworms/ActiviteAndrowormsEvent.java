@@ -1,5 +1,6 @@
 package com.androworms;
 
+import com.androworms.debug.ActiviteDebug;
 import com.androworms.multijoueurs.ActiviteMultiJoueur;
 
 import android.app.AlertDialog;
@@ -44,6 +45,11 @@ public class ActiviteAndrowormsEvent implements OnClickListener {
 			else if (b.getId() == R.id.btn_menu_settings) {
 				// Bouton de paramètres
 				Intent intent = new Intent(this.activiteAndroworms, ActiviteParametres.class);
+				this.activiteAndroworms.startActivity(intent);
+			}
+			else if (b.getId() == R.id.btn_DEBUG) {
+				// Bouton de DEBUG
+				Intent intent = new Intent(this.activiteAndroworms, ActiviteDebug.class);
 				this.activiteAndroworms.startActivity(intent);
 			}
 		}

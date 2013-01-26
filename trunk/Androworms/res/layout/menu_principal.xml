@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/RelativeLayout1"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
-
-    <LinearLayout
-        android:id="@+id/LinearLayout1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    
         <TextView
             android:id="@+id/textView1"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:gravity="center" />
 
         <TableLayout
             android:layout_width="match_parent"
@@ -71,41 +67,16 @@
 
             <Button
                 android:id="@+id/test_cam"
-                android:layout_width="130dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="@string/test_camera"
-                android:width="100dp" />
-        </LinearLayout>
-    </LinearLayout>
+                android:text="@string/test_camera" />
 
-    <SlidingDrawer
-        android:id="@+id/slidingDrawer1"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_margin="0dp"
-        android:layout_marginTop="0dp"
-        android:content="@+id/content"
-        android:handle="@+id/handle" >
-
-        <Button
-            android:id="@+id/handle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/informations" />
-
-        <LinearLayout
-            android:id="@+id/content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#ffffff"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/btn_DEBUG"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="@string/pas_de_donnees" />
-        </LinearLayout>
-    </SlidingDrawer>
+                android:text="@string/menu_DEBUG" />
 
-</RelativeLayout>
+        </LinearLayout>
+
+</LinearLayout>
