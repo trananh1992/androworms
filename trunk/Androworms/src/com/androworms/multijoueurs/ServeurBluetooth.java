@@ -45,7 +45,7 @@ public class ServeurBluetooth extends Thread {
 					Log.d(TAG,"device=null");
 				}
 				Log.d(TAG,"device="+socket.getRemoteDevice().getName());
-				activiteMultiJoueur.getFonctions_IHM().addNewPlayer(socket.getRemoteDevice());
+				activiteMultiJoueur.getFonctionsIHM().addNewPlayer(socket.getRemoteDevice());
 				
 			} catch (IOException e) {
 				break;
