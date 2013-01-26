@@ -60,13 +60,13 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 		Log.v(TAG,"Androworms : ending on create");
 	}
 	
-	/* Début de section des callbacks appelés automatiquement lors de la prise de photo */
+	/** Début de section des callbacks appelés automatiquement lors de la prise de photo */
 	private Camera.ShutterCallback mShutterCallback = new Camera.ShutterCallback() {
 		public void onShutter() {
 		}
 	};
 	
-	/* Callback principal, lorsque l'image au format jpeg est disponible (on l'enregistre) */
+	/** Callback principal, lorsque l'image au format jpeg est disponible (on l'enregistre) */
 	private Camera.PictureCallback mPictureCallbackJpeg = new Camera.PictureCallback() {
 		public void onPictureTaken(byte[] data, Camera c) {
 			try {
@@ -87,7 +87,7 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 			}
 		}
 	};
-	/* fonction appelée en cas d'appuie sur le bouton de photo */
+	/** Fonction appelée en cas d'appuie sur le bouton de photo */
 	private void takeThePicture () {
 		try {
 			/* on crée le dossier pour stocker la photo */
@@ -114,7 +114,7 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 		}
 	}
 	
-	/* l'appuie sur la touche DPAD CENTER prend aussi une photo (non testé) */
+	/** L'appuie sur la touche DPAD CENTER prend aussi une photo (non testé) */
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if(keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
 			takeThePicture();
@@ -152,14 +152,13 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 		}
 	}
 	
-	/* La surface à changée (lorsqu'on applique la caméra dessus par exemple) */
+	/** La surface à changée (lorsqu'on applique la caméra dessus par exemple) */
 	public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
 		if (isPreviewRunning) {
 			camera.stopPreview();
 		}
 		try {
-			/* On a stoppé la caméra le temps de changer la dimension de l'affichage des
-			 * données */
+			/* On a stoppé la caméra le temps de changer la dimension de l'affichage des données */
 			camera.setPreviewDisplay(holder);
 			Parameters param = camera.getParameters();
 			List<Size> sizes = param.getSupportedPreviewSizes();
@@ -197,7 +196,7 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 		return false;
 	}
 	
-	/* Gestionnaire d'évênement lançant cette activité */
+	/** Gestionnaire d'évênement lançant cette activité */
 	public void onClick(View v) {
 		Intent intent = new Intent(this.activiteCreationCarte, ActiviteCamera.class);
 		this.activiteCreationCarte.startActivityForResult(intent,TAKE_PICTURE);
