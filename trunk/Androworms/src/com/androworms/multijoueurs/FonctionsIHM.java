@@ -205,8 +205,8 @@ public class FonctionsIHM {
 		ProgressBar pbBluetoothAnalyse = (ProgressBar)activiteMultiJoueur.findViewById(R.id.pb_bluetooth_analyse);
 		
 		/** Init des listes des appareils **/
-		ActiviteMultiJoueur.appareilJumele = new ArrayList<BluetoothDevice>();
-		ActiviteMultiJoueur.appareilProximite = new ArrayList<BluetoothDevice>();
+		activiteMultiJoueur.appareilJumele = new ArrayList<BluetoothDevice>();
+		activiteMultiJoueur.appareilProximite = new ArrayList<BluetoothDevice>();
 		
 		listerAppareilsJumeles();
 		
@@ -253,7 +253,7 @@ public class FonctionsIHM {
 			// On click sur le bouton "Analyse"
 			public void onClick(View v) {
 				
-				ActiviteMultiJoueur.appareilProximite.clear();
+				activiteMultiJoueur.appareilProximite.clear();
 				ProgressBar pb = (ProgressBar)activiteMultiJoueur.findViewById(R.id.pb_bluetooth_analyse);
 				pb.setVisibility(View.VISIBLE);
 				
@@ -278,7 +278,7 @@ public class FonctionsIHM {
 		activiteMultiJoueur.registerReceiver(activiteMultiJoueur.mReceiver, filter);
 		filter = new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
 		activiteMultiJoueur.registerReceiver(activiteMultiJoueur.mReceiver, filter);
-		ActiviteMultiJoueur.estRegister = true;
+		activiteMultiJoueur.estServeurLance = true;
 		
 		/* Selection dans la liste */
 		lvAppareilsBluetooth.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
@@ -319,10 +319,10 @@ public class FonctionsIHM {
 	public void listerAppareilsJumeles() {
 		Set<BluetoothDevice> pairedDevices = ActiviteMultiJoueur.mBluetoothAdapter.getBondedDevices();
 		if (pairedDevices.size() > 0) {
-			ActiviteMultiJoueur.appareilJumele.clear();
+			activiteMultiJoueur.appareilJumele.clear();
 			for (BluetoothDevice device : pairedDevices) {
 				// J'ajoute les appareils jumelés à une liste
-				ActiviteMultiJoueur.appareilJumele.add(device);
+				activiteMultiJoueur.appareilJumele.add(device);
 			}
 		}
 	}
@@ -338,14 +338,14 @@ public class FonctionsIHM {
 		BluetoothDevice[] valuesA, valuesB;
 		
 		
-		valuesA = new BluetoothDevice[ActiviteMultiJoueur.appareilJumele.size()];
-		for (int j=0;j<ActiviteMultiJoueur.appareilJumele.size();j++) {
-			BluetoothDevice device = ActiviteMultiJoueur.appareilJumele.get(j);
+		valuesA = new BluetoothDevice[activiteMultiJoueur.appareilJumele.size()];
+		for (int j=0;j<activiteMultiJoueur.appareilJumele.size();j++) {
+			BluetoothDevice device = activiteMultiJoueur.appareilJumele.get(j);
 			valuesA[j] = device;
 		}
-		valuesB = new BluetoothDevice[ActiviteMultiJoueur.appareilProximite.size()];
-		for (int j=0;j<ActiviteMultiJoueur.appareilProximite.size();j++) {
-			BluetoothDevice device = ActiviteMultiJoueur.appareilProximite.get(j);
+		valuesB = new BluetoothDevice[activiteMultiJoueur.appareilProximite.size()];
+		for (int j=0;j<activiteMultiJoueur.appareilProximite.size();j++) {
+			BluetoothDevice device = activiteMultiJoueur.appareilProximite.get(j);
 			valuesB[j] = device;
 		}
 		

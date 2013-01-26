@@ -13,7 +13,7 @@ public class ServeurBluetooth extends Thread {
 	
 	private final BluetoothServerSocket mmServerSocket;
 	
-	public static BluetoothSocket socket = null;
+	public BluetoothSocket socket = null;
 	ActiviteMultiJoueur activiteMultiJoueur;
 	
 	public ServeurBluetooth(ActiviteMultiJoueur activiteMultiJoueur) {

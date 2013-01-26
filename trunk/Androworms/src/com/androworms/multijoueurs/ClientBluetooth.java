@@ -13,7 +13,7 @@ public class ClientBluetooth extends Thread {
 	//private final BluetoothSocket mmSocket;
 	private final BluetoothDevice mmDevice;
 	
-	public static BluetoothSocket mmSocket = null;
+	public BluetoothSocket mmSocket = null;
 	
 	public ClientBluetooth(BluetoothDevice device) {
 		// Use a temporary object that is later assigned to mmSocket,

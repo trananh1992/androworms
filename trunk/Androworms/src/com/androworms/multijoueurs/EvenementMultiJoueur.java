@@ -31,7 +31,7 @@ public class EvenementMultiJoueur implements OnClickListener {
 					// Le téléphone est compatible Bluetooth
 					
 					/* Changement de vue > Choix entre serveur et client */
-					activiteMultiJoueur.changerVue();
+					activiteMultiJoueur.changerVue(this);
 				}
 			}
 			else if (imgbtn == activiteMultiJoueur.findViewById(R.id.imgbtn_deux_joueurs)) {
