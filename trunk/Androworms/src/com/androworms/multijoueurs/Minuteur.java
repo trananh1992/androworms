@@ -46,7 +46,7 @@ public class Minuteur extends AsyncTask<ActiviteMultiJoueur, Integer, Boolean> {
 		// A la fin de l'opération
 		Log.v(TAG,"onPostExecute()");
 		
-		ProgressBar pb_minuteur = (ProgressBar)activiteMultiJoueur.findViewById(R.id.pb_Minuteur);
-		pb_minuteur.setProgress(0);
+		ProgressBar pbMinuteur = (ProgressBar)activiteMultiJoueur.findViewById(R.id.pb_Minuteur);
+		pbMinuteur.setProgress(0);
 	}
 }

@@ -80,11 +80,11 @@ public class ActiviteMultiJoueur extends Activity {
 	public void changerVue() {
 		setContentView(R.layout.multi_joueur_bluetooth);
 		
-		ImageButton imgbtn_bluetooth_serveur = (ImageButton)findViewById(R.id.imgbtn_bluetooth_serveur);
-		imgbtn_bluetooth_serveur.setOnClickListener(new EvenementMultiJoueur(this));
+		ImageButton imgbtnBluetoothServeur = (ImageButton)findViewById(R.id.imgbtn_bluetooth_serveur);
+		imgbtnBluetoothServeur.setOnClickListener(new EvenementMultiJoueur(this));
 		
-		ImageButton imgbtn_bluetooth_client = (ImageButton)findViewById(R.id.imgbtn_bluetooth_client);
-		imgbtn_bluetooth_client.setOnClickListener(new EvenementMultiJoueur(this));
+		ImageButton imgbtnBluetoothClient = (ImageButton)findViewById(R.id.imgbtn_bluetooth_client);
+		imgbtnBluetoothClient.setOnClickListener(new EvenementMultiJoueur(this));
 	}
 	
 	/** Démarrage du serveur Bluetooth **/
@@ -133,7 +133,7 @@ public class ActiviteMultiJoueur extends Activity {
 				// L'utilisateur a accepté l'activation de la visiblité du Bluetooth
 				
 				// On actualise l'interface graphique pour le minuteur
-				refresh_UI_minuteur();
+				ActualisationMinuteur();
 				
 				// On start le minuteur
 				Log.v(TAG, "Début du minuteur");
@@ -175,16 +175,16 @@ public class ActiviteMultiJoueur extends Activity {
 			} else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
 				// TODO : si aucun element : afficher "pas d'appareil à proximité"
 				
-				ProgressBar pb = (ProgressBar)findViewById(R.id.pb_bluetooth_analyse);
-				pb.setVisibility(View.INVISIBLE);
+				ProgressBar pbBluetoothAnalyse = (ProgressBar)findViewById(R.id.pb_bluetooth_analyse);
+				pbBluetoothAnalyse.setVisibility(View.INVISIBLE);
 				
-				Button btn_analyse = (Button)findViewById(R.id.btn_analyse);
-				btn_analyse.setEnabled(true);
+				Button btnAnalyse = (Button)findViewById(R.id.btn_analyse);
+				btnAnalyse.setEnabled(true);
 			}
 		}
 	};
 	
-	public void refresh_UI_minuteur() {
+	public void ActualisationMinuteur() {
 		TextView tv_maVisibilite = (TextView)findViewById(R.id.tv_maVisibilite);
 		ProgressBar pb_minuteur = (ProgressBar)findViewById(R.id.pb_Minuteur);
 		
