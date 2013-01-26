@@ -65,8 +65,6 @@ public class ServeurBluetooth extends Thread {
 		
 		} // pour sortir de cette boucle, il faut quitter le thread
 		
-		
-		
 	}
 	
 	/** Will cancel the listening socket, and cause the thread to finish */

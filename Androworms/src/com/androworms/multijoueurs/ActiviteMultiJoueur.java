@@ -78,7 +78,7 @@ public class ActiviteMultiJoueur extends Activity {
 		imgbtnDeuxJoueurs.setOnClickListener(evenementMultiJoueur);
 	}
 	
-	/** Changement de vue entre le choix "Bluetooth/2-joueurs" vers "Bluetooth Client/Serveur" **/
+	/** Changement de vue entre le choix "Bluetooth/2-joueurs" vers "Bluetooth Client/Serveur" */
 	public void changerVue(EvenementMultiJoueur evenementMultiJoueur) {
 		setContentView(R.layout.multi_joueur_bluetooth);
 		
@@ -89,21 +89,21 @@ public class ActiviteMultiJoueur extends Activity {
 		imgbtnBluetoothClient.setOnClickListener(evenementMultiJoueur);
 	}
 	
-	/** Démarrage du serveur Bluetooth **/
+	/** Démarrage du serveur Bluetooth */
 	public void demarrerServeurBluetooth() {
 		Log.d(TAG, "DEMARAGE DU SERVEUR BLUETOOTH");
 		sb = new ServeurBluetooth(this);
 		sb.start();
 	}
 	
-	/** Démarrage du client Bluetooth **/
+	/** Démarrage du client Bluetooth */
 	public void demarrerClientBluetooth(BluetoothDevice device) {
 		Log.d(TAG, "DEMARAGE DU CLIENT BLUETOOTH");
 		cb = new ClientBluetooth(device);
 		cb.start();
 	}
 	
-	/** Gestion des demandes d'activation/visibilité du Bluetooth **/
+	/** Gestion des demandes d'activation/visibilité du Bluetooth */
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
 		case DEMANDE_ACTIVATION_BLUETOOTH:
@@ -131,11 +131,12 @@ public class ActiviteMultiJoueur extends Activity {
 		case DEMANDE_VISIBILITE_BLUETOOTH:
 			// On reçois une réponse de l'activation de la visiblité du Bluetooth (uniquement pour le serveur Bluetooth)
 			
-			if (resultCode == DUREE_VISIBILITE_BLUETOOTH) { // Houlà c'est bizarre, mais j'ai l'impression que ça marche comme ça !!
+			if (resultCode == DUREE_VISIBILITE_BLUETOOTH) {
 				// L'utilisateur a accepté l'activation de la visiblité du Bluetooth
+				// (C'est un petit bizarre que le resultCode soit égale à la DUREE_VISIBILITE_BLUETOOTH mais ça marche comme ça !)
 				
 				// On actualise l'interface graphique pour le minuteur
-				ActualisationMinuteur();
+				actualisationMinuteur();
 				
 				// On start le minuteur
 				Log.v(TAG, "Début du minuteur");
@@ -146,6 +147,8 @@ public class ActiviteMultiJoueur extends Activity {
 				Log.v(TAG,"L'utilisateur a refusé l'activation de la visiblité du Bluetooth");
 			}
 			
+			break;
+		default:
 			break;
 		}
 	}
@@ -186,11 +189,12 @@ public class ActiviteMultiJoueur extends Activity {
 		}
 	};
 	
-	public void ActualisationMinuteur() {
+	/** Actualisation de l'affichage du minuteur */
+	public void actualisationMinuteur() {
 		TextView tvMaVisibilite = (TextView)findViewById(R.id.tv_maVisibilite);
-		ProgressBar pb_minuteur = (ProgressBar)findViewById(R.id.pb_Minuteur);
+		ProgressBar pbMinuteur = (ProgressBar)findViewById(R.id.pb_Minuteur);
 		
-		pb_minuteur.setVisibility(View.VISIBLE);
+		pbMinuteur.setVisibility(View.VISIBLE);
 		tvMaVisibilite.setText("Ma visibilité : ");
 	}
 	

@@ -36,7 +36,7 @@ public class Noyau {
 	public void test(Context context) {
 
 		creationPartieLocale();
-		ImageInformation ii = new ImageInformation(R.drawable.test_android_face, 162, 214 );
+		ImageInformation ii = new ImageInformation(R.drawable.test_android_face, 162, 214);
 		Personnage johnDoe = new Personnage("John Doe", ii);
 		johnDoe.setPosition(new PointF(300, 0));
 
