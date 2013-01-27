@@ -36,9 +36,9 @@ public class Noyau {
 	public void test(Context context) {
 
 		creationPartieLocale();
-		ImageInformation ii = new ImageInformation(R.drawable.test_android_face, 162, 214);
+		ImageInformation ii = new ImageInformation(R.drawable.test_android_face, 81, 107);
 		Personnage johnDoe = new Personnage("John Doe", ii);
-		johnDoe.setPosition(new PointF(300, 0));
+		johnDoe.setPosition(new PointF(400, 200));
 
 		SharedPreferences settings = context.getSharedPreferences(ActiviteParametres.PREFS_NAME, 0);
 		String pseudo = settings.getString("pseudo", "Joueur1");
@@ -48,7 +48,7 @@ public class Noyau {
 		monde.addPersonnage(tux);
 		monde.addPersonnage(johnDoe);
 		
-		Bitmap b = ((BitmapDrawable)context.getResources().getDrawable(R.drawable.terrain_jeu_defaut_3)).getBitmap();
+		Bitmap b = ((BitmapDrawable)context.getResources().getDrawable(R.drawable.terrain_jeu_defaut_4)).getBitmap();
 		monde.setTerrain(b, 1280, 720);
 
 		this.nomPersonnage = pseudo;
@@ -105,8 +105,8 @@ public class Noyau {
 	}
 
 	public void effectuerTir(float puissance, float angle) {
-		// TODO Auto-generated method stub
 		Log.v(TAG_NOYAU, "On tire");
+		
 	}
 	
 	/** Gestion des tests. */
