@@ -8,8 +8,8 @@ import android.util.Log;
 
 public class ConnexionDistante extends Connexion {
 	// L'item 1 designe le client et l'item 2 le serveur (si il y a)
-	private static final int serveurPosition = 1;
-	private static final int clientPosition = 0;
+	private static final int SERVEUR_POSITION = 1;
+	private static final int CLIENT_SERVEUR = 0;
 	private static final String TAG_COM = "Androworms.Communication";
 	private List<Communication> communications;
 
@@ -21,18 +21,18 @@ public class ConnexionDistante extends Connexion {
 
 
 	private Client getClient() {
-		return (Client)communications.get(clientPosition);
+		return (Client)communications.get(CLIENT_SERVEUR);
 	}
 
 	private Serveur getServeur() {
-		return (Serveur)communications.get(serveurPosition);
+		return (Serveur)communications.get(SERVEUR_POSITION);
 	}
 
 
 	public void lancementServeur() {
 		Log.v(TAG_COM, "Lancement de lancementServeur");
 		Serveur serveur = new Serveur(this);
-		communications.set(serveurPosition, serveur);
+		communications.set(SERVEUR_POSITION, serveur);
 		new Thread(serveur).start();
 	}
 

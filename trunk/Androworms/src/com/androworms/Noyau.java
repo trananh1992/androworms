@@ -117,4 +117,11 @@ public class Noyau {
 	public Monde getMonde() {
 		return monde;
 	}
+
+	
+	public void mouvementForces() {
+		
+	}
+	
+	
 }
