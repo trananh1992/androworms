@@ -1,11 +1,13 @@
 package com.androworms.multijoueurs;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -52,7 +54,7 @@ public class ActiviteMultiJoueur extends Activity {
 	public boolean isServeur = false;
 	
 	// Thread pour la communication Bluetooth
-	public ServeurBluetooth sb;
+	public ServeurConnexionBluetooth scb;
 	public ClientBluetooth cb;
 	
 	@Override
@@ -92,15 +94,27 @@ public class ActiviteMultiJoueur extends Activity {
 	/** Démarrage du serveur Bluetooth */
 	public void demarrerServeurBluetooth() {
 		Log.d(TAG, "DEMARAGE DU SERVEUR BLUETOOTH");
-		sb = new ServeurBluetooth(this);
-		sb.start();
+		scb = new ServeurConnexionBluetooth(this);
+		scb.start();
 	}
 	
 	/** Démarrage du client Bluetooth */
 	public void demarrerClientBluetooth(BluetoothDevice device) {
 		Log.d(TAG, "DEMARAGE DU CLIENT BLUETOOTH");
+		
+		// Elements de l'interface
+		ProgressBar pbBluetoothAnalyse = (ProgressBar)findViewById(R.id.pb_bluetooth_analyse);
+		Button btnConnexion = (Button)findViewById(R.id.btn_connexion);
+		
+		// On actualise l'interface graphique du client
+		pbBluetoothAnalyse.setVisibility(View.VISIBLE);
+		
 		cb = new ClientBluetooth(device);
 		cb.start();
+			
+		// On actualise l'interface graphique du client
+		btnConnexion.setEnabled(true);
+		pbBluetoothAnalyse.setVisibility(View.INVISIBLE);
 	}
 	
 	/** Gestion des demandes d'activation/visibilité du Bluetooth */
