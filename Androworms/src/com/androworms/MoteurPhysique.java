@@ -1,5 +1,7 @@
 package com.androworms;
 
+import java.util.List;
+
 import android.graphics.Color;
 import android.graphics.PointF;
 
@@ -36,6 +38,14 @@ public class MoteurPhysique {
 			return b;
 		}
 	}
+	
+	private float abs(float a) {
+		if(a < 0) {
+			return -a;
+		} else {
+			return a;
+		}
+	}
 
 	public void deplacementJoueurDroite(String personnage) {
 		deplacementJoueur(personnage, TAILLE_DEPLACEMENT_JOUEUR);
@@ -48,30 +58,29 @@ public class MoteurPhysique {
 	public void deplacementJoueur(String personnage, int addToX) {
 		Personnage pOld = monde.getPersonnage(personnage);
 		Personnage pNew = pOld.clone();
-		pNew.setPosition(pNew.getPosition().x + addToX, pNew.getPosition().y);
-		ajusterY(pNew);
-		pNew = validationDeplacement(pOld, pNew);
-		pOld.setPosition(new PointF(pNew.getPosition().x, pNew.getPosition().y));
-		gravite(pOld);
+		for(int i = 0; i < abs(addToX); i++) {
+			pNew.setPosition(pNew.getPosition().x + (addToX/abs(addToX)), pNew.getPosition().y);
+			pOld.setPosition(new PointF(pNew.getPosition().x, pNew.getPosition().y));
+			gravite(pOld);
+		}
 		noyau.actualiserGraphisme();
 	}
 	
-	private Personnage validationDeplacement(Personnage pOld, Personnage pNew) {
-		float decalage = pOld.getPosition().y - pNew.getPosition().y;
-		if( decalage < HAUTEUR_DEPLACEMENT_JOUEUR && !estEnCollision(pNew)) {
-			return pNew;
-		}
-		return pOld;
-	}
-	
 	private boolean estEnCollision(Personnage personnage) {
-		for(int i = 0; i < monde.nombrePersonnage(); i++) {
+		boolean result = false;
+		for(int i = 0; i < monde.nombrePersonnage() && !result; i++) {
 			Personnage p = monde.getListePersonnage().get(i);
 			if( p.getNom().compareTo(personnage.getNom()) != 0 && personnage.estEnCollision(p)) {
-				return true;
+				result = true;
 			}
 		}
-		return false;
+		if( !result ) {
+			List<PointF> enveloppeConvexe = personnage.getEnveloppeConvexe();
+			for(int i = 0; i < enveloppeConvexe.size() && !result; i++) {
+				result = result || collision(enveloppeConvexe.get(i)) ;				
+			}
+		}
+		return result;
 	}
 	
 	private void ajusterY( Personnage p) {
@@ -88,20 +97,23 @@ public class MoteurPhysique {
 		}	
 		return decalage;
 	}
+
 	
 	/** Cette fonction verifie que la gravite est respectee. */
 	public void gravite() {
 		for(int i = 0; i < monde.nombrePersonnage(); i++) {
 			Personnage p = monde.getListePersonnage().get(i);
 			while(personnageVolant(p)) {
+				p.addMouvementForces(p.getPosition());
 				p.setPosition(p.getPosition().x, p.getPosition().y+1);
-
 			}
 		}
-		noyau.actualiserGraphisme();
+		noyau.mouvementForces();
+		//noyau.actualiserGraphisme();
 	}
 	
 	/** Cette fonction verifie que toutes les regles de la physique implementees sont respectees. */
+
 	public void gravite(Personnage p) {
 		while(personnageVolant(p)) {
 			p.setPosition(p.getPosition().x, p.getPosition().y+1);
@@ -112,17 +124,21 @@ public class MoteurPhysique {
 	/** On teste si le personnage n'a rien sous les pieds.
 	    Renvoie vrai si le personnage vole et faux si non. */
 	public boolean personnageVolant(Personnage p) {
-		// TODO : la fonction ne prends qu'un point de reference
-		return (!collision((int)p.getPosition().x, p.getHeightImageTerrain()+(int)p.getPosition().y)
-				&& monde.getTerrain().getHeight() - (p.getHeightImageTerrain()+(int)p.getPosition().y) > 1);
-	}
+		return (!collision((int)p.getPosition().x, p.getHeightImageTerrain()+(int)p.getPosition().y))
+				//&& estDansTerrain(p))
+				;
+}
 	
 	public boolean collision(int x, int y) {
-		return Color.alpha(monde.getTerrain().getPixel(x, y)) > 0;	
+		return Color.alpha(monde.getTerrain().getPixel(x, y)) > 0;
 	}
 	
 	public boolean collision(PointF p) {
 		return collision((int)p.x, (int)p.y);
+	}
+	
+	public boolean collision(Personnage p) {
+		return collision(p.getPosition());
 	}
 	
 	public void sautJoueurDroite() {
@@ -133,7 +149,11 @@ public class MoteurPhysique {
 		
 	}
 	
-	public boolean sortieDuTerrain(Personnage p) {
-		return false;
+	public boolean estDansTerrain(Personnage p) {
+		return monde.getTerrain().getHeight() - (p.getHeightImageTerrain()+(int)p.getPosition().y) > 1
+				&& monde.getTerrain().getWidth() - (p.getWidthImageTerrain()+(int)p.getPosition().x) > 1
+				&& p.getPosition().y >= 0 
+				&& p.getPosition().x >= 0
+				;
 	}
 }
