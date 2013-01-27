@@ -29,12 +29,12 @@ public class ConnexionDistante extends Connexion {
 	}
 
 
-	public void lancementServeur() {
+	/*public void lancementServeur() {
 		Log.v(TAG_COM, "Lancement de lancementServeur");
 		Serveur serveur = new Serveur(this);
 		communications.set(SERVEUR_POSITION, serveur);
 		new Thread(serveur).start();
-	}
+	}*/
 
 
 	public List<String> listeDesServeursPrimaires() {
@@ -68,9 +68,4 @@ public class ConnexionDistante extends Connexion {
 	public void deplacementJoueurSaut(String nomPersonnage) {
 
 	}
-
-	public void arretServeur() {
-		getServeur().arret();
-	}
-
 }

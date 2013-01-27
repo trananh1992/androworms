@@ -108,14 +108,11 @@ public class FonctionsIHM {
 		btnDemarrerPartie.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				Log.v(TAG,"On démarre la partie ?");
-				if (activiteMultiJoueur.sb == null) {
+				if (activiteMultiJoueur.scb == null) {
 					Log.v(TAG,"Vous n'avez jamais lancer le serveur");
 				} else {
 					Log.v(TAG,"Arret du Thread");
-					activiteMultiJoueur.sb.cancel();// TODO-MH :: vérifier si c'est bien fait
-					
-					// TODO : arreter le thread sb
-					
+					activiteMultiJoueur.scb.arret();
 					Log.v("TAG","Je suis le SERVEUR et je clos le serveur ! Terminé les inscriptions ! !");
 				}
 			}
@@ -312,7 +309,7 @@ public class FonctionsIHM {
 			rafraichirListeAppareils();
 		}
 		
-		btnConnexion.setEnabled(true);
+		btnConnexion.setEnabled(false);
 	}
 	
 	/** Liste les appareils bluetooth jumélés **/

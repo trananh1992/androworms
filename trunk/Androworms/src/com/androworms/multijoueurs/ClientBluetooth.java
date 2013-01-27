@@ -15,45 +15,37 @@ import com.androworms.Personnage;
 
 public class ClientBluetooth extends Thread {
 	
-	private static final String TAG = "ClientBluetooth";
-	
-	//private final BluetoothSocket mmSocket;
-	private final BluetoothDevice mmDevice;
-	
-	public BluetoothSocket mmSocket = null;
+	private static final String TAG_CLIENT = "ClientBluetooth";
+	private BluetoothSocket socketServeur;
 	
 	public ClientBluetooth(BluetoothDevice device) {
-		// Use a temporary object that is later assigned to mmSocket,
-		// because mmSocket is final
-		BluetoothSocket tmp = null;
-		mmDevice = device;
-		
-		// Get a BluetoothSocket to connect with the given BluetoothDevice
 		try {
-			tmp = device.createRfcommSocketToServiceRecord(ActiviteMultiJoueur.ANDROWORMS_UUID);
-		} catch (IOException e) { }
-		mmSocket = tmp;
+			socketServeur = device.createRfcommSocketToServiceRecord(ActiviteMultiJoueur.ANDROWORMS_UUID);
+		} catch (IOException e) {
+			
+		}
 	}
 	
 	public void run() {
-		// Cancel discovery because it will slow down the connection
+		// On annule la recherche d'appareil à proximité si elle était lancé (elle sert plus à rien)
 		ActiviteMultiJoueur.mBluetoothAdapter.cancelDiscovery();
 		
 		try {
-			// Connect the device through the socket. This will block
-			// until it succeeds or throws an exception
-			mmSocket.connect();
-			Log.d("plop","Le client à accepté la connexion !");
+			socketServeur.connect();
+			Log.d(TAG_CLIENT, "Le client à accepté la connexion !");
+			
 		} catch (IOException connectException) {
-			// Unable to connect; close the socket and get out
+			// Impossible de se connecter, donc on clos la connexion
 			try {
-				mmSocket.close();
-			} catch (IOException closeException) { }
+				socketServeur.close();
+			} catch (IOException closeException) {
+				
+			}
 			return;
 		}
 		
 		// Do work to manage the connection (in a separate thread)
-		manageConnectedSocket(mmSocket);
+		manageConnectedSocket(socketServeur);
 	}
 	
 	private void manageConnectedSocket(BluetoothSocket mmSocket) {
@@ -106,12 +98,5 @@ public class ClientBluetooth extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
- 
-	/** Will cancel an in-progress connection, and close the socket */
-	public void cancel() {
-		try {
-			mmSocket.close();
-		} catch (IOException e) { }
 	}
 }
