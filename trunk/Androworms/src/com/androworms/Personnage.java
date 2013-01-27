@@ -173,5 +173,31 @@ public class Personnage extends ElementSurCarte implements Serializable {
 	public void addMouvementForces(PointF p) {
 		mouvementForces.add(p);
 	}
+
+	public List<PointF> getMouvementGauche() {
+		return mouvementGauche;
+	}
+
+	public void setMouvementGauche(List<PointF> mouvementGauche) {
+		this.mouvementGauche = mouvementGauche;
+	}
+
+	public List<PointF> getMouvementDroite() {
+		return mouvementDroite;
+	}
+
+	public void setMouvementDroite(List<PointF> mouvementDroite) {
+		this.mouvementDroite = mouvementDroite;
+	}
+
+	public List<PointF> getMouvementForces() {
+		return mouvementForces;
+	}
+
+	public void setMouvementForces(List<PointF> mouvementForces) {
+		this.mouvementForces = mouvementForces;
+	}
+	
+	
 }
 

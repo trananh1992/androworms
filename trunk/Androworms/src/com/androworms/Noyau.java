@@ -38,7 +38,7 @@ public class Noyau {
 		creationPartieLocale();
 		ImageInformation ii = new ImageInformation(R.drawable.test_android_face, 81, 107);
 		Personnage johnDoe = new Personnage("John Doe", ii);
-		johnDoe.setPosition(new PointF(400, 200));
+		johnDoe.setPosition(new PointF(220, 200));
 
 		SharedPreferences settings = context.getSharedPreferences(ActiviteParametres.PREFS_NAME, 0);
 		String pseudo = settings.getString("pseudo", "Joueur1");

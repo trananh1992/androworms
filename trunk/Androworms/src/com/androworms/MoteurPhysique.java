@@ -14,7 +14,7 @@ public class MoteurPhysique {
 	private Noyau noyau;
 	private Monde monde;
 	public static final int TAILLE_DEPLACEMENT_JOUEUR = 1;
-	public static final int HAUTEUR_DEPLACEMENT_JOUEUR = 20;
+	public static final int HAUTEUR_DEPLACEMENT_JOUEUR = 5;
 	
 	public MoteurPhysique(Noyau n, Monde monde) {
 		this.noyau = n;
@@ -48,20 +48,25 @@ public class MoteurPhysique {
 	}
 
 	public void deplacementJoueurDroite(String personnage) {
-		deplacementJoueur(personnage, TAILLE_DEPLACEMENT_JOUEUR);
+		Personnage p = monde.getPersonnage(personnage);
+		deplacementJoueur(p, 1, p.getMouvementDroite());
 	}
 	
 	public void deplacementJoueurGauche(String personnage) {
-		deplacementJoueur(personnage, -TAILLE_DEPLACEMENT_JOUEUR);
+		Personnage p = monde.getPersonnage(personnage);
+		deplacementJoueur(p, -1, p.getMouvementGauche());
 	}
 	
-	public void deplacementJoueur(String personnage, int addToX) {
-		Personnage pOld = monde.getPersonnage(personnage);
+	public void deplacementJoueur(Personnage pOld, int addToX, List<PointF> path) {
 		Personnage pNew = pOld.clone();
-		for(int i = 0; i < abs(addToX); i++) {
-			pNew.setPosition(pNew.getPosition().x + (addToX/abs(addToX)), pNew.getPosition().y);
-			pOld.setPosition(new PointF(pNew.getPosition().x, pNew.getPosition().y));
-			gravite(pOld);
+		for(int i = 0; i < TAILLE_DEPLACEMENT_JOUEUR; i++) {
+			pNew.setPosition(pNew.getPosition().x + addToX, 
+					pNew.getPosition().y-HAUTEUR_DEPLACEMENT_JOUEUR);
+			if( !estEnCollision(pNew) && estDansTerrain(pNew)) {
+				pOld.setPosition(new PointF(pNew.getPosition().x, pNew.getPosition().y));
+				gravite(pOld);
+				path.add(pOld.getPosition());
+			}
 		}
 		noyau.actualiserGraphisme();
 	}
@@ -82,22 +87,6 @@ public class MoteurPhysique {
 		}
 		return result;
 	}
-	
-	private void ajusterY( Personnage p) {
-		int decalage = decalagePositionPersonnage((int)p.getPosition().x,(int)(p.getHeightImageTerrain()+p.getPosition().y));
-		p.setPosition(p.getPosition().x, p.getPosition().y - decalage);
-	}
-	
-	/** Cette fonction retoune la position optimal de y. */
-	private int decalagePositionPersonnage( int x, int y ) {
-		int decalage =0;
-		while(y >= 0 && collision(x, y)) {
-			y--;
-			decalage ++;
-		}	
-		return decalage;
-	}
-
 	
 	/** Cette fonction verifie que la gravite est respectee. */
 	public void gravite() {
@@ -124,7 +113,13 @@ public class MoteurPhysique {
 	/** On teste si le personnage n'a rien sous les pieds.
 	    Renvoie vrai si le personnage vole et faux si non. */
 	public boolean personnageVolant(Personnage p) {
-		return (!collision((int)p.getPosition().x, p.getHeightImageTerrain()+(int)p.getPosition().y))
+		List<PointF> tmp = p.getEnveloppeConvexeBas();
+		for(int i =0; i < tmp.size(); i ++) {
+			if(collision(tmp.get(i))) {
+				return false;
+			}
+		}
+		return true
 				//&& estDansTerrain(p))
 				;
 }
@@ -152,8 +147,8 @@ public class MoteurPhysique {
 	public boolean estDansTerrain(Personnage p) {
 		return monde.getTerrain().getHeight() - (p.getHeightImageTerrain()+(int)p.getPosition().y) > 1
 				&& monde.getTerrain().getWidth() - (p.getWidthImageTerrain()+(int)p.getPosition().x) > 1
-				&& p.getPosition().y >= 0 
-				&& p.getPosition().x >= 0
+				&& p.getPosition().y >= 1 
+				&& p.getPosition().x >= 1
 				;
 	}
 }
