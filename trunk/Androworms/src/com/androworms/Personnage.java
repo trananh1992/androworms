@@ -1,5 +1,6 @@
 package com.androworms;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,10 @@ import android.graphics.PointF;
 
 /** Cette classe contient toutes les informations sur le personnage utilisé par un joueur.
  */
-public class Personnage extends ElementSurCarte {
+public class Personnage extends ElementSurCarte implements Serializable {
+	
+	private static final long serialVersionUID = 5484494097182728100L;
+	
 	/*
 	 * Propriete de personnage.
 	 * Image du personnage
