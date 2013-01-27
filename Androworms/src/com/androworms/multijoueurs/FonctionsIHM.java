@@ -389,7 +389,6 @@ public class FonctionsIHM {
 		values = new BluetoothDevice[1];
 		
 		ArrayAdapter<BluetoothDevice> adapter = new ArrayAdapter<BluetoothDevice>(activiteMultiJoueur, android.R.layout.simple_list_item_1, android.R.id.text1, values);
-		
-		lv.setAdapter(adapter);
+		//lv.setAdapter(adapter);
 	}
 }
