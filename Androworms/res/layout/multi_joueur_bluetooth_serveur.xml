@@ -82,10 +82,11 @@
         </LinearLayout>
 
         <ListView
-            android:id="@+id/liste_appareils_bluetoothD"
+            android:id="@+id/liste_appareils_bluetoothS"
             android:layout_width="match_parent"
-    		android:layout_height="0dip"
-    		android:layout_weight="1" >
+            android:layout_height="0dip"
+            android:layout_weight="1" >
+
         </ListView>
 
         <Button
