@@ -88,8 +88,7 @@ public class ClientConnexionBluetooth extends AsyncTask<ActiviteMultiJoueur, Int
 			os.write(s.getBytes());
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.e(TAG_CLIENT, "Erreur dans l'envoi du message sur le Client Bluetooth", e);
 		}
 	}
 	
@@ -99,8 +98,6 @@ public class ClientConnexionBluetooth extends AsyncTask<ActiviteMultiJoueur, Int
 			
 			byte[] buffer = new byte[1024];
 			is.read(buffer);
-			/*Personnage p = buffer;
-			Log.d("MESSAGE RECU",buffer.toString());*/
 			
 			ByteArrayInputStream bis = new ByteArrayInputStream(buffer);
 			ObjectInput in = null;
@@ -112,8 +109,7 @@ public class ClientConnexionBluetooth extends AsyncTask<ActiviteMultiJoueur, Int
 				Log.d("MESSAGE RECU : ",p.getNom());
 				
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Log.e(TAG_CLIENT, "Erreur dans la reception du message sur le Client Bluetooth", e);
 			} finally {
 				bis.close();
 				in.close();
@@ -121,8 +117,7 @@ public class ClientConnexionBluetooth extends AsyncTask<ActiviteMultiJoueur, Int
 			
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.e(TAG_CLIENT, "Erreur dans la reception du message sur le Client Bluetooth", e);
 		}
 	}
 }

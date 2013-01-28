@@ -44,10 +44,8 @@ public class FonctionsIHM {
 		Button btnDemarrerPartie = (Button)activiteMultiJoueur.findViewById(R.id.btn_demarrerPartie);
 		Button btnMontrerBluetooth = (Button)activiteMultiJoueur.findViewById(R.id.btn_MontrerBluetooth);
 		
-		// Actualisation des
+		// Actualisation des éléments de l'interface graphique du Serveur
 		actualisationInterfaceBluetoothServeur();
-		
-		
 		
 		/** Actions sur les composants **/
 		tgEtatBluetooth.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -64,9 +62,8 @@ public class FonctionsIHM {
 					// La première est de faire une Intent pour demander à l'utilisateur s'il est d'accord.
 					Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
 					activiteMultiJoueur.startActivityForResult(enableBtIntent, ActiviteMultiJoueur.DEMANDE_ACTIVATION_BLUETOOTH);
-					// La seconde consiste à l'activer l'activer directement sans accord de l'utilisateur
-//					mBluetoothAdapter.enable();
-					// La documentation est formele sur le sujet : IL EST INTERDIT DE FAIRE LA METHODE 2 !
+					// La seconde consiste à l'activer l'activer directement sans accord de l'utilisateur : mBluetoothAdapter.enable();
+					// La documentation est formel sur le sujet : IL EST INTERDIT DE FAIRE LA METHODE 2 !
 					// cf http://developer.android.com/reference/android/bluetooth/BluetoothAdapter.html#enable()
 					
 					// On refresh les infos
@@ -103,13 +100,13 @@ public class FonctionsIHM {
 		btnDemarrerPartie.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				Log.v(TAG,"On démarre la partie ?");
-				if (activiteMultiJoueur.scb == null) {
+				if (activiteMultiJoueur.serveurConnexionBluetooth == null) {
 					Log.v(TAG,"Vous n'avez jamais lancer le serveur");
 				} else {
 					Log.v(TAG,"Arret du Thread");
 					
 					// On arrête le serveur de connexion Bluetooth
-					activiteMultiJoueur.scb.cancel(true);
+					activiteMultiJoueur.serveurConnexionBluetooth.cancel(true);
 					
 					Log.v("TAG","Je suis le SERVEUR et je clos le serveur ! Terminé les inscriptions ! ! on va joueur...");
 					

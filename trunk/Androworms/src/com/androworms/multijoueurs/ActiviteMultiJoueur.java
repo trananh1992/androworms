@@ -47,8 +47,8 @@ public class ActiviteMultiJoueur extends Activity {
 	public boolean isServeur = false;
 	
 	// Thread pour la communication Bluetooth
-	public ServeurConnexionBluetooth scb;
-	public ClientConnexionBluetooth cb;
+	public ServeurConnexionBluetooth serveurConnexionBluetooth;
+	public ClientConnexionBluetooth clientConnexionBluetooth;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -87,8 +87,8 @@ public class ActiviteMultiJoueur extends Activity {
 	/** Démarrage du serveur Bluetooth */
 	public void demarrerServeurBluetooth() {
 		Log.d(TAG, "DEMARAGE DU SERVEUR BLUETOOTH");
-		scb = new ServeurConnexionBluetooth(this);
-		scb.execute(this);
+		serveurConnexionBluetooth = new ServeurConnexionBluetooth(this);
+		serveurConnexionBluetooth.execute(this);
 	}
 	
 	/** Démarrage du client Bluetooth */
@@ -101,8 +101,8 @@ public class ActiviteMultiJoueur extends Activity {
 		// On actualise l'interface graphique du client
 		pbBluetoothAnalyse.setVisibility(View.VISIBLE);
 		
-		cb = new ClientConnexionBluetooth(device);
-		cb.execute(this);
+		clientConnexionBluetooth = new ClientConnexionBluetooth(device);
+		clientConnexionBluetooth.execute(this);
 	}
 	
 	/** Gestion des demandes d'activation/visibilité du Bluetooth */
