@@ -93,11 +93,6 @@ public class FonctionsIHM {
 				//startActivity(discoverableIntent);
 				activiteMultiJoueur.startActivityForResult(discoverableIntent, ActiviteMultiJoueur.DEMANDE_VISIBILITE_BLUETOOTH);
 				
-			/*	refresh_UI_minuteur();
-				
-				Log.v(TAG, "Début du minuteur");
-				ch = new Minuteur();
-				ch.execute(ActiviteMultiJoueur.this);*/
 				// On refresh les infos
 				actualisationInterfaceBluetoothServeur();
 			}
@@ -112,7 +107,10 @@ public class FonctionsIHM {
 					Log.v(TAG,"Vous n'avez jamais lancer le serveur");
 				} else {
 					Log.v(TAG,"Arret du Thread");
-					activiteMultiJoueur.scb.arret();
+					
+					// On arrête le serveur de connexion Bluetooth
+					activiteMultiJoueur.scb.cancel(true);
+					
 					Log.v("TAG","Je suis le SERVEUR et je clos le serveur ! Terminé les inscriptions ! ! on va joueur...");
 					
 					// TODO le serveur doit dire aux clients qu'on commence à jouer !
@@ -375,18 +373,5 @@ public class FonctionsIHM {
 	
 	public void chargementComposantsCommuns() {
 		// Fusion des 2 ToggleButton tg_etatBluetooth ??
-	}
-	
-	/** Ajout de la connexion d'un client sur l'interface du serveur **/
-	public void addNewPlayer(BluetoothDevice device) {
-		// FIXME : ne fonctionne pas !
-		
-		ListView lv = (ListView)activiteMultiJoueur.findViewById(R.id.liste_appareils_bluetoothD);
-		
-		BluetoothDevice[] values;
-		values = new BluetoothDevice[1];
-		
-		ArrayAdapter<BluetoothDevice> adapter = new ArrayAdapter<BluetoothDevice>(activiteMultiJoueur, android.R.layout.simple_list_item_1, android.R.id.text1, values);
-		//lv.setAdapter(adapter);
 	}
 }

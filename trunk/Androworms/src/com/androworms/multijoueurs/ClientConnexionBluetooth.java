@@ -9,18 +9,24 @@ import java.io.OutputStream;
 
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
 
 import com.androworms.Contact;
 import com.androworms.Personnage;
+import com.androworms.R;
 
 /** Lors de la création d'une partie en Multi-joueur en Bluetooth,
  *  ce Thread est crée pour crée l'échange de socket entre le client et le serveur.
  */
-public class ClientConnexionBluetooth extends Thread {
+public class ClientConnexionBluetooth extends AsyncTask<ActiviteMultiJoueur, Integer, Boolean> {
 	
 	private static final String TAG_CLIENT = "ClientBluetooth";
 	private BluetoothSocket socketServeur;
+	private ActiviteMultiJoueur activiteMultiJoueur;
 	
 	public ClientConnexionBluetooth(BluetoothDevice device) {
 		try {
@@ -30,7 +36,11 @@ public class ClientConnexionBluetooth extends Thread {
 		}
 	}
 	
-	public void run() {
+	@Override
+	protected Boolean doInBackground(ActiviteMultiJoueur... params) {
+		
+		this.activiteMultiJoueur = params[0];
+		
 		// On annule la recherche d'appareil à proximité si elle était lancé (elle sert plus à rien)
 		ActiviteMultiJoueur.mBluetoothAdapter.cancelDiscovery();
 		
@@ -45,11 +55,23 @@ public class ClientConnexionBluetooth extends Thread {
 			} catch (IOException closeException) {
 				
 			}
-			return;
+			return false;
 		}
 		
 		// Do work to manage the connection (in a separate thread)
 		//manageConnectedSocket(socketServeur);
+		return true;
+	}
+	
+	@Override
+	protected void onPostExecute(Boolean result) {
+		// A la fin de l'opération
+		ProgressBar pbBluetoothAnalyse = (ProgressBar)activiteMultiJoueur.findViewById(R.id.pb_bluetooth_analyse);
+		Button btnConnexion = (Button)activiteMultiJoueur.findViewById(R.id.btn_connexion);
+		// On actualise l'interface graphique du client
+		// FIXME : comme c'est dans un thread séparé, il faut que je vérifie que la socket est OK
+		btnConnexion.setEnabled(true);
+		pbBluetoothAnalyse.setVisibility(View.INVISIBLE);
 	}
 	
 	private void manageConnectedSocket(BluetoothSocket mmSocket) {

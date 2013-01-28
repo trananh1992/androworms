@@ -11,16 +11,21 @@ import java.util.List;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
+import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.androworms.Contact;
 import com.androworms.ImageInformation;
 import com.androworms.Personnage;
+import com.androworms.R;
 
 /** Lors de la création d'une partie en Multi-joueur en Bluetooth,
  *  ce Thread est crée pour crée pour tourner et attendre les connexions clientes.
  */
-public class ServeurConnexionBluetooth extends Thread {
+public class ServeurConnexionBluetooth extends AsyncTask<ActiviteMultiJoueur, String, Boolean> {
 	
 	private static final String TAG_SERVEUR = "Androworms.ServeurConnexionBluetooth";
 	
@@ -33,11 +38,25 @@ public class ServeurConnexionBluetooth extends Thread {
 	
 	ActiviteMultiJoueur activiteMultiJoueur;
 	
+	// Gestion de la liste des clients déjà connecté
+	ArrayAdapter<String> adaptateurListeClients;
+	List<String> listeClients;
+	
 	public ServeurConnexionBluetooth(ActiviteMultiJoueur activiteMultiJoueur) {
 		
 		Log.v(TAG_SERVEUR, "Création de la socket publique");
 		
+		// Enregistrement de l'interface
 		this.activiteMultiJoueur = activiteMultiJoueur;
+		
+		// Gestion de la liste des clients déjà connecté
+		listeClients = new ArrayList<String>();
+		adaptateurListeClients = new ArrayAdapter<String>(activiteMultiJoueur, android.R.layout.simple_list_item_1, android.R.id.text1, listeClients);
+		
+		// Affichage de la liste des clients déjà connecté
+		ListView lv = (ListView)activiteMultiJoueur.findViewById(R.id.liste_appareils_bluetoothS);
+		lv.setAdapter(adaptateurListeClients);
+		lv.setVisibility(View.VISIBLE);
 		
 		// Intialisation de la liste des sockets clients
 		socketClient = new ArrayList<BluetoothSocket>();
@@ -51,7 +70,8 @@ public class ServeurConnexionBluetooth extends Thread {
 		}
 	}
 	
-	public void run() {
+	@Override
+	protected Boolean doInBackground(ActiviteMultiJoueur... params) {
 		BluetoothSocket socket = null;
 		
 		while (true) {
@@ -66,20 +86,37 @@ public class ServeurConnexionBluetooth extends Thread {
 				}
 				
 				// On ajoute le client dans la liste sur l'interface du client
-				// FIXME : ne marche pas encore !
-				activiteMultiJoueur.getFonctionsIHM().addNewPlayer(socket.getRemoteDevice());
+				publishProgress(socket.getRemoteDevice().getName());
 				
 				// On ajoute la socket à la liste des sockets clients du serveur
 				socketClient.add(socket);
 				
-				manageConnectedSocket(socket);
-				
+				//manageConnectedSocket(socket);
 			} catch (Exception e) {
-				Log.v(TAG_SERVEUR, "Erreur dans la reception d'une connexion cliente sur le ServeurConnexionBluetooth");
+				Log.e(TAG_SERVEUR, "Erreur dans la reception d'une connexion cliente sur le ServeurConnexionBluetooth", e);
 				break;
 			}
 		}
+		
+		return true;
 	}
+	
+	@Override
+	protected void onProgressUpdate(String... name) {
+		// Ajout d'un client dans la liste des clients sur le serveur
+		listeClients.add(name[0]);
+		adaptateurListeClients.notifyDataSetChanged();
+	}
+	
+	/** Lorsque l'on arrête le serveur de connexion Bluetooth, il faut fermer la socket */
+	public void onCancelled() {
+		try {
+			socketServeur.close();
+		} catch (IOException e) {
+			
+		}
+	}
+	
 	
 	private void manageConnectedSocket(BluetoothSocket mmSocket) {
 		receiveMessage(mmSocket);
@@ -119,15 +156,6 @@ public class ServeurConnexionBluetooth extends Thread {
 			
 		} catch (IOException e) {
 			Log.e(TAG_SERVEUR, e.getMessage());
-		}
-	}
-	
-	/** Lorsque l'on arrête le serveur de connexion Bluetooth, il faut fermer la socket */
-	public void arret() {
-		try {
-			socketServeur.close();
-		} catch (IOException e) {
-			
 		}
 	}
 }
