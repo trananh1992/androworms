@@ -13,9 +13,13 @@ import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.util.Log;
 
+import com.androworms.Contact;
 import com.androworms.ImageInformation;
 import com.androworms.Personnage;
 
+/** Lors de la création d'une partie en Multi-joueur en Bluetooth,
+ *  ce Thread est crée pour crée pour tourner et attendre les connexions clientes.
+ */
 public class ServeurConnexionBluetooth extends Thread {
 	
 	private static final String TAG_SERVEUR = "Androworms.ServeurConnexionBluetooth";
@@ -40,7 +44,7 @@ public class ServeurConnexionBluetooth extends Thread {
 		
 		try {
 			// Création de la socket avec le UUID (définit aléatoiremenet pour l'application)
-			socketServeur = BluetoothAdapter.getDefaultAdapter().listenUsingRfcommWithServiceRecord("Androworms", ActiviteMultiJoueur.ANDROWORMS_UUID);
+			socketServeur = BluetoothAdapter.getDefaultAdapter().listenUsingRfcommWithServiceRecord("Androworms", Contact.ANDROWORMS_UUID);
 		} catch (Exception e) {
 			Log.e(TAG_SERVEUR, "Erreur sur la creation de la socket publique ");
 			Log.e(TAG_SERVEUR, "\t"+e.getMessage());
@@ -111,7 +115,7 @@ public class ServeurConnexionBluetooth extends Thread {
 			is.read(buffer);
 			
 			String message_recu = new String(buffer);
-			Log.d(TAG_SERVEUR, "MESSAGE RECU" + message_recu);
+			Log.d(TAG_SERVEUR, "MESSAGE RECU : " + message_recu);
 			
 		} catch (IOException e) {
 			Log.e(TAG_SERVEUR, e.getMessage());
