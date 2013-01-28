@@ -36,18 +36,13 @@ public class ServeurConnexionBluetooth extends AsyncTask<ActiviteMultiJoueur, St
 	// Liste des sockets des clients du jeu.
 	public List<BluetoothSocket> socketClient;
 	
-	ActiviteMultiJoueur activiteMultiJoueur;
-	
 	// Gestion de la liste des clients déjà connecté
-	ArrayAdapter<String> adaptateurListeClients;
-	List<String> listeClients;
+	private ArrayAdapter<String> adaptateurListeClients;
+	private List<String> listeClients;
 	
 	public ServeurConnexionBluetooth(ActiviteMultiJoueur activiteMultiJoueur) {
 		
 		Log.v(TAG_SERVEUR, "Création de la socket publique");
-		
-		// Enregistrement de l'interface
-		this.activiteMultiJoueur = activiteMultiJoueur;
 		
 		// Gestion de la liste des clients déjà connecté
 		listeClients = new ArrayList<String>();
@@ -140,7 +135,7 @@ public class ServeurConnexionBluetooth extends AsyncTask<ActiviteMultiJoueur, St
 			out.close();
 			bos.close();
 		} catch (IOException e) {
-			Log.e(TAG_SERVEUR, e.getMessage());
+			Log.e(TAG_SERVEUR, "Erreur dans l'envoi du message sur le Serveur Bluetooth", e);
 		}
 	}
 	
@@ -151,11 +146,11 @@ public class ServeurConnexionBluetooth extends AsyncTask<ActiviteMultiJoueur, St
 			byte[] buffer = new byte[1024];
 			is.read(buffer);
 			
-			String message_recu = new String(buffer);
-			Log.d(TAG_SERVEUR, "MESSAGE RECU : " + message_recu);
+			String messageRecu = new String(buffer);
+			Log.d(TAG_SERVEUR, "MESSAGE RECU : " + messageRecu);
 			
 		} catch (IOException e) {
-			Log.e(TAG_SERVEUR, e.getMessage());
+			Log.e(TAG_SERVEUR, "Erreur dans la reception du message sur le Serveur Bluetooth", e);
 		}
 	}
 }
