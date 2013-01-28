@@ -37,7 +37,7 @@ public class Chargement extends AsyncTask<ActiviteAndroworms, Integer, Boolean> 
 
 		if (!touchDone) {
 			try {
-				synchronized(this){
+				synchronized(this) {
 					Log.v(TAG,"Lancement timer");
 					wait(TEMPS_PAUSE - (new Date().getTime() - dateDebutChargement.getTime()));
 				}

@@ -14,4 +14,8 @@ public class Serveur extends Communication implements Runnable {
 	public void run() {
 		
 	}
+	
+	public void arret() {
+		
+	}
 }

@@ -11,16 +11,20 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.util.Log;
 
+import com.androworms.Contact;
 import com.androworms.Personnage;
 
-public class ClientBluetooth extends Thread {
+/** Lors de la création d'une partie en Multi-joueur en Bluetooth,
+ *  ce Thread est crée pour crée l'échange de socket entre le client et le serveur.
+ */
+public class ClientConnexionBluetooth extends Thread {
 	
 	private static final String TAG_CLIENT = "ClientBluetooth";
 	private BluetoothSocket socketServeur;
 	
-	public ClientBluetooth(BluetoothDevice device) {
+	public ClientConnexionBluetooth(BluetoothDevice device) {
 		try {
-			socketServeur = device.createRfcommSocketToServiceRecord(ActiviteMultiJoueur.ANDROWORMS_UUID);
+			socketServeur = device.createRfcommSocketToServiceRecord(Contact.ANDROWORMS_UUID);
 		} catch (IOException e) {
 			
 		}
@@ -45,7 +49,7 @@ public class ClientBluetooth extends Thread {
 		}
 		
 		// Do work to manage the connection (in a separate thread)
-		manageConnectedSocket(socketServeur);
+		//manageConnectedSocket(socketServeur);
 	}
 	
 	private void manageConnectedSocket(BluetoothSocket mmSocket) {
@@ -83,7 +87,7 @@ public class ClientBluetooth extends Thread {
 				Object o = in.readObject(); 
 				Personnage p = (Personnage)o;
 				
-				Log.d("MESSAGE RECU",p.getNom());
+				Log.d("MESSAGE RECU : ",p.getNom());
 				
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block

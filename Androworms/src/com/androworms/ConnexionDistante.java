@@ -27,15 +27,13 @@ public class ConnexionDistante extends Connexion {
 	private Serveur getServeur() {
 		return (Serveur)communications.get(SERVEUR_POSITION);
 	}
-
-
-	/*public void lancementServeur() {
+	
+	public void lancementServeur() {
 		Log.v(TAG_COM, "Lancement de lancementServeur");
 		Serveur serveur = new Serveur(this);
 		communications.set(SERVEUR_POSITION, serveur);
 		new Thread(serveur).start();
-	}*/
-
+	}
 
 	public List<String> listeDesServeursPrimaires() {
 		// On recherche l'ensemble des appareils dans le voisinage (bluetooth)
@@ -67,5 +65,9 @@ public class ConnexionDistante extends Connexion {
 
 	public void deplacementJoueurSaut(String nomPersonnage) {
 
+	}
+	
+	public void arretServeur() {
+		getServeur().arret();
 	}
 }

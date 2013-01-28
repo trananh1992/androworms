@@ -113,7 +113,9 @@ public class FonctionsIHM {
 				} else {
 					Log.v(TAG,"Arret du Thread");
 					activiteMultiJoueur.scb.arret();
-					Log.v("TAG","Je suis le SERVEUR et je clos le serveur ! Terminé les inscriptions ! !");
+					Log.v("TAG","Je suis le SERVEUR et je clos le serveur ! Terminé les inscriptions ! ! on va joueur...");
+					
+					// TODO le serveur doit dire aux clients qu'on commence à jouer !
 				}
 			}
 		});
@@ -285,7 +287,6 @@ public class FonctionsIHM {
 				activiteMultiJoueur.demarrerClientBluetooth((BluetoothDevice)lvAppareilsBluetooth.getItemAtPosition(position));
 			}
 		});
-		
 		
 		pbBluetoothAnalyse.setVisibility(View.INVISIBLE);
 	}

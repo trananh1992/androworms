@@ -1,13 +1,11 @@
 package com.androworms.multijoueurs;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -25,10 +23,6 @@ import com.androworms.R;
 public class ActiviteMultiJoueur extends Activity {
 	
 	private static final String TAG = "Androworms.ActiviteMultiJoueur";
-	
-	// Identifiant (généré aléatoirement) pour Androworms.
-	// Il sert à établir la connexion Bluetooth entre 2 appareils
-	public static final UUID ANDROWORMS_UUID = UUID.fromString("c2d080da-7610-4dde-96c1-01406eb4b24b");
 	
 	// Adaptateur du Bluetooth
 	public static BluetoothAdapter mBluetoothAdapter;
@@ -55,7 +49,7 @@ public class ActiviteMultiJoueur extends Activity {
 	
 	// Thread pour la communication Bluetooth
 	public ServeurConnexionBluetooth scb;
-	public ClientBluetooth cb;
+	public ClientConnexionBluetooth cb;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -109,10 +103,11 @@ public class ActiviteMultiJoueur extends Activity {
 		// On actualise l'interface graphique du client
 		pbBluetoothAnalyse.setVisibility(View.VISIBLE);
 		
-		cb = new ClientBluetooth(device);
+		cb = new ClientConnexionBluetooth(device);
 		cb.start();
-			
+		
 		// On actualise l'interface graphique du client
+		// FIXME : comme c'est dans un thread séparé, il faut que je vérifie que la socket est OK
 		btnConnexion.setEnabled(true);
 		pbBluetoothAnalyse.setVisibility(View.INVISIBLE);
 	}
