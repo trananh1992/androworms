@@ -49,13 +49,8 @@ public class FonctionsIHM {
 		
 		/** Actions sur les composants **/
 		tgEtatBluetooth.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			// TODO : ce bouton peux être faux si :
-			// - on lance Androworms (Bluetooth OFF)
-			// - On active le Bluetooth avec le bouton
-			// - on appuie sur le bouton Home du tel
-			// - on Désactive le Bluetooth
-			// - on retourne sur l'appli
-			// (bon il est mis à jour avec le bouton "Actualiser")
+			// FIXME : ce bouton peut ne pas indiquer l'état réel du Bluetooth
+			// Exemple : on désactive le Bluetooth en Alt/Tab
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if (isChecked) {
 					// Activation du Bluetooth (2 possibilités)
@@ -67,7 +62,7 @@ public class FonctionsIHM {
 					// cf http://developer.android.com/reference/android/bluetooth/BluetoothAdapter.html#enable()
 					
 					// On refresh les infos
-//					refresh_UI_multijoueur_bluetooth_serveur();
+					actualisationInterfaceBluetoothServeur();
 				} else {
 					// Désactivation du Bluetooth
 					BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -94,7 +89,6 @@ public class FonctionsIHM {
 				actualisationInterfaceBluetoothServeur();
 			}
 		});
-		
 		
 		/* On démarrer la partie */
 		btnDemarrerPartie.setOnClickListener(new OnClickListener() {
@@ -209,26 +203,20 @@ public class FonctionsIHM {
 		
 		/** Création des évenements sur les composants graphiques **/
 		tgEtatBluetooth.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			// TODO : ce bouton peux être faux si :
-			// - on lance Androworms (Bluetooth OFF)
-			// - On active le Bluetooth avec le bouton
-			// - on appuie sur le bouton Home du tel
-			// - on Désactive le Bluetooth
-			// - on retourne sur l'appli
-			// (bon il est mis à jour avec le bouton "Actualiser")
+			// FIXME : ce bouton peut ne pas indiquer l'état réel du Bluetooth
+			// Exemple : on désactive le Bluetooth en Alt/Tab
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if (isChecked) {
 					// Activation du Bluetooth (2 possibilités)
 					// La première est de faire une Intent pour demander à l'utilisateur s'il est d'accord.
 					Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
 					activiteMultiJoueur.startActivityForResult(enableBtIntent, ActiviteMultiJoueur.DEMANDE_ACTIVATION_BLUETOOTH);
-					// La seconde consiste à l'activer l'activer directement sans accord de l'utilisateur
-//					mBluetoothAdapter.enable();
-					// La documentation est formele sur le sujet : IL EST INTERDIT DE FAIRE LA METHODE 2 !
+					// La seconde consiste à l'activer l'activer directement sans accord de l'utilisateur : mBluetoothAdapter.enable();
+					// La documentation est formel sur le sujet : IL EST INTERDIT DE FAIRE LA METHODE 2 !
 					// cf http://developer.android.com/reference/android/bluetooth/BluetoothAdapter.html#enable()
 					
 					// On refresh les infos
-					actualisationInterfaceBluetoothServeur();
+					actualisationInterfaceBluetoothClient();
 				} else {
 					// Désactivation du Bluetooth
 					BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -300,7 +288,6 @@ public class FonctionsIHM {
 		// Coché si le Bluetooth est déjà activé
 		tgEtatBluetooth.setChecked(Informations.isBluetoothOn());
 		
-		
 		if (Informations.isBluetoothOn()) {
 			rafraichirListeAppareils();
 		}
@@ -323,7 +310,6 @@ public class FonctionsIHM {
 	/** Actualise la liste des appreils Bluetooth **/
 	public void rafraichirListeAppareils() {
 		final ListView lv = (ListView)activiteMultiJoueur.findViewById(R.id.liste_appareils_bluetooth);
-		
 		
 		// On vide la liste pour éventullement la remplir après
 		lv.setAdapter(null);
