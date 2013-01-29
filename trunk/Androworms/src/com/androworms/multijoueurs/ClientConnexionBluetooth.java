@@ -9,11 +9,14 @@ import java.io.OutputStream;
 
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androworms.Contact;
 import com.androworms.Personnage;
@@ -38,7 +41,6 @@ public class ClientConnexionBluetooth extends AsyncTask<ActiviteMultiJoueur, Int
 	
 	@Override
 	protected Boolean doInBackground(ActiviteMultiJoueur... params) {
-		
 		this.activiteMultiJoueur = params[0];
 		
 		// On annule la recherche d'appareil à proximité si elle était lancé (elle sert plus à rien)
@@ -65,12 +67,25 @@ public class ClientConnexionBluetooth extends AsyncTask<ActiviteMultiJoueur, Int
 	
 	@Override
 	protected void onPostExecute(Boolean result) {
-		// A la fin de l'opération
+		// A la fin de l'opération :
+		if (result) {
+			// en cas de succès, on affiche un message pour dire que tout s'est bien passé et que l'on attends les insctructions du serveur
+			Button btnConnexion = (Button)activiteMultiJoueur.findViewById(R.id.btn_connexion);
+			TextView tvMessage = (Button)activiteMultiJoueur.findViewById(R.id.tv_message);
+			// On actualise l'interface graphique du client
+			btnConnexion.setEnabled(true);
+			tvMessage.setText("Tout est ok !");
+		} else {
+			// En cas d'échec, on affiche un message d'erreur
+			Context context = activiteMultiJoueur.getApplicationContext();
+			CharSequence text = "Echec de la connexion avec le serveur.";
+			int duration = Toast.LENGTH_LONG;
+
+			Toast toast = Toast.makeText(context, text, duration);
+			toast.show();
+		}
+		
 		ProgressBar pbBluetoothAnalyse = (ProgressBar)activiteMultiJoueur.findViewById(R.id.pb_bluetooth_analyse);
-		Button btnConnexion = (Button)activiteMultiJoueur.findViewById(R.id.btn_connexion);
-		// On actualise l'interface graphique du client
-		// FIXME : comme c'est dans un thread séparé, il faut que je vérifie que la socket est OK
-		btnConnexion.setEnabled(true);
 		pbBluetoothAnalyse.setVisibility(View.INVISIBLE);
 	}
 	
