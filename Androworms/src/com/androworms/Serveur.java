@@ -15,6 +15,12 @@ public class Serveur extends Communication implements Runnable {
 		
 	}
 	
+	public void traitementMessage() {
+		Log.v(TAG_SERVEUR, "Je suis le serveur et je recois un message !");
+		//Traitement
+		Log.v(TAG_SERVEUR, "Je vais surement renvoyer un autre message a tous les joueurs!");
+	}
+	
 	public void arret() {
 		
 	}
