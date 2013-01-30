@@ -20,5 +20,28 @@ public abstract class Communication {
 		this.connexionDistante = connexionDistante;
 	}
 	
+	/*
+	 * Cette fonction envoie un message vers un contact distant.
+	 * Elle devra surement retourner un booleen indique si l'envoie a fonctionne
+	 */
+	public boolean sendMessage ( /* Proposition d'argument (Contact c, "Objet" message)*/ ) {
+		return false;
+	}
+	
+	/*
+	 * Cette objet recoit un message.
+	 * Cette classe devra surement être threader pour pouvoir recevoir des messages
+	 */
+	public void receptionMessage() {
+		// La fonction dechiffre le message ou je ne sais quoi.
+		traitementMessage(/*Le message sous la forme d'objet qui va bien*/);
+	}
+	
+	/*
+	 * Fonction a definir chez les classes filles (client et serveur)
+	 * Il n'y aura pas le meme traitement sur les deux.
+	 */
+	public abstract void traitementMessage(/*Argument qui vont bien*/);
+	
 	
 }

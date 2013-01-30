@@ -16,6 +16,8 @@ public abstract class Connexion {
 		this.noyau = noyau;
 	}
 	
+
+	
 	public abstract void deplacementJoueurDroite(String nomPersonnage);
 	public abstract void deplacementJoueurGauche(String nomPersonnage);
 	public abstract void deplacementJoueurSaut(String nomPersonnage);
