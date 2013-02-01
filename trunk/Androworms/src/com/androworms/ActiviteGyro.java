@@ -14,6 +14,9 @@ import android.widget.ImageView.ScaleType;
 
 public class ActiviteGyro extends Activity implements SensorEventListener {
 	
+	public static final PointF POSTION_INIT = new PointF(600,300);
+	public static final int TAILLE_IMAGE = 50;
+	
 	private SensorManager sensorManager;
 	private PointF pos;
 	private Matrix matrix;
@@ -26,7 +29,7 @@ public class ActiviteGyro extends Activity implements SensorEventListener {
 		setContentView(R.layout.activity_activite_gyro);
 		
 		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-		pos = new PointF(600,300);
+		pos = POSTION_INIT;
 		matrix = new Matrix();
 		rotation = 0;
 		cumul = new PointF(0,0);
@@ -62,9 +65,9 @@ public class ActiviteGyro extends Activity implements SensorEventListener {
 		pos.y += x*SensorManager.GRAVITY_EARTH;
 		
 		// Translation
-		iv.layout((int)pos.x, (int)pos.y, (int)pos.x+50, (int)pos.y+50);
+		iv.layout((int)pos.x, (int)pos.y, (int)pos.x + TAILLE_IMAGE, (int)pos.y + TAILLE_IMAGE);
 		// Rotation
-		matrix.postRotate(rotation, 25, 25);
+		matrix.postRotate(rotation, TAILLE_IMAGE/2, TAILLE_IMAGE/2);
 		iv.setImageMatrix(matrix);
 	}
 	

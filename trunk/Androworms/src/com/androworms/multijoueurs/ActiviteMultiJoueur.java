@@ -1,6 +1,6 @@
 package com.androworms.multijoueurs;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -31,8 +31,8 @@ public class ActiviteMultiJoueur extends Activity {
 	public static final int DUREE_VISIBILITE_BLUETOOTH = 120;
 	
 	// Listes des appareils Bluetooth jumélés et à proximité
-	public ArrayList<BluetoothDevice> appareilJumele;
-	public ArrayList<BluetoothDevice> appareilProximite;
+	public List<BluetoothDevice> appareilJumele;
+	public List<BluetoothDevice> appareilProximite;
 	
 	// Codes de demande de l'Intent sur l'activation/visibilité du Bluetooth
 	public static final int DEMANDE_ACTIVATION_BLUETOOTH = 1;
@@ -203,12 +203,7 @@ public class ActiviteMultiJoueur extends Activity {
 	@Override
 	public void onStop() {
 		super.onStop();
-		
 		Log.v(TAG,"onStop()");
-		
-		if (ch != null && ch.getStatus() == AsyncTask.Status.RUNNING) {
-			ch.cancel(true);
-		}
 	}
 	
 	@Override
@@ -227,6 +222,18 @@ public class ActiviteMultiJoueur extends Activity {
 			// On supprime le receiver qui permet de trouver les appareils Bluetooth à proximité
 			this.unregisterReceiver(mReceiver);
 			estServeurLance = false;
+		}
+		
+		if (serveurConnexionBluetooth != null) {
+			serveurConnexionBluetooth.cancel(true);
+		}
+		
+		if (clientConnexionBluetooth != null) {
+			clientConnexionBluetooth.cancel(true);
+		}
+		
+		if (ch != null && ch.getStatus() == AsyncTask.Status.RUNNING) {
+			ch.cancel(true);
 		}
 	}
 
