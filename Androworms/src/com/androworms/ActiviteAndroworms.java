@@ -78,6 +78,7 @@ public class ActiviteAndroworms extends Activity {
 		TestClassListener testL = new TestClassListener(this);
 		findViewById(R.id.test_cam).setOnClickListener(testL);
 		findViewById(R.id.btn_DEBUG).setOnClickListener(cl);
+		findViewById(R.id.btn_GYRO).setOnClickListener(cl);
 	}
 	
 	private class TestClassListener implements OnClickListener {
