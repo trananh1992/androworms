@@ -21,7 +21,6 @@ public class ActiviteAndrowormsEvent implements OnClickListener {
 	}
 
 	public void onClick(View arg0) {
-		// TODO pour savoir sur quelle bouton on a cliqué
 		if (arg0 instanceof Button) {
 			Button b = (Button)arg0;
 			
@@ -50,6 +49,11 @@ public class ActiviteAndrowormsEvent implements OnClickListener {
 			else if (b.getId() == R.id.btn_DEBUG) {
 				// Bouton de DEBUG
 				Intent intent = new Intent(this.activiteAndroworms, ActiviteDebug.class);
+				this.activiteAndroworms.startActivity(intent);
+			}
+			else if (b.getId() == R.id.btn_GYRO) {
+				// Bouton de Gyro
+				Intent intent = new Intent(this.activiteAndroworms, ActiviteGyro.class);
 				this.activiteAndroworms.startActivity(intent);
 			}
 		}

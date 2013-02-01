@@ -77,6 +77,12 @@
                 android:layout_height="wrap_content"
                 android:text="@string/menu_DEBUG" />
 
+            <Button
+                android:id="@+id/btn_GYRO"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="@string/menu_gyro" />
+
         </LinearLayout>
 
 </LinearLayout>
