@@ -71,7 +71,7 @@ public class ClientConnexionBluetooth extends AsyncTask<ActiviteMultiJoueur, Int
 		if (result) {
 			// en cas de succès, on affiche un message pour dire que tout s'est bien passé et que l'on attends les insctructions du serveur
 			Button btnConnexion = (Button)activiteMultiJoueur.findViewById(R.id.btn_connexion);
-			TextView tvMessage = (Button)activiteMultiJoueur.findViewById(R.id.tv_message);
+			TextView tvMessage = (TextView)activiteMultiJoueur.findViewById(R.id.tv_message);
 			// On actualise l'interface graphique du client
 			btnConnexion.setEnabled(true);
 			tvMessage.setText("Tout est ok !");
