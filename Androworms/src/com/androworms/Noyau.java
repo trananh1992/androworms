@@ -27,15 +27,21 @@ public class Noyau {
 	private MoteurGraphique graphique;
 
 	
-	public Noyau(Context context, MoteurGraphique mg) {
-		test(context);
+	public Noyau(Context context, MoteurGraphique mg, boolean estDeuxJoueursBluetooth) {
+		// Le paramètre "estDeuxJoueursBluetooth" est en test pour le moment, il ne sera peut-être pas définitif
+		test(context, estDeuxJoueursBluetooth);
 		graphique = mg;
 	}
 	
 	/** Cette fonction sera à supprimer lorsque l'on en aura plus besoin. */
-	public void test(Context context) {
-
-		creationPartieLocale();
+	public void test(Context context, boolean estDeuxJoueursBluetooth) {
+		if (estDeuxJoueursBluetooth) {
+			creationPartieDistante();
+		}
+		else {
+			creationPartieLocale();
+		}
+		
 		ImageInformation ii = new ImageInformation(R.drawable.test_android_face, 81, 107);
 		Personnage johnDoe = new Personnage("John Doe", ii);
 		johnDoe.setPosition(new PointF(220, 200));
@@ -74,6 +80,8 @@ public class Noyau {
 	
 	public void creationPartieDistante() {
 		connexion = new ConnexionDistante(this);
+		monde = new Monde();
+		physique = new MoteurPhysique(this, monde);
 	}
 	
 	/** Gestion des messages venanat de l'IHM */

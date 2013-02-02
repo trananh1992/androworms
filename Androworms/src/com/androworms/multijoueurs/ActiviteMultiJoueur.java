@@ -17,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.androworms.ActiviteJeu;
 import com.androworms.R;
 
 public class ActiviteMultiJoueur extends Activity {
@@ -239,5 +240,17 @@ public class ActiviteMultiJoueur extends Activity {
 
 	public FonctionsIHM getFonctionsIHM() {
 		return fonctionsIHM;
+	}
+	
+	/** Lancement du jeu en Bluetooth */
+	public void lancerLeJeu() {
+		Log.v(TAG, "=============================================");
+		Log.v(TAG, "=====   Démarrage du jeu en Bluetooth   =====");
+		Log.v(TAG, "=============================================");
+		Intent intent = new Intent(this, ActiviteJeu.class);
+		Bundle b = new Bundle();
+		b.putBoolean("bluetooth", true);
+		intent.putExtras(b);
+		this.startActivity(intent);
 	}
 }

@@ -3,22 +3,22 @@ package com.androworms;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.bluetooth.BluetoothAdapter;
 import android.util.Log;
 
 public class ConnexionDistante extends Connexion {
+	
 	// L'item 1 designe le client et l'item 2 le serveur (si il y a)
 	private static final int SERVEUR_POSITION = 1;
 	private static final int CLIENT_SERVEUR = 0;
-	private static final String TAG_COM = "Androworms.Communication";
+	
+	private static final String TAG_COM = "Androworms.ConnexionDistante";
+	
 	private List<Communication> communications;
-
 
 	public ConnexionDistante(Noyau n) {
 		super(n);
 		communications = new ArrayList<Communication>();
 	}
-
 
 	private Client getClient() {
 		return (Client)communications.get(CLIENT_SERVEUR);
@@ -41,30 +41,17 @@ public class ConnexionDistante extends Connexion {
 		// Le joueur pourra alors se connecter a l'un d'entre eux si besoin.
 		return new ArrayList<String>();
 	}
-
-	public boolean testBluetooth() {
-		BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-		if (mBluetoothAdapter == null) {
-			// Device does not support Bluetooth
-			Log.v(TAG_COM, "Le device ne supporte pas le bluetooth");
-			return false;
-		} else {
-			Log.v(TAG_COM, "Le device supporte le bluetooth");
-			return true;
-		}
-	}
-
-
+	
 	public void deplacementJoueurDroite(String nomPersonnage) {
 		getClient().deplacementJoueurDroite(nomPersonnage);
 	}
 
 	public void deplacementJoueurGauche(String nomPersonnage) {
-
+		getNoyau().deplacementJoueurGauche(nomPersonnage);
 	} 
 
 	public void deplacementJoueurSaut(String nomPersonnage) {
-
+		
 	}
 	
 	public void arretServeur() {
