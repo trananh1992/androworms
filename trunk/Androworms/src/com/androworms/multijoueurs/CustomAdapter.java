@@ -14,12 +14,13 @@ import android.widget.BaseAdapter;
 import com.androworms.R;
 
 public class CustomAdapter extends BaseAdapter {
-	// [Titre] Appareils A
-	//          bla
-	//          bla
-	//          bla
-	// [Titre] Appareils B
-	//          bla
+	// [Titre section]
+	//    Elément A
+	//    Elément B
+	//    Elément C
+	// [Titre section]
+	//    Elément D
+	//    Elément E
 	public static final String TAG = "BluetoothCustomAdapter";
 	
 	public final Map<String, Adapter> sections = new LinkedHashMap<String, Adapter>();

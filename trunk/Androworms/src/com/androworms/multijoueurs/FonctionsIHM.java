@@ -105,6 +105,8 @@ public class FonctionsIHM {
 					Log.v("TAG","Je suis le SERVEUR et je clos le serveur ! Terminé les inscriptions ! ! on va joueur...");
 					
 					// TODO le serveur doit dire aux clients qu'on commence à jouer !
+					
+					activiteMultiJoueur.lancerLeJeu();
 				}
 			}
 		});

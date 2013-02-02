@@ -23,7 +23,7 @@ import com.androworms.ui.ClavierDirectionnel;
 
 public class ActiviteJeu extends Activity {
 	
-	private static final String TAG = "TESTAndroworms.GameActivity";
+	private static final String TAG = "Androworms.ActiviteJeu";
 	
 	/* Etats possible pour le mode de gestion des doigts */
 	private static int mode;
@@ -45,24 +45,30 @@ public class ActiviteJeu extends Activity {
 		/* Affiche la vue */
 		setContentView(R.layout.terrain_de_jeu);
 		
-		/* Récupération du layout de fond */
-		MoteurGraphique moteurGraph = (MoteurGraphique)findViewById(R.id.trlCarte);
-		
-		noyau = new Noyau(getBaseContext(), moteurGraph);
+		/* Récupération des paramètres envoyé à l'activity */
+		boolean estDeuxJoueursBluetooth = false;
 		Bundle bundle = this.getIntent().getExtras();
-		if(bundle != null)
-		{
-			String map = (String) bundle.get("map");
-			if(map!=null && map.length()>0)
-			{
-				Log.e("started activite jeu","with map "+map);
+		if(bundle != null) {
+			String paramMap = (String) bundle.get("map");
+			if(paramMap != null && paramMap.length() > 0) {
+				Log.e("started activite jeu","with map "+paramMap);
 				Monde m = noyau.getMonde();
 				File root = Environment.getExternalStorageDirectory();
-				File sd = new File(root,"Androworms/"+map);
+				File sd = new File(root, "Androworms/"+paramMap);
 				Bitmap b = BitmapFactory.decodeFile(sd.getAbsolutePath());
 				m.setTerrain(b, 1280, 720);
 			}
+			Boolean paramBluetooth = (Boolean) bundle.get("bluetooth");
+			if(paramBluetooth != null) {
+				estDeuxJoueursBluetooth = true;
+			}
 		}
+		
+		/* Récupération du layout de fond */
+		MoteurGraphique moteurGraph = (MoteurGraphique)findViewById(R.id.trlCarte);
+		
+		/* Création du noyau */
+		noyau = new Noyau(getBaseContext(), moteurGraph, estDeuxJoueursBluetooth);
 		moteurGraph.setNoyau(noyau);
 		
 		/* Mode TIR */
