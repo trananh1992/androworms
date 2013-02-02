@@ -47,5 +47,7 @@
     <string name="menu_DEBUG">Informations DEBUG</string>
     <string name="title_activity_activite_gyro">ActiviteGyro</string>
     <string name="menu_gyro">Test du gyro</string>
+    <string name="menu_jeu">Jouer</string>
+    <string name="menu_editeur">Editeur de carte</string>
 
 </resources>

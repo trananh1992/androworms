@@ -2,7 +2,6 @@ package com.androworms;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -69,27 +68,14 @@ public class ActiviteAndroworms extends Activity {
 		
 		/* Evenements */
 		OnClickListener cl = new ActiviteAndrowormsEvent(this);
-		findViewById(R.id.btn_solo).setOnClickListener(cl);
-		findViewById(R.id.btn_multi).setOnClickListener(cl);
+		findViewById(R.id.btn_menu_jouer).setOnClickListener(cl);
+		findViewById(R.id.btn_menu_editeur).setOnClickListener(cl);
 		findViewById(R.id.btn_menu_score).setOnClickListener(cl);
-		findViewById(R.id.btn_menu_settings).setOnClickListener(cl);
+		findViewById(R.id.btn_menu_parametres).setOnClickListener(cl);
 		
 		// Evenements sur les boutons de TEST
-		TestClassListener testL = new TestClassListener(this);
-		findViewById(R.id.test_cam).setOnClickListener(testL);
+		findViewById(R.id.btn_menu_multi).setOnClickListener(cl);
 		findViewById(R.id.btn_DEBUG).setOnClickListener(cl);
 		findViewById(R.id.btn_GYRO).setOnClickListener(cl);
-	}
-	
-	private class TestClassListener implements OnClickListener {
-		private ActiviteAndroworms parent;
-		public TestClassListener(ActiviteAndroworms p) {
-			parent = p;
-		}
-		
-		public void onClick(View v) {
-			Intent intent = new Intent(parent, ActiviteChoixOption.class);
-			this.parent.startActivity(intent);
-		}
 	}
 }
