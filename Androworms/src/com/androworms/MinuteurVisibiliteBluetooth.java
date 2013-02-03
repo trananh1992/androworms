@@ -1,4 +1,4 @@
-package com.androworms.multijoueurs;
+package com.androworms;
 
 import android.os.AsyncTask;
 import android.util.Log;

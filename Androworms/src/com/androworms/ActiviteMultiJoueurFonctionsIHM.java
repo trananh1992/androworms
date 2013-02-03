@@ -1,4 +1,4 @@
-package com.androworms.multijoueurs;
+package com.androworms;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.androworms.R;
+import com.androworms.ui.BluetoothCustomAdapter;
 import com.androworms.utile.Informations;
 
 public class ActiviteMultiJoueurFonctionsIHM {

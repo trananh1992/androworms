@@ -8,7 +8,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.androworms.debug.ActiviteDebug;
-import com.androworms.multijoueurs.ActiviteMultiJoueur;
 
 public class ActiviteAndrowormsEvent implements OnClickListener {
 	
