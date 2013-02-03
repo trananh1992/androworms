@@ -64,10 +64,13 @@ public class ActiviteGyro extends Activity implements SensorEventListener {
 		pos.x += y*SensorManager.GRAVITY_EARTH;
 		pos.y += x*SensorManager.GRAVITY_EARTH;
 		
+		float angle = (float) (Math.toDegrees(Math.atan2(y, -x)));
+		
 		// Translation
 		iv.layout((int)pos.x, (int)pos.y, (int)pos.x + TAILLE_IMAGE, (int)pos.y + TAILLE_IMAGE);
 		// Rotation
-		matrix.postRotate(rotation, TAILLE_IMAGE/2, TAILLE_IMAGE/2);
+		matrix = new Matrix();
+		matrix.postRotate(angle, TAILLE_IMAGE/2, TAILLE_IMAGE/2);
 		iv.setImageMatrix(matrix);
 	}
 	
