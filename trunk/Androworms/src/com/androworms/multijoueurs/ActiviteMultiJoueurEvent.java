@@ -9,12 +9,12 @@ import android.widget.ImageButton;
 import com.androworms.R;
 import com.androworms.utile.Informations;
 
-public class EvenementMultiJoueur implements OnClickListener {
+public class ActiviteMultiJoueurEvent implements OnClickListener {
 	
 	private static final String TAG = "Androworms.EvenementMultiJoueur";
 	private ActiviteMultiJoueur activiteMultiJoueur;
 	
-	public EvenementMultiJoueur(ActiviteMultiJoueur activiteMultiJoueur) {
+	public ActiviteMultiJoueurEvent(ActiviteMultiJoueur activiteMultiJoueur) {
 		this.activiteMultiJoueur = activiteMultiJoueur;
 	}
 

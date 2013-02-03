@@ -26,12 +26,12 @@ import android.widget.ToggleButton;
 import com.androworms.R;
 import com.androworms.utile.Informations;
 
-public class FonctionsIHM {
+public class ActiviteMultiJoueurFonctionsIHM {
 	
 	private static final String TAG = "Fonctions_IHM";
 	private ActiviteMultiJoueur activiteMultiJoueur;
 	
-	public FonctionsIHM(ActiviteMultiJoueur activiteMultiJoueur) {
+	public ActiviteMultiJoueurFonctionsIHM(ActiviteMultiJoueur activiteMultiJoueur) {
 		this.activiteMultiJoueur = activiteMultiJoueur;
 	}
 	

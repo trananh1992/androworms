@@ -28,7 +28,7 @@ public class ActiviteMultiJoueur extends Activity {
 	public static BluetoothAdapter mBluetoothAdapter;
 	
 	// Partie Bluetooth > Serveur : pour faire une animation du temps restant de la visibilité Bluetooth
-	private Minuteur ch;
+	private MinuteurVisibiliteBluetooth ch;
 	public static final int DUREE_VISIBILITE_BLUETOOTH = 120;
 	
 	// Listes des appareils Bluetooth jumélés et à proximité
@@ -43,7 +43,7 @@ public class ActiviteMultiJoueur extends Activity {
 	// Dans le OnDetroy(), il faut pouvoir savoir si on a lancé le serveur ou pas pour l'arreter.
 	public boolean estServeurLance = false;
 	
-	private FonctionsIHM fonctionsIHM;
+	private ActiviteMultiJoueurFonctionsIHM fonctionsIHM;
 	
 	public boolean isServeur = false;
 	
@@ -60,12 +60,12 @@ public class ActiviteMultiJoueur extends Activity {
 		// Récupération de l'adaptateur Bluetooth
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		
-		fonctionsIHM  = new FonctionsIHM(this);
+		fonctionsIHM  = new ActiviteMultiJoueurFonctionsIHM(this);
 		
 		/* Choix entre Bluetooth et 2 joueurs */
 		setContentView(R.layout.multi_joueur);
 		
-		EvenementMultiJoueur evenementMultiJoueur = new EvenementMultiJoueur(this);
+		ActiviteMultiJoueurEvent evenementMultiJoueur = new ActiviteMultiJoueurEvent(this);
 		// Bouton partie Bluetooth
 		ImageButton imgbtnBluetooth = (ImageButton)findViewById(R.id.imgbtn_bluetooth);
 		imgbtnBluetooth.setOnClickListener(evenementMultiJoueur);
@@ -75,7 +75,7 @@ public class ActiviteMultiJoueur extends Activity {
 	}
 	
 	/** Changement de vue entre le choix "Bluetooth/2-joueurs" vers "Bluetooth Client/Serveur" */
-	public void changerVue(EvenementMultiJoueur evenementMultiJoueur) {
+	public void changerVue(ActiviteMultiJoueurEvent evenementMultiJoueur) {
 		setContentView(R.layout.multi_joueur_bluetooth);
 		
 		ImageButton imgbtnBluetoothServeur = (ImageButton)findViewById(R.id.imgbtn_bluetooth_serveur);
@@ -143,7 +143,7 @@ public class ActiviteMultiJoueur extends Activity {
 				
 				// On start le minuteur
 				Log.v(TAG, "Début du minuteur");
-				ch = new Minuteur();
+				ch = new MinuteurVisibiliteBluetooth();
 				ch.execute(ActiviteMultiJoueur.this);
 			} else {
 				// L'utilisateur a refusé l'activation de la visiblité du Bluetooth (ou il s'agit d'une erreur)
@@ -238,7 +238,7 @@ public class ActiviteMultiJoueur extends Activity {
 		}
 	}
 
-	public FonctionsIHM getFonctionsIHM() {
+	public ActiviteMultiJoueurFonctionsIHM getFonctionsIHM() {
 		return fonctionsIHM;
 	}
 	
