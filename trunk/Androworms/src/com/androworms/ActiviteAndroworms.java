@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 public class ActiviteAndroworms extends Activity {
 	
-	private static final String TAG = "Androworms.SplashScreen";
+	private static final String TAG = "Androworms.ActiviteAndroworms";
 	
 	// Codes de demande de l'Intent
 	public static final int REQUEST_CAM = 3;

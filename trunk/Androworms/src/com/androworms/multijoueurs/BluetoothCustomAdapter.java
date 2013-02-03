@@ -13,7 +13,7 @@ import android.widget.BaseAdapter;
 
 import com.androworms.R;
 
-public class CustomAdapter extends BaseAdapter {
+public class BluetoothCustomAdapter extends BaseAdapter {
 	// [Titre section]
 	//    Elément A
 	//    Elément B
@@ -27,7 +27,7 @@ public class CustomAdapter extends BaseAdapter {
 	public final ArrayAdapter<String> titres;
 	public static final int TYPE_SECTION_HEADER = 0;
 
-	public CustomAdapter(Context context) {
+	public BluetoothCustomAdapter(Context context) {
 		// On crée une liste contenant les titres de sections
 		titres = new ArrayAdapter<String>(context, R.layout.liste_bluetooth_section);
 	}
