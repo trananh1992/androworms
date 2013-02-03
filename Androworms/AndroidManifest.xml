@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.androworms"
     android:installLocation="auto"
-    android:versionCode="1"
+    android:versionCode="@string/numero_version"
     android:versionName="@string/numero_version" >
 
     <uses-sdk
@@ -21,7 +21,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.androworms.ActiviteAndroworms"
-            android:label="@string/title_activity_main"
+            android:label="@string/app_name"
             android:screenOrientation="landscape" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,7 +35,6 @@
         </activity>
         <activity
             android:name="com.androworms.ActiviteJeu"
-            android:label="@string/title_activity_game"
             android:screenOrientation="landscape" >
         </activity>
         <activity
@@ -43,13 +42,11 @@
             android:screenOrientation="landscape" >
         </activity>
         <activity
-            android:name="com.androworms.multijoueurs.ActiviteMultiJoueur"
-            android:label="@string/title_activity_multi_joueur"
+            android:name="com.androworms.ActiviteMultiJoueur"
             android:screenOrientation="landscape" >
         </activity>
         <activity
             android:name="com.androworms.ActiviteParametres"
-            android:label="@string/title_activity_activite_parametres"
             android:screenOrientation="landscape" >
         </activity>
         <activity
@@ -58,17 +55,14 @@
         </activity>
         <activity
             android:name="com.androworms.debug.ActiviteDebug"
-            android:label="@string/title_activity_debug"
             android:screenOrientation="landscape" >
         </activity>
         <activity
             android:name="com.androworms.ActiviteGyro"
-            android:label="@string/title_activity_activite_gyro"
             android:screenOrientation="landscape" >
         </activity>
         <activity
             android:name="com.androworms.ActiviteCreationPartie"
-            android:label="@string/title_activity_activite_creation_partie"
             android:screenOrientation="landscape" >
         </activity>
     </application>
