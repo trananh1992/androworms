@@ -26,7 +26,7 @@ public class ActiviteAndrowormsEvent implements OnClickListener {
 			if (b.getId() == R.id.btn_menu_jouer) {
 				// Bouton pour jouer
 				Log.v(TAG, "Clic sur le bouton pour jouer");
-				Intent intent = new Intent(this.activiteAndroworms, ActiviteJeu.class);
+				Intent intent = new Intent(this.activiteAndroworms, ActiviteCreationPartie.class);
 				this.activiteAndroworms.startActivity(intent);
 			}
 			else if (b.getId() == R.id.btn_menu_editeur) {
