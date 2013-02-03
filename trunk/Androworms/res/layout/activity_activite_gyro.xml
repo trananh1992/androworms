@@ -11,6 +11,6 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_marginBottom="119dp"
-        android:src="@drawable/missile" />
+        android:src="@drawable/missile_2" />
 
 </RelativeLayout>
