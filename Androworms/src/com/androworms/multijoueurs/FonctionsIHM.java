@@ -348,7 +348,7 @@ public class FonctionsIHM {
 			}
 		};
 		
-		CustomAdapter adapter = new CustomAdapter(activiteMultiJoueur);
+		BluetoothCustomAdapter adapter = new BluetoothCustomAdapter(activiteMultiJoueur);
 		
 		adapter.addSection("Appareils appairés (jumelés ?)", adapterA);
 		adapter.addSection("Appareils à proximité", adapterB);

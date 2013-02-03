@@ -20,18 +20,16 @@ public class ActiviteGyro extends Activity implements SensorEventListener {
 	private SensorManager sensorManager;
 	private PointF pos;
 	private Matrix matrix;
-	private float rotation;
 	private PointF cumul;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_activite_gyro);
+		setContentView(R.layout.activite_gyro);
 		
 		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 		pos = POSTION_INIT;
 		matrix = new Matrix();
-		rotation = 0;
 		cumul = new PointF(0,0);
 		
 		ImageView iv = (ImageView)findViewById(R.id.iv_missile);
