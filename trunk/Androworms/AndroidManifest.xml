@@ -66,6 +66,11 @@
             android:label="@string/title_activity_activite_gyro"
             android:screenOrientation="landscape" >
         </activity>
+        <activity
+            android:name="com.androworms.ActiviteCreationPartie"
+            android:label="@string/title_activity_activite_creation_partie"
+            android:screenOrientation="landscape" >
+        </activity>
     </application>
 
 </manifest>
