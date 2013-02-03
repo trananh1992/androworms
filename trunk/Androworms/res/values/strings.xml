@@ -2,11 +2,39 @@
 <resources>
 
     <string name="app_name">Androworms</string>
-    <string name="menu_parametres">Paramètres</string>
-    <string name="title_activity_main">Androworms</string>
     <string name="contentDescription_logo_androworms">Logo Androworms</string>
     <string name="texte_developpeurs">Développeurs :</string>
-
+    <string name="pas_de_donnees">Pas de données</string>
+    <string name="menu_score">Scores</string>
+    <string name="menu_solo">solo</string>
+    <string name="menu_multi">Multi-joueurs</string>
+    <string name="menu_principal">Menu principal</string>
+    <string name="menu_DEBUG">Informations DEBUG</string>
+    <string name="menu_gyro">Test du gyro</string>
+    <string name="menu_jeu">Jouer</string>
+    <string name="menu_editeur">Editeur de carte</string>
+    <string name="menu_parametres">Paramètres</string>
+    <string name="numero_version">0.0.1 Alpha</string>
+    <string name="joueur1">Joueur 1</string>
+    <string name="joueur2">Joueur 2</string>
+    <string name="informations">Informations</string>
+    <string name="OK">OK</string>
+    <string name="score_joueur_1">Joueur 1 : 0 pts</string>
+    <string name="score_joueur_2">Joueur 2 : 0 pts</string>
+    <string name="Armes">Armes</string>
+    <string name="mode_tir">Mode TIR</string>
+    <string name="menu_settings">Settings</string>
+    <string name="titre_multi_joueur">Androworms - Multi-Joueurs</string>
+    <string name="actualiser">Actualiser</string>
+    <string name="pseudo">Pseudo</string>
+    <string name="image_perso">Image perso</string>
+    <string name="enregistrer">Enregistrer</string>
+    <string name="lancer">Lancer</string>
+    <string name="btn_suivant">Suivant</string>
+    <string name="btn_precedent">Précédent</string>
+    <string name="btn_demarrer_la_partie">Démarrer la partie</string>
+    <string name="tout_effacer">Tout effacer</string>
+    
     <string-array name="liste_developpeurs">
         <item>Audrey Ernewein</item>
         <item>Damien Finck</item>
@@ -14,45 +42,5 @@
         <item>Renaud Vanhoutreve</item>
         <item>William Bon</item>
     </string-array>
-
-    <string name="pas_de_donnees">Pas de données</string>
-    <string name="menu_score">Scores</string>
-    <string name="menu_solo">solo</string>
-    <string name="menu_multi">Multi-joueurs</string>
-    <string name="menu_principal">Menu principal</string>
-    <string name="numero_version">0.0.1 Alpha</string>
-    <string name="title_activity_game">GameActivity</string>
-    <string name="joueur1">Joueur 1</string>
-    <string name="joueur2">Joueur 2</string>
-    <string name="test_bluetooth">Test du Bluetooth</string>
-    <string name="test_camera">Test de la caméra</string>
-    <string name="test_reseau">Test du reseau</string>
-    <string name="informations">Informations</string>
-    <string name="OK">OK</string>
-    <string name="score_joueur_1">Joueur 1 : 0 pts</string>
-    <string name="score_joueur_2">Joueur 2 : 0 pts</string>
-    <string name="Armes">Armes</string>
-    <string name="mode_tir">Mode TIR</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="menu_settings">Settings</string>
-    <string name="title_activity_multi_joueur">MultiJoueur</string>
-    <string name="titre_multi_joueur">Androworms - Multi-Joueurs</string>
-    <string name="actualiser">Actualiser</string>
-    <string name="title_activity_activite_parametres">ActiviteParametres</string>
-    <string name="pseudo">Pseudo</string>
-    <string name="image_perso">Image perso</string>
-    <string name="enregistrer">Enregistrer</string>
-    <string name="lancer">Lancer</string>
-    <string name="title_activity_debug">Debug</string>
-    <string name="menu_DEBUG">Informations DEBUG</string>
-    <string name="title_activity_activite_gyro">ActiviteGyro</string>
-    <string name="menu_gyro">Test du gyro</string>
-    <string name="menu_jeu">Jouer</string>
-    <string name="menu_editeur">Editeur de carte</string>
-    <string name="title_activity_activite_creation_partie">ActiviteCreationPartie</string>
-    <string name="btn_suivant">Suivant</string>
-    <string name="btn_precedent">Précédent</string>
-    <string name="btn_demarrer_la_partie">Démarrer la partie</string>
-    <string name="tout_effacer">Tout effacer</string>
     
 </resources>
