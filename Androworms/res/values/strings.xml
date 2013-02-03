@@ -42,5 +42,13 @@
         <item>Renaud Vanhoutreve</item>
         <item>William Bon</item>
     </string-array>
+        <string name="titre_choix_mode_jeu">Choix du mode de jeu</string>
+        <string name="titre_config_mode_jeu">Configuration du mode de jeu</string>
+        <string name="titre_choix_carte">Choix de la carte</string>
+        <string name="titre_choix_team">Choix de la team</string>
+        <string name="btn_jeu_solo">1 joueur contre le téléphone</string>
+        <string name="btn_2_joueurs">2 joueurs sur un téléphone</string>
+        <string name="btn_creation_partie">Créer une partie</string>
+        <string name="btn_rejoindre_partie">Rejoindre une partie</string>
     
 </resources>

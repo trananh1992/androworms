@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.androworms"
     android:installLocation="auto"
-    android:versionCode="@string/numero_version"
+    android:versionCode="1"
     android:versionName="@string/numero_version" >
 
     <uses-sdk
