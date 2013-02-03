@@ -34,7 +34,7 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 	private Handler mAutoFocusHandler;
 	private int mAutoFocusMessage;
 	private File photoPath;
-	private ActiviteCreationCarte activiteCreationCarte;
+	private ActiviteEditeur activiteCreationCarte;
 	static final int TAKE_PICTURE = 0;
 	
 	public void onCreate(Bundle icicle) {
@@ -203,7 +203,7 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 		
 	}
 	
-	public ActiviteCamera(ActiviteCreationCarte activiteCreationCarte) {
+	public ActiviteCamera(ActiviteEditeur activiteCreationCarte) {
 		this.activiteCreationCarte = activiteCreationCarte;
 	}
 	

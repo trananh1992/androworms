@@ -1,4 +1,4 @@
-package com.androworms.multijoueurs;
+package com.androworms;
 
 import java.util.List;
 
@@ -17,7 +17,6 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.androworms.ActiviteJeu;
 import com.androworms.R;
 
 public class ActiviteMultiJoueur extends Activity {

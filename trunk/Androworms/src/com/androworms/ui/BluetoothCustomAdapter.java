@@ -1,4 +1,4 @@
-package com.androworms.multijoueurs;
+package com.androworms.ui;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

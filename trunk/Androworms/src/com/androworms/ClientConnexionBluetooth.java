@@ -1,4 +1,4 @@
-package com.androworms.multijoueurs;
+package com.androworms;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -18,8 +18,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.androworms.Contact;
-import com.androworms.Personnage;
 import com.androworms.R;
 
 /** Lors de la création d'une partie en Multi-joueur en Bluetooth,

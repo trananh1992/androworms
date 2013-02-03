@@ -1,4 +1,4 @@
-package com.androworms.multijoueurs;
+package com.androworms;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -17,9 +17,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.androworms.Contact;
-import com.androworms.ImageInformation;
-import com.androworms.Personnage;
 import com.androworms.R;
 
 /** Lors de la création d'une partie en Multi-joueur en Bluetooth,
