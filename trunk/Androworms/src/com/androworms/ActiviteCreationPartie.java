@@ -155,7 +155,8 @@ public class ActiviteCreationPartie extends Activity {
 		btnDemarrerPartie.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				Intent intent = new Intent(ActiviteCreationPartie.this, ActiviteJeu.class);
-				ActiviteCreationPartie.this.startActivity(intent);
+				startActivity(intent);
+				finish();
 			}
 		});
 	}
