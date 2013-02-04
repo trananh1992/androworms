@@ -13,11 +13,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.androworms.R;
 
 public class ActiviteMultiJoueur extends Activity {
 	
@@ -66,22 +63,22 @@ public class ActiviteMultiJoueur extends Activity {
 		
 		ActiviteMultiJoueurEvent evenementMultiJoueur = new ActiviteMultiJoueurEvent(this);
 		// Bouton partie Bluetooth
-		ImageButton imgbtnBluetooth = (ImageButton)findViewById(R.id.imgbtn_bluetooth);
-		imgbtnBluetooth.setOnClickListener(evenementMultiJoueur);
+		Button btnBluetooth = (Button)findViewById(R.id.btn_bluetooth);
+		btnBluetooth.setOnClickListener(evenementMultiJoueur);
 		// Bouton partie Multi-joueurs
-		ImageButton imgbtnDeuxJoueurs = (ImageButton)findViewById(R.id.imgbtn_deux_joueurs);
-		imgbtnDeuxJoueurs.setOnClickListener(evenementMultiJoueur);
+		Button btnDeuxJoueurs = (Button)findViewById(R.id.btn_deux_joueurs);
+		btnDeuxJoueurs.setOnClickListener(evenementMultiJoueur);
 	}
 	
 	/** Changement de vue entre le choix "Bluetooth/2-joueurs" vers "Bluetooth Client/Serveur" */
 	public void changerVue(ActiviteMultiJoueurEvent evenementMultiJoueur) {
 		setContentView(R.layout.multi_joueur_bluetooth);
 		
-		ImageButton imgbtnBluetoothServeur = (ImageButton)findViewById(R.id.imgbtn_bluetooth_serveur);
-		imgbtnBluetoothServeur.setOnClickListener(evenementMultiJoueur);
+		Button btnBluetoothServeur = (Button)findViewById(R.id.btn_bluetooth_serveur);
+		btnBluetoothServeur.setOnClickListener(evenementMultiJoueur);
 		
-		ImageButton imgbtnBluetoothClient = (ImageButton)findViewById(R.id.imgbtn_bluetooth_client);
-		imgbtnBluetoothClient.setOnClickListener(evenementMultiJoueur);
+		Button btnBluetoothClient = (Button)findViewById(R.id.btn_bluetooth_client);
+		btnBluetoothClient.setOnClickListener(evenementMultiJoueur);
 	}
 	
 	/** Démarrage du serveur Bluetooth */

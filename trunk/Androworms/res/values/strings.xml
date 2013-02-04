@@ -50,5 +50,9 @@
         <string name="btn_2_joueurs">2 joueurs sur un téléphone</string>
         <string name="btn_creation_partie">Créer une partie</string>
         <string name="btn_rejoindre_partie">Rejoindre une partie</string>
+        <string name="jouer_avec_un_telephone">Jouer avec 1 téléphone</string>
+        <string name="jouer_avec_plusieurs_telephones">Jouer avec plusieurs téléphones</string>
+        <string name="serveur_bluetooth">Serveur Bluetooth</string>
+        <string name="client_bluetooth">Client Bluetooth</string>
     
 </resources>

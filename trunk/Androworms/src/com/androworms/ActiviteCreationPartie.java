@@ -36,46 +36,40 @@ public class ActiviteCreationPartie extends Activity {
 	private void etape1() {
 		setContentView(R.layout.activite_creation_partie_1_mode);
 		
-		
 		Button btnPartieSolo = (Button)findViewById(R.id.btn_partie_solo);
 		btnPartieSolo.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				etape2_solo();
+				etape2ModeSolo();
 			}
 		});
 		
 		Button btnMultiJoueur = (Button)findViewById(R.id.btn_multi_joueur);
 		btnMultiJoueur.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				etape2_2joueurs();
+				etape2ModeDeuxjoueurs();
 			}
 		});
 		
 		Button btnBluetoothCreer = (Button)findViewById(R.id.btn_bluetooth_creer);
 		btnBluetoothCreer.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				etape2_bluetooth_serveur();
+				etape2ModeBluetoothServeur();
 			}
 		});
 		
 		Button btnBluetoothRejoindre = (Button)findViewById(R.id.btn_bluetooth_rejoindre);
 		btnBluetoothRejoindre.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				etape2_bluetooth_client();
+				etape2ModeBluetoothClient();
 			}
 		});
 		
 		
 		Button btnSuivant = (Button)findViewById(R.id.btn_suivant);
 		btnSuivant.setEnabled(false);
-		/*btnSuivant.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				etape2();
-			}
-		})*/;
 	}
 	
-	private void etape2_solo() {
+	private void etape2ModeSolo() {
 		/* Affichage de la vue */
 		setContentView(R.layout.activite_creation_partie_2_solo);
 		
@@ -94,20 +88,27 @@ public class ActiviteCreationPartie extends Activity {
 		});
 	}
 	
-	private void etape2_2joueurs() {
+	private void etape2ModeDeuxjoueurs() {
 		// Non disponible pour le moment
 		new AlertDialog.Builder(this).setTitle("Androworms").setMessage("Les parties 2 joueurs ne sont pas encore dispo !").setNeutralButton("Close", null).show();
 	}
 	
-	private void etape2_bluetooth_serveur() {
-		
+	private void etape2ModeBluetoothServeur() {
+		/* Affichage de la vue */
+		setContentView(R.layout.multi_joueur_bluetooth_serveur);
+		/* Chargement des composants */
+//		chargementInterfaceBluetoothServeur();
 	}
 	
-	private void etape2_bluetooth_client() {
-		
+	private void etape2ModeBluetoothClient() {
+		/* Affichage de la vue */
+		setContentView(R.layout.multi_joueur_bluetooth_client);
+		/* Chargement des composants */
+//		chargementInterfaceBluetoothClient();
 	}
 	
 	private void etape3(final int mode) {
+		/* Affichage de la vue */
 		setContentView(R.layout.activite_creation_partie_3);
 		
 		Button btnPrecedent = (Button)findViewById(R.id.btn_precedent);
@@ -115,16 +116,16 @@ public class ActiviteCreationPartie extends Activity {
 			public void onClick(View v) {
 				switch (mode) {
 				case ActiviteCreationPartie.MODE_SOLO:
-					etape2_solo();
+					etape2ModeSolo();
 					break;
 				case ActiviteCreationPartie.MODE_2JOUEURS:
-					etape2_2joueurs();
+					etape2ModeDeuxjoueurs();
 					break;
 				case ActiviteCreationPartie.MODE_BLUETOOTH_SERVEUR:
-					etape2_bluetooth_serveur();
+					etape2ModeBluetoothServeur();
 					break;
 				case ActiviteCreationPartie.MODE_BLUETOOTH_CLIENT:
-					etape2_bluetooth_client();
+					etape2ModeBluetoothClient();
 					break;
 				default :
 					etape1();

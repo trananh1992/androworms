@@ -18,19 +18,19 @@
         android:layout_height="match_parent"
         android:orientation="horizontal" >
 
-        <ImageButton
-            android:id="@+id/imgbtn_bluetooth"
+        <Button
+            android:id="@+id/btn_bluetooth"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
-            android:src="@drawable/bluetooth" />
+            android:drawableTop="@drawable/bluetooth" />
 
-        <ImageButton
-            android:id="@+id/imgbtn_deux_joueurs"
+        <Button
+            android:id="@+id/btn_deux_joueurs"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
-            android:src="@drawable/deux_joueurs" />
+            android:drawableTop="@drawable/deux_joueurs" />
 
     </LinearLayout>
 
