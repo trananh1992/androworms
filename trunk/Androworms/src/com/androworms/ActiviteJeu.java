@@ -3,6 +3,8 @@ package com.androworms;
 import java.io.File;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -171,5 +173,24 @@ public class ActiviteJeu extends Activity {
 	public static void setMode(int mode) {
 		ActiviteJeu.mode = mode;
 		updateAffichageMode();
+	}
+	
+	@Override
+	public void onBackPressed() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("Voulez-vous vraiment quitter la partie ?");
+		builder.setCancelable(false);
+       builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+           public void onClick(DialogInterface dialog, int id) {
+                finish();
+           }
+       });
+       builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+           public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+           }
+       });
+		AlertDialog alert = builder.create();
+		alert.show();
 	}
 }
