@@ -45,6 +45,13 @@ public class ActiviteJeu extends Activity {
 		/* Affiche la vue */
 		setContentView(R.layout.terrain_de_jeu);
 		
+		/* Récupération du layout de fond */
+		MoteurGraphique moteurGraph = (MoteurGraphique)findViewById(R.id.trlCarte);
+		
+		/* Création du noyau */
+		noyau = new Noyau(getBaseContext(), moteurGraph, false);
+		moteurGraph.setNoyau(noyau);
+		
 		/* Récupération des paramètres envoyé à l'activity */
 		boolean estDeuxJoueursBluetooth = false;
 		Bundle bundle = this.getIntent().getExtras();
@@ -61,15 +68,9 @@ public class ActiviteJeu extends Activity {
 			Boolean paramBluetooth = (Boolean) bundle.get("bluetooth");
 			if(paramBluetooth != null) {
 				estDeuxJoueursBluetooth = true;
+				// TODO : passer au noyau qu'on est en mode bluetooth
 			}
 		}
-		
-		/* Récupération du layout de fond */
-		MoteurGraphique moteurGraph = (MoteurGraphique)findViewById(R.id.trlCarte);
-		
-		/* Création du noyau */
-		noyau = new Noyau(getBaseContext(), moteurGraph, estDeuxJoueursBluetooth);
-		moteurGraph.setNoyau(noyau);
 		
 		/* Mode TIR */
 		ToggleButton tgb = (ToggleButton) findViewById(R.id.toggleButton1);
