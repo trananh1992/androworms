@@ -14,6 +14,21 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choix de la difficulté de l&apos;IA :" />
+
+    <SeekBar
+        android:id="@+id/seekBar1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="4"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:progress="2" />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
