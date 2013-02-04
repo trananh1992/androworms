@@ -50,7 +50,6 @@ public class ActiviteJeu extends Activity {
 		
 		/* Création du noyau */
 		noyau = new Noyau(getBaseContext(), moteurGraph, false);
-		moteurGraph.setNoyau(noyau);
 		
 		/* Récupération des paramètres envoyé à l'activity */
 		boolean estDeuxJoueursBluetooth = false;
@@ -71,6 +70,8 @@ public class ActiviteJeu extends Activity {
 				// TODO : passer au noyau qu'on est en mode bluetooth
 			}
 		}
+		
+		moteurGraph.setNoyau(noyau);
 		
 		/* Mode TIR */
 		ToggleButton tgb = (ToggleButton) findViewById(R.id.toggleButton1);
