@@ -34,17 +34,27 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textStyle="italic" />
 
-            <Button
-                android:id="@+id/btn_partie_solo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/btn_jeu_solo" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
-            <Button
-                android:id="@+id/btn_multi_joueur"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/btn_2_joueurs" />
+                <Button
+                    android:id="@+id/btn_partie_solo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/un_joueur"
+                    android:text="@string/btn_jeu_solo" />
+
+                <Button
+                    android:id="@+id/btn_multi_joueur"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/deux_joueurs_bis"
+                    android:text="@string/btn_2_joueurs" />
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
@@ -55,19 +65,61 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textStyle="italic" />
 
-            <Button
-                android:id="@+id/btn_bluetooth_creer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/bluetooth_icon"
-                android:text="@string/btn_creation_partie" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
-            <Button
-                android:id="@+id/btn_bluetooth_rejoindre"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/bluetooth_icon"
-                android:text="@string/btn_rejoindre_partie" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Jouer en Bluetooth"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <Button
+                    android:id="@+id/btn_bluetooth_creer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/bluetooth_icon"
+                    android:text="@string/btn_creation_partie" />
+
+                <Button
+                    android:id="@+id/btn_bluetooth_rejoindre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/bluetooth_icon"
+                    android:text="@string/btn_rejoindre_partie" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Jouer en Wifi Direct"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <Button
+                    android:id="@+id/Button02"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/wifi"
+                    android:text="@string/btn_creation_partie" />
+
+                <Button
+                    android:id="@+id/Button01"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/wifi"
+                    android:text="@string/btn_rejoindre_partie" />
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 
