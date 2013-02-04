@@ -45,6 +45,7 @@ public class ActiviteEditeur extends Activity implements OnClickListener,OnTouch
 	static final int COULEUR_CIEL = 0xff77B5FE;
 	static final String TAG = "ActiviteCreationCarte";
 	static final int MAX_COLOR_VALUE = 255;
+	
 	/* couleur herbe foncée : 0xff458B00  couleur fluo : 0xff00ff00;*/
 	static final int COULEUR_HERBE = 0xff00ff00;
 	
@@ -481,18 +482,24 @@ public class ActiviteEditeur extends Activity implements OnClickListener,OnTouch
 			/* récupération de l'emplacement de stockage de l'image */
 			String photoPath = retour.getStringExtra("image");
 			FileInputStream stream = null;
+			ImageView surface = (ImageView) findViewById(R.id.CurrentMap);
 			/* On ouvre l'image */
 			try {
 				stream = new FileInputStream(photoPath);
 				byte data[] = new byte[stream.available()];
 				stream.read(data);
 				
+				
+				/* on libère le précédent bitmap */
+				if(upCalc != null)
+					upCalc.recycle();
+				
 				/* On met l'image en fond de l'activité */
-				ImageView surface = (ImageView) findViewById(R.id.CurrentMap);
-				Bitmap b = BitmapFactory.decodeByteArray(data, 0, data.length).copy(Bitmap.Config.ARGB_8888, true);
-				Bitmap overlay = Bitmap.createBitmap(surface.getWidth(), surface.getHeight(), b.getConfig());
-				Canvas c = new Canvas(overlay);
-				c.drawBitmap(b, Math.max(0, (surface.getHeight()-b.getHeight())/2),Math.max(0,(surface.getWidth()-b.getWidth())/2), null);
+				upCalc = BitmapFactory.decodeByteArray(data, 0, data.length);
+				Bitmap overlay = Bitmap.createBitmap(surface.getWidth(), surface.getHeight(), upCalc.getConfig());
+				
+				drawCanvas = new Canvas(overlay);
+				drawCanvas.drawBitmap(upCalc, new Rect(0,0,upCalc.getWidth(),upCalc.getHeight()), new Rect(0,0,surface.getWidth(),surface.getHeight()), null);
 				((ImageView)findViewById(R.id.background)).setImageBitmap(overlay);
 				stream.close();
 				boolean success = new File(photoPath).delete();
