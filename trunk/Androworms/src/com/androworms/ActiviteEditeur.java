@@ -45,7 +45,7 @@ public class ActiviteEditeur extends Activity implements OnClickListener,OnTouch
 	static final int COULEUR_CIEL = 0xff77B5FE;
 	static final String TAG = "ActiviteCreationCarte";
 	static final int MAX_COLOR_VALUE = 255;
-	
+	static final int DEFINITION = 3;
 	/* couleur herbe foncée : 0xff458B00  couleur fluo : 0xff00ff00;*/
 	static final int COULEUR_HERBE = 0xff00ff00;
 	
@@ -314,17 +314,29 @@ public class ActiviteEditeur extends Activity implements OnClickListener,OnTouch
 	private void separeAlpha(int width, int height, Bitmap base, int densityL, int densityD) {
 		int i,j;
 		final int nComponents = 3;
-		for(i=0;i<width;i++)
+		
+		for(i=0;i<(width-DEFINITION+1);i+=DEFINITION)
 		{
-			for(j=0;j<height;j++)
+			for(j=0;j<(height-DEFINITION+1);j+=DEFINITION)
 			{
-				int color = base.getPixel(i, j);
-				int density = (Color.red(color)+Color.green(color)+Color.blue(color))/nComponents;
+				int k,l;
+				int density = 0;
+				for(k=0;k<DEFINITION;k++)
+				{
+					for(l=0;l<DEFINITION;l++)
+					{
+						int color = base.getPixel(i+k, j+l);
+						density += ((Color.red(color)+Color.green(color)+Color.blue(color))/nComponents);
+					}
+				}
+				density = density / (DEFINITION*DEFINITION);
 				if(Math.abs(densityL-density)>Math.abs(densityD-density))
 				{
 					Paint paint = new Paint();
+					paint.setStrokeWidth(DEFINITION);
 					paint.setColor(COULEUR_CIEL);
 					drawCanvas.drawPoint(i, j, paint);
+					
 				}
 			}
 		}
@@ -346,19 +358,20 @@ public class ActiviteEditeur extends Activity implements OnClickListener,OnTouch
 		int width = b.getWidth();
 		int i,j;
 		final int nComponents = 3;
-		int dark = b.getPixel(0,0);
-		int densityD = (Color.red(dark)+Color.green(dark)+Color.blue(dark))/nComponents;
-		int light = b.getPixel(0,0);
-		int densityL = (Color.red(light)+Color.green(light)+Color.blue(light))/nComponents;
+		int origin = b.getPixel(0,0);
+		int densityD = (Color.red(origin)+Color.green(origin)+Color.blue(origin))/nComponents;
+		int densityL = (Color.red(origin)+Color.green(origin)+Color.blue(origin))/nComponents;
 		if(!initializedImageView)
 		{
 			initImageView();
 			initializedImageView = true;
 		}
-		for(i=0;i<width;i++)
+		
+		for(i=0;i<(width-DEFINITION+1);i+=DEFINITION)
 		{
-			for(j=0;j<height;j++)
+			for(j=0;j<(height-DEFINITION+1);j+=DEFINITION)
 			{
+				
 				int color = b.getPixel(i, j);
 				if(Color.alpha(color)!=MAX_COLOR_VALUE)
 				{
@@ -367,12 +380,10 @@ public class ActiviteEditeur extends Activity implements OnClickListener,OnTouch
 				int density = (Color.red(color)+Color.green(color)+Color.blue(color))/nComponents;
 				if(density<densityL)
 				{
-					light = color;
 					densityL = density;
 				}
 				else if(density > densityD)
 				{
-					dark = color;
 					densityD = density;
 				}
 			}
@@ -382,7 +393,7 @@ public class ActiviteEditeur extends Activity implements OnClickListener,OnTouch
 		((ImageView) surface).draw(drawCanvas);
 		((ImageView) surface).invalidate();
 	}
-	
+
 	private void autoAlpha() {
 		autoAlpha4();
 		mustSave = true;
