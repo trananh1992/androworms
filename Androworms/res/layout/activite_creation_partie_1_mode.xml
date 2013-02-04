@@ -25,6 +25,15 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/ciel_bleu"
+                android:gravity="center"
+                android:text="@string/jouer_avec_un_telephone"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textStyle="italic" />
+
             <Button
                 android:id="@+id/btn_partie_solo"
                 android:layout_width="wrap_content"
@@ -36,6 +45,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/btn_2_joueurs" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/ciel_bleu"
+                android:gravity="center"
+                android:text="@string/jouer_avec_plusieurs_telephones"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textStyle="italic" />
 
             <Button
                 android:id="@+id/btn_bluetooth_creer"
