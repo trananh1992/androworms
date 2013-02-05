@@ -142,6 +142,7 @@ public class MoteurGraphique extends RelativeLayout {
 	}
 	
 	public void actualiserGraphisme() {
+		// Permet d'actualiser les graphismes en appellant la fonction dispatchDraw()
 		invalidate();
 	}
 		

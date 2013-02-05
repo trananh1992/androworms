@@ -85,7 +85,7 @@ public class ActiviteMultiJoueur extends Activity {
 	public void demarrerServeurBluetooth() {
 		Log.d(TAG, "DEMARAGE DU SERVEUR BLUETOOTH");
 		serveurConnexionBluetooth = new ServeurConnexionBluetooth(this);
-		serveurConnexionBluetooth.execute(this);
+		serveurConnexionBluetooth.execute();
 	}
 	
 	/** Démarrage du client Bluetooth */
@@ -139,8 +139,8 @@ public class ActiviteMultiJoueur extends Activity {
 				
 				// On start le minuteur
 				Log.v(TAG, "Début du minuteur");
-				ch = new MinuteurVisibiliteBluetooth();
-				ch.execute(ActiviteMultiJoueur.this);
+				ch = new MinuteurVisibiliteBluetooth(this);
+				ch.executerTacheEnParralelle();
 			} else {
 				// L'utilisateur a refusé l'activation de la visiblité du Bluetooth (ou il s'agit d'une erreur)
 				Log.v(TAG,"L'utilisateur a refusé l'activation de la visiblité du Bluetooth");
