@@ -46,8 +46,6 @@ public class ActiviteMultiJoueurEvent implements OnClickListener {
 				
 				/* Chargement des composants */
 				activiteMultiJoueur.getFonctionsIHM().chargementInterfaceBluetoothServeur();
-				/* Actualisation des elements graphiques *///DELETE ?
-				//activiteMultiJoueur.getFonctions_IHM().refresh_UI_multijoueur_bluetooth_serveur();
 			}
 			else if (btn == activiteMultiJoueur.findViewById(R.id.btn_bluetooth_client)) {
 				/* Choix du Bluetooth > Client */
@@ -59,8 +57,6 @@ public class ActiviteMultiJoueurEvent implements OnClickListener {
 				
 				/* Chargement des composants */
 				activiteMultiJoueur.getFonctionsIHM().chargementInterfaceBluetoothClient();
-				/* Actualisation des elements graphiques *///DELETE ?
-				//activiteMultiJoueur.getFonctions_IHM().refresh_UI_multijoueur_bluetooth_client();
 			}
 		}
 	}
