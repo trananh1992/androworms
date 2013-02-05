@@ -42,28 +42,36 @@ public class ActiviteCreationPartie extends Activity {
 				etape2ModeSolo();
 			}
 		});
-		
 		Button btnMultiJoueur = (Button)findViewById(R.id.btn_multi_joueur);
 		btnMultiJoueur.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				etape2ModeDeuxjoueurs();
 			}
 		});
-		
 		Button btnBluetoothCreer = (Button)findViewById(R.id.btn_bluetooth_creer);
 		btnBluetoothCreer.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				etape2ModeBluetoothServeur();
 			}
 		});
-		
 		Button btnBluetoothRejoindre = (Button)findViewById(R.id.btn_bluetooth_rejoindre);
 		btnBluetoothRejoindre.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				etape2ModeBluetoothClient();
 			}
 		});
-		
+		Button btnWifiCreer = (Button)findViewById(R.id.btn_wifi_creer);
+		btnWifiCreer.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				etape2ModeWifiServeur();
+			}
+		});
+		Button btnWifiRejoindre = (Button)findViewById(R.id.btn_wifi_rejoindre);
+		btnWifiRejoindre.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				etape2ModeWifiClient();
+			}
+		});
 		
 		Button btnSuivant = (Button)findViewById(R.id.btn_suivant);
 		btnSuivant.setEnabled(false);
@@ -105,6 +113,16 @@ public class ActiviteCreationPartie extends Activity {
 		setContentView(R.layout.multi_joueur_bluetooth_client);
 		/* Chargement des composants */
 //		chargementInterfaceBluetoothClient();
+	}
+	
+	private void etape2ModeWifiServeur() {
+		// Non disponible pour le moment
+				new AlertDialog.Builder(this).setTitle("Androworms").setMessage("Les parties en Wifi-Direct ne sont pas encore dispo !").setNeutralButton("Close", null).show();
+	}
+	
+	private void etape2ModeWifiClient() {
+		// Non disponible pour le moment
+				new AlertDialog.Builder(this).setTitle("Androworms").setMessage("Les parties en Wifi-Direct ne sont pas encore dispo !").setNeutralButton("Close", null).show();
 	}
 	
 	private void etape3(final int mode) {

@@ -104,7 +104,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <Button
-                    android:id="@+id/Button02"
+                    android:id="@+id/btn_wifi_creer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -112,7 +112,7 @@
                     android:text="@string/btn_creation_partie" />
 
                 <Button
-                    android:id="@+id/Button01"
+                    android:id="@+id/btn_wifi_rejoindre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
