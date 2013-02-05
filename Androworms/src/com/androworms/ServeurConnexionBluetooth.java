@@ -22,7 +22,7 @@ import com.androworms.R;
 /** Lors de la création d'une partie en Multi-joueur en Bluetooth,
  *  ce Thread est crée pour crée pour tourner et attendre les connexions clientes.
  */
-public class ServeurConnexionBluetooth extends AsyncTask<ActiviteMultiJoueur, String, Boolean> {
+public class ServeurConnexionBluetooth extends AsyncTask<Void, String, Boolean> {
 	
 	private static final String TAG_SERVEUR = "Androworms.ServeurConnexionBluetooth";
 	
@@ -63,7 +63,7 @@ public class ServeurConnexionBluetooth extends AsyncTask<ActiviteMultiJoueur, St
 	}
 	
 	@Override
-	protected Boolean doInBackground(ActiviteMultiJoueur... params) {
+	protected Boolean doInBackground(Void... params) {
 		BluetoothSocket socket = null;
 		
 		while (true) {
