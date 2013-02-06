@@ -54,5 +54,6 @@
         <string name="jouer_avec_plusieurs_telephones">Jouer avec plusieurs téléphones</string>
         <string name="serveur_bluetooth">Serveur Bluetooth</string>
         <string name="client_bluetooth">Client Bluetooth</string>
+        <string name="version">"Version : "</string>
     
 </resources>
