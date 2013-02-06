@@ -117,12 +117,12 @@ public class ActiviteCreationPartie extends Activity {
 	
 	private void etape2ModeWifiServeur() {
 		// Non disponible pour le moment
-				new AlertDialog.Builder(this).setTitle("Androworms").setMessage("Les parties en Wifi-Direct ne sont pas encore dispo !").setNeutralButton("Close", null).show();
+		new AlertDialog.Builder(this).setTitle("Androworms").setMessage("Les parties en Wifi-Direct ne sont pas encore dispo !").setNeutralButton("Close", null).show();
 	}
 	
 	private void etape2ModeWifiClient() {
 		// Non disponible pour le moment
-				new AlertDialog.Builder(this).setTitle("Androworms").setMessage("Les parties en Wifi-Direct ne sont pas encore dispo !").setNeutralButton("Close", null).show();
+		new AlertDialog.Builder(this).setTitle("Androworms").setMessage("Les parties en Wifi-Direct ne sont pas encore dispo !").setNeutralButton("Close", null).show();
 	}
 	
 	private void etape3(final int mode) {
@@ -144,6 +144,12 @@ public class ActiviteCreationPartie extends Activity {
 					break;
 				case ActiviteCreationPartie.MODE_BLUETOOTH_CLIENT:
 					etape2ModeBluetoothClient();
+					break;
+				case ActiviteCreationPartie.MODE_WIFI_SERVEUR:
+					etape2ModeWifiClient();
+					break;
+				case ActiviteCreationPartie.MODE_WIFI_CLIENT:
+					etape2ModeWifiClient();
 					break;
 				default :
 					etape1();

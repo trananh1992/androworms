@@ -98,8 +98,8 @@ public class ActiviteMultiJoueur extends Activity {
 		// On actualise l'interface graphique du client
 		pbBluetoothAnalyse.setVisibility(View.VISIBLE);
 		
-		clientConnexionBluetooth = new ClientConnexionBluetooth(device);
-		clientConnexionBluetooth.execute(this);
+		clientConnexionBluetooth = new ClientConnexionBluetooth(this, device);
+		clientConnexionBluetooth.execute();
 	}
 	
 	/** Gestion des demandes d'activation/visibilité du Bluetooth */
@@ -113,6 +113,9 @@ public class ActiviteMultiJoueur extends Activity {
 				if (isServeur) {
 					// Si on est le serveur, on peut le démarrer
 					demarrerServeurBluetooth();
+				}
+				else {
+					fonctionsIHM.listerAppareilsJumeles();
 				}
 			} else {
 				// L'utilisateur a refusé d'activer le Bluetooth (ou il s'agit d'une erreur)
