@@ -176,20 +176,20 @@ public class ActiviteJeu extends Activity {
 	}
 	
 	@Override
-	public void onBackPressed() {
+	public void onBackPressed() {	
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage("Voulez-vous vraiment quitter la partie ?");
 		builder.setCancelable(false);
-       builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
-           public void onClick(DialogInterface dialog, int id) {
-                finish();
-           }
-       });
-       builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
-           public void onClick(DialogInterface dialog, int id) {
-                dialog.cancel();
-           }
-       });
+		builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				finish();
+			}
+		});
+		builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				dialog.cancel();
+			}
+		});
 		AlertDialog alert = builder.create();
 		alert.show();
 	}
