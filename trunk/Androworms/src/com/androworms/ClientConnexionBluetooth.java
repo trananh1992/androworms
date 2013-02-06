@@ -23,13 +23,14 @@ import com.androworms.R;
 /** Lors de la création d'une partie en Multi-joueur en Bluetooth,
  *  ce Thread est crée pour crée l'échange de socket entre le client et le serveur.
  */
-public class ClientConnexionBluetooth extends AsyncTask<ActiviteMultiJoueur, Integer, Boolean> {
+public class ClientConnexionBluetooth extends AsyncTask<Void, Integer, Boolean> {
 	
 	private static final String TAG_CLIENT = "ClientBluetooth";
 	private BluetoothSocket socketServeur;
 	private ActiviteMultiJoueur activiteMultiJoueur;
 	
-	public ClientConnexionBluetooth(BluetoothDevice device) {
+	public ClientConnexionBluetooth(ActiviteMultiJoueur activiteMultiJoueur, BluetoothDevice device) {
+		this.activiteMultiJoueur = activiteMultiJoueur;
 		try {
 			socketServeur = device.createRfcommSocketToServiceRecord(Contact.ANDROWORMS_UUID);
 		} catch (IOException e) {
@@ -38,9 +39,7 @@ public class ClientConnexionBluetooth extends AsyncTask<ActiviteMultiJoueur, Int
 	}
 	
 	@Override
-	protected Boolean doInBackground(ActiviteMultiJoueur... params) {
-		this.activiteMultiJoueur = params[0];
-		
+	protected Boolean doInBackground(Void... params) {
 		// On annule la recherche d'appareil à proximité si elle était lancé (elle sert plus à rien)
 		ActiviteMultiJoueur.mBluetoothAdapter.cancelDiscovery();
 		
