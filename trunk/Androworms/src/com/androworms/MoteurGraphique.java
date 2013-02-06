@@ -361,16 +361,12 @@ public class MoteurGraphique extends RelativeLayout {
 			
 			for(Personnage p : monde.getListePersonnage()) {
 				ImageSurCarte imgSurCarte = new ImageSurCarte(this.context, p, this);
-				//On rajoute dans le layout
-				this.addView(imgSurCarte);
 				//On garde la référence pour le zoom et translation
 				images.add(imgSurCarte);
 			}
 			
 			for(ObjetSurCarte objSurCarte : monde.getListeObjetCarte()) {
 				ImageSurCarte imgSurCarte = new ImageSurCarte(this.context, objSurCarte, this);
-				//On rajoute dans le layout
-				this.addView(imgSurCarte);
 				//On garde la référence pour le zoom et translation
 				images.add(imgSurCarte);
 			}
@@ -381,8 +377,6 @@ public class MoteurGraphique extends RelativeLayout {
 	
 	public void ajouterElementSurCarte(ElementSurCarte elt) {
 		ImageSurCarte imgSurCarte = new ImageSurCarte(this.context, elt, this);
-		//On rajoute dans le layout
-		this.addView(imgSurCarte);
 		//On garde la référence pour le zoom et translation
 		images.add(imgSurCarte);
 	}
