@@ -13,10 +13,14 @@ import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.util.LruCache;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 /** Ce composant graphique est un RelativeLayout personnalisé pour Androworms.
@@ -26,7 +30,7 @@ import android.widget.RelativeLayout;
 public class MoteurGraphique extends RelativeLayout {
 	
 	private static final String TAG = "Androworms.MoteurGraphique";
-	
+
 	/* Constantes de tailles des composants */
 	public static final int MAP_WIDTH = 1280;
 	public static final int MAP_HEIGHT = 720;
@@ -77,6 +81,7 @@ public class MoteurGraphique extends RelativeLayout {
 	
 	private Context context;
 	private List<ImageSurCarte> images;
+	private ProgressBar pbTest;
 	
 	public MoteurGraphique(Context context) {
 		super(context);
@@ -135,6 +140,11 @@ public class MoteurGraphique extends RelativeLayout {
 		matrix.getValues(mm);
 		images = new ArrayList<ImageSurCarte>();
 		
+		
+		pbTest = new ProgressBar(context);
+		pbTest.layout(0, 0, 20, 20);
+		pbTest.setVisibility(View.INVISIBLE);
+		this.addView(pbTest);
 	}
 	
 	private static Bitmap prepareBitmap(Bitmap b, int width, int height) {
@@ -144,6 +154,10 @@ public class MoteurGraphique extends RelativeLayout {
 	public void actualiserGraphisme() {
 		// Permet d'actualiser les graphismes en appellant la fonction dispatchDraw()
 		invalidate();
+	}
+	
+	public void affecterMouvementForces(List<Personnage> lp) {
+		new AsyncMouvementForce(this, lp).execute(this);	
 	}
 		
 	@Override
@@ -388,6 +402,38 @@ public class MoteurGraphique extends RelativeLayout {
 			}
 		}
 	}
+
+	
+    /**
+     * Create a simple handler that we can use to cause animation to happen.  We
+     * set ourselves as a target and we can use the sleep()
+     * function to cause an update/invalidate to occur at a later date.
+     */
+    private RefreshHandler mRedrawHandler = new RefreshHandler();
+
+    class RefreshHandler extends Handler {
+
+        @Override
+        public void handleMessage(Message msg) {
+            //MoteurGraphique.this.update();
+        	noyau.getPhysique().gravite();
+            MoteurGraphique.this.invalidate();
+        }
+
+        public void sleep(long delayMillis) {
+        	this.removeMessages(0);
+            sendMessageDelayed(obtainMessage(0), delayMillis);
+        }
+    };
+    
+	public void debutCalcul() {
+		pbTest.setVisibility(View.VISIBLE);
+	}
+	public void finCalcul() {
+		pbTest.setVisibility(View.INVISIBLE);
+	}
+    
+    
 	
 	public void remetAplusTard(Runnable r, int tps)
 	{
@@ -404,4 +450,9 @@ public class MoteurGraphique extends RelativeLayout {
 			}
 		}, 10000);
 	}
+	
+    public void setGravityInFuture() {
+        mRedrawHandler.sleep(10000);
+        
+    }
 }

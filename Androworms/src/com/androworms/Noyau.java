@@ -56,6 +56,8 @@ public class Noyau {
 		
 		Bitmap b = ((BitmapDrawable)context.getResources().getDrawable(R.drawable.terrain_jeu_defaut_4)).getBitmap();
 		monde.setTerrain(b, 1280, 720);
+		//physique.gravite();
+		//mouvementForces();
 
 		this.nomPersonnage = pseudo;
 	}
@@ -68,6 +70,14 @@ public class Noyau {
 		this.nomPersonnage = nomPersonnage;
 	}
 	
+	public MoteurPhysique getPhysique() {
+		return physique;
+	}
+
+	public void setPhysique(MoteurPhysique physique) {
+		this.physique = physique;
+	}
+
 	public void actualiserGraphisme() {
 		graphique.actualiserGraphisme();
 	}
@@ -86,11 +96,15 @@ public class Noyau {
 	
 	/** Gestion des messages venanat de l'IHM */
 	public void sautJoueurDroiteFromIHM() {
-		physique.gravite();
+		//physique.sautJoueurDroite(nomPersonnage);
+		//physique.gravite();
+		graphique.setGravityInFuture();
 	}
 	
 	public void sautJoueurGaucheFromIHM() {
-		
+		//physique.sautJoueurGauche(nomPersonnage);
+		//physique.gravite();
+		graphique.setGravityInFuture();
 	}
 	
 	public void deplacementJoueurDroiteFromIHM() {
@@ -115,8 +129,9 @@ public class Noyau {
 	public void effectuerTir(float puissance, float angle) {
 		Log.v(TAG_NOYAU, "On tire");
 		this.graphique.setGraviteInFuture(3);
-		
 	}
+	
+
 	
 	/** Gestion des tests. */
 	public void testReseau() {
@@ -127,15 +142,13 @@ public class Noyau {
 		return monde;
 	}
 
-	
+	/** Cette fonction informe l'interface graphique 
+	 * qu'il y a des mouvements que des joueurs doivent exécuter
+	 */
 	public void mouvementForces() {
-		
+		graphique.affecterMouvementForces(monde.getListePersonnage());
 	}
 	
-	
-	public MoteurPhysique getPhysique() {
-		return physique;
-	}
 
 
 	
