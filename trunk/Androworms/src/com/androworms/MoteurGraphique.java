@@ -156,10 +156,6 @@ public class MoteurGraphique extends RelativeLayout {
 		invalidate();
 	}
 	
-	public void affecterMouvementForces(List<Personnage> lp) {
-		new AsyncMouvementForce(this, lp).execute(this);	
-	}
-		
 	@Override
 	protected void dispatchDraw(Canvas canvas) {
 		
@@ -403,43 +399,43 @@ public class MoteurGraphique extends RelativeLayout {
 		}
 	}
 
-	
-    /**
-     * Create a simple handler that we can use to cause animation to happen.  We
-     * set ourselves as a target and we can use the sleep()
-     * function to cause an update/invalidate to occur at a later date.
-     */
-    private RefreshHandler mRedrawHandler = new RefreshHandler();
 
-    class RefreshHandler extends Handler {
+	/**
+	 * Create a simple handler that we can use to cause animation to happen.  We
+	 * set ourselves as a target and we can use the sleep()
+	 * function to cause an update/invalidate to occur at a later date.
+	 */
+	private RefreshHandler mRedrawHandler = new RefreshHandler();
 
-        @Override
-        public void handleMessage(Message msg) {
-            //MoteurGraphique.this.update();
-        	noyau.getPhysique().gravite();
-            MoteurGraphique.this.invalidate();
-        }
+	class RefreshHandler extends Handler {
 
-        public void sleep(long delayMillis) {
-        	this.removeMessages(0);
-            sendMessageDelayed(obtainMessage(0), delayMillis);
-        }
-    };
-    
+		@Override
+		public void handleMessage(Message msg) {
+			//MoteurGraphique.this.update();
+			noyau.getPhysique().gravite();
+			MoteurGraphique.this.invalidate();
+		}
+
+		public void sleep(long delayMillis) {
+			this.removeMessages(0);
+			sendMessageDelayed(obtainMessage(0), delayMillis);
+		}
+	};
+
 	public void debutCalcul() {
 		pbTest.setVisibility(View.VISIBLE);
 	}
 	public void finCalcul() {
 		pbTest.setVisibility(View.INVISIBLE);
 	}
-    
-    
-	
+
+
+
 	public void remetAplusTard(Runnable r, int tps)
 	{
 		postDelayed(r, tps);
 	}
-	
+
 	public void setGraviteInFuture(final int nbtrucs) {
 		postDelayed(new Runnable() {		
 			public void run() {
@@ -450,9 +446,9 @@ public class MoteurGraphique extends RelativeLayout {
 			}
 		}, 10000);
 	}
-	
-    public void setGravityInFuture() {
-        mRedrawHandler.sleep(10000);
-        
-    }
+
+	public void setGravityInFuture() {
+		mRedrawHandler.sleep(10000);
+
+	}
 }
