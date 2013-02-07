@@ -146,7 +146,6 @@ public class Noyau {
 	 * qu'il y a des mouvements que des joueurs doivent exécuter
 	 */
 	public void mouvementForces() {
-		graphique.affecterMouvementForces(monde.getListePersonnage());
 	}
 	
 
