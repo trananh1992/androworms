@@ -388,4 +388,20 @@ public class MoteurGraphique extends RelativeLayout {
 			}
 		}
 	}
+	
+	public void remetAplusTard(Runnable r, int tps)
+	{
+		postDelayed(r, tps);
+	}
+	
+	public void setGraviteInFuture(final int nbtrucs) {
+		postDelayed(new Runnable() {		
+			public void run() {
+				int i = nbtrucs;
+				noyau.getPhysique().gravite();
+				MoteurGraphique.this.invalidate();
+				setGraviteInFuture(3);
+			}
+		}, 10000);
+	}
 }
