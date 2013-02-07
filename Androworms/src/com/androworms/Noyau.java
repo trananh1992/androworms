@@ -114,6 +114,7 @@ public class Noyau {
 
 	public void effectuerTir(float puissance, float angle) {
 		Log.v(TAG_NOYAU, "On tire");
+		this.graphique.setGraviteInFuture(3);
 		
 	}
 	
@@ -131,5 +132,11 @@ public class Noyau {
 		
 	}
 	
+	
+	public MoteurPhysique getPhysique() {
+		return physique;
+	}
+
+
 	
 }
