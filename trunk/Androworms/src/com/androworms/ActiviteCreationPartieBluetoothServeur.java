@@ -1,6 +1,5 @@
 package com.androworms;
 
-import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.util.Log;
@@ -8,14 +7,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 
 import com.androworms.utile.Informations;
 
-public class ActiviteCreationPartieBluetoothServeur extends Activity {
+public class ActiviteCreationPartieBluetoothServeur {
 	
 	private static final String TAG = "Androworms.ActiviteCreationPartie";
 	private ActiviteCreationPartie activiteCreationPartie;
@@ -98,7 +97,7 @@ public class ActiviteCreationPartieBluetoothServeur extends Activity {
 					
 					// TODO le serveur doit dire aux clients qu'on commence à jouer !
 					
-					activiteCreationPartieBluetooth.lancerLeJeu();
+					activiteCreationPartie.passerEtape3DepuisServeurBluetooth();
 				}
 			}
 		});

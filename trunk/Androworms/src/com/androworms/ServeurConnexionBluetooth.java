@@ -37,11 +37,8 @@ public class ServeurConnexionBluetooth extends AsyncTask<Void, String, Boolean> 
 	private ArrayAdapter<String> adaptateurListeClients;
 	private List<String> listeClients;
 	
-	private ActiviteCreationPartie activiteCreationPartie;
-	
 	public ServeurConnexionBluetooth(ActiviteCreationPartieBluetooth activiteCreationPartieBluetooth) {
-		
-		this.activiteCreationPartie = activiteCreationPartieBluetooth.getActiviteCreationPartie();
+		ActiviteCreationPartie activiteCreationPartie = activiteCreationPartieBluetooth.getActiviteCreationPartie();
 		
 		Log.v(TAG_SERVEUR, "Création de la socket publique");
 		
