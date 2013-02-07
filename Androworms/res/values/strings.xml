@@ -55,5 +55,6 @@
         <string name="serveur_bluetooth">Serveur Bluetooth</string>
         <string name="client_bluetooth">Client Bluetooth</string>
         <string name="version">"Version : "</string>
+        <string name="touchez_l_ecran">Touchez l\'écran pour revenir au menu principale</string>
     
 </resources>

@@ -37,16 +37,20 @@ public class ServeurConnexionBluetooth extends AsyncTask<Void, String, Boolean> 
 	private ArrayAdapter<String> adaptateurListeClients;
 	private List<String> listeClients;
 	
-	public ServeurConnexionBluetooth(ActiviteMultiJoueur activiteMultiJoueur) {
+	private ActiviteCreationPartie activiteCreationPartie;
+	
+	public ServeurConnexionBluetooth(ActiviteCreationPartieBluetooth activiteCreationPartieBluetooth) {
+		
+		this.activiteCreationPartie = activiteCreationPartieBluetooth.getActiviteCreationPartie();
 		
 		Log.v(TAG_SERVEUR, "Création de la socket publique");
 		
 		// Gestion de la liste des clients déjà connecté
 		listeClients = new ArrayList<String>();
-		adaptateurListeClients = new ArrayAdapter<String>(activiteMultiJoueur, android.R.layout.simple_list_item_1, android.R.id.text1, listeClients);
+		adaptateurListeClients = new ArrayAdapter<String>(activiteCreationPartie, android.R.layout.simple_list_item_1, android.R.id.text1, listeClients);
 		
 		// Affichage de la liste des clients déjà connecté
-		ListView lv = (ListView)activiteMultiJoueur.findViewById(R.id.liste_appareils_bluetoothS);
+		ListView lv = (ListView)activiteCreationPartie.findViewById(R.id.liste_appareils_bluetoothS);
 		lv.setAdapter(adaptateurListeClients);
 		lv.setVisibility(View.VISIBLE);
 		

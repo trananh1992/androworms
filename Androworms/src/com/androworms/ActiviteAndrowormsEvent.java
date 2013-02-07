@@ -57,12 +57,6 @@ public class ActiviteAndrowormsEvent implements OnClickListener {
 				Intent intent = new Intent(this.activiteAndroworms, ActiviteGyro.class);
 				this.activiteAndroworms.startActivity(intent);
 			}
-			else if (b.getId() == R.id.btn_menu_multi) {
-				// Bouton de l'éditeur de carte
-				Log.v(TAG, "Clic sur le bouton du mode multi-joueurs");
-				Intent intent = new Intent(this.activiteAndroworms, ActiviteMultiJoueur.class);
-				this.activiteAndroworms.startActivity(intent);
-			}
 		}
 	}
 }

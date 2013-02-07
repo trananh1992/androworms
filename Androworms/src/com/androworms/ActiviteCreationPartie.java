@@ -20,16 +20,12 @@ public class ActiviteCreationPartie extends Activity {
 	private static final int MODE_WIFI_SERVEUR = 5;
 	private static final int MODE_WIFI_CLIENT = 6;
 	
+	private ActiviteCreationPartieBluetooth activiteCreationPartieBluetooth;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.v(TAG, "Début de la création de la partie");
-		etape1();
-	}
-	
-	@Override
-	protected void onResume() {
-		super.onResume();
 		etape1();
 	}
 	
@@ -102,17 +98,19 @@ public class ActiviteCreationPartie extends Activity {
 	}
 	
 	private void etape2ModeBluetoothServeur() {
+		activiteCreationPartieBluetooth = new ActiviteCreationPartieBluetooth(this);
 		/* Affichage de la vue */
 		setContentView(R.layout.multi_joueur_bluetooth_serveur);
 		/* Chargement des composants */
-//		chargementInterfaceBluetoothServeur();
+		activiteCreationPartieBluetooth.chargementInterfaceBluetoothServeur();
 	}
 	
 	private void etape2ModeBluetoothClient() {
+		activiteCreationPartieBluetooth = new ActiviteCreationPartieBluetooth(this);
 		/* Affichage de la vue */
 		setContentView(R.layout.multi_joueur_bluetooth_client);
 		/* Chargement des composants */
-//		chargementInterfaceBluetoothClient();
+		activiteCreationPartieBluetooth.chargementInterfaceBluetoothClient();
 	}
 	
 	private void etape2ModeWifiServeur() {
@@ -180,8 +178,32 @@ public class ActiviteCreationPartie extends Activity {
 			public void onClick(View v) {
 				Intent intent = new Intent(ActiviteCreationPartie.this, ActiviteJeu.class);
 				startActivity(intent);
+				/* On arrête l'application comme ça quand on sera sur la partie de jeu et qu'on fait la flèche de "retour à l'activité précédente",
+				   on arrivera sur le menu principal */
 				finish();
 			}
 		});
 	}
+	
+	@Override
+	public void onStop() {
+		super.onStop();
+		Log.v(TAG,"onStop()");
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		// Destroy des éléments du Bluetooth
+		activiteCreationPartieBluetooth.onDestroy();
+	}
+	
+	/** DEBUT DE SECTION : Fonctions pour le Bluetooth */
+	
+	/** Gestion des demandes d'activation/visibilité du Bluetooth */
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		activiteCreationPartieBluetooth.onActivityResult(requestCode, resultCode, data);
+	}
+	
+	/** FIN DE SECTION : Fonctions pour le Bluetooth */
 }

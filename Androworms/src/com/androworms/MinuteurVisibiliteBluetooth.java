@@ -14,13 +14,15 @@ import com.androworms.R;
 public class MinuteurVisibiliteBluetooth extends AsyncTask<Void, Integer, Boolean> {
 	
 	private static final String TAG = "Minuteur";
-	private ActiviteMultiJoueur activiteMultiJoueur;
+	private ActiviteCreationPartie activiteCreationPartie;
+	private ActiviteCreationPartieBluetooth activiteCreationPartieBluetooth;
 	
 	private static final int CENT_POUR_CENT = 100;
 	private static final int SEC_EN_MS = 1000;
 	
-	public MinuteurVisibiliteBluetooth(ActiviteMultiJoueur activiteMultiJoueur) {
-		this.activiteMultiJoueur = activiteMultiJoueur;
+	public MinuteurVisibiliteBluetooth(ActiviteCreationPartieBluetooth activiteCreationPartieBluetooth) {
+		this.activiteCreationPartieBluetooth = activiteCreationPartieBluetooth;
+		this.activiteCreationPartie = activiteCreationPartieBluetooth.getActiviteCreationPartie();
 	}
 	
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -55,7 +57,7 @@ public class MinuteurVisibiliteBluetooth extends AsyncTask<Void, Integer, Boolea
 				synchronized(this) {
 					// La valeur ActiviteMultiJoueur.DUREE_VISIBILITE_BLUETOOTH est en seconde, alors que le wait() prend des milisecondes.
 					// On attendre 1 centième de DUREE_VISIBILITE_BLUETOOTH pour avancer de 1%.
-					wait(ActiviteMultiJoueur.DUREE_VISIBILITE_BLUETOOTH * SEC_EN_MS / CENT_POUR_CENT);
+					wait(ActiviteCreationPartieBluetooth.DUREE_VISIBILITE_BLUETOOTH * SEC_EN_MS / CENT_POUR_CENT);
 				}
 				// On publie la progression du minuteur
 				publishProgress(i);
@@ -72,7 +74,7 @@ public class MinuteurVisibiliteBluetooth extends AsyncTask<Void, Integer, Boolea
 	@Override
 	protected void onProgressUpdate(Integer... progress) {
 		// Durant le minuteur, on actualise en fonction de la progression
-		ProgressBar pbMinuteur = (ProgressBar)activiteMultiJoueur.findViewById(R.id.pb_Minuteur);
+		ProgressBar pbMinuteur = (ProgressBar)activiteCreationPartie.findViewById(R.id.pb_Minuteur);
 		pbMinuteur.setProgress(progress[0]);
 	}
 	
@@ -80,7 +82,7 @@ public class MinuteurVisibiliteBluetooth extends AsyncTask<Void, Integer, Boolea
 	protected void onPostExecute(Boolean result) {
 		// A la fin du minuteur
 		if (result) {
-			ProgressBar pbMinuteur = (ProgressBar)activiteMultiJoueur.findViewById(R.id.pb_Minuteur);
+			ProgressBar pbMinuteur = (ProgressBar)activiteCreationPartie.findViewById(R.id.pb_Minuteur);
 			pbMinuteur.setProgress(0);
 		}
 	}
