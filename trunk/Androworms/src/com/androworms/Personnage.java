@@ -8,8 +8,7 @@ import android.graphics.PointF;
 
 /** Cette classe contient toutes les informations sur le personnage utilisé par un joueur.
  */
-public class Personnage extends ElementSurCarte implements Serializable {
-	
+public class Personnage extends ElementSurCarte implements Serializable, Cloneable {
 	private static final long serialVersionUID = 5484494097182728100L;
 	
 	/*
@@ -74,7 +73,7 @@ public class Personnage extends ElementSurCarte implements Serializable {
 	public List<PointF> getEnveloppeConvexe() {
 		List<PointF> result = getEnveloppeConvexeDroite();
 		result.addAll(getEnveloppeConvexeGauche());
-		result.addAll(getEnveloppeConvexeBas());
+		result.addAll(getEnveloppeConvexeBas());	
 		result.addAll(getEnveloppeConvexeHaut());
 		return result;
 	}

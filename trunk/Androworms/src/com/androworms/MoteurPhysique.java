@@ -21,32 +21,6 @@ public class MoteurPhysique {
 		this.monde = monde;
 	}
 	
-	private float max(float a, float b) {
-		if( a > b ) {
-			return a;
-		}
-		else {
-			return b;
-		}
-	}
-	
-	private float min(float a, float b) {
-		if( a < b ) {
-			return a;
-		}
-		else {
-			return b;
-		}
-	}
-	
-	private float abs(float a) {
-		if(a < 0) {
-			return -a;
-		} else {
-			return a;
-		}
-	}
-
 	public void deplacementJoueurDroite(String personnage) {
 		Personnage p = monde.getPersonnage(personnage);
 		deplacementJoueur(p, 1, p.getMouvementDroite());
@@ -63,13 +37,16 @@ public class MoteurPhysique {
 			pNew.setPosition(pNew.getPosition().x + addToX, 
 					pNew.getPosition().y-HAUTEUR_DEPLACEMENT_JOUEUR);
 			if( !estEnCollision(pNew) && estDansTerrain(pNew)) {
-				pOld.setPosition(new PointF(pNew.getPosition().x, pNew.getPosition().y));
-				gravite(pOld);
-				path.add(pOld.getPosition());
+				//pOld.setPosition(new PointF(pNew.getPosition().x, pNew.getPosition().y));
+				gravite(pNew);
+				path.add(pNew.getPosition());
 			}
 		}
-		noyau.actualiserGraphisme();
+		//noyau.actualiserGraphisme()
+		noyau.mouvementForces();
 	}
+	
+	
 	
 	private boolean estEnCollision(Personnage personnage) {
 		boolean result = false;
@@ -92,22 +69,24 @@ public class MoteurPhysique {
 	public void gravite() {
 		for(int i = 0; i < monde.nombrePersonnage(); i++) {
 			Personnage p = monde.getListePersonnage().get(i);
-			while(personnageVolant(p)) {
-				p.addMouvementForces(p.getPosition());
-				p.setPosition(p.getPosition().x, p.getPosition().y+1);
+			Personnage pNew = p.clone();
+			while(personnageVolant(pNew)) {
+				p.addMouvementForces(pNew.getPosition());
+				pNew.setPosition(pNew.getPosition().x, pNew.getPosition().y+1);
 			}
 		}
-		noyau.mouvementForces();
+		//noyau.mouvementForces();
 		//noyau.actualiserGraphisme();
 	}
 	
 	/** Cette fonction verifie que toutes les regles de la physique implementees sont respectees. */
-
 	public void gravite(Personnage p) {
+		/*
 		while(personnageVolant(p)) {
 			p.setPosition(p.getPosition().x, p.getPosition().y+1);
 		}
 		noyau.actualiserGraphisme();
+		*/
 	}		
 	
 	/** On teste si le personnage n'a rien sous les pieds.
@@ -119,10 +98,8 @@ public class MoteurPhysique {
 				return false;
 			}
 		}
-		return true
-				//&& estDansTerrain(p))
-				;
-}
+		return true;
+	}
 	
 	public boolean collision(int x, int y) {
 		return Color.alpha(monde.getTerrain().getPixel(x, y)) > 0;
@@ -136,12 +113,21 @@ public class MoteurPhysique {
 		return collision(p.getPosition());
 	}
 	
-	public void sautJoueurDroite() {
-		
+	public void sautJoueurDroite(String nomPersonnage) {
+		Personnage personnage = monde.getPersonnage(nomPersonnage);
+		Personnage p = personnage.clone();
+		for(int i = 0; i < 30 && !estDansTerrain(p); i++) {
+			p.setPosition(p.getPosition().x +1, p.getPosition().y+1);
+			if(!estDansTerrain(p)) {
+				personnage.addMouvementForces(p.getPosition());
+			}
+			
+		}
+		gravite(p);
 	}
 	
-	public void sautJoueurGauche() {
-		
+	public void sautJoueurGauche(String nomPersonnage) {
+		sautJoueurDroite(nomPersonnage);
 	}
 	
 	public boolean estDansTerrain(Personnage p) {
