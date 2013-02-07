@@ -60,7 +60,6 @@ public class ActiviteAndroworms extends Activity {
 		findViewById(R.id.btn_menu_parametres).setOnClickListener(cl);
 		
 		// Evenements sur les boutons de TEST
-		findViewById(R.id.btn_menu_multi).setOnClickListener(cl);
 		findViewById(R.id.btn_DEBUG).setOnClickListener(cl);
 		findViewById(R.id.btn_GYRO).setOnClickListener(cl);
 		

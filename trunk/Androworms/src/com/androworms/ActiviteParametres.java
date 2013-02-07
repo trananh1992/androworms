@@ -15,7 +15,7 @@ public class ActiviteParametres extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.parametres);
+		setContentView(R.layout.activite_parametres);
 		
 		// Chargement des préférences
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
