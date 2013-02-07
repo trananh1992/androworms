@@ -205,5 +205,13 @@ public class ActiviteCreationPartie extends Activity {
 		activiteCreationPartieBluetooth.onActivityResult(requestCode, resultCode, data);
 	}
 	
+	public void passerEtape3DepuisServeurBluetooth() {
+		etape3(ActiviteCreationPartie.MODE_BLUETOOTH_SERVEUR);
+	}
+	
+	public void passerEtape3DepuisClientBluetooth() {
+		etape3(ActiviteCreationPartie.MODE_BLUETOOTH_CLIENT);
+	}
+	
 	/** FIN DE SECTION : Fonctions pour le Bluetooth */
 }

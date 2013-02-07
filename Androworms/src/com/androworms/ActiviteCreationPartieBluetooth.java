@@ -271,18 +271,6 @@ public class ActiviteCreationPartieBluetooth {
 		
 		lv.setAdapter(adapter);
 	}
-	
-	/** Lancement du jeu en Bluetooth */
-	public void lancerLeJeu() {
-		Log.v(TAG, "=============================================");
-		Log.v(TAG, "=====   Démarrage du jeu en Bluetooth   =====");
-		Log.v(TAG, "=============================================");
-		//Intent intent = new Intent(this, ActiviteJeu.class);
-		//Bundle b = new Bundle();
-		//b.putBoolean("bluetooth", true);
-		//intent.putExtras(b);
-		//this.startActivity(intent);
-	}
 
 	protected void onDestroy() {
 		// On s'assure de désactiver l'analyse des périphériques Bluetooth

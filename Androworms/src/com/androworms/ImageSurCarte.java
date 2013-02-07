@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ImageSurCarte extends ImageView {
-	private static final String TAG = "ImageSurCarte";
+	
 	private ElementSurCarte elt;
 	private TextView textV;
 	private TextView tvVie;
@@ -49,7 +49,7 @@ public class ImageSurCarte extends ImageView {
 			textV = new TextView(ctx);
 			textV.setText(p.getNom());
 			textV.layout((int) ptCourant.x,
-				(int) ptCourant.y - 20, 
+				(int) ptCourant.y - 20,
 				(int)( ptCourant.x + taille.x),
 				(int)( ptCourant.y + 10));
 			textV.setGravity(Gravity.CENTER);
@@ -60,7 +60,7 @@ public class ImageSurCarte extends ImageView {
 			tvVie.setText("100");
 			tvVie.setTextSize(8);
 			tvVie.layout((int)ptCourant.x,
-				(int)ptCourant.y - 40, 
+				(int)ptCourant.y - 40,
 				(int)(ptCourant.x + 70),
 				(int)(ptCourant.y));
 			 // ça affiche l'image à gauche et le texte à droite
@@ -85,7 +85,7 @@ public class ImageSurCarte extends ImageView {
 		
 		if (textV != null) {
 			textV.layout((int) ptCourant.x,
-					(int) ptCourant.y - 10, 
+					(int) ptCourant.y - 10,
 					(int)( ptCourant.x + taille.x),
 					(int)( ptCourant.y +10));
 			textV.setGravity(Gravity.CENTER);
@@ -94,9 +94,9 @@ public class ImageSurCarte extends ImageView {
 
 		if (tvVie != null) {
 			tvVie.layout((int)ptCourant.x,
-			(int)ptCourant.y - 40, 
-			(int)(ptCourant.x + 70),
-			(int)(ptCourant.y));
+					(int)ptCourant.y - 40,
+					(int)(ptCourant.x + 70),
+					(int)(ptCourant.y));
 			tvVie.setGravity(Gravity.CENTER);
 			tvVie.setMinimumWidth((int)taille.x);
 		}

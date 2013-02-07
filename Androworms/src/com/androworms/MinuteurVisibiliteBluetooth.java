@@ -15,13 +15,11 @@ public class MinuteurVisibiliteBluetooth extends AsyncTask<Void, Integer, Boolea
 	
 	private static final String TAG = "Minuteur";
 	private ActiviteCreationPartie activiteCreationPartie;
-	private ActiviteCreationPartieBluetooth activiteCreationPartieBluetooth;
 	
 	private static final int CENT_POUR_CENT = 100;
 	private static final int SEC_EN_MS = 1000;
 	
 	public MinuteurVisibiliteBluetooth(ActiviteCreationPartieBluetooth activiteCreationPartieBluetooth) {
-		this.activiteCreationPartieBluetooth = activiteCreationPartieBluetooth;
 		this.activiteCreationPartie = activiteCreationPartieBluetooth.getActiviteCreationPartie();
 	}
 	
