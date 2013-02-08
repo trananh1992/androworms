@@ -20,6 +20,8 @@ public class ActiviteCreationPartie extends Activity {
 	private static final int MODE_WIFI_SERVEUR = 5;
 	private static final int MODE_WIFI_CLIENT = 6;
 	
+	private static int mode;
+	
 	private ActiviteCreationPartieBluetooth activiteCreationPartieBluetooth;
 	
 	@Override
@@ -35,42 +37,73 @@ public class ActiviteCreationPartie extends Activity {
 		Button btnPartieSolo = (Button)findViewById(R.id.btn_partie_solo);
 		btnPartieSolo.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				etape2ModeSolo();
+				mode = ActiviteCreationPartie.MODE_SOLO;
+				etape2();
 			}
 		});
 		Button btnMultiJoueur = (Button)findViewById(R.id.btn_multi_joueur);
 		btnMultiJoueur.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				etape2ModeDeuxjoueurs();
+				mode = ActiviteCreationPartie.MODE_2JOUEURS;
+				etape2();
 			}
 		});
 		Button btnBluetoothCreer = (Button)findViewById(R.id.btn_bluetooth_creer);
 		btnBluetoothCreer.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				etape2ModeBluetoothServeur();
+				mode = ActiviteCreationPartie.MODE_BLUETOOTH_SERVEUR;
+				etape2();
 			}
 		});
 		Button btnBluetoothRejoindre = (Button)findViewById(R.id.btn_bluetooth_rejoindre);
 		btnBluetoothRejoindre.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				etape2ModeBluetoothClient();
+				mode = ActiviteCreationPartie.MODE_BLUETOOTH_CLIENT;
+				etape2();
 			}
 		});
 		Button btnWifiCreer = (Button)findViewById(R.id.btn_wifi_creer);
 		btnWifiCreer.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				etape2ModeWifiServeur();
+				mode = ActiviteCreationPartie.MODE_WIFI_SERVEUR;
+				etape2();
 			}
 		});
 		Button btnWifiRejoindre = (Button)findViewById(R.id.btn_wifi_rejoindre);
 		btnWifiRejoindre.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				etape2ModeWifiClient();
+				mode = ActiviteCreationPartie.MODE_WIFI_CLIENT;
+				etape2();
 			}
 		});
 		
 		Button btnSuivant = (Button)findViewById(R.id.btn_suivant);
 		btnSuivant.setEnabled(false);
+	}
+	
+	private void etape2() {
+		switch (mode) {
+		case ActiviteCreationPartie.MODE_SOLO:
+			etape2ModeSolo();
+			break;
+		case ActiviteCreationPartie.MODE_2JOUEURS:
+			etape2ModeDeuxjoueurs();
+			break;
+		case ActiviteCreationPartie.MODE_BLUETOOTH_SERVEUR:
+			etape2ModeBluetoothServeur();
+			break;
+		case ActiviteCreationPartie.MODE_BLUETOOTH_CLIENT:
+			etape2ModeBluetoothClient();
+			break;
+		case ActiviteCreationPartie.MODE_WIFI_SERVEUR:
+			etape2ModeWifiServeur();
+			break;
+		case ActiviteCreationPartie.MODE_WIFI_CLIENT:
+			etape2ModeWifiClient();
+			break;
+		default :
+			etape1();
+		}
 	}
 	
 	private void etape2ModeSolo() {
@@ -87,7 +120,7 @@ public class ActiviteCreationPartie extends Activity {
 		Button btnSuivant = (Button)findViewById(R.id.btn_suivant);
 		btnSuivant.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				etape3(ActiviteCreationPartie.MODE_SOLO);
+				etape3();
 			}
 		});
 	}
@@ -123,53 +156,32 @@ public class ActiviteCreationPartie extends Activity {
 		new AlertDialog.Builder(this).setTitle("Androworms").setMessage("Les parties en Wifi-Direct ne sont pas encore dispo !").setNeutralButton("Close", null).show();
 	}
 	
-	private void etape3(final int mode) {
+	private void etape3() {
 		/* Affichage de la vue */
 		setContentView(R.layout.activite_creation_partie_3);
 		
 		Button btnPrecedent = (Button)findViewById(R.id.btn_precedent);
 		btnPrecedent.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				switch (mode) {
-				case ActiviteCreationPartie.MODE_SOLO:
-					etape2ModeSolo();
-					break;
-				case ActiviteCreationPartie.MODE_2JOUEURS:
-					etape2ModeDeuxjoueurs();
-					break;
-				case ActiviteCreationPartie.MODE_BLUETOOTH_SERVEUR:
-					etape2ModeBluetoothServeur();
-					break;
-				case ActiviteCreationPartie.MODE_BLUETOOTH_CLIENT:
-					etape2ModeBluetoothClient();
-					break;
-				case ActiviteCreationPartie.MODE_WIFI_SERVEUR:
-					etape2ModeWifiClient();
-					break;
-				case ActiviteCreationPartie.MODE_WIFI_CLIENT:
-					etape2ModeWifiClient();
-					break;
-				default :
-					etape1();
-				}
+				etape2();
 			}
 		});
 		
 		Button btnSuivant = (Button)findViewById(R.id.btn_suivant);
 		btnSuivant.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				etape4(mode);
+				etape4();
 			}
 		});
 	}
 	
-	private void etape4(final int mode) {
+	private void etape4() {
 		setContentView(R.layout.activite_creation_partie_4);
 		
 		Button btnPrecedent = (Button)findViewById(R.id.btn_precedent);
 		btnPrecedent.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				etape3(mode);
+				etape3();
 			}
 		});
 		
@@ -194,8 +206,10 @@ public class ActiviteCreationPartie extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		// Destroy des éléments du Bluetooth
-		activiteCreationPartieBluetooth.onDestroy();
+		if (mode == ActiviteCreationPartie.MODE_BLUETOOTH_SERVEUR || mode == ActiviteCreationPartie.MODE_BLUETOOTH_CLIENT) {
+			// Destroy des éléments du Bluetooth
+			activiteCreationPartieBluetooth.onDestroy();
+		}
 	}
 	
 	/** DEBUT DE SECTION : Fonctions pour le Bluetooth */
@@ -206,11 +220,11 @@ public class ActiviteCreationPartie extends Activity {
 	}
 	
 	public void passerEtape3DepuisServeurBluetooth() {
-		etape3(ActiviteCreationPartie.MODE_BLUETOOTH_SERVEUR);
+		etape3();
 	}
 	
 	public void passerEtape3DepuisClientBluetooth() {
-		etape3(ActiviteCreationPartie.MODE_BLUETOOTH_CLIENT);
+		etape3();
 	}
 	
 	/** FIN DE SECTION : Fonctions pour le Bluetooth */
