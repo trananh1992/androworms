@@ -90,7 +90,7 @@ public class ActiviteCreationPartieBluetoothClient {
 				pb.setVisibility(View.VISIBLE);
 				
 				// Recherche des périphériques  visibles
-				Log.v(TAG,"State = "+ActiviteCreationPartieBluetooth.mBluetoothAdapter.getState());
+				Log.v(TAG,"Statut = " + ActiviteCreationPartieBluetooth.mBluetoothAdapter.getState());
 				if (ActiviteCreationPartieBluetooth.mBluetoothAdapter.isDiscovering()) {
 					ActiviteCreationPartieBluetooth.mBluetoothAdapter.cancelDiscovery();
 					Log.e(TAG,"J'étais isDiscovering() et maintenant j'ai fais cancelDiscovery()");
@@ -110,7 +110,7 @@ public class ActiviteCreationPartieBluetoothClient {
 		activiteCreationPartie.registerReceiver(activiteCreationPartieBluetooth.mReceiver, filter);
 		filter = new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
 		activiteCreationPartie.registerReceiver(activiteCreationPartieBluetooth.mReceiver, filter);
-		activiteCreationPartieBluetooth.estServeurLance = true;
+		activiteCreationPartieBluetooth.setServeurLance(true);
 		
 		/* Selection dans la liste */
 		lvAppareilsBluetooth.setChoiceMode(ListView.CHOICE_MODE_SINGLE);

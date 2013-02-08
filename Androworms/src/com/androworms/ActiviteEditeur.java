@@ -502,8 +502,9 @@ public class ActiviteEditeur extends Activity implements OnClickListener,OnTouch
 				
 				
 				/* on libère le précédent bitmap */
-				if(upCalc != null)
+				if(upCalc != null) {
 					upCalc.recycle();
+				}
 				
 				/* On met l'image en fond de l'activité */
 				upCalc = BitmapFactory.decodeByteArray(data, 0, data.length);

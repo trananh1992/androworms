@@ -25,7 +25,10 @@ public class Noyau {
 
 	private MoteurPhysique physique;
 	private MoteurGraphique graphique;
-
+	
+	// Variable de débug
+	public static final PointF DEBUG_POSITION_JOUEUR_1 = new PointF(220, 200);
+	public static final PointF DEBUG_POSITION_JOUEUR_2 = new PointF(620, 200);
 	
 	public Noyau(Context context, MoteurGraphique mg, boolean estDeuxJoueursBluetooth) {
 		// Le paramètre "estDeuxJoueursBluetooth" est en test pour le moment, il ne sera peut-être pas définitif
@@ -44,13 +47,13 @@ public class Noyau {
 		
 		ImageInformation ii = new ImageInformation(R.drawable.android_face, 81, 107);
 		Personnage johnDoe = new Personnage("John Doe", ii);
-		johnDoe.setPosition(new PointF(220, 200));
+		johnDoe.setPosition(DEBUG_POSITION_JOUEUR_1);
 
 		SharedPreferences settings = context.getSharedPreferences(ActiviteParametres.PREFS_NAME, 0);
 		String pseudo = settings.getString("pseudo", "Joueur1");
 		
 		Personnage tux = new Personnage(pseudo, ii);
-		tux.setPosition(new PointF(620, 200));
+		tux.setPosition(DEBUG_POSITION_JOUEUR_2);
 		monde.addPersonnage(tux);
 		monde.addPersonnage(johnDoe);
 		

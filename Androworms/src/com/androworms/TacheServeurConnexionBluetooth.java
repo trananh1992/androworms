@@ -22,7 +22,7 @@ import com.androworms.R;
 /** Lors de la création d'une partie en Multi-joueur en Bluetooth,
  *  ce Thread est crée pour crée pour tourner et attendre les connexions clientes.
  */
-public class ServeurConnexionBluetooth extends AsyncTask<Void, String, Boolean> {
+public class TacheServeurConnexionBluetooth extends AsyncTask<Void, String, Boolean> {
 	
 	private static final String TAG_SERVEUR = "Androworms.ServeurConnexionBluetooth";
 	
@@ -37,7 +37,7 @@ public class ServeurConnexionBluetooth extends AsyncTask<Void, String, Boolean> 
 	private ArrayAdapter<String> adaptateurListeClients;
 	private List<String> listeClients;
 	
-	public ServeurConnexionBluetooth(ActiviteCreationPartieBluetooth activiteCreationPartieBluetooth) {
+	public TacheServeurConnexionBluetooth(ActiviteCreationPartieBluetooth activiteCreationPartieBluetooth) {
 		ActiviteCreationPartie activiteCreationPartie = activiteCreationPartieBluetooth.getActiviteCreationPartie();
 		
 		Log.v(TAG_SERVEUR, "Création de la socket publique");
