@@ -12,15 +12,15 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
+import com.androworms.utile.Informations;
+
 public class ActiviteGyro extends Activity implements SensorEventListener {
 	
-	public static final PointF POSTION_INIT = new PointF(600,300);
 	public static final int TAILLE_IMAGE = 50;
 	
 	private SensorManager sensorManager;
 	private PointF pos;
 	private Matrix matrix;
-	private PointF cumul;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,19 +28,19 @@ public class ActiviteGyro extends Activity implements SensorEventListener {
 		setContentView(R.layout.activite_gyro);
 		
 		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-		pos = POSTION_INIT;
 		matrix = new Matrix();
-		cumul = new PointF(0,0);
+		// Position de départ
+		pos = new PointF(Informations.getWidthPixels() / 2, Informations.getHeightPixels() / 2);
 		
 		ImageView iv = (ImageView)findViewById(R.id.iv_missile);
 		iv.setScaleType(ScaleType.MATRIX);
 	}
-
+	
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 	public void onSensorChanged(SensorEvent event) {
 		if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
 			getAccelerometer(event);
@@ -54,10 +54,8 @@ public class ActiviteGyro extends Activity implements SensorEventListener {
 		float z = values[2];
 		ImageView iv = (ImageView)findViewById(R.id.iv_missile);
 		
-		cumul.x += x;
-		cumul.y += y;
 		
-		Log.v("Gyro","(x,y,z)=(" + x + "," + y + "," + z + ")    cumul=(" + cumul.x + "," + cumul.y + ")");
+		Log.v("Gyro","(x,y,z)=(" + x + "," + y + "," + z + ")");
 		
 		pos.x += y*SensorManager.GRAVITY_EARTH;
 		pos.y += x*SensorManager.GRAVITY_EARTH;
