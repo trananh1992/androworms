@@ -42,7 +42,7 @@ public class Noyau {
 			creationPartieLocale();
 		}
 		
-		ImageInformation ii = new ImageInformation(R.drawable.test_android_face, 81, 107);
+		ImageInformation ii = new ImageInformation(R.drawable.android_face, 81, 107);
 		Personnage johnDoe = new Personnage("John Doe", ii);
 		johnDoe.setPosition(new PointF(220, 200));
 
@@ -50,7 +50,7 @@ public class Noyau {
 		String pseudo = settings.getString("pseudo", "Joueur1");
 		
 		Personnage tux = new Personnage(pseudo, ii);
-		tux.setPosition(new PointF(120, 200));
+		tux.setPosition(new PointF(620, 200));
 		monde.addPersonnage(tux);
 		monde.addPersonnage(johnDoe);
 		
