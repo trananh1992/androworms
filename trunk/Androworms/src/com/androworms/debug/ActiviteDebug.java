@@ -33,10 +33,41 @@ public class ActiviteDebug extends Activity {
 	public void afficherInformationsTelephone() {
 		StringBuffer buf = new StringBuffer();
 		
+		// SECTION : Android
 		buf.append("<b>Android</b>" + RETOUR_LIGNE_HTML);
 		buf.append("Version = " + Informations.getAndroidVersion() + RETOUR_LIGNE_HTML);
 		buf.append("SDK = " + Informations.getAndroidSdk() + RETOUR_LIGNE_HTML);
 		buf.append(RETOUR_LIGNE_HTML);
+		
+		// SECTION : Taille de l'écran
+		buf.append(tailleEcran());
+		
+		// SECTION : Densité de l'écran
+		buf.append(densiteEcran());
+		
+		buf.append("<b>Bluetooth</b>" + RETOUR_LIGNE_HTML);
+		buf.append("Compatible Bluetooth : " + Informations.isCompatibleBluetooth() + RETOUR_LIGNE_HTML);
+		
+		buf.append(RETOUR_LIGNE_HTML);
+		buf.append("<b>Capteurs</b>");
+		TableLayout tl = (TableLayout)findViewById(R.id.tl_DEBUG);
+		SensorManager sm = (SensorManager)getSystemService(SENSOR_SERVICE);
+		List<Sensor> l = sm.getSensorList(Sensor.TYPE_ALL);
+		TableRow tr = generationLigne("<b>Type</b>", "<b>Name</b>", "<b>Version</b>", "<b>Vendor</b>", "<b>Power</b>",
+				"<b>Résolution</b>", "<b>MinDelay</b>", "<b>MaximunRange</b>");
+		tl.addView(tr);
+		for (int i=0;i<l.size();i++) {
+			tr = generationLigne(""+l.get(i).getType(), l.get(i).getName(), ""+l.get(i).getVersion(), l.get(i).getVendor(), ""+l.get(i).getPower(),
+					""+l.get(i).getResolution(), ""+l.get(i).getMinDelay(), ""+l.get(i).getMaximumRange());
+			tl.addView(tr);
+		}
+		String txtInfo = buf.toString();
+		TextView tv = (TextView)findViewById(R.id.tv_DEBUG);
+		tv.setText(Html.fromHtml(txtInfo));
+	}
+	
+	public StringBuffer tailleEcran() {
+		StringBuffer buf = new StringBuffer();
 		
 		buf.append("<b>Taille de l'écran</b>" + RETOUR_LIGNE_HTML);
 		buf.append("WidthPixels = " + Informations.getWidthPixels() + " px" + RETOUR_LIGNE_HTML);
@@ -62,6 +93,12 @@ public class ActiviteDebug extends Activity {
 		buf.append(RETOUR_LIGNE_HTML);
 		buf.append(RETOUR_LIGNE_HTML);
 		
+		return buf;
+	}
+	
+	public StringBuffer densiteEcran() {
+		StringBuffer buf = new StringBuffer();
+		
 		buf.append("<b>Densité de l'écran</b>" + RETOUR_LIGNE_HTML);
 		buf.append("Density = " + Informations.getDensity() + RETOUR_LIGNE_HTML);
 		buf.append("DensityDPI = " + Informations.getDensityDpi() + " dp   (");
@@ -85,25 +122,7 @@ public class ActiviteDebug extends Activity {
 		buf.append(")" + RETOUR_LIGNE_HTML);
 		buf.append(RETOUR_LIGNE_HTML);
 		
-		buf.append("<b>Bluetooth</b>" + RETOUR_LIGNE_HTML);
-		buf.append("Compatible Bluetooth : " + Informations.isCompatibleBluetooth() + RETOUR_LIGNE_HTML);
-		
-		buf.append(RETOUR_LIGNE_HTML);
-		buf.append("<b>Capteurs</b>");
-		TableLayout tl = (TableLayout)findViewById(R.id.tl_DEBUG);
-		SensorManager sm = (SensorManager)getSystemService(SENSOR_SERVICE);
-		List<Sensor> l = sm.getSensorList(Sensor.TYPE_ALL);
-		TableRow tr = generationLigne("<b>Type</b>", "<b>Name</b>", "<b>Version</b>", "<b>Vendor</b>", "<b>Power</b>",
-				"<b>Résolution</b>", "<b>MinDelay</b>", "<b>MaximunRange</b>");
-		tl.addView(tr);
-		for (int i=0;i<l.size();i++) {
-			tr = generationLigne(""+l.get(i).getType(), l.get(i).getName(), ""+l.get(i).getVersion(), l.get(i).getVendor(), ""+l.get(i).getPower(),
-					""+l.get(i).getResolution(), ""+l.get(i).getMinDelay(), ""+l.get(i).getMaximumRange());
-			tl.addView(tr);
-		}
-		String txtInfo = buf.toString();
-		TextView tv = (TextView)findViewById(R.id.tv_DEBUG);
-		tv.setText(Html.fromHtml(txtInfo));
+		return buf;
 	}
 	
 	public TableRow generationLigne(String type, String name, String version, String vendor, String power, String resolution, String minDelay, String maximunRange) {

@@ -48,12 +48,12 @@ public class ActiviteCreationPartieBluetooth {
 	
 	// Mis à vrai si on est Bluetooth > Serveur et qu'on lance le serveur.
 	// Dans le OnDetroy(), il faut pouvoir savoir si on a lancé le serveur ou pas pour l'arreter.
-	public boolean estServeurLance = false;
+	private boolean serveurLance = false;
 	
 	
 	// Thread pour la communication Bluetooth
-	public ServeurConnexionBluetooth serveurConnexionBluetooth;
-	public ClientConnexionBluetooth clientConnexionBluetooth;
+	public TacheServeurConnexionBluetooth serveurConnexionBluetooth;
+	public TacheClientConnexionBluetooth clientConnexionBluetooth;
 	
 	
 	/** Constructeur de ActiviteCreationPartieBluetooth */
@@ -124,7 +124,7 @@ public class ActiviteCreationPartieBluetooth {
 	/** Démarrage du serveur Bluetooth */
 	public void demarrerServeurBluetooth() {
 		Log.d(TAG, "DEMARAGE DU SERVEUR BLUETOOTH");
-		serveurConnexionBluetooth = new ServeurConnexionBluetooth(this);
+		serveurConnexionBluetooth = new TacheServeurConnexionBluetooth(this);
 		serveurConnexionBluetooth.execute();
 	}
 	
@@ -138,7 +138,7 @@ public class ActiviteCreationPartieBluetooth {
 		// On actualise l'interface graphique du client
 		pbBluetoothAnalyse.setVisibility(View.VISIBLE);
 		
-		clientConnexionBluetooth = new ClientConnexionBluetooth(this, device);
+		clientConnexionBluetooth = new TacheClientConnexionBluetooth(this, device);
 		clientConnexionBluetooth.execute();
 	}
 	
@@ -271,17 +271,25 @@ public class ActiviteCreationPartieBluetooth {
 		
 		lv.setAdapter(adapter);
 	}
+	
+	public boolean isServeurLance() {
+		return serveurLance;
+	}
 
+	public void setServeurLance(boolean serveurLance) {
+		this.serveurLance = serveurLance;
+	}
+	
 	protected void onDestroy() {
 		// On s'assure de désactiver l'analyse des périphériques Bluetooth
 		if (mBluetoothAdapter != null) {
 			mBluetoothAdapter.cancelDiscovery();
 		}
 		
-		if (estServeurLance) {
+		if (isServeurLance()) {
 			// On supprime le receiver qui permet de trouver les appareils Bluetooth à proximité
 			activiteCreationPartie.unregisterReceiver(mReceiver);
-			estServeurLance = false;
+			setServeurLance(false);
 		}
 		
 		if (serveurConnexionBluetooth != null) {
@@ -296,4 +304,6 @@ public class ActiviteCreationPartieBluetooth {
 			ch.cancel(true);
 		}
 	}
+
+	
 }

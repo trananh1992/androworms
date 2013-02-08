@@ -23,13 +23,13 @@ import com.androworms.R;
 /** Lors de la création d'une partie en Multi-joueur en Bluetooth,
  *  ce Thread est crée pour crée l'échange de socket entre le client et le serveur.
  */
-public class ClientConnexionBluetooth extends AsyncTask<Void, Integer, Boolean> {
+public class TacheClientConnexionBluetooth extends AsyncTask<Void, Integer, Boolean> {
 	
 	private static final String TAG_CLIENT = "ClientBluetooth";
 	private BluetoothSocket socketServeur;
 	private ActiviteCreationPartie activiteCreationPartie;
 	
-	public ClientConnexionBluetooth(ActiviteCreationPartieBluetooth activiteCreationPartieBluetooth, BluetoothDevice device) {
+	public TacheClientConnexionBluetooth(ActiviteCreationPartieBluetooth activiteCreationPartieBluetooth, BluetoothDevice device) {
 		this.activiteCreationPartie = activiteCreationPartieBluetooth.getActiviteCreationPartie();
 		try {
 			socketServeur = device.createRfcommSocketToServiceRecord(Contact.ANDROWORMS_UUID);

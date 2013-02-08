@@ -29,8 +29,9 @@ public class ActiviteGyro extends Activity implements SensorEventListener {
 		
 		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 		matrix = new Matrix();
+		
 		// Position de départ
-		pos = new PointF(Informations.getWidthPixels() / 2, Informations.getHeightPixels() / 2);
+		pos = new PointF(Informations.getWidthPixels() / (float)2, Informations.getHeightPixels() / (float)2);
 		
 		ImageView iv = (ImageView)findViewById(R.id.iv_missile);
 		iv.setScaleType(ScaleType.MATRIX);
@@ -57,8 +58,8 @@ public class ActiviteGyro extends Activity implements SensorEventListener {
 		
 		Log.v("Gyro","(x,y,z)=(" + x + "," + y + "," + z + ")");
 		
-		pos.x += y*SensorManager.GRAVITY_EARTH;
-		pos.y += x*SensorManager.GRAVITY_EARTH;
+		pos.x += y * SensorManager.GRAVITY_EARTH;
+		pos.y += x * SensorManager.GRAVITY_EARTH;
 		
 		float angle = (float) (Math.toDegrees(Math.atan2(y, -x)));
 		

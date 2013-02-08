@@ -76,9 +76,6 @@ public class ActiviteCreationPartie extends Activity {
 				etape2();
 			}
 		});
-		
-		Button btnSuivant = (Button)findViewById(R.id.btn_suivant);
-		btnSuivant.setEnabled(false);
 	}
 	
 	private void etape2() {
