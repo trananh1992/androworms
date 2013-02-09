@@ -50,11 +50,11 @@ public class Noyau {
 		physique = new MoteurPhysique(this, monde);
 		
 		switch (paramMode) {
-		case ActiviteCreationPartie.MODE_BLUETOOTH_SERVEUR:
-		case ActiviteCreationPartie.MODE_BLUETOOTH_CLIENT:
+		case ParametrePartie.MODE_BLUETOOTH_SERVEUR:
+		case ParametrePartie.MODE_BLUETOOTH_CLIENT:
 			creationPartieDistante();
 			break;
-		case ActiviteCreationPartie.MODE_SOLO :
+		case ParametrePartie.MODE_SOLO :
 		default :
 			creationPartieLocale();
 			break;
@@ -158,9 +158,6 @@ public class Noyau {
 		this.graphique.setGraviteInFuture(3);
 	}
 	
-
-	
-	/** Gestion des tests. */
 	
 	public Monde getMonde() {
 		return monde;

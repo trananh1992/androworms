@@ -62,6 +62,7 @@ public class ActiviteAndroworms extends Activity {
 		// Evenements sur les boutons de TEST
 		findViewById(R.id.btn_DEBUG).setOnClickListener(cl);
 		findViewById(R.id.btn_GYRO).setOnClickListener(cl);
+		findViewById(R.id.btn_test_jeu).setOnClickListener(cl);
 		
 		/* Interface des credits */
 		ImageView img = (ImageView)findViewById(R.id.img_info);

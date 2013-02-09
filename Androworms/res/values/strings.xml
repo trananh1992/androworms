@@ -58,5 +58,6 @@
         <string name="touchez_l_ecran">Touchez l\'écran pour revenir au menu principale</string>
         <string name="aide">Aide</string>
         <string name="credits">Credits</string>
+        <string name="test_jeu">Test du jeu</string>
     
 </resources>

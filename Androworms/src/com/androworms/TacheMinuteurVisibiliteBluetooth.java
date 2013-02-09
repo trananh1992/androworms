@@ -11,7 +11,7 @@ import com.androworms.R;
 /** Minuteur servant à afficher la durée restante de visibilité du Bluetooth.
  *  Le minuteur est utilisé pour l'interface Bluetooth > Serveur
  */
-public class MinuteurVisibiliteBluetooth extends AsyncTask<Void, Integer, Boolean> {
+public class TacheMinuteurVisibiliteBluetooth extends AsyncTask<Void, Integer, Boolean> {
 	
 	private static final String TAG = "Minuteur";
 	private ActiviteCreationPartie activiteCreationPartie;
@@ -19,7 +19,7 @@ public class MinuteurVisibiliteBluetooth extends AsyncTask<Void, Integer, Boolea
 	private static final int CENT_POUR_CENT = 100;
 	private static final int SEC_EN_MS = 1000;
 	
-	public MinuteurVisibiliteBluetooth(ActiviteCreationPartieBluetooth activiteCreationPartieBluetooth) {
+	public TacheMinuteurVisibiliteBluetooth(ActiviteCreationPartieBluetooth activiteCreationPartieBluetooth) {
 		this.activiteCreationPartie = activiteCreationPartieBluetooth.getActiviteCreationPartie();
 	}
 	

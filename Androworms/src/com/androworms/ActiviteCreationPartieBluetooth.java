@@ -39,7 +39,7 @@ public class ActiviteCreationPartieBluetooth {
 	public static BluetoothAdapter mBluetoothAdapter;
 	
 	// Partie Bluetooth > Serveur : pour faire une animation du temps restant de la visibilité Bluetooth
-	private MinuteurVisibiliteBluetooth ch;
+	private TacheMinuteurVisibiliteBluetooth ch;
 	public static final int DUREE_VISIBILITE_BLUETOOTH = 120;
 	
 	// Listes des appareils Bluetooth jumélés et à proximité
@@ -189,7 +189,7 @@ public class ActiviteCreationPartieBluetooth {
 				
 				// On start le minuteur
 				Log.v(TAG, "Début du minuteur");
-				ch = new MinuteurVisibiliteBluetooth(this);
+				ch = new TacheMinuteurVisibiliteBluetooth(this);
 				ch.executerTacheEnParralelle();
 			} else {
 				// L'utilisateur a refusé l'activation de la visiblité du Bluetooth (ou il s'agit d'une erreur)
