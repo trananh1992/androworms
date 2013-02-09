@@ -42,10 +42,6 @@
             android:screenOrientation="landscape" >
         </activity>
         <activity
-            android:name="com.androworms.ActiviteMultiJoueur"
-            android:screenOrientation="landscape" >
-        </activity>
-        <activity
             android:name="com.androworms.ActiviteParametres"
             android:screenOrientation="landscape" >
         </activity>

@@ -12,19 +12,15 @@ import android.widget.Button;
 public class ActiviteCreationPartie extends Activity {
 	
 	private static final String TAG = "Androworms.ActiviteCreationPartie";
-	
-	public static final int MODE_SOLO = 1;
-	public static final int MODE_2JOUEURS = 2;
-	public static final int MODE_BLUETOOTH_SERVEUR = 3;
-	public static final int MODE_BLUETOOTH_CLIENT = 4;
-	public static final int MODE_WIFI_SERVEUR = 5;
-	public static final int MODE_WIFI_CLIENT = 6;
-	
-	private static int mode;
-	private static boolean estCartePerso;
-	private static String nomCarte;
-	
 	private ActiviteCreationPartieBluetooth activiteCreationPartieBluetooth;
+	
+	/** Paramètres du jeu à envoyer à l'activité de jeu **/
+	// Mode de jeu (Solo, 2 joueurs sur un téléphone, en Bluetooth, etc...
+	private static int modeJeu;
+	// Si la carte du terrain est une carte personnalisé ou une carte de base
+	private static boolean estCartePerso;
+	// Nom de la carte pour le fond du terrain
+	private static String nomCarte;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,65 +35,65 @@ public class ActiviteCreationPartie extends Activity {
 		Button btnPartieSolo = (Button)findViewById(R.id.btn_partie_solo);
 		btnPartieSolo.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				mode = ActiviteCreationPartie.MODE_SOLO;
+				modeJeu = ParametrePartie.MODE_SOLO;
 				etape2();
 			}
 		});
 		Button btnMultiJoueur = (Button)findViewById(R.id.btn_multi_joueur);
 		btnMultiJoueur.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				mode = ActiviteCreationPartie.MODE_2JOUEURS;
+				modeJeu = ParametrePartie.MODE_2JOUEURS;
 				etape2();
 			}
 		});
 		Button btnBluetoothCreer = (Button)findViewById(R.id.btn_bluetooth_creer);
 		btnBluetoothCreer.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				mode = ActiviteCreationPartie.MODE_BLUETOOTH_SERVEUR;
+				modeJeu = ParametrePartie.MODE_BLUETOOTH_SERVEUR;
 				etape2();
 			}
 		});
 		Button btnBluetoothRejoindre = (Button)findViewById(R.id.btn_bluetooth_rejoindre);
 		btnBluetoothRejoindre.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				mode = ActiviteCreationPartie.MODE_BLUETOOTH_CLIENT;
+				modeJeu = ParametrePartie.MODE_BLUETOOTH_CLIENT;
 				etape2();
 			}
 		});
 		Button btnWifiCreer = (Button)findViewById(R.id.btn_wifi_creer);
 		btnWifiCreer.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				mode = ActiviteCreationPartie.MODE_WIFI_SERVEUR;
+				modeJeu = ParametrePartie.MODE_WIFI_SERVEUR;
 				etape2();
 			}
 		});
 		Button btnWifiRejoindre = (Button)findViewById(R.id.btn_wifi_rejoindre);
 		btnWifiRejoindre.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				mode = ActiviteCreationPartie.MODE_WIFI_CLIENT;
+				modeJeu = ParametrePartie.MODE_WIFI_CLIENT;
 				etape2();
 			}
 		});
 	}
 	
 	private void etape2() {
-		switch (mode) {
-		case ActiviteCreationPartie.MODE_SOLO:
+		switch (modeJeu) {
+		case ParametrePartie.MODE_SOLO:
 			etape2ModeSolo();
 			break;
-		case ActiviteCreationPartie.MODE_2JOUEURS:
+		case ParametrePartie.MODE_2JOUEURS:
 			etape2ModeDeuxjoueurs();
 			break;
-		case ActiviteCreationPartie.MODE_BLUETOOTH_SERVEUR:
+		case ParametrePartie.MODE_BLUETOOTH_SERVEUR:
 			etape2ModeBluetoothServeur();
 			break;
-		case ActiviteCreationPartie.MODE_BLUETOOTH_CLIENT:
+		case ParametrePartie.MODE_BLUETOOTH_CLIENT:
 			etape2ModeBluetoothClient();
 			break;
-		case ActiviteCreationPartie.MODE_WIFI_SERVEUR:
+		case ParametrePartie.MODE_WIFI_SERVEUR:
 			etape2ModeWifiServeur();
 			break;
-		case ActiviteCreationPartie.MODE_WIFI_CLIENT:
+		case ParametrePartie.MODE_WIFI_CLIENT:
 			etape2ModeWifiClient();
 			break;
 		default :
@@ -192,7 +188,7 @@ public class ActiviteCreationPartie extends Activity {
 			public void onClick(View v) {
 				Intent intent = new Intent(ActiviteCreationPartie.this, ActiviteJeu.class);
 				Bundle b = new Bundle();
-				b.putInt("mode", mode);
+				b.putInt("mode", modeJeu);
 				b.putBoolean("estCartePerso", estCartePerso);
 				b.putString("nomCarte", nomCarte);
 				intent.putExtras(b);
@@ -213,7 +209,7 @@ public class ActiviteCreationPartie extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		if (mode == ActiviteCreationPartie.MODE_BLUETOOTH_SERVEUR || mode == ActiviteCreationPartie.MODE_BLUETOOTH_CLIENT) {
+		if (modeJeu == ParametrePartie.MODE_BLUETOOTH_SERVEUR || modeJeu == ParametrePartie.MODE_BLUETOOTH_CLIENT) {
 			// Destroy des éléments du Bluetooth
 			activiteCreationPartieBluetooth.onDestroy();
 		}
