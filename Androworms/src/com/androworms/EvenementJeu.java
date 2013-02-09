@@ -200,8 +200,6 @@ public class EvenementJeu extends ScaleGestureDetector.SimpleOnScaleGestureListe
 				scaleCourant = temp;
 			}
 			
-			Log.v(TAG, "zoom courant : " + scaleCourant);
-			
 			// Application du Zoom
 			this.moteurGraph.getMatrice().postScale(mScaleFactor, mScaleFactor, detector.getFocusX(), detector.getFocusY());
 			fixTrans();

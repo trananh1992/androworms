@@ -88,8 +88,6 @@ public class ImageSurCarte extends ImageView {
 					(int) ptCourant.y - 10,
 					(int)( ptCourant.x + taille.x),
 					(int)( ptCourant.y +10));
-			textV.setGravity(Gravity.CENTER);
-			textV.setMinimumWidth((int)taille.x);
 		}
 
 		if (tvVie != null) {
@@ -97,8 +95,6 @@ public class ImageSurCarte extends ImageView {
 					(int)ptCourant.y - 40,
 					(int)(ptCourant.x + 70),
 					(int)(ptCourant.y));
-			tvVie.setGravity(Gravity.CENTER);
-			tvVie.setMinimumWidth((int)taille.x);
 		}
 		
 		this.anciennePosition.set(ptCourant);

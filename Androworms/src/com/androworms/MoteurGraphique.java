@@ -125,9 +125,9 @@ public class MoteurGraphique extends RelativeLayout {
 			//TODO terminer ou dire quelque chose...
 		}
 		
-		//on crée une nouvelle matrice
+		// On crée une nouvelle matrice
 		matrix = new Matrix();
-		//On crée un tableau ici pour la performance
+		// On crée un tableau ici pour la performance
 		this.mm = new float[TAILLE_MATRIX];
 		
 		pointTir = new PointF(-1, -1);
@@ -158,7 +158,6 @@ public class MoteurGraphique extends RelativeLayout {
 	
 	@Override
 	protected void dispatchDraw(Canvas canvas) {
-		
 		// Application de la matrice avec la translation et le zoom à tout le canvas
 		canvas.setMatrix(matrix);
 		// Dessin des objets du jeu
@@ -241,11 +240,8 @@ public class MoteurGraphique extends RelativeLayout {
 		// flèche de tir sur le bonhomme
 		if (distance >= COULEUR_MAXIMUM / INCREMENT_COULEUR) {
 			paint.setColor(Color.rgb(COULEUR_MAXIMUM,0,0));
-			Log.v(TAG,"[A] Couleur : " + Integer.toHexString(paint.getColor())+"    ; distance = "+distance);
 		} else {
 			paint.setColor(Color.rgb(COULEUR_MAXIMUM, COULEUR_MAXIMUM - (int)(distance * INCREMENT_COULEUR),0));
-			Log.v(TAG,"[B] Couleur : " + Integer.toHexString(paint.getColor())+"    ; distance = "+distance);
-			Log.v(TAG,"=="+(distance * INCREMENT_COULEUR));
 		}
 		
 		paint.setStrokeWidth(EPAISSEUR_FLECHE_TIR);
@@ -431,8 +427,7 @@ public class MoteurGraphique extends RelativeLayout {
 
 
 
-	public void remetAplusTard(Runnable r, int tps)
-	{
+	public void remetAplusTard(Runnable r, int tps) {
 		postDelayed(r, tps);
 	}
 

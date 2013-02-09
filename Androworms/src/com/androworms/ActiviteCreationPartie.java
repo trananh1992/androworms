@@ -13,14 +13,16 @@ public class ActiviteCreationPartie extends Activity {
 	
 	private static final String TAG = "Androworms.ActiviteCreationPartie";
 	
-	private static final int MODE_SOLO = 1;
-	private static final int MODE_2JOUEURS = 2;
-	private static final int MODE_BLUETOOTH_SERVEUR = 3;
-	private static final int MODE_BLUETOOTH_CLIENT = 4;
-	private static final int MODE_WIFI_SERVEUR = 5;
-	private static final int MODE_WIFI_CLIENT = 6;
+	public static final int MODE_SOLO = 1;
+	public static final int MODE_2JOUEURS = 2;
+	public static final int MODE_BLUETOOTH_SERVEUR = 3;
+	public static final int MODE_BLUETOOTH_CLIENT = 4;
+	public static final int MODE_WIFI_SERVEUR = 5;
+	public static final int MODE_WIFI_CLIENT = 6;
 	
 	private static int mode;
+	private static boolean estCartePerso;
+	private static String nomCarte;
 	
 	private ActiviteCreationPartieBluetooth activiteCreationPartieBluetooth;
 	
@@ -157,6 +159,9 @@ public class ActiviteCreationPartie extends Activity {
 		/* Affichage de la vue */
 		setContentView(R.layout.activite_creation_partie_3);
 		
+		estCartePerso = false;
+		nomCarte = "terrain_jeu_defaut_1.png";
+		
 		Button btnPrecedent = (Button)findViewById(R.id.btn_precedent);
 		btnPrecedent.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -186,6 +191,11 @@ public class ActiviteCreationPartie extends Activity {
 		btnDemarrerPartie.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				Intent intent = new Intent(ActiviteCreationPartie.this, ActiviteJeu.class);
+				Bundle b = new Bundle();
+				b.putInt("mode", mode);
+				b.putBoolean("estCartePerso", estCartePerso);
+				b.putString("nomCarte", nomCarte);
+				intent.putExtras(b);
 				startActivity(intent);
 				/* On arrête l'application comme ça quand on sera sur la partie de jeu et qu'on fait la flèche de "retour à l'activité précédente",
 				   on arrivera sur le menu principal */
