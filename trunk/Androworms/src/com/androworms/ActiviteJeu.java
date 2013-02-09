@@ -50,29 +50,11 @@ public class ActiviteJeu extends Activity {
 		/* Récupération du layout de fond */
 		MoteurGraphique moteurGraph = (MoteurGraphique)findViewById(R.id.trlCarte);
 		
-		/* Création du noyau */
-		noyau = new Noyau(getBaseContext(), moteurGraph, false);
-		
 		/* Récupération des paramètres envoyé à l'activity */
-		boolean estDeuxJoueursBluetooth = false;
 		Bundle bundle = this.getIntent().getExtras();
-		if(bundle != null) {
-			String paramMap = (String) bundle.get("map");
-			if(paramMap != null && paramMap.length() > 0) {
-				Log.e("started activite jeu","with map "+paramMap);
-				Monde m = noyau.getMonde();
-				File root = Environment.getExternalStorageDirectory();
-				File sd = new File(root, "Androworms/"+paramMap);
-				Bitmap b = BitmapFactory.decodeFile(sd.getAbsolutePath());
-				m.setTerrain(b, 1280, 720);
-			}
-			Boolean paramBluetooth = (Boolean) bundle.get("bluetooth");
-			if(paramBluetooth != null) {
-				estDeuxJoueursBluetooth = true;
-				// TODO : passer au noyau qu'on est en mode bluetooth
-			}
-		}
 		
+		/* Création du noyau */
+		noyau = new Noyau(getBaseContext(), moteurGraph, bundle);
 		moteurGraph.setNoyau(noyau);
 		
 		/* Mode TIR */

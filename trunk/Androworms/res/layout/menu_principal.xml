@@ -102,6 +102,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:contentDescription="@string/aide"
         android:src="@drawable/ic_aide" />
 
     <ImageView
@@ -110,6 +111,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:contentDescription="@string/credits"
         android:src="@drawable/ic_info" />
 
 </RelativeLayout>

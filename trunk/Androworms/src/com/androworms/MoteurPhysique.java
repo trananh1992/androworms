@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.graphics.Color;
 import android.graphics.PointF;
+import android.util.Log;
 
 /**
  * Cette classe génère la physique du jeu.

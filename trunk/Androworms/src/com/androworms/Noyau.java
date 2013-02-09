@@ -1,9 +1,14 @@
 package com.androworms;
 
+import java.io.File;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PointF;
+import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.graphics.drawable.BitmapDrawable;
 
@@ -30,19 +35,29 @@ public class Noyau {
 	public static final PointF DEBUG_POSITION_JOUEUR_1 = new PointF(220, 200);
 	public static final PointF DEBUG_POSITION_JOUEUR_2 = new PointF(620, 200);
 	
-	public Noyau(Context context, MoteurGraphique mg, boolean estDeuxJoueursBluetooth) {
-		// Le paramètre "estDeuxJoueursBluetooth" est en test pour le moment, il ne sera peut-être pas définitif
-		test(context, estDeuxJoueursBluetooth);
+	public Noyau(Context context, MoteurGraphique mg, Bundle bundle) {
+		test(context, bundle);
 		graphique = mg;
 	}
 	
 	/** Cette fonction sera à supprimer lorsque l'on en aura plus besoin. */
-	public void test(Context context, boolean estDeuxJoueursBluetooth) {
-		if (estDeuxJoueursBluetooth) {
+	public void test(Context context, Bundle bundle) {
+		Integer paramMode = (Integer) bundle.get("mode");
+		Boolean paramEstCartePerso = (Boolean) bundle.get("estCartePerso");
+		String paramNomCarte = (String) bundle.get("nomCarte");
+
+		monde = new Monde();
+		physique = new MoteurPhysique(this, monde);
+		
+		switch (paramMode) {
+		case ActiviteCreationPartie.MODE_BLUETOOTH_SERVEUR:
+		case ActiviteCreationPartie.MODE_BLUETOOTH_CLIENT:
 			creationPartieDistante();
-		}
-		else {
+			break;
+		case ActiviteCreationPartie.MODE_SOLO :
+		default :
 			creationPartieLocale();
+			break;
 		}
 		
 		ImageInformation ii = new ImageInformation(R.drawable.android_face, 81, 107);
@@ -57,8 +72,21 @@ public class Noyau {
 		monde.addPersonnage(tux);
 		monde.addPersonnage(johnDoe);
 		
-		Bitmap b = ((BitmapDrawable)context.getResources().getDrawable(R.drawable.terrain_jeu_defaut_4)).getBitmap();
-		monde.setTerrain(b, 1280, 720);
+		if (paramEstCartePerso != null && paramNomCarte != null) {
+			if (paramEstCartePerso) {
+				File root = Environment.getExternalStorageDirectory();
+				File sd = new File(root, "Androworms/" + paramNomCarte);
+				Bitmap b = BitmapFactory.decodeFile(sd.getAbsolutePath());
+				monde.setTerrain(b, 1280, 720);
+			}
+			else {
+				// TODO : prendre en compte ce paramètre
+				// afficher la carte parmi les cartes par défaut de l'application.
+				Bitmap b = ((BitmapDrawable)context.getResources().getDrawable(R.drawable.terrain_jeu_defaut_4)).getBitmap();
+				monde.setTerrain(b, 1280, 720);
+			}
+		}
+		
 		//physique.gravite();
 		//mouvementForces();
 
@@ -87,14 +115,10 @@ public class Noyau {
 
 	public void creationPartieLocale() {
 		connexion = new ConnexionLocale(this);
-		monde = new Monde();
-		physique = new MoteurPhysique(this, monde);
 	}
 	
 	public void creationPartieDistante() {
 		connexion = new ConnexionDistante(this);
-		monde = new Monde();
-		physique = new MoteurPhysique(this, monde);
 	}
 	
 	/** Gestion des messages venanat de l'IHM */
@@ -137,9 +161,6 @@ public class Noyau {
 
 	
 	/** Gestion des tests. */
-	public void testReseau() {
-		Log.v(TAG_NOYAU, "TestReseau n'est plus valide !");
-	}
 	
 	public Monde getMonde() {
 		return monde;
@@ -149,9 +170,7 @@ public class Noyau {
 	 * qu'il y a des mouvements que des joueurs doivent exécuter
 	 */
 	public void mouvementForces() {
-	}
 	
-
-
+	}
 	
 }
