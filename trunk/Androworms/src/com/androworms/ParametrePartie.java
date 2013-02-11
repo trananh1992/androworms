@@ -9,7 +9,19 @@ public class ParametrePartie {
 	public static final int MODE_WIFI_SERVEUR = 5;
 	public static final int MODE_WIFI_CLIENT = 6;
 	
-	public ParametrePartie() {
+	private static ParametrePartie parametres;
+	
+	private ParametrePartie() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	public static ParametrePartie getParametrePartie()
+	{
+		if (parametres == null)
+		{
+			parametres = new ParametrePartie();
+		}
+		
+		return parametres;
 	}
 }
