@@ -279,7 +279,7 @@ public class MoteurGraphique extends RelativeLayout {
 	 * @param pt : Point de l'objet relative à la carte
 	 * @return : Point de l'objet relative à l'écran
 	 */
-	private PointF transpositionPointSurEcran(PointF pt) {
+	public PointF transpositionPointSurEcran(PointF pt) {
 		matrix.getValues(this.mm);
 		float transX = mm[Matrix.MTRANS_X];
 		float transY = mm[Matrix.MTRANS_Y];
@@ -445,5 +445,9 @@ public class MoteurGraphique extends RelativeLayout {
 	public void setGravityInFuture() {
 		mRedrawHandler.sleep(10000);
 
+	}
+
+	public EvenementJeu getEvtJeu() {
+		return evtJeu;
 	}
 }

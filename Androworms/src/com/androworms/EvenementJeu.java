@@ -215,9 +215,8 @@ public class EvenementJeu extends ScaleGestureDetector.SimpleOnScaleGestureListe
 		ActiviteJeu.setMode(ActiviteJeu.RIEN);
 	}
 	
-	/** Fonction qui corrige la translation si elle dépasse
-	 */
-	private void fixTrans() {
+	/** Fonction qui corrige la translation si elle dépasse */
+	public void fixTrans() {
 		// On cherches les translations en x et y voulus par le reste du programme
 		float[] m = new float[TAILLE_MATRIX];
 		this.moteurGraph.getMatrice().getValues(m);

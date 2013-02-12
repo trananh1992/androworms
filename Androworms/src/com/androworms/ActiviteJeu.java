@@ -4,11 +4,15 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.PointF;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.ImageView;
 import android.widget.SlidingDrawer;
 import android.widget.SlidingDrawer.OnDrawerCloseListener;
 import android.widget.SlidingDrawer.OnDrawerOpenListener;
@@ -17,6 +21,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.androworms.ui.ClavierDirectionnel;
+import com.androworms.utile.Informations;
 
 public class ActiviteJeu extends Activity {
 	
@@ -33,7 +38,7 @@ public class ActiviteJeu extends Activity {
 	
 	private static TextView tv;
 	private Noyau noyau;
-
+	private MoteurGraphique moteurGraph;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -43,7 +48,7 @@ public class ActiviteJeu extends Activity {
 		setContentView(R.layout.terrain_de_jeu);
 		
 		/* Récupération du layout de fond */
-		MoteurGraphique moteurGraph = (MoteurGraphique)findViewById(R.id.trlCarte);
+		moteurGraph = (MoteurGraphique)findViewById(R.id.trlCarte);
 		
 		/* Récupération des paramètres envoyé à l'activity */
 		Bundle bundle = this.getIntent().getExtras();
@@ -106,6 +111,40 @@ public class ActiviteJeu extends Activity {
 		/* Gestion du clavier*/
 		ClavierDirectionnel clavier = (ClavierDirectionnel) findViewById(R.id.clavier);
 		clavier.setOnTouchListener(new EvenementClavier(noyau));
+		
+		/* Recentrer sur le joueur */
+		ImageView ivRecentrer = (ImageView)findViewById(R.id.iv_recentrer);
+		ivRecentrer.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				centrerCarte();
+			}
+		});
+		// On centre le joueur au premier chargement
+		centrerCarte();
+	}
+	
+	/** Fonction qui affiche ou cache le bouton de recentrage */
+	public void afficheBoutonCentrerCarte(boolean estAffiche) {
+		ImageView ivRecentrer = (ImageView)findViewById(R.id.iv_recentrer);
+		if (estAffiche) {
+			ivRecentrer.setVisibility(View.VISIBLE);
+		}
+		else {
+			//ivRecentrer.setVisibility(View.INVISIBLE);
+			ivRecentrer.setVisibility(View.VISIBLE);
+		}
+	}
+	
+	/** Fonction qui centre le joueur au milieu de la carte */
+	public void centrerCarte() {
+		int width = Informations.getWidthPixels();
+		int height = Informations.getHeightPixels();
+		PointF positionJoueur = noyau.getMonde().getPersonnagePrincipal().getPosition();
+		PointF positionJoueurSurEcran = moteurGraph.transpositionPointSurEcran(positionJoueur);
+		moteurGraph.getMatrice().postTranslate(- positionJoueurSurEcran.x + width / 2, -positionJoueurSurEcran.y + height / 2);
+		moteurGraph.getEvtJeu().fixTrans();
+		moteurGraph.invalidate();
+		afficheBoutonCentrerCarte(false);
 	}
 	
 	@Override
