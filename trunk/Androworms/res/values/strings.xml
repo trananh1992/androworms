@@ -59,5 +59,6 @@
         <string name="aide">Aide</string>
         <string name="credits">Credits</string>
         <string name="test_jeu">Test du jeu</string>
+        <string name="recentrer_sur_le_joueur">Recentrer sur le joueur</string>
     
 </resources>

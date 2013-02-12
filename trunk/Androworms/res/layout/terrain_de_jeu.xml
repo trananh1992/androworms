@@ -130,5 +130,16 @@
 	        </TableLayout>
 		</SlidingDrawer>
 
+		<ImageView
+		    android:id="@+id/iv_recentrer"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_above="@+id/toggleButton1"
+		    android:layout_alignParentLeft="true"
+		    android:layout_marginBottom="15dp"
+		    android:layout_marginLeft="15dp"
+		    android:contentDescription="@string/recentrer_sur_le_joueur"
+		    android:src="@drawable/ic_position" />
+
     </RelativeLayout>
 </RelativeLayout>
