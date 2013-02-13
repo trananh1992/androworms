@@ -140,6 +140,15 @@
 		    android:layout_marginLeft="15dp"
 		    android:contentDescription="@string/recentrer_sur_le_joueur"
 		    android:src="@drawable/ic_position" />
-
+		
+		<ImageView
+		    android:id="@+id/iv_pause"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentLeft="true"
+		    android:layout_alignParentTop="true"
+		    android:contentDescription="@string/pause"
+		    android:src="@drawable/ic_pause" />
+		
     </RelativeLayout>
 </RelativeLayout>
