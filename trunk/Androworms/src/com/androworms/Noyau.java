@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.os.Environment;
@@ -34,6 +35,7 @@ public class Noyau {
 	// Variable de débug
 	public static final PointF DEBUG_POSITION_JOUEUR_1 = new PointF(220, 200);
 	public static final PointF DEBUG_POSITION_JOUEUR_2 = new PointF(620, 200);
+	public static final Point TAILLE_IMAGE_JOUEUR = new Point(81, 107);
 	
 	public Noyau(Context context, MoteurGraphique mg, Bundle bundle) {
 		test(context, bundle);
@@ -60,7 +62,7 @@ public class Noyau {
 			break;
 		}
 		
-		ImageInformation ii = new ImageInformation(R.drawable.android_face, 81, 107);
+		ImageInformation ii = new ImageInformation(R.drawable.android_face, TAILLE_IMAGE_JOUEUR.x, TAILLE_IMAGE_JOUEUR.y);
 		Personnage johnDoe = new Personnage("John Doe", ii);
 		johnDoe.setPosition(DEBUG_POSITION_JOUEUR_1);
 

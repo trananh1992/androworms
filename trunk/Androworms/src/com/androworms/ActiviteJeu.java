@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.util.Log;
@@ -130,20 +129,33 @@ public class ActiviteJeu extends Activity {
 			ivRecentrer.setVisibility(View.VISIBLE);
 		}
 		else {
-			//ivRecentrer.setVisibility(View.INVISIBLE);
+			ivRecentrer.setVisibility(View.INVISIBLE);
+			
+			// FIXME : à supprimer quand ça marchera bien !
 			ivRecentrer.setVisibility(View.VISIBLE);
 		}
 	}
 	
 	/** Fonction qui centre le joueur au milieu de la carte */
 	public void centrerCarte() {
+		// Taille de l'écran
 		int width = Informations.getWidthPixels();
 		int height = Informations.getHeightPixels();
+		// Position du joueur sur la carte de fond
 		PointF positionJoueur = noyau.getMonde().getPersonnagePrincipal().getPosition();
+		// Position du joueur par rapport au coin supérieur gauche de l'écran du téléphone et du coin supérieur gauche de l'image
+		// Négatif sur "x", si l'image est plus à gauche que le bord gauche de l'écran,
+		//      négatif sur "y" si l'image est plus haute que le haut de l'écran
 		PointF positionJoueurSurEcran = moteurGraph.transpositionPointSurEcran(positionJoueur);
-		moteurGraph.getMatrice().postTranslate(- positionJoueurSurEcran.x + width / 2, -positionJoueurSurEcran.y + height / 2);
+		// Calcul de la translation à faire pour que l'image soit au centre de l'image
+		float transX = - positionJoueurSurEcran.x + width / (float)2 - Noyau.TAILLE_IMAGE_JOUEUR.x / (float)2;
+		float transY = -positionJoueurSurEcran.y + height / (float)2 - Noyau.TAILLE_IMAGE_JOUEUR.y / (float)2;
+		// Application de la translation de l'image et de tous les objets
+		moteurGraph.getMatrice().postTranslate(transX,transY);
 		moteurGraph.getEvtJeu().fixTrans();
+		// Actualisation des graphismes
 		moteurGraph.invalidate();
+		// On affiche ou on cache
 		afficheBoutonCentrerCarte(false);
 	}
 	
@@ -151,7 +163,7 @@ public class ActiviteJeu extends Activity {
 	protected void onDestroy() {
 		super.onDestroy();
 		Log.v(TAG, "ActiviteJeu destroy");
-		MoteurGraphique moteurGraph = (MoteurGraphique)findViewById(R.id.trlCarte);
+		moteurGraph = (MoteurGraphique)findViewById(R.id.trlCarte);
 		moteurGraph.nettoyer();
 	}
 	
