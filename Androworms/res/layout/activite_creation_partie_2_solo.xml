@@ -21,7 +21,7 @@
         android:text="Choix de la difficulté de l&apos;IA :" />
 
     <SeekBar
-        android:id="@+id/seekBar1"
+        android:id="@+id/sb_difficulte_IA"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:max="4"

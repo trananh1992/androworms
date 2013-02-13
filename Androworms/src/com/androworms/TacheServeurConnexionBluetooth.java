@@ -30,9 +30,6 @@ public class TacheServeurConnexionBluetooth extends AsyncTask<Void, String, Bool
 	// Une fois que le jeu est démarré, on a plus besoin de cette socket (le serveur de connexion est fermé).
 	private BluetoothServerSocket socketServeur;
 	
-	// Liste des sockets des clients du jeu.
-	public List<BluetoothSocket> socketClient;
-	
 	// Gestion de la liste des clients déjà connecté
 	private ArrayAdapter<String> adaptateurListeClients;
 	private List<String> listeClients;
@@ -50,9 +47,6 @@ public class TacheServeurConnexionBluetooth extends AsyncTask<Void, String, Bool
 		ListView lv = (ListView)activiteCreationPartie.findViewById(R.id.liste_appareils_bluetoothS);
 		lv.setAdapter(adaptateurListeClients);
 		lv.setVisibility(View.VISIBLE);
-		
-		// Intialisation de la liste des sockets clients
-		socketClient = new ArrayList<BluetoothSocket>();
 		
 		try {
 			// Création de la socket avec le UUID (définit aléatoiremenet pour l'application)
@@ -82,7 +76,7 @@ public class TacheServeurConnexionBluetooth extends AsyncTask<Void, String, Bool
 				publishProgress(socket.getRemoteDevice().getName());
 				
 				// On ajoute la socket à la liste des sockets clients du serveur
-				socketClient.add(socket);
+				ParametresPartie.getParametresPartie().addSocketsClients(socket);
 				
 				//manageConnectedSocket(socket);
 			} catch (Exception e) {

@@ -112,7 +112,7 @@ public class ActiviteChoixOption extends Activity {
 	{
 		Intent intent = new Intent(this, ActiviteJeu.class);
 		Bundle b = new Bundle();
-		b.putInt("mode", ParametrePartie.MODE_SOLO);
+		b.putInt("mode", ParametresPartie.MODE_SOLO);
 		b.putBoolean("estCartePerso", true);
 		b.putString("nomCarte", carte);
 		intent.putExtras(b);
