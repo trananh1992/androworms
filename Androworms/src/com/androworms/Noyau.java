@@ -36,6 +36,7 @@ public class Noyau {
 	public static final PointF DEBUG_POSITION_JOUEUR_1 = new PointF(220, 200);
 	public static final PointF DEBUG_POSITION_JOUEUR_2 = new PointF(620, 200);
 	public static final Point TAILLE_IMAGE_JOUEUR = new Point(81, 107);
+	public static final Point TAILLE_IMAGE_FOND = new Point(1280, 720);
 	
 	public Noyau(Context context, MoteurGraphique mg, Bundle bundle) {
 		test(context, bundle);
@@ -79,13 +80,13 @@ public class Noyau {
 				File root = Environment.getExternalStorageDirectory();
 				File sd = new File(root, "Androworms/" + paramNomCarte);
 				Bitmap b = BitmapFactory.decodeFile(sd.getAbsolutePath());
-				monde.setTerrain(b, 1280, 720);
+				monde.setTerrain(b, TAILLE_IMAGE_FOND.x, TAILLE_IMAGE_FOND.y);
 			}
 			else {
 				// TODO : prendre en compte ce paramètre
 				// afficher la carte parmi les cartes par défaut de l'application.
 				Bitmap b = ((BitmapDrawable)context.getResources().getDrawable(R.drawable.terrain_jeu_defaut_4)).getBitmap();
-				monde.setTerrain(b, 1280, 720);
+				monde.setTerrain(b, TAILLE_IMAGE_FOND.x, TAILLE_IMAGE_FOND.y);
 			}
 		}
 		
