@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.SeekBar;
 
 public class ActiviteCreationPartie extends Activity {
 	
@@ -35,65 +36,65 @@ public class ActiviteCreationPartie extends Activity {
 		Button btnPartieSolo = (Button)findViewById(R.id.btn_partie_solo);
 		btnPartieSolo.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				modeJeu = ParametrePartie.MODE_SOLO;
+				ParametresPartie.getParametresPartie().setModeJeu(ParametresPartie.MODE_SOLO);
 				etape2();
 			}
 		});
 		Button btnMultiJoueur = (Button)findViewById(R.id.btn_multi_joueur);
 		btnMultiJoueur.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				modeJeu = ParametrePartie.MODE_2JOUEURS;
+				ParametresPartie.getParametresPartie().setModeJeu(ParametresPartie.MODE_2JOUEURS);
 				etape2();
 			}
 		});
 		Button btnBluetoothCreer = (Button)findViewById(R.id.btn_bluetooth_creer);
 		btnBluetoothCreer.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				modeJeu = ParametrePartie.MODE_BLUETOOTH_SERVEUR;
+				ParametresPartie.getParametresPartie().setModeJeu(ParametresPartie.MODE_BLUETOOTH_SERVEUR);
 				etape2();
 			}
 		});
 		Button btnBluetoothRejoindre = (Button)findViewById(R.id.btn_bluetooth_rejoindre);
 		btnBluetoothRejoindre.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				modeJeu = ParametrePartie.MODE_BLUETOOTH_CLIENT;
+				ParametresPartie.getParametresPartie().setModeJeu(ParametresPartie.MODE_BLUETOOTH_CLIENT);
 				etape2();
 			}
 		});
 		Button btnWifiCreer = (Button)findViewById(R.id.btn_wifi_creer);
 		btnWifiCreer.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				modeJeu = ParametrePartie.MODE_WIFI_SERVEUR;
+				ParametresPartie.getParametresPartie().setModeJeu(ParametresPartie.MODE_WIFI_SERVEUR);
 				etape2();
 			}
 		});
 		Button btnWifiRejoindre = (Button)findViewById(R.id.btn_wifi_rejoindre);
 		btnWifiRejoindre.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				modeJeu = ParametrePartie.MODE_WIFI_CLIENT;
+				ParametresPartie.getParametresPartie().setModeJeu(ParametresPartie.MODE_WIFI_CLIENT);
 				etape2();
 			}
 		});
 	}
 	
 	private void etape2() {
-		switch (modeJeu) {
-		case ParametrePartie.MODE_SOLO:
+		switch (ParametresPartie.getParametresPartie().getModeJeu()) {
+		case ParametresPartie.MODE_SOLO:
 			etape2ModeSolo();
 			break;
-		case ParametrePartie.MODE_2JOUEURS:
+		case ParametresPartie.MODE_2JOUEURS:
 			etape2ModeDeuxjoueurs();
 			break;
-		case ParametrePartie.MODE_BLUETOOTH_SERVEUR:
+		case ParametresPartie.MODE_BLUETOOTH_SERVEUR:
 			etape2ModeBluetoothServeur();
 			break;
-		case ParametrePartie.MODE_BLUETOOTH_CLIENT:
+		case ParametresPartie.MODE_BLUETOOTH_CLIENT:
 			etape2ModeBluetoothClient();
 			break;
-		case ParametrePartie.MODE_WIFI_SERVEUR:
+		case ParametresPartie.MODE_WIFI_SERVEUR:
 			etape2ModeWifiServeur();
 			break;
-		case ParametrePartie.MODE_WIFI_CLIENT:
+		case ParametresPartie.MODE_WIFI_CLIENT:
 			etape2ModeWifiClient();
 			break;
 		default :
@@ -115,6 +116,8 @@ public class ActiviteCreationPartie extends Activity {
 		Button btnSuivant = (Button)findViewById(R.id.btn_suivant);
 		btnSuivant.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
+				SeekBar sbDifficulteIA = (SeekBar)findViewById(R.id.sb_difficulte_IA);
+				ParametresPartie.getParametresPartie().setDifficuluteIA(sbDifficulteIA.getProgress());
 				etape3();
 			}
 		});
@@ -209,7 +212,8 @@ public class ActiviteCreationPartie extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		if (modeJeu == ParametrePartie.MODE_BLUETOOTH_SERVEUR || modeJeu == ParametrePartie.MODE_BLUETOOTH_CLIENT) {
+		if (ParametresPartie.getParametresPartie().getModeJeu() == ParametresPartie.MODE_BLUETOOTH_SERVEUR
+				|| ParametresPartie.getParametresPartie().getModeJeu() == ParametresPartie.MODE_BLUETOOTH_CLIENT) {
 			// Destroy des éléments du Bluetooth
 			activiteCreationPartieBluetooth.onDestroy();
 		}

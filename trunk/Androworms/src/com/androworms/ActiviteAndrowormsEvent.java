@@ -62,7 +62,7 @@ public class ActiviteAndrowormsEvent implements OnClickListener {
 				// Bouton de test rapide du jeu
 				Intent intent = new Intent(this.activiteAndroworms, ActiviteJeu.class);
 				Bundle b = new Bundle();
-				b.putInt("mode", ParametrePartie.MODE_SOLO);
+				b.putInt("mode", ParametresPartie.MODE_SOLO);
 				b.putBoolean("estCartePerso", false);
 				b.putString("nomCarte", "terrain_jeu_defaut_1.png");
 				intent.putExtras(b);

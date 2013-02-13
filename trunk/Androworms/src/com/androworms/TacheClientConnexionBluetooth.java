@@ -57,6 +57,8 @@ public class TacheClientConnexionBluetooth extends AsyncTask<Void, Integer, Bool
 			return false;
 		}
 		
+		ParametresPartie.getParametresPartie().setSocketServeur(socketServeur);
+		
 		// Do work to manage the connection (in a separate thread)
 		//manageConnectedSocket(socketServeur);
 		return true;
@@ -94,7 +96,7 @@ public class TacheClientConnexionBluetooth extends AsyncTask<Void, Integer, Bool
 	private void sendMessage(BluetoothSocket mmSocket) {
 		Log.v("a","Je suis le client et j'envoie un MESSAGE STRING !");
 		try {
-			OutputStream os =mmSocket.getOutputStream();
+			OutputStream os = mmSocket.getOutputStream();
 			
 			String s = "Hello, je suis le client et j'envoie un message String !";
 			os.write(s.getBytes());

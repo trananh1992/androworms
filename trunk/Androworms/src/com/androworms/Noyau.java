@@ -52,11 +52,11 @@ public class Noyau {
 		physique = new MoteurPhysique(this, monde);
 		
 		switch (paramMode) {
-		case ParametrePartie.MODE_BLUETOOTH_SERVEUR:
-		case ParametrePartie.MODE_BLUETOOTH_CLIENT:
+		case ParametresPartie.MODE_BLUETOOTH_SERVEUR:
+		case ParametresPartie.MODE_BLUETOOTH_CLIENT:
 			creationPartieDistante();
 			break;
-		case ParametrePartie.MODE_SOLO :
+		case ParametresPartie.MODE_SOLO :
 		default :
 			creationPartieLocale();
 			break;
