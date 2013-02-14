@@ -38,9 +38,15 @@ public class Noyau {
 	public static final Point TAILLE_IMAGE_JOUEUR = new Point(81, 107);
 	public static final Point TAILLE_IMAGE_FOND = new Point(1280, 720);
 	
+	// Paramètres de l'application configurable dans l'activité "Paramètres" de l'application
+	private SharedPreferences parametresApplication;
+	
 	public Noyau(Context context, MoteurGraphique mg, Bundle bundle) {
+		this.graphique = mg;
+		this.parametresApplication = context.getSharedPreferences(ActiviteParametres.PREFS_NAME, 0);
+		
+		// Juste pour le test
 		test(context, bundle);
-		graphique = mg;
 	}
 	
 	/** Cette fonction sera à supprimer lorsque l'on en aura plus besoin. */
@@ -66,9 +72,8 @@ public class Noyau {
 		ImageInformation ii = new ImageInformation(R.drawable.android_face, TAILLE_IMAGE_JOUEUR.x, TAILLE_IMAGE_JOUEUR.y);
 		Personnage johnDoe = new Personnage("John Doe", ii);
 		johnDoe.setPosition(DEBUG_POSITION_JOUEUR_1);
-
-		SharedPreferences settings = context.getSharedPreferences(ActiviteParametres.PREFS_NAME, 0);
-		String pseudo = settings.getString("pseudo", "Joueur1");
+		
+		String pseudo = this.parametresApplication.getString("pseudo", "Joueur1");
 		
 		Personnage tux = new Personnage(pseudo, ii);
 		tux.setPosition(DEBUG_POSITION_JOUEUR_2);
@@ -111,7 +116,11 @@ public class Noyau {
 	public void setPhysique(MoteurPhysique physique) {
 		this.physique = physique;
 	}
-
+	
+	public SharedPreferences getParametresApplication() {
+		return parametresApplication;
+	}
+	
 	public void actualiserGraphisme() {
 		graphique.actualiserGraphisme();
 	}
@@ -172,5 +181,4 @@ public class Noyau {
 	public void mouvementForces() {
 	
 	}
-	
 }

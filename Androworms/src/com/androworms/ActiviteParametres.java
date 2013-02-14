@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 public class ActiviteParametres extends Activity {
@@ -19,12 +20,14 @@ public class ActiviteParametres extends Activity {
 		
 		// Chargement des préférences
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-		
 		String pseudo = settings.getString("pseudo", "");
+		boolean vibrations = settings.getBoolean("vibrations", false);
 		
-		EditText et = (EditText)findViewById(R.id.pseudo);
-		et.setHint("Pseudo");
-		et.setText(pseudo);
+		// Configuration des composants
+		EditText etPseudo = (EditText)findViewById(R.id.et_pseudo);
+		etPseudo.setText(pseudo);
+		CheckBox chkVibrations = (CheckBox)findViewById(R.id.chk_vibrations);
+		chkVibrations.setChecked(vibrations);
 		
 		/* Bouton enregistrer */
 		Button btn = (Button)findViewById(R.id.btn_enregistrer);
@@ -38,11 +41,13 @@ public class ActiviteParametres extends Activity {
 	protected void onStop() {
 		super.onStop();
 		// Sauvegarde des préférences
-		EditText tv = (EditText)findViewById(R.id.pseudo);
+		EditText etPseudo = (EditText)findViewById(R.id.et_pseudo);
+		CheckBox chkVibrations = (CheckBox)findViewById(R.id.chk_vibrations);
 		
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 		SharedPreferences.Editor editor = settings.edit();
-		editor.putString("pseudo", tv.getText().toString());
+		editor.putString("pseudo", etPseudo.getText().toString());
+		editor.putBoolean("vibrations", chkVibrations.isChecked());
 		editor.commit();
 	}
 }

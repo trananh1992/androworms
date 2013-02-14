@@ -3,6 +3,8 @@ package com.androworms;
 import android.content.Context;
 import android.graphics.Matrix;
 import android.graphics.PointF;
+import android.os.Vibrator;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
@@ -30,10 +32,14 @@ public class EvenementJeu extends ScaleGestureDetector.SimpleOnScaleGestureListe
 	//zoom qui permet de ne pas afficher de bordures
 	private float zoomMin;
 	//zoom qui dépend de zoomMin
-	private float zoomMax; 
+	private float zoomMax;
+	
+	private Context ctx;
 		
 	public EvenementJeu(Context ctx, MoteurGraphique mg) {
+		Log.v(TAG, "constructeur EvenementJeu()");
 		this.moteurGraph = mg;
+		this.ctx = ctx;
 		
 		positionNouvelleTouche = new PointF(-1, -1);
 		positionAncienneTouche = new PointF(-1, -1);
@@ -48,7 +54,7 @@ public class EvenementJeu extends ScaleGestureDetector.SimpleOnScaleGestureListe
 		scaleCourant = zoomMin * MoteurGraphique.ZOOM_DEBUT_MULT;
 		
 		//on attribue le zoom min à la matrice
-		//TODO changer 0 0 par les coordonées qu'on souhaite afficher
+		//TODO changer 0 0 par les coordonnées qu'on souhaite afficher
 		mg.getMatrice().postScale(scaleCourant, scaleCourant, 0, 0);
 	}
 	
@@ -157,6 +163,17 @@ public class EvenementJeu extends ScaleGestureDetector.SimpleOnScaleGestureListe
 			float angle = ((float)(Math.atan2 (deplacement.y, deplacement.x)* MoteurGraphique.ANGLE_DEMITOUR /Math.PI));
 		
 			noyau.effectuerTir(distance, angle);
+			
+			
+			// FIXME : ce code est là juste pour tester
+			// Pour le moment : a chaque tir, on fait une petite vibration; mais au final, il faudrait mettre ce code pour
+			// que à chaque fois qu'on a des dégats sur notre joueur, on reçoit une vibration (si le joueur a activé l'option dans les paramètres).
+			if (noyau.getParametresApplication().getBoolean("vibrations", false)) {
+				// On récupère l'instance Vibrator depuis le context de l'activité
+				Vibrator v = (Vibrator)ctx.getSystemService(Context.VIBRATOR_SERVICE);
+				// Vibration durant 300 milliseconds
+				v.vibrate(300);
+			}
 		}
 		positionAncienneTouche = new PointF(-1, -1);
 	}

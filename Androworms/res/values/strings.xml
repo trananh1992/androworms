@@ -62,5 +62,6 @@
     <string name="test_jeu">Test du jeu</string>
     <string name="recentrer_sur_le_joueur">Recentrer sur le joueur</string>
     <string name="pause">Pause</string>
+    <string name="activer_vibrations">Activer vibrations</string>
     
 </resources>
