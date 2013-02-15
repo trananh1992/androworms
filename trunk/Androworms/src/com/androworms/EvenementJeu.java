@@ -168,7 +168,7 @@ public class EvenementJeu extends ScaleGestureDetector.SimpleOnScaleGestureListe
 			// FIXME : ce code est là juste pour tester
 			// Pour le moment : a chaque tir, on fait une petite vibration; mais au final, il faudrait mettre ce code pour
 			// que à chaque fois qu'on a des dégats sur notre joueur, on reçoit une vibration (si le joueur a activé l'option dans les paramètres).
-			if (noyau.getParametresApplication().getBoolean("vibrations", false)) {
+			if (noyau.getParametresApplication().getBoolean(ActiviteParametres.PARAMETRE_VIBRATIONS_CLE, ActiviteParametres.PARAMETRE_VIBRATIONS_DEFAUT)) {
 				// On récupère l'instance Vibrator depuis le context de l'activité
 				Vibrator v = (Vibrator)ctx.getSystemService(Context.VIBRATOR_SERVICE);
 				// Vibration durant 300 milliseconds

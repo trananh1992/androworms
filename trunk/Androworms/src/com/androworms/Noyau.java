@@ -43,7 +43,7 @@ public class Noyau {
 	
 	public Noyau(Context context, MoteurGraphique mg, Bundle bundle) {
 		this.graphique = mg;
-		this.parametresApplication = context.getSharedPreferences(ActiviteParametres.PREFS_NAME, 0);
+		this.parametresApplication = context.getSharedPreferences(ActiviteParametres.PARAMETRES_CLE, 0);
 		
 		// Juste pour le test
 		test(context, bundle);
@@ -73,7 +73,7 @@ public class Noyau {
 		Personnage johnDoe = new Personnage("John Doe", ii);
 		johnDoe.setPosition(DEBUG_POSITION_JOUEUR_1);
 		
-		String pseudo = this.parametresApplication.getString("pseudo", "Joueur1");
+		String pseudo = this.parametresApplication.getString(ActiviteParametres.PARAMETRE_PSEUDO_CLE, ActiviteParametres.PARAMETRE_PSEUDO_DEFAUT_2);
 		
 		Personnage tux = new Personnage(pseudo, ii);
 		tux.setPosition(DEBUG_POSITION_JOUEUR_2);

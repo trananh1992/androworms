@@ -34,7 +34,6 @@
                     android:id="@+id/et_pseudo"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:ems="10"
                     android:hint="@string/pseudo"
                     android:inputType="textPersonName"
                     android:width="20dp" >
@@ -48,6 +47,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/activer_vibrations" />
+
+            <CheckBox
+                android:id="@+id/chk_sons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/activer_sons" />
 
             <TextView
                 android:id="@+id/textView2"
