@@ -41,19 +41,20 @@ public class BluetoothCustomAdapter extends BaseAdapter {
 	}
 
 	public Object getItem(int position) {
+		int pos = position;
 		for (Object section : this.sections.keySet()) {
 			Adapter adapter = sections.get(section);
 			int size = adapter.getCount() + 1;
 
 			// check if position inside this section
-			if (position == 0) {
+			if (pos == 0) {
 				return section;
 			}
-			if (position < size) {
-				return adapter.getItem(position - 1);
+			if (pos < size) {
+				return adapter.getItem(pos - 1);
 			}
 			// otherwise jump into next section
-			position -= size;
+			pos -= size;
 		}
 		return null;
 	}
@@ -80,21 +81,22 @@ public class BluetoothCustomAdapter extends BaseAdapter {
 
 	@Override
 	public int getItemViewType(int position) {
+		int pos = position;
 		int type = 1;
 		for (Object section : this.sections.keySet()) {
 			Adapter adapter = sections.get(section);
 			int size = adapter.getCount() + 1;
 
 			// check if position inside this section
-			if (position == 0) {
+			if (pos == 0) {
 				return TYPE_SECTION_HEADER;
 			}
-			if (position < size) {
-				return type + adapter.getItemViewType(position - 1);
+			if (pos < size) {
+				return type + adapter.getItemViewType(pos - 1);
 			}
 
 			// otherwise jump into next section
-			position -= size;
+			pos -= size;
 			type += adapter.getViewTypeCount();
 		}
 		return -1;
@@ -112,21 +114,22 @@ public class BluetoothCustomAdapter extends BaseAdapter {
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
+		int pos = position;
 		int sectionnum = 0;
 		for (Object section : this.sections.keySet()) {
 			Adapter adapter = sections.get(section);
 			int size = adapter.getCount() + 1;
 
 			// check if position inside this section
-			if (position == 0) {
+			if (pos == 0) {
 				return titres.getView(sectionnum, convertView, parent);
 			}
-			if (position < size) {
-				return adapter.getView(position - 1, convertView, parent);
+			if (pos < size) {
+				return adapter.getView(pos - 1, convertView, parent);
 			}
 
 			// otherwise jump into next section
-			position -= size;
+			pos -= size;
 			sectionnum++;
 		}
 		return null;
