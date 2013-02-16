@@ -62,6 +62,7 @@ public class EvenementClavier implements OnTouchListener {
 			}
 			mHandler.removeCallbacks(mAction);
 			mHandler = null;
+			noyau.stopAnimationAndroid();
 			break;
 		default:
 			break;
