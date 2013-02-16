@@ -23,11 +23,13 @@ public class MoteurPhysique {
 	
 	public void deplacementJoueurDroite(String personnage) {
 		Personnage p = monde.getPersonnage(personnage);
+		noyau.animerAndroid(p);
 		deplacementJoueur(p, 1, p.getMouvementDroite());
 	}
 	
 	public void deplacementJoueurGauche(String personnage) {
 		Personnage p = monde.getPersonnage(personnage);
+		noyau.animerAndroid(p);
 		deplacementJoueur(p, -1, p.getMouvementGauche());
 	}
 	

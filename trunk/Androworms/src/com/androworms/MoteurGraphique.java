@@ -12,6 +12,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.RectF;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
 import android.os.Message;
@@ -82,6 +83,9 @@ public class MoteurGraphique extends RelativeLayout {
 	private Context context;
 	private List<ImageSurCarte> images;
 	private ProgressBar pbTest;
+	
+	public AnimationDrawable animPerso;
+	public AnimationDrawable animPerso2;
 	
 	public MoteurGraphique(Context context) {
 		super(context);
@@ -369,6 +373,16 @@ public class MoteurGraphique extends RelativeLayout {
 				ImageSurCarte imgSurCarte = new ImageSurCarte(this.context, p, this);
 				//On garde la référence pour le zoom et translation
 				images.add(imgSurCarte);
+				
+				ImageView perso = (ImageView) imgSurCarte;
+				perso.setBackgroundResource(R.drawable.animation_android);
+				Personnage persoPrincipal = noyau.getMonde().getPersonnagePrincipal();
+				if(persoPrincipal.equals(p)) {
+					animPerso = (AnimationDrawable) perso.getBackground();
+				}
+				else {
+					animPerso2 = (AnimationDrawable) perso.getBackground();
+				}
 			}
 			
 			for(ObjetSurCarte objSurCarte : monde.getListeObjetCarte()) {
@@ -379,6 +393,21 @@ public class MoteurGraphique extends RelativeLayout {
 			
 			this.actualiserGraphisme();
 		}
+	}
+	
+	public void animerAndroid(Personnage p) {
+		Personnage persoPrincipal = noyau.getMonde().getPersonnagePrincipal();
+		if(persoPrincipal.equals(p)) {
+			animPerso.start();
+		}
+		else {
+			animPerso2.start();
+		}
+	}
+	
+	public void stopAnimationAndroid() {
+		animPerso.stop();
+		animPerso2.stop();
 	}
 	
 	public void ajouterElementSurCarte(ElementSurCarte elt) {

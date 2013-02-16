@@ -170,6 +170,14 @@ public class Noyau {
 		this.graphique.setGraviteInFuture(3);
 	}
 	
+	public void animerAndroid(Personnage p) {
+		graphique.animerAndroid(p);
+	}
+	
+	public void stopAnimationAndroid() {
+		graphique.stopAnimationAndroid();
+	}
+	
 	
 	public Monde getMonde() {
 		return monde;
