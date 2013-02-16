@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.PointF;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -120,6 +121,18 @@ public class ActiviteJeu extends Activity {
 		});
 		// On centre le joueur au premier chargement
 		centrerCarte();
+		
+		/* Gestion de la pause */
+		ImageView ivPause = (ImageView)findViewById(R.id.iv_pause);
+		ivPause.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				// FIXME : juste un test pour ajouter des sons dans le projet.
+				if (noyau.getParametresApplication().getBoolean(ActiviteParametres.PARAMETRE_SONS_CLE, ActiviteParametres.PARAMETRE_SONS_DEFAUT)) {
+					MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.sound_ringer_vibrate);
+					mp.start();
+				}
+			}
+		});
 	}
 	
 	/** Fonction qui affiche ou cache le bouton de recentrage */
