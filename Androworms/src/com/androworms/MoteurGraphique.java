@@ -46,7 +46,7 @@ public class MoteurGraphique extends RelativeLayout {
 	public static final int COEFF_ACCELERATION = 3;
 	
 	// Constantes qui servent pour dessiner un tir en cours
-	private static final int EPAISSEUR_FLECHE_TIR = 30;
+	//private static final int EPAISSEUR_FLECHE_TIR = 30;
 	private static final int EPAISSEUR_ONDE_TIR = 10;
 	private static final float ANGLE_ONDE_TIR = 30f;
 	public static final int ANGLE_DEMITOUR = 180;
@@ -244,7 +244,7 @@ public class MoteurGraphique extends RelativeLayout {
 			paint.setColor(Color.rgb(COULEUR_MAXIMUM, COULEUR_MAXIMUM - (int)(distance * INCREMENT_COULEUR),0));
 		}
 		
-		paint.setStrokeWidth(EPAISSEUR_FLECHE_TIR);
+		paint.setStrokeWidth(this.getResources().getInteger(R.integer.epaisseurFlecheTir));
 		
 		//La fleche debute en dehors du joueur
 		PointF debutFleche = new PointF();
