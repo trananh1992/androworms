@@ -115,6 +115,9 @@ public class ActiviteDebug extends Activity {
 		case DisplayMetrics.DENSITY_XHIGH:
 			buf.append("xhdpi -- XHIGH");
 			break;
+		case DisplayMetrics.DENSITY_XXHIGH:
+			buf.append("xxhdpi -- XXHIGH");
+			break;
 		default:
 			buf.append("??? -- ???");
 			break;
