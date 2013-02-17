@@ -45,7 +45,7 @@ public class ActiviteJeu extends Activity {
 		Log.v(TAG,"Start");
 		
 		/* Affiche la vue */
-		setContentView(R.layout.terrain_de_jeu);
+		setContentView(R.layout.activite_jeu);
 		
 		/* Récupération du layout de fond */
 		moteurGraph = (MoteurGraphique)findViewById(R.id.trlCarte);

@@ -28,7 +28,7 @@ import android.view.View.OnTouchListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-public class ActiviteEditeur extends Activity implements OnClickListener,OnTouchListener {
+public class ActiviteEditeurCarte extends Activity implements OnClickListener,OnTouchListener {
 	private ActiviteAndroworms activiteMenuPrincipal;
 	static final int TAKE_PICTURE = 0;
 	private static final int BIG_BRUSH = 3;
@@ -51,7 +51,7 @@ public class ActiviteEditeur extends Activity implements OnClickListener,OnTouch
 	
 	/** Gestionnaire d'évênement permettant le lancement de cette activité */
 	public void onClick(View arg0) {
-		Intent intent = new Intent(this.activiteMenuPrincipal, ActiviteEditeur.class);
+		Intent intent = new Intent(this.activiteMenuPrincipal, ActiviteEditeurCarte.class);
 		this.activiteMenuPrincipal.startActivity(intent);
 		
 	}
@@ -170,11 +170,11 @@ public class ActiviteEditeur extends Activity implements OnClickListener,OnTouch
 		return false;
 	}
 	
-	public ActiviteEditeur(ActiviteAndroworms activiteMenuPrincipal) {
+	public ActiviteEditeurCarte(ActiviteAndroworms activiteMenuPrincipal) {
 		this.activiteMenuPrincipal = activiteMenuPrincipal;
 	}
 	
-	public ActiviteEditeur() {
+	public ActiviteEditeurCarte() {
 		super();
 	}
 	
@@ -279,7 +279,7 @@ public class ActiviteEditeur extends Activity implements OnClickListener,OnTouch
 		super.onCreate(savedInstanceState);
 		
 		/* Affiche la vue par défaut */
-		setContentView(R.layout.edition_carte);
+		setContentView(R.layout.activite_editeur_carte);
 		ImageView surface = (ImageView) findViewById(R.id.CurrentMap);
 		((ImageView)findViewById(R.id.background)).setBackgroundColor(COULEUR_CIEL);
 		

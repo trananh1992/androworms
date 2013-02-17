@@ -131,7 +131,7 @@ public class ActiviteCreationPartie extends Activity {
 	private void etape2ModeBluetoothServeur() {
 		activiteCreationPartieBluetooth = new ActiviteCreationPartieBluetooth(this);
 		/* Affichage de la vue */
-		setContentView(R.layout.multi_joueur_bluetooth_serveur);
+		setContentView(R.layout.activite_creation_partie_2_bluetooth_serveur);
 		/* Chargement des composants */
 		activiteCreationPartieBluetooth.chargementInterfaceBluetoothServeur();
 	}
@@ -139,7 +139,7 @@ public class ActiviteCreationPartie extends Activity {
 	private void etape2ModeBluetoothClient() {
 		activiteCreationPartieBluetooth = new ActiviteCreationPartieBluetooth(this);
 		/* Affichage de la vue */
-		setContentView(R.layout.multi_joueur_bluetooth_client);
+		setContentView(R.layout.activite_creation_partie_2_bluetooth_client);
 		/* Chargement des composants */
 		activiteCreationPartieBluetooth.chargementInterfaceBluetoothClient();
 	}

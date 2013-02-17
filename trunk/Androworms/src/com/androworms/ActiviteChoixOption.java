@@ -84,7 +84,7 @@ public class ActiviteChoixOption extends Activity {
 	
 	private void demarreCreationCarte()
 	{
-		Intent intent = new Intent(this, ActiviteEditeur.class);
+		Intent intent = new Intent(this, ActiviteEditeurCarte.class);
 		this.startActivityForResult(intent, 0);
 	}
 	
