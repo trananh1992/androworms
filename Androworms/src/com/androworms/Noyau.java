@@ -136,14 +136,14 @@ public class Noyau {
 	/** Gestion des messages venanat de l'IHM */
 	public void sautJoueurDroiteFromIHM() {
 		//physique.sautJoueurDroite(nomPersonnage);
-		//physique.gravite();
-		graphique.setGravityInFuture();
+		physique.gravite();
+		//graphique.setGravityInFuture();
 	}
 	
 	public void sautJoueurGaucheFromIHM() {
 		//physique.sautJoueurGauche(nomPersonnage);
-		//physique.gravite();
-		graphique.setGravityInFuture();
+		physique.gravite();
+		//graphique.setGravityInFuture();
 	}
 	
 	public void deplacementJoueurDroiteFromIHM() {
@@ -187,6 +187,6 @@ public class Noyau {
 	 * qu'il y a des mouvements que des joueurs doivent exécuter
 	 */
 	public void mouvementForces() {
-	
+		graphique.remetAplusTard(new RunnableMouvementForce(graphique, this), 1000);
 	}
 }
