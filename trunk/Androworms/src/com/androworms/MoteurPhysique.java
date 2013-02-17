@@ -41,11 +41,12 @@ public class MoteurPhysique {
 			if( !estEnCollision(pNew) && estDansTerrain(pNew)) {
 				//pOld.setPosition(new PointF(pNew.getPosition().x, pNew.getPosition().y));
 				gravite(pNew);
-				path.add(pNew.getPosition());
+				//path.add(pNew.getPosition());
 			}
 		}
+		pOld.setPosition(pNew.getPosition());
 		//noyau.actualiserGraphisme()
-		noyau.mouvementForces();
+		//noyau.mouvementForces();
 	}
 	
 	
@@ -73,22 +74,24 @@ public class MoteurPhysique {
 			Personnage p = monde.getListePersonnage().get(i);
 			Personnage pNew = p.clone();
 			while(personnageVolant(pNew)) {
-				p.addMouvementForces(pNew.getPosition());
+				p.addMouvementForces(new PointF(pNew.getPosition().x, pNew.getPosition().y));
 				pNew.setPosition(pNew.getPosition().x, pNew.getPosition().y+1);
 			}
 		}
-		//noyau.mouvementForces();
+		noyau.mouvementForces();
 		//noyau.actualiserGraphisme();
 	}
 	
 	/** Cette fonction verifie que toutes les regles de la physique implementees sont respectees. */
 	public void gravite(Personnage p) {
-		/*
+		//Personnage pNew = p.clone();
 		while(personnageVolant(p)) {
+			//p.addMouvementForces(new PointF(pNew.getPosition().x, pNew.getPosition().y));
 			p.setPosition(p.getPosition().x, p.getPosition().y+1);
 		}
-		noyau.actualiserGraphisme();
-		*/
+		//noyau.actualiserGraphisme();
+		//noyau.mouvementForces();
+
 	}		
 	
 	/** On teste si le personnage n'a rien sous les pieds.
