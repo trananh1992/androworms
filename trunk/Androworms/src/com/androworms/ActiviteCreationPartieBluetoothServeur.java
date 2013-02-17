@@ -88,12 +88,9 @@ public class ActiviteCreationPartieBluetoothServeur {
 				if (activiteCreationPartieBluetooth.serveurConnexionBluetooth == null) {
 					Log.v(TAG,"Vous n'avez jamais lancer le serveur");
 				} else {
-					Log.v(TAG,"Arret du Thread");
-					
 					// On arrête le serveur de connexion Bluetooth
-					activiteCreationPartieBluetooth.serveurConnexionBluetooth.cancel(true);
-					
-					Log.v("TAG","Je suis le SERVEUR et je clos le serveur ! Terminé les inscriptions ! ! on va joueur...");
+					Log.v(TAG,"Arret du serveur de connexion Bluetooth");
+					activiteCreationPartieBluetooth.serveurConnexionBluetooth.fermetureConnexionsForce();
 					
 					// TODO le serveur doit dire aux clients qu'on commence à jouer !
 					

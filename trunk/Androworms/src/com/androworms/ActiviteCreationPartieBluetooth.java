@@ -293,7 +293,8 @@ public class ActiviteCreationPartieBluetooth {
 		}
 		
 		if (serveurConnexionBluetooth != null) {
-			serveurConnexionBluetooth.cancel(true);
+			Log.v("Androworms.TacheServeurConnexionBluetooth", "onDestroy() -> fermetureConnexionsForce()");
+			serveurConnexionBluetooth.fermetureConnexionsForce();
 		}
 		
 		if (clientConnexionBluetooth != null) {
