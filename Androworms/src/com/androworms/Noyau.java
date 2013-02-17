@@ -23,6 +23,7 @@ public class Noyau {
 	public static final int DEPLACEMENT_DROITE = 0;
 	public static final int DEPLACEMENT_GAUCHE = 1;
 	public static final int DEPLACEMENT_HAUT = 2;
+	public static final int VITESSE_CHUTE = 400;
 	
 	private static final String TAG_NOYAU = "Androworms.Noyau";
 	private Connexion connexion;
@@ -187,6 +188,6 @@ public class Noyau {
 	 * qu'il y a des mouvements que des joueurs doivent exécuter
 	 */
 	public void mouvementForces() {
-		graphique.remetAplusTard(new RunnableMouvementForce(graphique, this), 1000);
+		graphique.remetAplusTard(new RunnableMouvementForce(graphique, this), VITESSE_CHUTE);
 	}
 }
