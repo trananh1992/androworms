@@ -33,7 +33,7 @@ public class ActiviteAndroworms extends Activity {
 		BluetoothAdapter.getDefaultAdapter();
 		
 		/* Démarrage du Thread qui charge les données nécessaires à l'application */
-		final Chargement ch = new Chargement();
+		final TacheChargement ch = new TacheChargement();
 		ch.execute(this);
 		
 		/* Gestion de l'utilisateur qui touche l'écran pour passer le SplashScreen */

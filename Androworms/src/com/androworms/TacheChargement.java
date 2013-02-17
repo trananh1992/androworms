@@ -8,7 +8,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 /** Thread asynchrone permettant de charger des informations durant l'affichage du SplashScreen */
-public class Chargement extends AsyncTask<ActiviteAndroworms, Integer, Boolean> {
+public class TacheChargement extends AsyncTask<ActiviteAndroworms, Integer, Boolean> {
 	
 	public static final String TAG = "Chargement";
 	public static final int TEMPS_PAUSE = 5000;
