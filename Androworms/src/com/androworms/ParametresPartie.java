@@ -50,10 +50,10 @@ public class ParametresPartie {
 		nomJoueur2 = "Joueur 2";
 		
 		// Mode Bluetooth Serveur
-		List<BluetoothSocket> socketsClients = new ArrayList<BluetoothSocket>();
+		socketsClients = new ArrayList<BluetoothSocket>();
 		
 		// Mode Bluetooth Client
-		BluetoothSocket socketServeur = null;
+		socketServeur = null;
 	}
 	
 	/** Singleton des ParamètresParties */
