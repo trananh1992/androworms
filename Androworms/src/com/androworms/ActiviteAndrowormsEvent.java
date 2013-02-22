@@ -2,7 +2,6 @@ package com.androworms;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -61,11 +60,9 @@ public class ActiviteAndrowormsEvent implements OnClickListener {
 			else if (btn.getId() == R.id.btn_test_jeu) {
 				// Bouton de test rapide du jeu
 				Intent intent = new Intent(this.activiteAndroworms, ActiviteJeu.class);
-				Bundle b = new Bundle();
-				b.putInt("mode", ParametresPartie.MODE_SOLO);
-				b.putBoolean("estCartePerso", false);
-				b.putString("nomCarte", "terrain_jeu_defaut_1.png");
-				intent.putExtras(b);
+				ParametresPartie.getParametresPartie().setModeJeu(ParametresPartie.MODE_SOLO);
+				ParametresPartie.getParametresPartie().setEstCartePerso(false);
+				ParametresPartie.getParametresPartie().setNomCarte("terrain_jeu_defaut_1.png");
 				this.activiteAndroworms.startActivity(intent);
 			}
 		}

@@ -15,14 +15,6 @@ public class ActiviteCreationPartie extends Activity {
 	private static final String TAG = "Androworms.ActiviteCreationPartie";
 	private ActiviteCreationPartieBluetooth activiteCreationPartieBluetooth;
 	
-	/** Paramètres du jeu à envoyer à l'activité de jeu **/
-	// Mode de jeu (Solo, 2 joueurs sur un téléphone, en Bluetooth, etc...
-	private static int modeJeu;
-	// Si la carte du terrain est une carte personnalisé ou une carte de base
-	private static boolean estCartePerso;
-	// Nom de la carte pour le fond du terrain
-	private static String nomCarte;
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -158,8 +150,8 @@ public class ActiviteCreationPartie extends Activity {
 		/* Affichage de la vue */
 		setContentView(R.layout.activite_creation_partie_3);
 		
-		estCartePerso = false;
-		nomCarte = "terrain_jeu_defaut_1.png";
+		ParametresPartie.getParametresPartie().setEstCartePerso(false);
+		ParametresPartie.getParametresPartie().setNomCarte("terrain_jeu_defaut_1.png");
 		
 		Button btnPrecedent = (Button)findViewById(R.id.btn_precedent);
 		btnPrecedent.setOnClickListener(new OnClickListener() {
@@ -190,11 +182,6 @@ public class ActiviteCreationPartie extends Activity {
 		btnDemarrerPartie.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				Intent intent = new Intent(ActiviteCreationPartie.this, ActiviteJeu.class);
-				Bundle b = new Bundle();
-				b.putInt("mode", modeJeu);
-				b.putBoolean("estCartePerso", estCartePerso);
-				b.putString("nomCarte", nomCarte);
-				intent.putExtras(b);
 				startActivity(intent);
 				/* On arrête l'application comme ça quand on sera sur la partie de jeu et qu'on fait la flèche de "retour à l'activité précédente",
 				   on arrivera sur le menu principal */

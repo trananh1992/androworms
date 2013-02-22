@@ -111,11 +111,9 @@ public class ActiviteChoixOption extends Activity {
 	private void lanceLeJeu()
 	{
 		Intent intent = new Intent(this, ActiviteJeu.class);
-		Bundle b = new Bundle();
-		b.putInt("mode", ParametresPartie.MODE_SOLO);
-		b.putBoolean("estCartePerso", true);
-		b.putString("nomCarte", carte);
-		intent.putExtras(b);
+		ParametresPartie.getParametresPartie().setModeJeu(ParametresPartie.MODE_SOLO);
+		ParametresPartie.getParametresPartie().setEstCartePerso(true);
+		ParametresPartie.getParametresPartie().setNomCarte(carte);
 		this.startActivity(intent);
 	}
 }
