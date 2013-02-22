@@ -52,9 +52,10 @@ public class Noyau {
 	
 	/** Cette fonction sera à supprimer lorsque l'on en aura plus besoin. */
 	public void test(Context context, Bundle bundle) {
-		Integer paramMode = (Integer) bundle.get("mode");
-		Boolean paramEstCartePerso = (Boolean) bundle.get("estCartePerso");
-		String paramNomCarte = (String) bundle.get("nomCarte");
+		ParametresPartie params = ParametresPartie.getParametresPartie();
+		Integer paramMode = params.getModeJeu();
+		Boolean paramEstCartePerso = params.isEstCartePerso();
+		String paramNomCarte = params.getNomCarte();
 
 		monde = new Monde();
 		physique = new MoteurPhysique(this, monde);
