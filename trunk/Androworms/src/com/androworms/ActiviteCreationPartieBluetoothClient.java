@@ -11,13 +11,13 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.ToggleButton;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 
 import com.androworms.utile.Informations;
 
@@ -41,6 +41,7 @@ public class ActiviteCreationPartieBluetoothClient {
 		final Button btnAnalyse = (Button)activiteCreationPartie.findViewById(R.id.btn_analyse);
 		final ListView lvAppareilsBluetooth = (ListView)activiteCreationPartie.findViewById(R.id.liste_appareils_bluetooth);
 		ProgressBar pbBluetoothAnalyse = (ProgressBar)activiteCreationPartie.findViewById(R.id.pb_bluetooth_analyse);
+		Button btnConnexion = (Button)activiteCreationPartie.findViewById(R.id.btn_connexion);
 		
 		/** Init des listes des appareils **/
 		activiteCreationPartieBluetooth.appareilJumele = new ArrayList<BluetoothDevice>();
@@ -117,9 +118,19 @@ public class ActiviteCreationPartieBluetoothClient {
 		lvAppareilsBluetooth.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parentView, View childView, int position, long id) {
 				Log.v(TAG,"selection de : "+lvAppareilsBluetooth.getItemAtPosition(position));
-				activiteCreationPartieBluetooth.demarrerClientBluetooth((BluetoothDevice)lvAppareilsBluetooth.getItemAtPosition(position));
+				//activiteCreationPartieBluetooth.demarrerClientBluetooth((BluetoothDevice)lvAppareilsBluetooth.getItemAtPosition(position));
 			}
 		});
+		
+		
+		/** On tente de se connecter au serveur */
+		btnConnexion.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				// TODO
+			}
+		});
+		
+		
 		
 		pbBluetoothAnalyse.setVisibility(View.INVISIBLE);
 	}

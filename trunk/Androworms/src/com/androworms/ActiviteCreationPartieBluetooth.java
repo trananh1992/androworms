@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -247,27 +246,13 @@ public class ActiviteCreationPartieBluetooth {
 		}
 		
 		// FIXME : j'ai pas compris les paramètres 2 et 3 du ArrayAdapter
-		adapterA = new ArrayAdapter<BluetoothDevice>(activiteCreationPartie, android.R.layout.simple_list_item_1, android.R.id.text1, valuesA) {
-			public View getView(int position, View convertView, ViewGroup parent) {
-				TextView view = (TextView) super.getView(position, convertView, parent);
-				BluetoothDevice bluetoothDevice = (BluetoothDevice) getItem(position);
-				view.setText("Appareil jumelé : " + bluetoothDevice.getName() + " (" + bluetoothDevice.getAddress() + ")");
-				return view;
-			}
-		};
-		adapterB = new ArrayAdapter<BluetoothDevice>(activiteCreationPartie, android.R.layout.simple_list_item_1, android.R.id.text1, valuesB) {
-			public View getView(int position, View convertView, ViewGroup parent) {
-				TextView view = (TextView) super.getView(position, convertView, parent);
-				BluetoothDevice bluetoothDevice = (BluetoothDevice) getItem(position);
-				view.setText("Appareil à proximité : " + bluetoothDevice.getName() + " (" + bluetoothDevice.getAddress() + ")");
-				return view;
-			}
-		};
+		adapterA = new ArrayAdapter<BluetoothDevice>(activiteCreationPartie, android.R.layout.simple_list_item_1, android.R.id.text1, valuesA);
+		adapterB = new ArrayAdapter<BluetoothDevice>(activiteCreationPartie, android.R.layout.simple_list_item_1, android.R.id.text1, valuesB);
 		
 		BluetoothCustomAdapter adapter = new BluetoothCustomAdapter(activiteCreationPartie);
 		
-		adapter.addSection("Appareils appairés (jumelés ?)", adapterA);
-		adapter.addSection("Appareils à proximité", adapterB);
+		adapter.ajouterSections("Appareils appairés (jumelés ?)", adapterA);
+		adapter.ajouterSections("Appareils à proximité", adapterB);
 		
 		lv.setAdapter(adapter);
 	}

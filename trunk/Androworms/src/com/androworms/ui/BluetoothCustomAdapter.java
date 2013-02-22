@@ -3,139 +3,209 @@ package com.androworms.ui;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import android.bluetooth.BluetoothDevice;
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.androworms.R;
 
 public class BluetoothCustomAdapter extends BaseAdapter {
-	// [Titre section]
-	//    Elément A
-	//    Elément B
-	//    Elément C
-	// [Titre section]
-	//    Elément D
-	//    Elément E
+	
+	/* Descrition de ce composant liste :
+	 * 
+	 * [Titre de section 1] (Non clicable)
+	 *    BluetoothDevice A
+	 *    BluetoothDevice B
+	 *    BluetoothDevice C
+	 * [Titre de section 2] (Non clicable)
+	 *    BluetoothDevice D
+	 *    BluetoothDevice E
+	 * [Titre de section 3] (Non clicable)
+	 *    <Message de section vide> (Non clicable)
+	 * 
+	 * Ce composant dispose donc de 3 types d'éléments.
+	 */
+	
 	public static final String TAG = "BluetoothCustomAdapter";
 	
 	public final Map<String, Adapter> sections = new LinkedHashMap<String, Adapter>();
 	public final ArrayAdapter<String> titres;
-	public static final int TYPE_SECTION_HEADER = 0;
+	public final ArrayAdapter<String> empty;
+	
+	// Type des éléments dans la liste
+	public static final int TYPE_TITRE_SECTION = 0;
+	public static final int TYPE_ELEMENT = 1;
+	public static final int TYPE_MESSAGE_SECTION_VIDE = 2;
+	
 
 	public BluetoothCustomAdapter(Context context) {
 		// On crée une liste contenant les titres de sections
-		titres = new ArrayAdapter<String>(context, R.layout.liste_bluetooth_section);
+		titres = new ArrayAdapter<String>(context, R.layout.liste_bluetooth_titre_section);
+		empty = new ArrayAdapter<String>(context, R.layout.liste_bluetooth_message_section_vide);
+		empty.add("Aucun périphérique détecté !");
 	}
 	
-	public void addSection(String section, Adapter adapter) {
+	/** Pour ajouter une section à la liste */
+	public void ajouterSections(String titreSection, Adapter adapter) {
 		// Lorsque l'ont ajoute une section,
 		// on ajoute le titre de a section à la liste des titres de section
-		this.titres.add(section);
+		this.titres.add(titreSection);
 		// On map les elements de la section (dans adapter) avec comme clé, le titre de la section
-		this.sections.put(section, adapter);
+		this.sections.put(titreSection, adapter);
 	}
-
-	public Object getItem(int position) {
-		int pos = position;
-		for (Object section : this.sections.keySet()) {
-			Adapter adapter = sections.get(section);
-			int size = adapter.getCount() + 1;
-
-			// check if position inside this section
-			if (pos == 0) {
-				return section;
-			}
-			if (pos < size) {
-				return adapter.getItem(pos - 1);
-			}
-			// otherwise jump into next section
-			pos -= size;
-		}
-		return null;
-	}
-
-	public int getCount() {
-		// total together all sections, plus one for each section header
-		int total = 0;
-		for (Adapter adapter : this.sections.values()) {
-			total += adapter.getCount() + 1;
-		}
-		Log.v(TAG,"getCount() = "+total);
-		return total;
-	}
-
+	
+	/** Les éléments de la liste sont-ils séléctionnable ? */
 	@Override
-	public int getViewTypeCount() {
-		// assume that headers count as one, then total all sections
-		int total = 1;
-		for (Adapter adapter : this.sections.values()) {
-			total += adapter.getViewTypeCount();
-		}
-		return total;
+	public boolean areAllItemsEnabled() {
+		// Non, les titres ou les messages de section vides ne sont pas sélectionnable.
+		return false;
 	}
-
+	
+	/** Obtenir le type d'un élément de la liste */
 	@Override
 	public int getItemViewType(int position) {
 		int pos = position;
-		int type = 1;
+		// Pour chaque section
 		for (Object section : this.sections.keySet()) {
 			Adapter adapter = sections.get(section);
-			int size = adapter.getCount() + 1;
+			
+			// Taille de la section : titre + éléments de la section
+			int taille = 1 + adapter.getCount();
 
-			// check if position inside this section
+			// Si la position demandé est un titre
 			if (pos == 0) {
-				return TYPE_SECTION_HEADER;
+				return TYPE_TITRE_SECTION;
 			}
-			if (pos < size) {
-				return type + adapter.getItemViewType(pos - 1);
+			// Si la position demandé est un élément
+			else if (pos < taille) {
+				return TYPE_ELEMENT;
+			}
+			// Si la position demandé est un message de section vide (taille de la section : juste le titre)
+			else if (taille == 1) {
+				return TYPE_MESSAGE_SECTION_VIDE;
 			}
 
-			// otherwise jump into next section
-			pos -= size;
-			type += adapter.getViewTypeCount();
+			// On passe à la section suivante
+			pos -= taille;
 		}
 		return -1;
 	}
-
-	public boolean areAllItemsSelectable() {
-		// On ne peux pas selectionner les titres
-		return false;
+	
+	/** On veux savoir le nombre de type d'élément différent il y a dans la liste */
+	@Override
+	public int getViewTypeCount() {
+		return 3;
 	}
-
+	
+	/** La liste est-elle vide ? */
+	@Override
+	public boolean isEmpty() {
+		// La lsite est vide que s'il n'y a aucune section.
+		return (this.titres.getCount() == 0);
+	}
+	
+	/** On aimerait savoir si l'élément est actif (=séléctionnable) */
 	@Override
 	public boolean isEnabled(int position) {
-		// On désactive l'élément si c'est un titre
-		return (getItemViewType(position) != TYPE_SECTION_HEADER);
+		return (getItemViewType(position) != TYPE_TITRE_SECTION && getItemViewType(position) != TYPE_MESSAGE_SECTION_VIDE);
 	}
-
-	public View getView(int position, View convertView, ViewGroup parent) {
+	
+	/** Nombre d'éléments dans la liste */
+	public int getCount() {
+		int total = 0;
+		// Pour chaque section
+		for (Adapter adapter : this.sections.values()) {
+			// on compte le titre + le nombre d'élément dans la liste
+			total += 1 + adapter.getCount();
+			// si la section est vide, on ajoute 1 pour le message de section vide
+			if (adapter.getCount() == 0) {
+				total += 1;
+			}
+		}
+		return total;
+	}
+	
+	/** Obtenir l'élément de la liste à la position demandé */
+	public Object getItem(int position) {
 		int pos = position;
-		int sectionnum = 0;
+		
+		// Pour chaque section
 		for (Object section : this.sections.keySet()) {
 			Adapter adapter = sections.get(section);
-			int size = adapter.getCount() + 1;
+			
+			// Taille de la section : titre + éléments de la section
+			int taille = 1 + adapter.getCount();
 
-			// check if position inside this section
+			// Si la position demandé est un titre
 			if (pos == 0) {
-				return titres.getView(sectionnum, convertView, parent);
+				return section;
 			}
-			if (pos < size) {
-				return adapter.getView(pos - 1, convertView, parent);
+			// Si la position demandé est un élément
+			else if (pos < taille) {
+				return adapter.getItem(pos - 1);
 			}
-
-			// otherwise jump into next section
-			pos -= size;
-			sectionnum++;
+			// Si la position demandé est un message de section vide (taille de la section : juste le titre)
+			else if (taille == 1) {
+				return section;
+			}
+			
+			// On passe à la section suivante
+			pos -= taille;
 		}
 		return null;
 	}
-
+	
+	/** Obtenir l'Id de l'item dans la liste. */
 	public long getItemId(int position) {
+		// On utilise sa position comme id
 		return position;
+	}
+	
+	/** Obtenir la vue de l'élément */
+	public View getView(int position, View convertView, ViewGroup parent) {
+		int pos = position;
+		int sectionnum = 0;
+		
+		// Pour chaque section
+		for (Object section : this.sections.keySet()) {
+			Adapter adapter = sections.get(section);
+			
+			// Taille de la section : titre + éléments de la section
+			int taille = 1 + adapter.getCount();
+			
+			// Si la position demandé est un titre
+			if (pos == 0) {
+				return titres.getView(sectionnum, convertView, parent);
+			}
+			// Si la position demandé est un élément
+			else if (pos < taille) {
+				TextView view = (TextView) adapter.getView(pos - 1, convertView, parent);
+				BluetoothDevice bluetoothDevice = (BluetoothDevice) getItem(position);
+				if (sectionnum == 0) {
+					view.setText("Appareil jumelé : " + bluetoothDevice.getName() + " (" + bluetoothDevice.getAddress() + ")");
+				}
+				else if (sectionnum == 1) {
+					view.setText("Appareil proximité : " + bluetoothDevice.getName() + " (" + bluetoothDevice.getAddress() + ")");
+				}
+				else {
+					view.setText("Appareil inconnu : " + bluetoothDevice.getName() + " (" + bluetoothDevice.getAddress() + ")");
+				}
+				return view;
+			}
+			// Si la position demandé est un message de section vide (taille de la section : juste le titre)
+			else if (taille == 1) {
+				return empty.getView(0, convertView, parent);
+			}
+
+			// On passe à la section suivante
+			pos -= taille;
+			sectionnum++;
+		}
+		return null;
 	}
 }
