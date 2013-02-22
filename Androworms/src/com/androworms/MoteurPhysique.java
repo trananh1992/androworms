@@ -126,7 +126,6 @@ public class MoteurPhysique {
 			if(!estDansTerrain(p)) {
 				personnage.addMouvementForces(p.getPosition());
 			}
-			
 		}
 		gravite(p);
 	}
@@ -139,7 +138,6 @@ public class MoteurPhysique {
 		return monde.getTerrain().getHeight() - (p.getHeightImageTerrain()+(int)p.getPosition().y) > 1
 				&& monde.getTerrain().getWidth() - (p.getWidthImageTerrain()+(int)p.getPosition().x) > 1
 				&& p.getPosition().y >= 1 
-				&& p.getPosition().x >= 1
-				;
+				&& p.getPosition().x >= 1;
 	}
 }
