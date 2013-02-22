@@ -19,6 +19,9 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 
 public class ActiviteChoixOption extends Activity {
+	
+	private static final String TAG = "Androworms.ActiviteChoixOption";
+	
 	private String carte;
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -35,13 +38,13 @@ public class ActiviteChoixOption extends Activity {
 		int i = 0;
 		if (sdDirList != null) {
 			for(i=0;i<sdDirList.length;i++) {
-				Log.e("test","adding item");
+				Log.v(TAG,"adding item");
 				adapter.add(sdDirList[i].getName());
-				Log.e("test","added item "+sdDirList[i].getName());
+				Log.v(TAG,"added item "+sdDirList[i].getName());
 			}
 		}
 		adapter.add("Create new");
-		Log.e("ActiviteChoixOption","setting");
+		Log.v(TAG,"setting");
 		adapter.notifyDataSetChanged();
 		mapChooser.setAdapter(adapter);
 		mapChooser.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -68,11 +71,10 @@ public class ActiviteChoixOption extends Activity {
 			}
 			
 		});
-		Log.e("ActiviteChoixOption","setted");
+		Log.v(TAG,"setted");
 	}
 	
-	private void afficheCarte(String map)
-	{
+	private void afficheCarte(String map) {
 		carte = map;
 		ImageView v = (ImageView)findViewById(R.id.chosen_map);
 		File root = Environment.getExternalStorageDirectory();
@@ -82,23 +84,21 @@ public class ActiviteChoixOption extends Activity {
 		v.setImageBitmap(thumbnail);
 	}
 	
-	private void demarreCreationCarte()
-	{
+	private void demarreCreationCarte() {
 		Intent intent = new Intent(this, ActiviteEditeurCarte.class);
 		this.startActivityForResult(intent, 0);
 	}
 	
-	protected void onActivityResult(int requestCode, int resultCode, Intent retour)
-	{
+	protected void onActivityResult(int requestCode, int resultCode, Intent retour) {
 		Spinner sp = (Spinner) findViewById(R.id.mapChooser);
-		Log.e("activiteChoixOptions","result");
+		Log.v(TAG,"result");
 		if(resultCode == RESULT_OK)
 		{
-			Log.e("activiteChoixOptions","result is ok");
+			Log.v(TAG,"result is ok");
 			String photo= retour.getStringExtra("image");
 			if(photo.length()>0)
 			{
-				Log.e("activiteChoixOptions","result is ok and photo is "+photo);
+				Log.v(TAG,"result is ok and photo is "+photo);
 				ArrayAdapter<String> adapter = (ArrayAdapter<String>) sp.getAdapter();
 				adapter.insert(photo,adapter.getCount()-1);
 				adapter.notifyDataSetChanged();
@@ -108,8 +108,7 @@ public class ActiviteChoixOption extends Activity {
 		}
 	}
 	
-	private void lanceLeJeu()
-	{
+	private void lanceLeJeu() {
 		Intent intent = new Intent(this, ActiviteJeu.class);
 		ParametresPartie.getParametresPartie().setModeJeu(ParametresPartie.MODE_SOLO);
 		ParametresPartie.getParametresPartie().setEstCartePerso(true);

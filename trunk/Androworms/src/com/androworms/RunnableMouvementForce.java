@@ -2,7 +2,7 @@ package com.androworms;
 
 import java.util.List;
 
-public class RunnableMouvementForce implements Runnable{
+public class RunnableMouvementForce implements Runnable {
 	private MoteurGraphique mg;
 	private Noyau noyau;
 	
@@ -13,7 +13,6 @@ public class RunnableMouvementForce implements Runnable{
 	}
 
 	public void run() {
-		// TODO Auto-generated method stub
 		List<Personnage> lp = noyau.getMonde().getListePersonnage();
 		boolean mouvement = false;
 		for(int i =0; i < lp.size(); i++) {
@@ -26,6 +25,5 @@ public class RunnableMouvementForce implements Runnable{
 			mg.actualiserGraphisme();
 			mg.remetAplusTard(this, 1);
 		}
-
 	}
 }
