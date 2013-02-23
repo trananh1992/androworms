@@ -34,8 +34,8 @@ public class Noyau {
 	private MoteurGraphique graphique;
 	
 	// Variable de débug
-	public static final PointF DEBUG_POSITION_JOUEUR_1 = new PointF(220, 200);
-	public static final PointF DEBUG_POSITION_JOUEUR_2 = new PointF(620, 200);
+	public static final Point DEBUG_POSITION_JOUEUR_1 = new Point(220, 200);
+	public static final Point DEBUG_POSITION_JOUEUR_2 = new Point(620, 200);
 	public static final Point TAILLE_IMAGE_JOUEUR = new Point(81, 107);
 	public static final Point TAILLE_IMAGE_FOND = new Point(1280, 720);
 	
@@ -73,12 +73,12 @@ public class Noyau {
 		
 		ImageInformation ii = new ImageInformation(R.drawable.android_face, TAILLE_IMAGE_JOUEUR.x, TAILLE_IMAGE_JOUEUR.y);
 		Personnage johnDoe = new Personnage("John Doe", ii);
-		johnDoe.setPosition(DEBUG_POSITION_JOUEUR_1);
+		johnDoe.setPosition(new PointF(DEBUG_POSITION_JOUEUR_1));
 		
 		String pseudo = this.parametresApplication.getString(ActiviteParametres.PARAMETRE_PSEUDO_CLE, ActiviteParametres.PARAMETRE_PSEUDO_DEFAUT_2);
 		
 		Personnage tux = new Personnage(pseudo, ii);
-		tux.setPosition(DEBUG_POSITION_JOUEUR_2);
+		tux.setPosition(new PointF(DEBUG_POSITION_JOUEUR_2));
 		monde.addPersonnage(tux);
 		monde.addPersonnage(johnDoe);
 		
