@@ -91,10 +91,6 @@ public class ActiviteCreationPartieBluetoothServeur {
 					// On arrête le serveur de connexion Bluetooth
 					Log.v(TAG,"Arret du serveur de connexion Bluetooth");
 					activiteCreationPartieBluetooth.serveurConnexionBluetooth.fermetureConnexionsForce();
-					
-					// TODO le serveur doit dire aux clients qu'on commence à jouer !
-					
-					activiteCreationPartie.passerEtape3DepuisServeurBluetooth();
 				}
 			}
 		});

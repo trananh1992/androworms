@@ -1,23 +1,20 @@
 package com.androworms;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
-import com.androworms.R;
+import android.widget.Toast;
 
 /** Lors de la création d'une partie en Multi-joueur en Bluetooth,
  *  ce Thread est crée pour crée pour tourner et attendre les connexions clientes.
@@ -25,6 +22,9 @@ import com.androworms.R;
 public class TacheServeurConnexionBluetooth extends AsyncTask<Void, String, Boolean> {
 	
 	private static final String TAG = "Androworms.TacheServeurConnexionBluetooth";
+	
+	// Interface graphique
+	private ActiviteCreationPartie activiteCreationPartie;
 	
 	// On crée une socket Bluetooth pour le serveur lors de l'initalisation du jeu pour attendre les connexions clientes.
 	// Une fois que le jeu est démarré, on a plus besoin de cette socket (le serveur de connexion est fermé).
@@ -38,9 +38,7 @@ public class TacheServeurConnexionBluetooth extends AsyncTask<Void, String, Bool
 	private boolean fermetureConnexionsForce = false;
 	
 	public TacheServeurConnexionBluetooth(ActiviteCreationPartieBluetooth activiteCreationPartieBluetooth) {
-		ActiviteCreationPartie activiteCreationPartie = activiteCreationPartieBluetooth.getActiviteCreationPartie();
-		
-		Log.v(TAG, "Création de la socket publique");
+		activiteCreationPartie = activiteCreationPartieBluetooth.getActiviteCreationPartie();
 		
 		// Gestion de la liste des clients déjà connecté
 		listeClients = new ArrayList<String>();
@@ -55,7 +53,7 @@ public class TacheServeurConnexionBluetooth extends AsyncTask<Void, String, Bool
 			// Création de la socket avec le UUID (définit aléatoiremenet pour l'application)
 			socketServeur = BluetoothAdapter.getDefaultAdapter().listenUsingRfcommWithServiceRecord("Androworms", Contact.ANDROWORMS_UUID);
 		} catch (Exception e) {
-			Log.e(TAG, "Erreur sur la creation de la socket publique ");
+			Log.e(TAG, "Erreur sur la creation de la socket serveur");
 			Log.e(TAG, "\t"+e.getMessage());
 		}
 	}
@@ -66,30 +64,47 @@ public class TacheServeurConnexionBluetooth extends AsyncTask<Void, String, Bool
 		
 		while (!fermetureConnexionsForce) {
 			try {
+				// on attend des connexions de clients
 				socket = socketServeur.accept();
 				
-				if (socket.getRemoteDevice() != null) {
+				if (socket.getRemoteDevice() != null) { // FIXME : mieux gérer cette erreur
 					Log.v(TAG, "Le serveur a accepté une connexion ! (device=" + socket.getRemoteDevice().getName() + ")");
 				}
 				else {
 					Log.e(TAG,"Le serveur a accepté une connexion ! Mais ERREUR le device est est null");
 				}
 				
-				// On ajoute le client dans la liste sur l'interface du client
+				// On ajoute le client dans la liste sur l'interface du serveur
 				publishProgress(socket.getRemoteDevice().getName());
 				
 				// On ajoute la socket à la liste des sockets clients du serveur
 				ParametresPartie.getParametresPartie().addSocketsClients(socket);
 				
-				//manageConnectedSocket(socket);
+				// On envoi à tous les clients le nom du nouveau joueur
+				envoyerAuxClientsLeNomDuNouveauJoueur(socket.getRemoteDevice().getName());
+				
 			} catch (Exception e) {
 				if (fermetureConnexionsForce) {
 					// C'est un cas prévu et exceptionnelle de fermeture forcé du serveur de connexions Bluetooth
 					Log.v(TAG, "Fermeture forcé et controlé du serveur de connexions Bluetooth");
+					
+					// On communique avec les clients pour les informer qu'on passe à l'étape suivante
+					for (BluetoothSocket socket2 : ParametresPartie.getParametresPartie().getSocketsClients()) {
+						Bluetooth.envoyerObjet(socket2,true);
+						if (Bluetooth.recevoirTexte(socket2).equals("ACK")) {
+							Log.v(TAG,"ACK");
+						}
+						else {
+							// FIXME : mieux traiter cette erreu
+							// 1) relancer le client
+							// 2) supprimer le client
+							Log.e(TAG,"ERREUR --> !!");
+						}
+					}
 				} else {
 					// C'est un cas non prévu -> génération d'une exception
 					Log.e(TAG, "Erreur dans la reception d'une connexion cliente sur le ServeurConnexionBluetooth", e);
-					break;
+					return false;
 				}
 			}
 		}
@@ -104,6 +119,23 @@ public class TacheServeurConnexionBluetooth extends AsyncTask<Void, String, Bool
 		adaptateurListeClients.notifyDataSetChanged();
 	}
 	
+	@Override
+	protected void onPostExecute(Boolean result) {
+		Context context = activiteCreationPartie.getApplicationContext();
+		CharSequence text;
+		int duration = Toast.LENGTH_LONG;
+		
+		if (result) {
+			text = "Le serveur de connexion Bluetooth est fini : OK !";
+		} else {
+			text = "Le serveur de connexion Bluetooth est fini : ECHEC !";
+		}
+		Toast toast = Toast.makeText(context, text, duration);
+		toast.show();
+		
+		activiteCreationPartie.passerEtape3DepuisServeurBluetooth();
+	}
+	
 	/** On force la fermeture des connexions */
 	public void fermetureConnexionsForce() {
 		Log.v(TAG, "fermetureConnexionsForce()");
@@ -114,48 +146,24 @@ public class TacheServeurConnexionBluetooth extends AsyncTask<Void, String, Bool
 			// http://developer.android.com/reference/android/bluetooth/BluetoothServerSocket.html#accept()
 			socketServeur.close();
 		} catch (IOException e) {
-			
+			Log.e(TAG, "Erreur à l'arrêt du ServeurConnexionBluetooth");
+			Log.e(TAG, "\t"+e.getMessage());
 		}
 	}
 	
-	private void manageConnectedSocket(BluetoothSocket mmSocket) {
-		receiveMessage(mmSocket);
-		sendMessage(mmSocket);
-	}
-	
-	private void sendMessage(BluetoothSocket mmSocket) {
-		/* Plus d'informations sur le passage d'objet sérialisable : //http://stackoverflow.com/questions/2836646/java-serializable-object-to-byte-array */
-		try {
-			Log.v(TAG,"Je suis le SERVEUR et je vais envoyer un objet 'Personnage' !");
-			
-			OutputStream os = mmSocket.getOutputStream();
-			
-			Personnage p = new Personnage("Chuck Norris", new ImageInformation());
-			
-			ByteArrayOutputStream bos = new ByteArrayOutputStream();
-			ObjectOutputStream out = new ObjectOutputStream(bos);  
-			out.writeObject(p);
-			byte[] yourBytes = bos.toByteArray();
-			os.write(yourBytes);
-			out.close();
-			bos.close();
-		} catch (IOException e) {
-			Log.e(TAG, "Erreur dans l'envoi du message sur le Serveur Bluetooth", e);
-		}
-	}
-	
-	private void receiveMessage(BluetoothSocket mmSocket) {
-		try {
-			InputStream is = mmSocket.getInputStream();
-			
-			byte[] buffer = new byte[1024];
-			is.read(buffer);
-			
-			String messageRecu = new String(buffer);
-			Log.d(TAG, "MESSAGE RECU : " + messageRecu);
-			
-		} catch (IOException e) {
-			Log.e(TAG, "Erreur dans la reception du message sur le Serveur Bluetooth", e);
+	/** Quand le serveur reçoit une connexion d'un client, il envoie à tous ses autres clients, le nom du nouveau client */
+	private void envoyerAuxClientsLeNomDuNouveauJoueur(String nomNouveauJoueur) {
+		for (BluetoothSocket socket : ParametresPartie.getParametresPartie().getSocketsClients()) {
+			Bluetooth.envoyerObjet(socket,nomNouveauJoueur);
+			if (Bluetooth.recevoirTexte(socket).equals("OK")) {
+				Log.v(TAG,"OK");
+			}
+			else {
+				// FIXME : mieux traiter cette erreu
+				// 1) relancer le client
+				// 2) supprimer le client
+				Log.e(TAG,"ERREUR --> !!");
+			}
 		}
 	}
 }

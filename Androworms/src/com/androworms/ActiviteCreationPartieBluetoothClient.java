@@ -7,7 +7,6 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -17,13 +16,15 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.androworms.utile.Informations;
 
 public class ActiviteCreationPartieBluetoothClient {
 	
-	private static final String TAG = "Androworms.ActiviteCreationPartie";
+	private static final String TAG = "ActiviteCreationPartieBluetoothClient";
+	
 	private ActiviteCreationPartie activiteCreationPartie;
 	private ActiviteCreationPartieBluetooth activiteCreationPartieBluetooth;
 	
@@ -34,14 +35,10 @@ public class ActiviteCreationPartieBluetoothClient {
 	
 	/** Chargement de l'interface Bluetooth > Client **/
 	public void chargementInterfaceBluetoothClient() {
-		Log.v(TAG, "Chargement de l'interface : Bluetooth > Client");
-		
 		/** Définition des composants **/
 		ToggleButton tgEtatBluetooth = (ToggleButton)activiteCreationPartie.findViewById(R.id.tg_EtatBluetoothC);
 		final Button btnAnalyse = (Button)activiteCreationPartie.findViewById(R.id.btn_analyse);
 		final ListView lvAppareilsBluetooth = (ListView)activiteCreationPartie.findViewById(R.id.liste_appareils_bluetooth);
-		ProgressBar pbBluetoothAnalyse = (ProgressBar)activiteCreationPartie.findViewById(R.id.pb_bluetooth_analyse);
-		Button btnConnexion = (Button)activiteCreationPartie.findViewById(R.id.btn_connexion);
 		
 		/** Init des listes des appareils **/
 		activiteCreationPartieBluetooth.appareilJumele = new ArrayList<BluetoothDevice>();
@@ -89,24 +86,22 @@ public class ActiviteCreationPartieBluetoothClient {
 				activiteCreationPartieBluetooth.appareilProximite.clear();
 				ProgressBar pb = (ProgressBar)activiteCreationPartie.findViewById(R.id.pb_bluetooth_analyse);
 				pb.setVisibility(View.VISIBLE);
+				TextView tvMessage = (TextView)activiteCreationPartie.findViewById(R.id.tv_message);
+				tvMessage.setText("Recherche des appareils à proximité...");
 				
-				// Recherche des périphériques  visibles
-				Log.v(TAG,"Statut = " + ActiviteCreationPartieBluetooth.mBluetoothAdapter.getState());
+				// Si j'étais déjà en mode analyse, je stop l'analyse
 				if (ActiviteCreationPartieBluetooth.mBluetoothAdapter.isDiscovering()) {
 					ActiviteCreationPartieBluetooth.mBluetoothAdapter.cancelDiscovery();
-					Log.e(TAG,"J'étais isDiscovering() et maintenant j'ai fais cancelDiscovery()");
-					Log.e(TAG,"Ce n'est pas censé arriver !!");
 				}
 				
+				// Recherche des périphériques visibles
 				boolean res = ActiviteCreationPartieBluetooth.mBluetoothAdapter.startDiscovery();
 				if (!res) {
 					new AlertDialog.Builder(activiteCreationPartie).setTitle("Androworms").setMessage("Une erreur c'est produite. Contacter le 5556 pour avoir plus d'infos.").setNeutralButton("Close", null).show();
 				}
-				
-				
-				btnAnalyse.setEnabled(false);
 			}
 		});
+		
 		IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
 		activiteCreationPartie.registerReceiver(activiteCreationPartieBluetooth.mReceiver, filter);
 		filter = new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
@@ -117,31 +112,15 @@ public class ActiviteCreationPartieBluetoothClient {
 		lvAppareilsBluetooth.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 		lvAppareilsBluetooth.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parentView, View childView, int position, long id) {
-				Log.v(TAG,"selection de : "+lvAppareilsBluetooth.getItemAtPosition(position));
-				//activiteCreationPartieBluetooth.demarrerClientBluetooth((BluetoothDevice)lvAppareilsBluetooth.getItemAtPosition(position));
+				activiteCreationPartieBluetooth.demarrerClientBluetooth((BluetoothDevice)lvAppareilsBluetooth.getItemAtPosition(position));
 			}
 		});
-		
-		
-		/** On tente de se connecter au serveur */
-		btnConnexion.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				// TODO
-			}
-		});
-		
-		
-		
-		pbBluetoothAnalyse.setVisibility(View.INVISIBLE);
 	}
 	
 	/** Actualisation de l'interface Bluetooth > Client **/
 	public void actualisationInterfaceBluetoothClient() {
-		Log.v(TAG, "REFRESH de l'interface : Bluetooth > Client");
-		
 		/** Définition des composants **/
 		ToggleButton tgEtatBluetooth = (ToggleButton)activiteCreationPartie.findViewById(R.id.tg_EtatBluetoothC);
-		Button btnConnexion = (Button)activiteCreationPartie.findViewById(R.id.btn_connexion);
 		
 		/** Configuration des composants **/
 		// Désactivé si l'appareil est pas compatible Bluetooth :: TODO encore utile ??
@@ -153,6 +132,5 @@ public class ActiviteCreationPartieBluetoothClient {
 			activiteCreationPartieBluetooth.rafraichirListeAppareils();
 		}
 		
-		btnConnexion.setEnabled(false);
 	}
 }

@@ -6,13 +6,15 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/tv_titre_bluetooth_client"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/titre_multi_joueur"
-        android:textColor="#d515b8"
-        android:textStyle="bold" />
+        android:drawableLeft="@drawable/bluetooth_icon"
+        android:drawableRight="@drawable/ic_aide"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:text="@string/btn_rejoindre_partie"
+        android:textAppearance="?android:attr/textAppearanceLarge" >
+    </TextView>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,26 +25,14 @@
             android:id="@+id/tg_EtatBluetoothC"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/bluetooth_icon"
-            android:text="ToggleButton" />
+            android:drawableLeft="@drawable/bluetooth_icon" />
 
         <Button
             android:id="@+id/btn_analyse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/bluetooth_analyse"
-            android:text="Analyse" />
-
-        <ProgressBar
-            android:id="@+id/pb_bluetooth_analyse"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/tv_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="@string/analyse" />
 
     </LinearLayout>
 
@@ -52,18 +42,25 @@
         android:layout_height="0dip"
         android:layout_weight="1" >
     </ListView>
-	
-	<Button
-        android:id="@+id/btn_connexion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Connexion" />
-    
+
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:visibility="gone" >
+        android:layout_gravity="right" >
+
+        <ProgressBar
+            android:id="@+id/pb_bluetooth_analyse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/tv_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/selectionner_appareil_Bluetooth" />
 
         <Button
             android:id="@+id/btn_precedent"
@@ -75,8 +72,9 @@
             android:id="@+id/btn_suivant"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:enabled="false"
             android:text="@string/btn_suivant" />
 
-   	</LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

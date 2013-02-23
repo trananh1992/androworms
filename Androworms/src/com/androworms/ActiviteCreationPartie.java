@@ -126,6 +126,13 @@ public class ActiviteCreationPartie extends Activity {
 		setContentView(R.layout.activite_creation_partie_2_bluetooth_serveur);
 		/* Chargement des composants */
 		activiteCreationPartieBluetooth.chargementInterfaceBluetoothServeur();
+		
+		Button btnPrecedent = (Button)findViewById(R.id.btn_precedent);
+		btnPrecedent.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				etape1();
+			}
+		});
 	}
 	
 	private void etape2ModeBluetoothClient() {
@@ -134,6 +141,13 @@ public class ActiviteCreationPartie extends Activity {
 		setContentView(R.layout.activite_creation_partie_2_bluetooth_client);
 		/* Chargement des composants */
 		activiteCreationPartieBluetooth.chargementInterfaceBluetoothClient();
+		
+		Button btnPrecedent = (Button)findViewById(R.id.btn_precedent);
+		btnPrecedent.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				etape1();
+			}
+		});
 	}
 	
 	private void etape2ModeWifiServeur() {

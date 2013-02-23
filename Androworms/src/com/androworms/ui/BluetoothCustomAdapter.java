@@ -38,6 +38,7 @@ public class BluetoothCustomAdapter extends BaseAdapter {
 	private final ArrayAdapter<String> empty;
 	
 	// Type des éléments dans la liste
+	private static final int NOMBRE_TYPE_OBJETS = 3;
 	private static final int TYPE_TITRE_SECTION = 0;
 	private static final int TYPE_ELEMENT = 1;
 	private static final int TYPE_MESSAGE_SECTION_VIDE = 2;
@@ -98,7 +99,7 @@ public class BluetoothCustomAdapter extends BaseAdapter {
 	/** On veux savoir le nombre de type d'élément différent il y a dans la liste */
 	@Override
 	public int getViewTypeCount() {
-		return 3;
+		return NOMBRE_TYPE_OBJETS;
 	}
 	
 	/** La liste est-elle vide ? */

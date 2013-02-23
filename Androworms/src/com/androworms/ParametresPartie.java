@@ -64,18 +64,22 @@ public class ParametresPartie {
 		return parametres;
 	}
 	
+	/** Savoir le mode de jeu */
 	public int getModeJeu() {
 		return modeJeu;
 	}
-
+	
+	/** Définir le mode de jeu */
 	public void setModeJeu(int modeJeu) {
 		this.modeJeu = modeJeu;
 	}
-
+	
+	/** Savoir si c'est une carte personnalisé ou une carte par défaut */
 	public boolean isEstCartePerso() {
 		return estCartePerso;
 	}
-
+	
+	/** Définir si c'est une carte personnalisé ou une carte par défaut */
 	public void setEstCartePerso(boolean estCartePerso) {
 		this.estCartePerso = estCartePerso;
 	}
