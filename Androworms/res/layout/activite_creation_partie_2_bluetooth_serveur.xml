@@ -1,127 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+	
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/bluetooth_icon"
+        android:drawableRight="@drawable/ic_aide"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:text="@string/btn_creation_partie"
+        android:textAppearance="?android:attr/textAppearanceLarge" >
+    </TextView>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
 
-       
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/titre_multi_joueur"
-            android:textColor="#d515b8"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
-
-            <ToggleButton
-                android:id="@+id/tg_EtatBluetoothS"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/bluetooth_icon"
-                android:text="ToggleButton" />
-
-            <Button
-                android:id="@+id/btn_MontrerBluetooth"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/bluetooth_visible"
-                android:text="Montrer Bluetooth" />
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tv_monNomBluetooth"
+        <ToggleButton
+            android:id="@+id/tg_EtatBluetoothS"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:drawableLeft="@drawable/bluetooth_icon" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:id="@+id/tv_maVisibilite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView" />
-
-            <ProgressBar
-                android:id="@+id/pb_Minuteur"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:max="100" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <ProgressBar
-                android:id="@+id/pb_AttenteConnexion"
-                style="?android:attr/progressBarStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/tv_AttenteConnexion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Attente de connexion" />
-        </LinearLayout>
-
-        <ListView
-            android:id="@+id/liste_appareils_bluetoothS"
-            android:layout_width="match_parent"
-            android:layout_height="0dip"
-            android:layout_weight="1" >
-
-        </ListView>
-		
-		<Button
-            android:id="@+id/btn_demarrerPartie"
-            android:layout_width="match_parent"
-      	  	android:layout_height="wrap_content"
-            android:text="Démarrer la partie" />
-        
-        <LinearLayout
+        <Button
+            android:id="@+id/btn_MontrerBluetooth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:visibility="gone" >
-
-	        <Button
-	            android:id="@+id/btn_precedent"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="@string/btn_precedent" />
-	
-	        <Button
-	            android:id="@+id/btn_suivant"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="@string/btn_suivant" />
-
-    	</LinearLayout>
+            android:drawableLeft="@drawable/bluetooth_visible"
+            android:text="@string/montrer_bluetooth" />
 
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tv_information"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:gravity="center"
+        android:id="@+id/tv_monNomBluetooth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="TextView" />
-	
-</RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/tv_maVisibilite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+
+        <ProgressBar
+            android:id="@+id/pb_Minuteur"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/liste_appareils_bluetoothS"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1" >
+    </ListView>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right" >
+
+        <ProgressBar
+            android:id="@+id/pb_AttenteConnexion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/tv_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/attente_connexion" />
+
+        <Button
+            android:id="@+id/btn_precedent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_precedent" />
+
+        <Button
+            android:id="@+id/btn_suivant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:text="@string/btn_suivant" />
+
+    </LinearLayout>
+
+</LinearLayout>

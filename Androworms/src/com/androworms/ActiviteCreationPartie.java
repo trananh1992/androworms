@@ -98,13 +98,14 @@ public class ActiviteCreationPartie extends Activity {
 		/* Affichage de la vue */
 		setContentView(R.layout.activite_creation_partie_2_solo);
 		
+		/* Bouton "Précédent" */
 		Button btnPrecedent = (Button)findViewById(R.id.btn_precedent);
 		btnPrecedent.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				etape1();
 			}
 		});
-		
+		/* Bouton "Suivant" */
 		Button btnSuivant = (Button)findViewById(R.id.btn_suivant);
 		btnSuivant.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -127,6 +128,7 @@ public class ActiviteCreationPartie extends Activity {
 		/* Chargement des composants */
 		activiteCreationPartieBluetooth.chargementInterfaceBluetoothServeur();
 		
+		/* Bouton "Précédent" */
 		Button btnPrecedent = (Button)findViewById(R.id.btn_precedent);
 		btnPrecedent.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -142,6 +144,7 @@ public class ActiviteCreationPartie extends Activity {
 		/* Chargement des composants */
 		activiteCreationPartieBluetooth.chargementInterfaceBluetoothClient();
 		
+		/* Bouton "Précédent" */
 		Button btnPrecedent = (Button)findViewById(R.id.btn_precedent);
 		btnPrecedent.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -167,13 +170,14 @@ public class ActiviteCreationPartie extends Activity {
 		ParametresPartie.getParametresPartie().setEstCartePerso(false);
 		ParametresPartie.getParametresPartie().setNomCarte("terrain_jeu_defaut_1.png");
 		
+		/* Bouton "Précédent" */
 		Button btnPrecedent = (Button)findViewById(R.id.btn_precedent);
 		btnPrecedent.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				etape2();
 			}
 		});
-		
+		/* Bouton "Suivant" */
 		Button btnSuivant = (Button)findViewById(R.id.btn_suivant);
 		btnSuivant.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -185,6 +189,7 @@ public class ActiviteCreationPartie extends Activity {
 	private void etape4() {
 		setContentView(R.layout.activite_creation_partie_4);
 		
+		/* Bouton "Précédent" */
 		Button btnPrecedent = (Button)findViewById(R.id.btn_precedent);
 		btnPrecedent.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -192,6 +197,7 @@ public class ActiviteCreationPartie extends Activity {
 			}
 		});
 		
+		/* Bouton "Démarrer la partie" */
 		Button btnDemarrerPartie = (Button)findViewById(R.id.btn_demarrer_la_partie);
 		btnDemarrerPartie.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {

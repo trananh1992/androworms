@@ -1,6 +1,8 @@
 package com.androworms;
 
+import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
@@ -32,8 +34,8 @@ public class ActiviteCreationPartieBluetoothServeur {
 		
 		// Définition des composants
 		ToggleButton tgEtatBluetooth = (ToggleButton)activiteCreationPartie.findViewById(R.id.tg_EtatBluetoothS);
-		Button btnDemarrerPartie = (Button)activiteCreationPartie.findViewById(R.id.btn_demarrerPartie);
 		Button btnMontrerBluetooth = (Button)activiteCreationPartie.findViewById(R.id.btn_MontrerBluetooth);
+		Button btnSuivant = (Button)activiteCreationPartie.findViewById(R.id.btn_suivant);
 		
 		// Actualisation des éléments de l'interface graphique du Serveur
 		actualisationInterfaceBluetoothServeur();
@@ -82,15 +84,30 @@ public class ActiviteCreationPartieBluetoothServeur {
 		});
 		
 		/* On démarrer la partie */
-		btnDemarrerPartie.setOnClickListener(new OnClickListener() {
+		btnSuivant.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				Log.v(TAG,"On démarre la partie ?");
 				if (activiteCreationPartieBluetooth.serveurConnexionBluetooth == null) {
 					Log.v(TAG,"Vous n'avez jamais lancer le serveur");
 				} else {
-					// On arrête le serveur de connexion Bluetooth
-					Log.v(TAG,"Arret du serveur de connexion Bluetooth");
-					activiteCreationPartieBluetooth.serveurConnexionBluetooth.fermetureConnexionsForce();
+					
+					AlertDialog.Builder builder = new AlertDialog.Builder(activiteCreationPartie);
+					builder.setMessage("Tous les joueurs sont arrivé ?");
+					builder.setCancelable(false);
+					builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							// On arrête le serveur de connexion Bluetooth
+							Log.v(TAG,"Arret du serveur de connexion Bluetooth");
+							activiteCreationPartieBluetooth.serveurConnexionBluetooth.fermetureConnexionsForce();
+						}
+					});
+					builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							dialog.cancel();
+						}
+					});
+					AlertDialog alert = builder.create();
+					alert.show();
 				}
 			}
 		});
@@ -109,11 +126,10 @@ public class ActiviteCreationPartieBluetoothServeur {
 		ToggleButton tgEtatBluetooth = (ToggleButton)activiteCreationPartie.findViewById(R.id.tg_EtatBluetoothS);
 		TextView tvMonNomBluetooth = (TextView)activiteCreationPartie.findViewById(R.id.tv_monNomBluetooth);
 		TextView tvMaVisibilite = (TextView)activiteCreationPartie.findViewById(R.id.tv_maVisibilite);
-		TextView tvInformation = (TextView)activiteCreationPartie.findViewById(R.id.tv_information);
+		TextView tvInformation = (TextView)activiteCreationPartie.findViewById(R.id.tv_message);
 		Button btnMontrerBluetooth = (Button)activiteCreationPartie.findViewById(R.id.btn_MontrerBluetooth);
 		ProgressBar pbMinuteur = (ProgressBar)activiteCreationPartie.findViewById(R.id.pb_Minuteur);
 		ProgressBar pbAttenteConnexion = (ProgressBar)activiteCreationPartie.findViewById(R.id.pb_AttenteConnexion);
-		TextView tvAttenteConnexion = (TextView)activiteCreationPartie.findViewById(R.id.tv_AttenteConnexion);
 		
 		/** Configuration des composants **/
 		// Désactivé si l'appareil est pas compatible Bluetooth :: TODO encore utile ??
@@ -136,7 +152,6 @@ public class ActiviteCreationPartieBluetoothServeur {
 			tvMaVisibilite.setVisibility(View.INVISIBLE);
 			pbMinuteur.setVisibility(View.INVISIBLE);
 			pbAttenteConnexion.setVisibility(View.INVISIBLE);
-			tvAttenteConnexion.setVisibility(View.INVISIBLE);
 			
 		} else {
 			// Le Bluetooth est actif
@@ -160,11 +175,6 @@ public class ActiviteCreationPartieBluetoothServeur {
 			pbMinuteur.setVisibility(View.INVISIBLE);
 			
 			pbAttenteConnexion.setVisibility(View.VISIBLE);
-			tvAttenteConnexion.setVisibility(View.VISIBLE);
-			
-			
-			// Elements masqués
-			tvInformation.setVisibility(View.INVISIBLE);
 		}
 	}
 }
