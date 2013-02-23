@@ -33,16 +33,15 @@ public class BluetoothCustomAdapter extends BaseAdapter {
 	
 	public static final String TAG = "BluetoothCustomAdapter";
 	
-	public final Map<String, Adapter> sections = new LinkedHashMap<String, Adapter>();
-	public final ArrayAdapter<String> titres;
-	public final ArrayAdapter<String> empty;
+	private final Map<String, Adapter> sections = new LinkedHashMap<String, Adapter>();
+	private final ArrayAdapter<String> titres;
+	private final ArrayAdapter<String> empty;
 	
 	// Type des éléments dans la liste
-	public static final int TYPE_TITRE_SECTION = 0;
-	public static final int TYPE_ELEMENT = 1;
-	public static final int TYPE_MESSAGE_SECTION_VIDE = 2;
+	private static final int TYPE_TITRE_SECTION = 0;
+	private static final int TYPE_ELEMENT = 1;
+	private static final int TYPE_MESSAGE_SECTION_VIDE = 2;
 	
-
 	public BluetoothCustomAdapter(Context context) {
 		// On crée une liste contenant les titres de sections
 		titres = new ArrayAdapter<String>(context, R.layout.liste_bluetooth_titre_section);
