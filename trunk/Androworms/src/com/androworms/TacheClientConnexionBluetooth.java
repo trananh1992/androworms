@@ -123,12 +123,10 @@ public class TacheClientConnexionBluetooth extends AsyncTask<Void, Integer, Bool
 			lvAppareilsBluetooth.setAdapter(adapter);
 			
 			
-			
-			
-			
 			pbBluetoothAnalyse.setVisibility(View.INVISIBLE);
 			break;
 		case 2:
+			// Je rafraichit la liste des noms des joueurs
 			adapter.notifyDataSetChanged();
 			break;
 		default:
