@@ -83,43 +83,6 @@ public class ActiviteCreationPartieBluetooth {
 	}
 	
 	
-	/** Pour chercher les appareils Bluetooth à proximité */
-	public final BroadcastReceiver mReceiver = new BroadcastReceiver() {
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			String action = intent.getAction();
-			
-			// Quand l'analyse permet de découvrir un appareil
-			if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-				// On récupère l'objet BluetoothDevice depuis l'intent
-				BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-				Log.v(TAG,"j'ai trouvé un appareil du nom de "+device.getName()+" ("+device.getAddress()+")");
-				
-				// On regarde si on est jumélé avec cette appareil
-				if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
-					// TODO : éventuellement mettre cette appreil en tête de liste.
-					//        1) C'est comme ça que fait le système Android
-					//        2) Statistiquement, un appareil jumélée et Bluetooth-proximité a de fortes chances d'être un joueur potentielle
-					appareilProximite.add(device);
-					Log.v(TAG,"...en plus je l'avais pas encore !");
-				} else {
-					Log.v(TAG,"...en fait, je l'avais déjà !");
-				}
-				
-				activiteCreationPartieBluetoothClient.actualisationInterfaceBluetoothClient();
-			} else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
-				// TODO : si aucun element : afficher "pas d'appareil à proximité"
-				
-				ProgressBar pbBluetoothAnalyse = (ProgressBar)activiteCreationPartie.findViewById(R.id.pb_bluetooth_analyse);
-				pbBluetoothAnalyse.setVisibility(View.INVISIBLE);
-				
-				Button btnAnalyse = (Button)activiteCreationPartie.findViewById(R.id.btn_analyse);
-				btnAnalyse.setEnabled(true);
-			}
-		}
-	};
-	
-	
 	/** Démarrage du serveur Bluetooth */
 	public void demarrerServeurBluetooth() {
 		Log.d(TAG, "DEMARAGE DU SERVEUR BLUETOOTH");
@@ -133,9 +96,11 @@ public class ActiviteCreationPartieBluetooth {
 		
 		// Elements de l'interface
 		ProgressBar pbBluetoothAnalyse = (ProgressBar)activiteCreationPartie.findViewById(R.id.pb_bluetooth_analyse);
+		TextView tvMessage = (TextView)activiteCreationPartie.findViewById(R.id.tv_message);
 		
 		// On actualise l'interface graphique du client
 		pbBluetoothAnalyse.setVisibility(View.VISIBLE);
+		tvMessage.setText("Tentative de connexion en cours...");
 		
 		clientConnexionBluetooth = new TacheClientConnexionBluetooth(this, device);
 		clientConnexionBluetooth.execute();
@@ -201,6 +166,44 @@ public class ActiviteCreationPartieBluetooth {
 		}
 	}
 	
+	/** Pour chercher les appareils Bluetooth à proximité */
+	public final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			String action = intent.getAction();
+			
+			// Quand l'analyse permet de découvrir un appareil
+			if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+				// On récupère l'objet BluetoothDevice depuis l'intent
+				BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+				Log.v(TAG,"j'ai trouvé un appareil du nom de "+device.getName()+" ("+device.getAddress()+")");
+				
+				// On regarde si on est jumélé avec cette appareil
+				if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
+					// TODO : éventuellement mettre cette appreil en tête de liste.
+					//        1) C'est comme ça que fait le système Android
+					//        2) Statistiquement, un appareil jumélée et Bluetooth-proximité a de fortes chances d'être un joueur potentielle
+					appareilProximite.add(device);
+					Log.v(TAG,"...en plus je l'avais pas encore !");
+				} else {
+					Log.v(TAG,"...en fait, je l'avais déjà !");
+				}
+				
+				activiteCreationPartieBluetoothClient.actualisationInterfaceBluetoothClient();
+			} else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
+				// TODO : si aucun element : afficher "pas d'appareil à proximité"
+				
+				ProgressBar pbBluetoothAnalyse = (ProgressBar)activiteCreationPartie.findViewById(R.id.pb_bluetooth_analyse);
+				pbBluetoothAnalyse.setVisibility(View.INVISIBLE);
+				
+				Button btnAnalyse = (Button)activiteCreationPartie.findViewById(R.id.btn_analyse);
+				btnAnalyse.setEnabled(true);
+				
+				TextView tvMessage = (TextView)activiteCreationPartie.findViewById(R.id.tv_message);
+				tvMessage.setText(R.string.selectionner_appareil_Bluetooth);
+			}
+		}
+	};
 	
 	
 	/** Actualisation de l'affichage du minuteur */
@@ -246,8 +249,9 @@ public class ActiviteCreationPartieBluetooth {
 		}
 		
 		// FIXME : j'ai pas compris les paramètres 2 et 3 du ArrayAdapter
-		adapterA = new ArrayAdapter<BluetoothDevice>(activiteCreationPartie, android.R.layout.simple_list_item_1, android.R.id.text1, valuesA);
-		adapterB = new ArrayAdapter<BluetoothDevice>(activiteCreationPartie, android.R.layout.simple_list_item_1, android.R.id.text1, valuesB);
+		// android.R.layout.simple_list_item_checked       simple_list_item_activated_1
+		adapterA = new ArrayAdapter<BluetoothDevice>(activiteCreationPartie, android.R.layout.simple_list_item_checked, valuesA);
+		adapterB = new ArrayAdapter<BluetoothDevice>(activiteCreationPartie, android.R.layout.simple_list_item_checked, valuesB);
 		
 		BluetoothCustomAdapter adapter = new BluetoothCustomAdapter(activiteCreationPartie);
 		
@@ -290,6 +294,4 @@ public class ActiviteCreationPartieBluetooth {
 			ch.cancel(true);
 		}
 	}
-
-	
 }

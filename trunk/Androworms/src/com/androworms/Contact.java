@@ -64,4 +64,9 @@ public abstract class Contact {
 	public void connect() {
 		
 	}
+	
+	/*public abstract void envoyerTexte(BluetoothSocket socket, String texte);
+	public abstract String recevoirTexte(BluetoothSocket socket);
+	public abstract void envoyerObjet(BluetoothSocket socket, Object obj);
+	public abstract Object recevoirObjet(BluetoothSocket socket);*/
 }
