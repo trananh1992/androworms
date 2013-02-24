@@ -83,7 +83,7 @@ public class TacheClientConnexionBluetooth extends AsyncTask<Void, Integer, Bool
 				}
 			}
 			// je répond ACK au serveur
-			Bluetooth.envoyerTexte(socketServeur,"ACK");
+			Bluetooth.envoyerTexte(socketServeur, "ACK");
 			// On affiche le nouveau nom dans la liste
 			publishProgress(2);
 		}
@@ -98,7 +98,8 @@ public class TacheClientConnexionBluetooth extends AsyncTask<Void, Integer, Bool
 		ProgressBar pbBluetoothAnalyse = (ProgressBar)activiteCreationPartie.findViewById(R.id.pb_bluetooth_analyse);
 		
 		switch (code[0]) {
-		case -1: // Erreur de connexion
+		case -1:
+			// Erreur de connexion
 			Context context = activiteCreationPartie.getApplicationContext();
 			CharSequence text = "Echec à la connexion.";
 			int duration = Toast.LENGTH_LONG;
