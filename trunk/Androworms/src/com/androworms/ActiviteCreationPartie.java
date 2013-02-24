@@ -14,6 +14,7 @@ public class ActiviteCreationPartie extends Activity {
 	
 	private static final String TAG = "Androworms.ActiviteCreationPartie";
 	private ActiviteCreationPartieBluetooth activiteCreationPartieBluetooth;
+	private int etape = 0;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,8 @@ public class ActiviteCreationPartie extends Activity {
 	}
 	
 	private void etape1() {
+		etape = 1;
+		
 		setContentView(R.layout.activite_creation_partie_1_mode);
 		
 		Button btnPartieSolo = (Button)findViewById(R.id.btn_partie_solo);
@@ -70,6 +73,8 @@ public class ActiviteCreationPartie extends Activity {
 	}
 	
 	private void etape2() {
+		etape = 2;
+		
 		switch (ParametresPartie.getParametresPartie().getModeJeu()) {
 		case ParametresPartie.MODE_SOLO:
 			etape2ModeSolo();
@@ -164,6 +169,7 @@ public class ActiviteCreationPartie extends Activity {
 	}
 	
 	private void etape3() {
+		etape = 3;
 		/* Affichage de la vue */
 		setContentView(R.layout.activite_creation_partie_3);
 		
@@ -223,6 +229,42 @@ public class ActiviteCreationPartie extends Activity {
 				|| ParametresPartie.getParametresPartie().getModeJeu() == ParametresPartie.MODE_BLUETOOTH_CLIENT) {
 			// Destroy des éléments du Bluetooth
 			activiteCreationPartieBluetooth.onDestroy();
+		}
+	}
+	
+	@Override
+	public void onBackPressed() {
+		Log.v(TAG, "Etape : "+etape);
+		switch(etape) {
+		case 1:
+			// Marche aussi si on précise pas "finish()"
+			finish();
+			break;
+		case 2:
+			switch (ParametresPartie.getParametresPartie().getModeJeu()) {
+			case ParametresPartie.MODE_SOLO:
+			case ParametresPartie.MODE_2JOUEURS:
+				etape1();
+				break;
+			case ParametresPartie.MODE_BLUETOOTH_SERVEUR:
+				// TODO
+				break;
+			case ParametresPartie.MODE_BLUETOOTH_CLIENT:
+				// TODO
+				break;
+			default:
+				break;
+			}
+			break;
+		case 3:
+			// TODO
+			break;
+		case 4:
+			//TODO : en cas de partie BLuetooth
+			etape3();
+			break;
+		default :
+			break;
 		}
 	}
 	
