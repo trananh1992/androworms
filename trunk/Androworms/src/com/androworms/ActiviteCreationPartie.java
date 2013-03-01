@@ -1,14 +1,24 @@
 package com.androworms;
 
+import java.io.File;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.SeekBar;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 public class ActiviteCreationPartie extends Activity {
 	
@@ -173,17 +183,37 @@ public class ActiviteCreationPartie extends Activity {
 		/* Affichage de la vue */
 		setContentView(R.layout.activite_creation_partie_3);
 		
-		ParametresPartie.getParametresPartie().setEstCartePerso(false);
-		ParametresPartie.getParametresPartie().setNomCarte("terrain_jeu_defaut_1.png");
+		File root = Environment.getExternalStorageDirectory();
+		File sd = new File(root,"Androworms");
 		
-		/* Bouton "Précédent" */
+		//gets a list of the files
+		File[] sdDirList = sd.listFiles(); 
+		ListView mapChooser = (ListView)findViewById(R.id.mapChooser);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.text_view_spinner);
+		int i = 0;
+		if (sdDirList != null) {
+			for(i=0;i<sdDirList.length;i++) {
+				Log.e("test","adding item");
+				adapter.add(sdDirList[i].getName());
+				Log.e("test","added item "+sdDirList[i].getName());
+			}
+		}
+		adapter.notifyDataSetChanged();
+		mapChooser.setAdapter(adapter);		
+		mapChooser.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+				afficheCarte((String)arg0.getAdapter().getItem(position));
+			}
+		});
+
 		Button btnPrecedent = (Button)findViewById(R.id.btn_precedent);
 		btnPrecedent.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				etape2();
 			}
 		});
-		/* Bouton "Suivant" */
+		
 		Button btnSuivant = (Button)findViewById(R.id.btn_suivant);
 		btnSuivant.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -209,6 +239,7 @@ public class ActiviteCreationPartie extends Activity {
 			public void onClick(View v) {
 				Intent intent = new Intent(ActiviteCreationPartie.this, ActiviteJeu.class);
 				startActivity(intent);
+				
 				/* On arrête l'application comme ça quand on sera sur la partie de jeu et qu'on fait la flèche de "retour à l'activité précédente",
 				   on arrivera sur le menu principal */
 				finish();
@@ -216,6 +247,16 @@ public class ActiviteCreationPartie extends Activity {
 		});
 	}
 	
+	private void afficheCarte(String map) {
+		ParametresPartie.getParametresPartie().setNomCarte(map);	
+		ImageView v = (ImageView)findViewById(R.id.chosen_map);
+		File root = Environment.getExternalStorageDirectory();
+		File sd = new File(root,"Androworms/"+map);
+		Bitmap b = BitmapFactory.decodeFile(sd.getAbsolutePath());
+		Bitmap thumbnail = Bitmap.createScaledBitmap(b, 300, 200, false);
+		v.setImageBitmap(thumbnail);
+	}
+
 	@Override
 	public void onStop() {
 		super.onStop();

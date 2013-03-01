@@ -9,17 +9,45 @@
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
         android:text="@string/titre_choix_carte"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textStyle="bold" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+		<RelativeLayout
+		    android:layout_width="match_parent"
+		    android:layout_height="200dp" >
+	
+	        <ListView
+	            android:id="@+id/mapChooser"
+	            android:layout_width="200dp"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentBottom="true"
+	            android:layout_alignParentLeft="true"
+	            android:layout_alignParentTop="true" 
+	            android:paddingLeft="20dp">
+
+	        </ListView>
+
+	        <ImageView
+	            android:id="@+id/chosen_map"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentBottom="true"
+	            android:layout_alignParentRight="true"
+	            android:layout_alignParentTop="true"
+	            android:layout_toRightOf="@+id/mapChooser"
+	            android:contentDescription="@+id/chosen_map" 
+	            android:paddingRight="20dp"/>
+
+	</RelativeLayout>
+	
+	<LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="right" >
-
-        <Button
+	 	<Button
             android:id="@+id/btn_precedent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/btn_suivant" />
-
-    </LinearLayout>
+	</LinearLayout>
 
 </LinearLayout>
+
