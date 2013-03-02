@@ -77,10 +77,10 @@ public class ActiviteEditeurCarte extends Activity implements OnClickListener,On
 	private void saveMap(String name) {
 		final int compression = 100;
 		File root = Environment.getExternalStorageDirectory();
-		File androworms = new File(root,"Androworms");
+		File fichierCarte = new File(root, ActiviteAndroworms.DOSSIER_CARTE);
 		boolean status = true;
-		if (!androworms.exists()) {
-			status = androworms.mkdir();
+		if (!fichierCarte.exists()) {
+			status = fichierCarte.mkdir();
 		}
 		
 		/* échec lors de la création du dossier */
@@ -90,7 +90,7 @@ public class ActiviteEditeurCarte extends Activity implements OnClickListener,On
 		}
 		
 		/* création du path complet vers la photo */
-		File photoPath = new File(androworms,name);
+		File photoPath = new File(fichierCarte,name);
 		/* sauvegarde de la photo */
 		FileOutputStream filoutputStream;
 		try {
@@ -132,13 +132,13 @@ public class ActiviteEditeurCarte extends Activity implements OnClickListener,On
 			{
 				AlertDialog.Builder dlg = new AlertDialog.Builder(this);
 				
-				dlg.setTitle("Save current map ?");
-				dlg.setMessage("Type map name:");
+				dlg.setTitle(R.string.sauvegarder_carte);
+				dlg.setMessage(R.string.nom_carte);
 				
 				final EditText edit = new EditText(this);
 				edit.setSingleLine();
 				dlg.setView(edit);
-				dlg.setNegativeButton("No", new DialogInterface.OnClickListener() {
+				dlg.setNegativeButton(R.string.non, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
 						/* Création de l'intent pour passer à l'activité parent l'endroit où est la photo*/
 						Intent i = new Intent();
@@ -148,7 +148,7 @@ public class ActiviteEditeurCarte extends Activity implements OnClickListener,On
 					}
 				});
 				
-				dlg.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+				dlg.setPositiveButton(R.string.oui, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
 						String value = edit.getText().toString();
 						/* on crée le dossier pour stocker la photo */

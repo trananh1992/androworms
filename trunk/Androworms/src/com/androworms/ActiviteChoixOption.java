@@ -29,7 +29,7 @@ public class ActiviteChoixOption extends Activity {
 		setContentView(R.layout.choix_options);
 		
 		File root = Environment.getExternalStorageDirectory();
-		File sd = new File(root,"Androworms");
+		File sd = new File(root, ActiviteAndroworms.DOSSIER_CARTE);
 		
 		//gets a list of the files
 		File[] sdDirList = sd.listFiles(); 
@@ -78,7 +78,7 @@ public class ActiviteChoixOption extends Activity {
 		carte = map;
 		ImageView v = (ImageView)findViewById(R.id.chosen_map);
 		File root = Environment.getExternalStorageDirectory();
-		File sd = new File(root,"Androworms/"+map);
+		File sd = new File(root, ActiviteAndroworms.DOSSIER_CARTE + map);
 		Bitmap b = BitmapFactory.decodeFile(sd.getAbsolutePath());
 		Bitmap thumbnail = Bitmap.createScaledBitmap(b, 300, 200, false);
 		v.setImageBitmap(thumbnail);

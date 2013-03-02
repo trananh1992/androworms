@@ -18,6 +18,9 @@ public class ActiviteAndroworms extends Activity {
 	private static final String TAG = "Androworms.ActiviteAndroworms";
 	private static final String RETOUR_LIGNE_HTML = "<br/>";
 	
+	// Nom du dossier crée à la racine du téléphone pour stocker les cartes perso
+	public static final String DOSSIER_CARTE = "Androworms/";
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

@@ -18,7 +18,6 @@
     <string name="joueur1">Joueur 1</string>
     <string name="joueur2">Joueur 2</string>
     <string name="informations">Informations</string>
-    <string name="OK">OK</string>
     <string name="score_joueur_1">Joueur 1 : 0 pts</string>
     <string name="score_joueur_2">Joueur 2 : 0 pts</string>
     <string name="Armes">Armes</string>
@@ -72,5 +71,11 @@
     <string name="choix_difficulte_IA">Choix de la difficulté de l\'IA :</string>
     <string name="jouer_bluetooth">Jouer en Bluetooth</string>
     <string name="jouer_wifi_direct">Jouer en Wifi Direct</string>
+    <string name="sauvegarder_carte">Sauvegarder la carte ?</string>
+    <string name="nom_carte">Nom de la carte :</string>
+    <string name="oui">Oui</string>
+    <string name="non">Non</string>
+    <string name="annuler">Annuler</string>
+    <string name="ok">OK</string>
     
 </resources>
