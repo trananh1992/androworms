@@ -88,14 +88,14 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 		}
 	};
 	/** Fonction appelée en cas d'appuie sur le bouton de photo */
-	private void takeThePicture () {
+	private void takeThePicture() {
 		try {
 			/* on crée le dossier pour stocker la photo */
 			File root = Environment.getExternalStorageDirectory();
-			File androworms = new File(root,"Androworms");
+			File fichierPhoto = new File(root, ActiviteAndroworms.DOSSIER_CARTE);
 			boolean status = true;
-			if (!androworms.exists()) {
-				status = androworms.mkdir();
+			if (!fichierPhoto.exists()) {
+				status = fichierPhoto.mkdir();
 			}
 			
 			/* échec lors de la création du dossier */
@@ -105,11 +105,11 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 			}
 			
 			/* création du path complet vers la photo */
-			photoPath = new File(androworms,"maPhoto.jpg");
+			photoPath = new File(fichierPhoto,"maPhoto.jpg");
 			
 			/* lancement de la capture de la photo */
 			camera.takePicture(mShutterCallback, null, mPictureCallbackJpeg);
-		} catch(Exception ex ){
+		} catch(Exception ex ) {
 			Log.e(getClass().getSimpleName(), ex.getMessage(), ex);
 		}
 	}

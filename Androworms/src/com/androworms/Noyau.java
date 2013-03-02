@@ -85,7 +85,7 @@ public class Noyau {
 		if (paramEstCartePerso != null && paramNomCarte != null) {
 			if (paramEstCartePerso) {
 				File root = Environment.getExternalStorageDirectory();
-				File sd = new File(root, "Androworms/" + paramNomCarte);
+				File sd = new File(root, ActiviteAndroworms.DOSSIER_CARTE + paramNomCarte);
 				Bitmap b = BitmapFactory.decodeFile(sd.getAbsolutePath());
 				monde.setTerrain(b, TAILLE_IMAGE_FOND.x, TAILLE_IMAGE_FOND.y);
 			}

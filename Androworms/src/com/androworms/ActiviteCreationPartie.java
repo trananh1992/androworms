@@ -166,7 +166,7 @@ public class ActiviteCreationPartie extends Activity {
 	
 	private void etape2ModeDeuxjoueurs() {
 		// Non disponible pour le moment
-		new AlertDialog.Builder(this).setTitle("Androworms").setMessage("Les parties 2 joueurs ne sont pas encore dispo !").setNeutralButton("Close", null).show();
+		new AlertDialog.Builder(this).setTitle(R.string.app_name).setMessage("Les parties 2 joueurs ne sont pas encore dispo !").setNeutralButton("Close", null).show();
 	}
 	
 	private void etape2ModeBluetoothServeur() {
@@ -203,12 +203,12 @@ public class ActiviteCreationPartie extends Activity {
 	
 	private void etape2ModeWifiServeur() {
 		// Non disponible pour le moment
-		new AlertDialog.Builder(this).setTitle("Androworms").setMessage("Les parties en Wifi-Direct ne sont pas encore dispo !").setNeutralButton("Close", null).show();
+		new AlertDialog.Builder(this).setTitle(R.string.app_name).setMessage("Les parties en Wifi-Direct ne sont pas encore dispo !").setNeutralButton("Close", null).show();
 	}
 	
 	private void etape2ModeWifiClient() {
 		// Non disponible pour le moment
-		new AlertDialog.Builder(this).setTitle("Androworms").setMessage("Les parties en Wifi-Direct ne sont pas encore dispo !").setNeutralButton("Close", null).show();
+		new AlertDialog.Builder(this).setTitle(R.string.app_name).setMessage("Les parties en Wifi-Direct ne sont pas encore dispo !").setNeutralButton("Close", null).show();
 	}
 	
 	private void etape3() {
@@ -217,7 +217,7 @@ public class ActiviteCreationPartie extends Activity {
 		setContentView(R.layout.activite_creation_partie_3);
 		
 		File root = Environment.getExternalStorageDirectory();
-		File sd = new File(root,"Androworms");
+		File sd = new File(root, ActiviteAndroworms.DOSSIER_CARTE);
 		
 		//gets a list of the files
 		File[] sdDirList = sd.listFiles(); 
@@ -284,7 +284,7 @@ public class ActiviteCreationPartie extends Activity {
 		ParametresPartie.getParametresPartie().setNomCarte(map);	
 		ImageView v = (ImageView)findViewById(R.id.chosen_map);
 		File root = Environment.getExternalStorageDirectory();
-		File sd = new File(root,"Androworms/"+map);
+		File sd = new File(root, ActiviteAndroworms.DOSSIER_CARTE + map);
 		Bitmap b = BitmapFactory.decodeFile(sd.getAbsolutePath());
 		Bitmap thumbnail = Bitmap.createScaledBitmap(b, 300, 200, false);
 		v.setImageBitmap(thumbnail);
