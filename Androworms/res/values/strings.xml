@@ -67,7 +67,10 @@
     <string name="analyse">Analyse</string>
     <string name="connexion">Connexion</string>
     <string name="selectionner_appareil_Bluetooth">Veuillez sélectionner un appareil Bluetooth</string>
-    <string name="attente_connexion">Attente de connexion de joueurs...</string>
+    <string name="attente_connexion">Attente de connexion de joueurs&#8230;</string>
     <string name="montrer_bluetooth">Montrer Bluetooth</string>
+    <string name="choix_difficulte_IA">Choix de la difficulté de l\'IA :</string>
+    <string name="jouer_bluetooth">Jouer en Bluetooth</string>
+    <string name="jouer_wifi_direct">Jouer en Wifi Direct</string>
     
 </resources>

@@ -4,6 +4,7 @@ import java.io.File;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,12 +14,12 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SeekBar;
-import android.widget.AdapterView.OnItemSelectedListener;
 
 public class ActiviteCreationPartie extends Activity {
 	
@@ -78,6 +79,38 @@ public class ActiviteCreationPartie extends Activity {
 			public void onClick(View v) {
 				ParametresPartie.getParametresPartie().setModeJeu(ParametresPartie.MODE_WIFI_CLIENT);
 				etape2();
+			}
+		});
+		
+		
+		ImageView imgAide1Telephone = (ImageView)findViewById(R.id.img_aide_1_telephone);
+		imgAide1Telephone.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				AlertDialog.Builder builder = new AlertDialog.Builder(ActiviteCreationPartie.this);
+				builder.setMessage("Faire une partie quand vous n'avez que un seul téléphone à votre disposition.");
+				builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.dismiss();
+					}
+				});
+				builder.setCancelable(false);
+				AlertDialog alert = builder.create();
+				alert.show();
+			}
+		});
+		ImageView imgAide2Telephones = (ImageView)findViewById(R.id.img_aide_2_telephones);
+		imgAide2Telephones.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				AlertDialog.Builder builder = new AlertDialog.Builder(ActiviteCreationPartie.this);
+				builder.setMessage("Faire une partie quand vous avez plusieurs téléphones à votre disposition.");
+				builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.dismiss();
+					}
+				});
+				builder.setCancelable(false);
+				AlertDialog alert = builder.create();
+				alert.show();
 			}
 		});
 	}
@@ -200,20 +233,20 @@ public class ActiviteCreationPartie extends Activity {
 		}
 		adapter.notifyDataSetChanged();
 		mapChooser.setAdapter(adapter);		
-		mapChooser.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-				afficheCarte((String)arg0.getAdapter().getItem(position));
+		mapChooser.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parentView, View childView, int position, long id) {
+				afficheCarte((String)parentView.getAdapter().getItem(position));
 			}
 		});
-
+		
+		/* Bouton "Précédent" */
 		Button btnPrecedent = (Button)findViewById(R.id.btn_precedent);
 		btnPrecedent.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				etape2();
 			}
 		});
-		
+		/* Bouton "Suivant" */
 		Button btnSuivant = (Button)findViewById(R.id.btn_suivant);
 		btnSuivant.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -239,7 +272,6 @@ public class ActiviteCreationPartie extends Activity {
 			public void onClick(View v) {
 				Intent intent = new Intent(ActiviteCreationPartie.this, ActiviteJeu.class);
 				startActivity(intent);
-				
 				/* On arrête l'application comme ça quand on sera sur la partie de jeu et qu'on fait la flèche de "retour à l'activité précédente",
 				   on arrivera sur le menu principal */
 				finish();
@@ -248,6 +280,7 @@ public class ActiviteCreationPartie extends Activity {
 	}
 	
 	private void afficheCarte(String map) {
+		ParametresPartie.getParametresPartie().setEstCartePerso(true);
 		ParametresPartie.getParametresPartie().setNomCarte(map);	
 		ImageView v = (ImageView)findViewById(R.id.chosen_map);
 		File root = Environment.getExternalStorageDirectory();
