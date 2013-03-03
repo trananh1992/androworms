@@ -34,12 +34,16 @@ public class ActiviteCreationPartieBluetoothClient {
 	private ActiviteCreationPartieBluetooth activiteCreationPartieBluetooth;
 	
 	// Listes des appareils Bluetooth jumélés et à proximité
-	public List<BluetoothDevice> appareilJumele;
-	public List<BluetoothDevice> appareilProximite;
+	private List<BluetoothDevice> appareilJumele;
+	private List<BluetoothDevice> appareilProximite;
 	
 	public ActiviteCreationPartieBluetoothClient(ActiviteCreationPartieBluetooth activiteCreationPartieBluetooth) {
 		this.activiteCreationPartieBluetooth = activiteCreationPartieBluetooth;
 		this.activiteCreationPartie = activiteCreationPartieBluetooth.getActiviteCreationPartie();
+	}
+	
+	public void addAppareilProximite(BluetoothDevice device) {
+		appareilProximite.add(device);
 	}
 	
 	/** Chargement de l'interface Bluetooth > Client **/
@@ -79,8 +83,7 @@ public class ActiviteCreationPartieBluetoothClient {
 					actualisationInterfaceBluetoothClient();
 				} else {
 					// Désactivation du Bluetooth
-					BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-					mBluetoothAdapter.disable();
+					Bluetooth.getBluetoothAdapter().disable();
 					// On refresh les infos
 					actualisationInterfaceBluetoothClient();
 					// TODO : NE MARCHE PAS COMME IL DEVRAIT
@@ -102,12 +105,12 @@ public class ActiviteCreationPartieBluetoothClient {
 				tvMessage.setText("Recherche des appareils à proximité...");
 				
 				// Si j'étais déjà en mode analyse, je stop l'analyse
-				if (ActiviteCreationPartieBluetooth.mBluetoothAdapter.isDiscovering()) {
-					ActiviteCreationPartieBluetooth.mBluetoothAdapter.cancelDiscovery();
+				if (Bluetooth.getBluetoothAdapter().isDiscovering()) {
+					Bluetooth.getBluetoothAdapter().cancelDiscovery();
 				}
 				
 				// Recherche des périphériques visibles
-				boolean res = ActiviteCreationPartieBluetooth.mBluetoothAdapter.startDiscovery();
+				boolean res = Bluetooth.getBluetoothAdapter().startDiscovery();
 				if (!res) {
 					new AlertDialog.Builder(activiteCreationPartie).setTitle("Androworms").setMessage("Une erreur c'est produite. Contacter le 5556 pour avoir plus d'infos.").setNeutralButton("Close", null).show();
 				}
@@ -115,9 +118,9 @@ public class ActiviteCreationPartieBluetoothClient {
 		});
 		
 		IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-		activiteCreationPartie.registerReceiver(activiteCreationPartieBluetooth.mReceiver, filter);
+		activiteCreationPartie.registerReceiver(activiteCreationPartieBluetooth.getmReceiver(), filter);
 		filter = new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
-		activiteCreationPartie.registerReceiver(activiteCreationPartieBluetooth.mReceiver, filter);
+		activiteCreationPartie.registerReceiver(activiteCreationPartieBluetooth.getmReceiver(), filter);
 		activiteCreationPartieBluetooth.setServeurLance(true);
 		
 		/* Selection dans la liste */
@@ -148,7 +151,7 @@ public class ActiviteCreationPartieBluetoothClient {
 	
 	/** Liste les appareils bluetooth jumélés **/
 	public void listerAppareilsJumeles() {
-		Set<BluetoothDevice> pairedDevices = ActiviteCreationPartieBluetooth.mBluetoothAdapter.getBondedDevices();
+		Set<BluetoothDevice> pairedDevices = Bluetooth.getBluetoothAdapter().getBondedDevices();
 		if (pairedDevices.size() > 0) {
 			appareilJumele.clear();
 			for (BluetoothDevice device : pairedDevices) {

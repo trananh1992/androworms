@@ -33,7 +33,9 @@ public class ActiviteAndroworms extends Activity {
 		// Dans les vieilles version d'android, il faut charger le bluetooth depuis une activité
 		// avant de pouvoir l'utiliser en background
 		// cf : http://code.google.com/p/android/issues/detail?id=16587
-		BluetoothAdapter.getDefaultAdapter();
+		BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+		// Comme on l'a récupéré, autant l'utiliser dans toute l'application sans refaire un appel !
+		Bluetooth.setBluetoothAdapter(bluetoothAdapter);
 		
 		/* Démarrage du Thread qui charge les données nécessaires à l'application */
 		final TacheChargement ch = new TacheChargement();

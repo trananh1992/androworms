@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
@@ -51,7 +50,7 @@ public class TacheServeurConnexionBluetooth extends AsyncTask<Void, String, Bool
 		
 		try {
 			// Création de la socket avec le UUID (définit aléatoiremenet pour l'application)
-			socketServeur = BluetoothAdapter.getDefaultAdapter().listenUsingRfcommWithServiceRecord("Androworms", Contact.ANDROWORMS_UUID);
+			socketServeur = Bluetooth.getBluetoothAdapter().listenUsingRfcommWithServiceRecord("Androworms", Contact.ANDROWORMS_UUID);
 		} catch (Exception e) {
 			Log.e(TAG, "Erreur sur la creation de la socket serveur");
 			Log.e(TAG, "\t"+e.getMessage());
@@ -189,7 +188,7 @@ public class TacheServeurConnexionBluetooth extends AsyncTask<Void, String, Bool
 		}
 		
 		// On envoie au nouveau client le nom du serveur (le serveur est aussi un joueur !)
-		Bluetooth.envoyerObjet(socket, ActiviteCreationPartieBluetooth.mBluetoothAdapter.getName());
+		Bluetooth.envoyerObjet(socket, Bluetooth.getBluetoothAdapter().getName());
 		if (Bluetooth.recevoirTexte(socket).equals("ACK")) {
 			Log.v(TAG,"ACK");
 		}

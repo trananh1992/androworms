@@ -46,7 +46,7 @@ public class TacheClientConnexionBluetooth extends AsyncTask<Void, Integer, Bool
 	@Override
 	protected Boolean doInBackground(Void... params) {
 		// On annule la recherche d'appareil à proximité si elle était lancé (elle sert plus à rien)
-		ActiviteCreationPartieBluetooth.mBluetoothAdapter.cancelDiscovery();
+		Bluetooth.getBluetoothAdapter().cancelDiscovery();
 		
 		// On tente de se connecter su serveur
 		try {

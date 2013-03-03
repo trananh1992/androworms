@@ -22,7 +22,13 @@ public class ActiviteCreationPartie extends Activity {
 	private static final String TAG = "Androworms.ActiviteCreationPartie";
 	private ActiviteCreationPartieBluetooth activiteCreationPartieBluetooth;
 	private ActiviteCreationPartieEvent evenements;
+	
+	// Etape dans la création d'une partie
 	private int etape = 0;
+	private static final int ETAPE_1_CHOIX_MODE_JEU = 1;
+	private static final int ETAPE_2_CONFIGURATION_MODE_JEU = 2;
+	private static final int ETAPE_3_CHOIX_CARTE = 3;
+	private static final int ETAPE_4_CHOIX_EQUIPE = 4;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +40,7 @@ public class ActiviteCreationPartie extends Activity {
 	
 	private void etape1() {
 		// Etape courante
-		etape = 1;
+		etape = ETAPE_1_CHOIX_MODE_JEU;
 		// Affichage de la vue
 		setContentView(R.layout.activite_creation_partie_1_mode);
 		// Gestion des composants > Mode de jeu
@@ -50,7 +56,7 @@ public class ActiviteCreationPartie extends Activity {
 	}
 	
 	private void etape2() {
-		etape = 2;
+		etape = ETAPE_2_CONFIGURATION_MODE_JEU;
 		
 		switch (ParametresPartie.getParametresPartie().getModeJeu()) {
 		case ParametresPartie.MODE_SOLO:
@@ -80,6 +86,10 @@ public class ActiviteCreationPartie extends Activity {
 		/* Affichage de la vue */
 		setContentView(R.layout.activite_creation_partie_2_solo);
 		
+		//FIXME : quand je clic sur "suivant", je dois sauvegarder l'état de la progressbar
+		// Regression en r236
+		// https://code.google.com/p/androworms/source/diff?path=/trunk/Androworms/src/com/androworms/ActiviteCreationPartie.java&format=side&r=236
+		
 		// Boutons "Précédent" et "Suivant"
 		findViewById(R.id.btn_precedent).setOnClickListener(evenements);
 		findViewById(R.id.btn_suivant).setOnClickListener(evenements);
@@ -97,9 +107,8 @@ public class ActiviteCreationPartie extends Activity {
 		/* Chargement des composants */
 		activiteCreationPartieBluetooth.getServeur().chargementInterfaceBluetoothServeur();
 		
-		// Boutons "Précédent" et "Suivant"
+		// Boutons "Précédent"
 		findViewById(R.id.btn_precedent).setOnClickListener(evenements);
-		findViewById(R.id.btn_suivant).setOnClickListener(evenements);
 	}
 	
 	private void etape2ModeBluetoothClient() {
@@ -109,9 +118,8 @@ public class ActiviteCreationPartie extends Activity {
 		/* Chargement des composants */
 		activiteCreationPartieBluetooth.getClient().chargementInterfaceBluetoothClient();
 		
-		// Boutons "Précédent" et "Suivant"
+		// Boutons "Précédent"
 		findViewById(R.id.btn_precedent).setOnClickListener(evenements);
-		findViewById(R.id.btn_suivant).setOnClickListener(evenements);
 	}
 	
 	private void etape2ModeWifiServeur() {
@@ -125,7 +133,7 @@ public class ActiviteCreationPartie extends Activity {
 	}
 	
 	private void etape3() {
-		etape = 3;
+		etape = ETAPE_3_CHOIX_CARTE;
 		/* Affichage de la vue */
 		setContentView(R.layout.activite_creation_partie_3);
 		
@@ -158,7 +166,7 @@ public class ActiviteCreationPartie extends Activity {
 	}
 	
 	private void etape4() {
-		etape = 4;
+		etape = ETAPE_4_CHOIX_EQUIPE;
 		setContentView(R.layout.activite_creation_partie_4);
 		
 		// Boutons "Précédent"
@@ -202,16 +210,16 @@ public class ActiviteCreationPartie extends Activity {
 	public void etapeSuivante() {
 		Log.v(TAG, "On est à l'étape " + etape + " et on va à l'étape SUIVANTE");
 		switch(etape) {
-		case 1:
+		case ETAPE_1_CHOIX_MODE_JEU:
 			etape2();
 			break;
-		case 2:
+		case ETAPE_2_CONFIGURATION_MODE_JEU:
 			etape3();
 			break;
-		case 3:
+		case ETAPE_3_CHOIX_CARTE:
 			etape4();
 			break;
-		case 4:
+		case ETAPE_4_CHOIX_EQUIPE:
 			Intent intent = new Intent(ActiviteCreationPartie.this, ActiviteJeu.class);
 			startActivity(intent);
 			/* On arrête l'application comme ça quand on sera sur la partie de jeu et qu'on fait la flèche de "retour à l'activité précédente",
@@ -230,17 +238,17 @@ public class ActiviteCreationPartie extends Activity {
 		if (avecApprobationUtilisateur || estOkPourPasserEtapePrecedente()) {
 			Log.v(TAG, "Ok pour faire précédent");
 			switch(etape) {
-			case 1:
+			case ETAPE_1_CHOIX_MODE_JEU:
 				// Marche aussi si on précise pas "finish()"
 				finish();
 				break;
-			case 2:
+			case ETAPE_2_CONFIGURATION_MODE_JEU:
 				etape1();
 				break;
-			case 3:
+			case ETAPE_3_CHOIX_CARTE:
 				etape2();
 				break;
-			case 4:
+			case ETAPE_4_CHOIX_EQUIPE:
 				etape3();
 				break;
 			default :
@@ -255,7 +263,7 @@ public class ActiviteCreationPartie extends Activity {
 	private boolean estOkPourPasserEtapePrecedente() {
 		Log.v(TAG, "On est à l'étape " + etape + " et on va à l'étape PRECEDENTE");
 		switch(etape) {
-		case 2:
+		case ETAPE_2_CONFIGURATION_MODE_JEU:
 			switch (ParametresPartie.getParametresPartie().getModeJeu()) {
 			case ParametresPartie.MODE_BLUETOOTH_SERVEUR:
 				activiteCreationPartieBluetooth.getServeur().faireActionPrecedent();
@@ -267,10 +275,10 @@ public class ActiviteCreationPartie extends Activity {
 				break;
 			}
 			break;
-		case 3:
+		case ETAPE_3_CHOIX_CARTE:
 			// TODO
 			break;
-		case 4:
+		case ETAPE_4_CHOIX_EQUIPE:
 			//TODO : en cas de partie BLuetooth
 			break;
 		default :
