@@ -29,10 +29,22 @@ public class Bluetooth extends Contact {
 	// La taille du Buffer par défaut
 	private static final int TAILLE_BUFFER = 1024;
 	
+	// Stockage ici de l'adaptateur Bluetooth de l'appareil
+	private static BluetoothAdapter bluetoothAdapter = null;
+	
 	public Bluetooth(String adresse) {
 		super();
-		BluetoothAdapter ba = BluetoothAdapter.getDefaultAdapter();
-		init(ba, adresse);
+		init(bluetoothAdapter, adresse);
+	}
+	
+	/** Intialiation de l'adaptateur Bluetooth */
+	public static void setBluetoothAdapter(BluetoothAdapter bluetoothAdapter) {
+		Bluetooth.bluetoothAdapter = bluetoothAdapter;
+	}
+	
+	/** Récupération de l'adaptateur Bluetooth */
+	public static BluetoothAdapter getBluetoothAdapter() {
+		return bluetoothAdapter;
 	}
 	
 	/** Envoyer du texte à une socket Bluetooth */

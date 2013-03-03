@@ -59,8 +59,7 @@ public class ActiviteCreationPartieBluetoothServeur {
 					actualisationInterfaceBluetoothServeur();
 				} else {
 					// Désactivation du Bluetooth
-					BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-					mBluetoothAdapter.disable();
+					Bluetooth.getBluetoothAdapter().disable();
 					// On refresh les infos
 					actualisationInterfaceBluetoothServeur();
 					// TODO : NE MARCHE PAS COMME IL DEVRAIT
@@ -88,7 +87,7 @@ public class ActiviteCreationPartieBluetoothServeur {
 		btnSuivant.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				Log.v(TAG,"On démarre la partie ?");
-				if (activiteCreationPartieBluetooth.serveurConnexionBluetooth == null) {
+				if (activiteCreationPartieBluetooth.getServeurConnexionBluetooth() == null) {
 					Log.v(TAG,"Vous n'avez jamais lancer le serveur");
 				} else {
 					
@@ -99,7 +98,7 @@ public class ActiviteCreationPartieBluetoothServeur {
 						public void onClick(DialogInterface dialog, int id) {
 							// On arrête le serveur de connexion Bluetooth
 							Log.v(TAG,"Arret du serveur de connexion Bluetooth");
-							activiteCreationPartieBluetooth.serveurConnexionBluetooth.fermetureConnexionsForce();
+							activiteCreationPartieBluetooth.getServeurConnexionBluetooth().fermetureConnexionsForce();
 						}
 					});
 					builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
@@ -162,16 +161,16 @@ public class ActiviteCreationPartieBluetoothServeur {
 			btnMontrerBluetooth.setVisibility(View.VISIBLE);
 			
 			tvMonNomBluetooth.setVisibility(View.VISIBLE);
-			tvMonNomBluetooth.setText("Mon nom : "+ActiviteCreationPartieBluetooth.mBluetoothAdapter.getName());
+			tvMonNomBluetooth.setText("Mon nom : " + Bluetooth.getBluetoothAdapter().getName());
 			
 			tvMaVisibilite.setVisibility(View.VISIBLE);
-			String tt = "Ma visibilité : ";
-			if (ActiviteCreationPartieBluetooth.mBluetoothAdapter.getScanMode() == BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
-				tt += "visible";
+			String maVisibilite = "Ma visibilité : ";
+			if (Bluetooth.getBluetoothAdapter().getScanMode() == BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
+				maVisibilite += "visible";
 			} else {
-				tt += "invisible";
+				maVisibilite += "invisible";
 			}
-			tvMaVisibilite.setText(tt);
+			tvMaVisibilite.setText(maVisibilite);
 			
 			pbMinuteur.setVisibility(View.INVISIBLE);
 			

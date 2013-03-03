@@ -27,22 +27,19 @@ public class ActiviteCreationPartieBluetooth {
 	private ActiviteCreationPartieBluetoothServeur activiteCreationPartieBluetoothServeur;
 	private ActiviteCreationPartieBluetoothClient activiteCreationPartieBluetoothClient;
 	
-	// Adaptateur du Bluetooth
-	public static BluetoothAdapter mBluetoothAdapter;
-	
 	// Partie Bluetooth > Serveur : pour faire une animation du temps restant de la visibilité Bluetooth
 	private TacheMinuteurVisibiliteBluetooth tacheMinuteurVisiviliteBlueooth;
 	public static final int DUREE_VISIBILITE_BLUETOOTH = 120;
 	
 	
 	// Mis à vrai si on est Bluetooth > Serveur et qu'on lance le serveur.
-	// Dans le OnDetroy(), il faut pouvoir savoir si on a lancé le serveur ou pas pour l'arreter.
+	// Dans le OnDestroy(), il faut pouvoir savoir si on a lancé le serveur ou pas pour l'arreter.
 	private boolean serveurLance = false;
 	
 	
 	// Thread pour la communication Bluetooth
-	public TacheServeurConnexionBluetooth serveurConnexionBluetooth;
-	public TacheClientConnexionBluetooth clientConnexionBluetooth;
+	private TacheServeurConnexionBluetooth serveurConnexionBluetooth;
+	private TacheClientConnexionBluetooth clientConnexionBluetooth;
 	
 	
 	/** Constructeur de ActiviteCreationPartieBluetooth */
@@ -50,9 +47,6 @@ public class ActiviteCreationPartieBluetooth {
 		this.activiteCreationPartie = activiteCreationPartie;
 		this.activiteCreationPartieBluetoothServeur = new ActiviteCreationPartieBluetoothServeur(this);
 		this.activiteCreationPartieBluetoothClient = new ActiviteCreationPartieBluetoothClient(this);
-		
-		// Récupération de l'adaptateur Bluetooth
-		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 	}
 	
 	/** Obtenir l'activite de création de partie */
@@ -68,6 +62,10 @@ public class ActiviteCreationPartieBluetooth {
 	/** Obtenir le fichier d'interface du Client Bluetooth */
 	public ActiviteCreationPartieBluetoothClient getClient() {
 		return activiteCreationPartieBluetoothClient;
+	}
+	
+	public TacheServeurConnexionBluetooth getServeurConnexionBluetooth() {
+		return serveurConnexionBluetooth;
 	}
 	
 	
@@ -132,7 +130,7 @@ public class ActiviteCreationPartieBluetooth {
 	}
 	
 	/** Pour chercher les appareils Bluetooth à proximité */
-	public final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+	private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			String action = intent.getAction();
@@ -148,7 +146,7 @@ public class ActiviteCreationPartieBluetooth {
 					// TODO : éventuellement mettre cette appreil en tête de liste.
 					//        1) C'est comme ça que fait le système Android
 					//        2) Statistiquement, un appareil jumélée et Bluetooth-proximité a de fortes chances d'être un joueur potentielle
-					getClient().appareilProximite.add(device);
+					getClient().addAppareilProximite(device);
 					Log.v(TAG,"...en plus je l'avais pas encore !");
 				} else {
 					Log.v(TAG,"...en fait, je l'avais déjà !");
@@ -169,6 +167,11 @@ public class ActiviteCreationPartieBluetooth {
 			}
 		}
 	};
+	
+	/** Pour chercher les appareils Bluetooth à proximité */
+	public BroadcastReceiver getmReceiver() {
+		return mReceiver;
+	}
 	
 	/** Démarrage du serveur Bluetooth */
 	public void demarrerServeurBluetooth() {
@@ -206,8 +209,8 @@ public class ActiviteCreationPartieBluetooth {
 	/** Lors de l'arrêt de l'activité, il faut arrêter proprement toutes les opérations en cours */
 	protected void onDestroy() {
 		// On s'assure de désactiver l'analyse des périphériques Bluetooth
-		if (mBluetoothAdapter != null) {
-			mBluetoothAdapter.cancelDiscovery();
+		if (Bluetooth.getBluetoothAdapter() != null) {
+			Bluetooth.getBluetoothAdapter().cancelDiscovery();
 		}
 		
 		if (isServeurLance()) {

@@ -1,10 +1,11 @@
 package com.androworms.utile;
 
-import android.bluetooth.BluetoothAdapter;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.util.DisplayMetrics;
+
+import com.androworms.Bluetooth;
 
 /** Classes qui contient des éléments sur les caractéristiques du téléphone.
  */
@@ -34,8 +35,7 @@ public final class Informations {
 		screenLayoutSizeMask = c.screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
 		
 		/* Vérifie la compatibilité du Bluetooth */
-		BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-		compatibleBluetooth = (mBluetoothAdapter != null);
+		compatibleBluetooth = (Bluetooth.getBluetoothAdapter() != null);
 	}
 
 	public static String getAndroidVersion() {
@@ -73,9 +73,7 @@ public final class Informations {
 	public static boolean isBluetoothOn() {
 		if (compatibleBluetooth) {
 			// Si le téléphone supporte le Bluetooth
-			
-			BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-			return mBluetoothAdapter.isEnabled();
+			return Bluetooth.getBluetoothAdapter().isEnabled();
 		}
 		return false;
 	}
