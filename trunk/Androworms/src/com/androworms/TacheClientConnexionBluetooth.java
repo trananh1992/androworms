@@ -138,7 +138,7 @@ public class TacheClientConnexionBluetooth extends AsyncTask<Void, Integer, Bool
 	@Override
 	protected void onPostExecute(Boolean result) {
 		if (result) {
-			activiteCreationPartie.passerEtape3DepuisClientBluetooth();
+			activiteCreationPartie.etapeSuivante();
 		}
 	}
 }

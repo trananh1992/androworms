@@ -39,7 +39,7 @@
         android:id="@+id/tv_monNomBluetooth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="@string/pas_de_donnees" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,7 +50,7 @@
             android:id="@+id/tv_maVisibilite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="@string/pas_de_donnees" />
 
         <ProgressBar
             android:id="@+id/pb_Minuteur"

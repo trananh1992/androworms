@@ -140,7 +140,7 @@ public class TacheServeurConnexionBluetooth extends AsyncTask<Void, String, Bool
 		Toast toast = Toast.makeText(context, text, duration);
 		toast.show();
 		
-		activiteCreationPartie.passerEtape3DepuisServeurBluetooth();
+		activiteCreationPartie.etapeSuivante();
 	}
 	
 	/** On force la fermeture des connexions */

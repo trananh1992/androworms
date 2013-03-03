@@ -1,16 +1,20 @@
 package com.androworms;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -19,14 +23,19 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.androworms.ui.BluetoothCustomAdapter;
 import com.androworms.utile.Informations;
 
 public class ActiviteCreationPartieBluetoothClient {
 	
-	private static final String TAG = "ActiviteCreationPartieBluetoothClient";
+	private static final String TAG = "Androworms.ActiviteCreationPartie.Bluetooth.Client";
 	
 	private ActiviteCreationPartie activiteCreationPartie;
 	private ActiviteCreationPartieBluetooth activiteCreationPartieBluetooth;
+	
+	// Listes des appareils Bluetooth jumélés et à proximité
+	public List<BluetoothDevice> appareilJumele;
+	public List<BluetoothDevice> appareilProximite;
 	
 	public ActiviteCreationPartieBluetoothClient(ActiviteCreationPartieBluetooth activiteCreationPartieBluetooth) {
 		this.activiteCreationPartieBluetooth = activiteCreationPartieBluetooth;
@@ -35,16 +44,19 @@ public class ActiviteCreationPartieBluetoothClient {
 	
 	/** Chargement de l'interface Bluetooth > Client **/
 	public void chargementInterfaceBluetoothClient() {
+		
+		Log.v(TAG, "Chargement de l'interface : Bluetooth > Client");
+		
 		/** Définition des composants **/
 		ToggleButton tgEtatBluetooth = (ToggleButton)activiteCreationPartie.findViewById(R.id.tg_EtatBluetoothC);
 		final Button btnAnalyse = (Button)activiteCreationPartie.findViewById(R.id.btn_analyse);
 		final ListView lvAppareilsBluetooth = (ListView)activiteCreationPartie.findViewById(R.id.liste_appareils_bluetooth);
 		
 		/** Init des listes des appareils **/
-		activiteCreationPartieBluetooth.appareilJumele = new ArrayList<BluetoothDevice>();
-		activiteCreationPartieBluetooth.appareilProximite = new ArrayList<BluetoothDevice>();
+		appareilJumele = new ArrayList<BluetoothDevice>();
+		appareilProximite = new ArrayList<BluetoothDevice>();
 		
-		activiteCreationPartieBluetooth.listerAppareilsJumeles();
+		listerAppareilsJumeles();
 		
 		/** Actualisation de l'interface **/
 		actualisationInterfaceBluetoothClient();
@@ -83,7 +95,7 @@ public class ActiviteCreationPartieBluetoothClient {
 			// On click sur le bouton "Analyse"
 			public void onClick(View v) {
 				
-				activiteCreationPartieBluetooth.appareilProximite.clear();
+				appareilProximite.clear();
 				ProgressBar pb = (ProgressBar)activiteCreationPartie.findViewById(R.id.pb_bluetooth_analyse);
 				pb.setVisibility(View.VISIBLE);
 				TextView tvMessage = (TextView)activiteCreationPartie.findViewById(R.id.tv_message);
@@ -129,8 +141,61 @@ public class ActiviteCreationPartieBluetoothClient {
 		tgEtatBluetooth.setChecked(Informations.isBluetoothOn());
 		
 		if (Informations.isBluetoothOn()) {
-			activiteCreationPartieBluetooth.rafraichirListeAppareils();
+			rafraichirListeAppareils();
 		}
 		
+	}
+	
+	/** Liste les appareils bluetooth jumélés **/
+	public void listerAppareilsJumeles() {
+		Set<BluetoothDevice> pairedDevices = ActiviteCreationPartieBluetooth.mBluetoothAdapter.getBondedDevices();
+		if (pairedDevices.size() > 0) {
+			appareilJumele.clear();
+			for (BluetoothDevice device : pairedDevices) {
+				// J'ajoute les appareils jumelés à une liste
+				appareilJumele.add(device);
+			}
+		}
+	}
+	
+	/** Actualise la liste des appreils Bluetooth **/
+	public void rafraichirListeAppareils() {
+		final ListView lv = (ListView)activiteCreationPartie.findViewById(R.id.liste_appareils_bluetooth);
+		
+		// On vide la liste pour éventullement la remplir après
+		lv.setAdapter(null);
+		ArrayAdapter<BluetoothDevice> adapterA,adapterB;
+		BluetoothDevice[] valuesA, valuesB;
+		
+		
+		valuesA = new BluetoothDevice[appareilJumele.size()];
+		for (int j=0;j<appareilJumele.size();j++) {
+			BluetoothDevice device = appareilJumele.get(j);
+			valuesA[j] = device;
+		}
+		valuesB = new BluetoothDevice[appareilProximite.size()];
+		for (int j=0;j<appareilProximite.size();j++) {
+			BluetoothDevice device = appareilProximite.get(j);
+			valuesB[j] = device;
+		}
+		
+		// FIXME : j'ai pas compris les paramètres 2 et 3 du ArrayAdapter
+		// android.R.layout.simple_list_item_checked       simple_list_item_activated_1
+		adapterA = new ArrayAdapter<BluetoothDevice>(activiteCreationPartie, android.R.layout.simple_list_item_checked, valuesA);
+		adapterB = new ArrayAdapter<BluetoothDevice>(activiteCreationPartie, android.R.layout.simple_list_item_checked, valuesB);
+		
+		BluetoothCustomAdapter adapter = new BluetoothCustomAdapter(activiteCreationPartie);
+		
+		adapter.ajouterSections("Appareils appairés (jumelés ?)", adapterA);
+		adapter.ajouterSections("Appareils à proximité", adapterB);
+		
+		lv.setAdapter(adapter);
+	}
+	
+	/** L'utilisateur demande à revenir au statut précédent.
+	 *  Dans certains cas, on veux afficher une popup pour lui demander s'il veux vraiment quitter */
+	public void surActionPrecedent() {
+		//FIXME : si on a rejoint le serveur, il faut demander une validation
+		activiteCreationPartie.etapePrecedente(true);
 	}
 }
