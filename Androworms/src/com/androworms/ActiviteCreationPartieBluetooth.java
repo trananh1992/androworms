@@ -1,8 +1,5 @@
 package com.androworms;
 
-import java.util.List;
-import java.util.Set;
-
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -12,13 +9,9 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.androworms.ui.BluetoothCustomAdapter;
 
 public class ActiviteCreationPartieBluetooth {
 	
@@ -38,12 +31,9 @@ public class ActiviteCreationPartieBluetooth {
 	public static BluetoothAdapter mBluetoothAdapter;
 	
 	// Partie Bluetooth > Serveur : pour faire une animation du temps restant de la visibilité Bluetooth
-	private TacheMinuteurVisibiliteBluetooth ch;
+	private TacheMinuteurVisibiliteBluetooth tacheMinuteurVisiviliteBlueooth;
 	public static final int DUREE_VISIBILITE_BLUETOOTH = 120;
 	
-	// Listes des appareils Bluetooth jumélés et à proximité
-	public List<BluetoothDevice> appareilJumele;
-	public List<BluetoothDevice> appareilProximite;
 	
 	// Mis à vrai si on est Bluetooth > Serveur et qu'on lance le serveur.
 	// Dans le OnDetroy(), il faut pouvoir savoir si on a lancé le serveur ou pas pour l'arreter.
@@ -65,46 +55,21 @@ public class ActiviteCreationPartieBluetooth {
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 	}
 	
+	/** Obtenir l'activite de création de partie */
 	public ActiviteCreationPartie getActiviteCreationPartie() {
 		return activiteCreationPartie;
 	}
 	
-	
-	
-	
-	/** Afficher l'interface du serveur */
-	public void chargementInterfaceBluetoothServeur() {
-		activiteCreationPartieBluetoothServeur.chargementInterfaceBluetoothServeur();
+	/** Obtenir le fichier d'interface du Serveur Bluetooth */
+	public ActiviteCreationPartieBluetoothServeur getServeur() {
+		return activiteCreationPartieBluetoothServeur;
 	}
 	
-	/** Afficher l'interface du client */
-	public void chargementInterfaceBluetoothClient() {
-		activiteCreationPartieBluetoothClient.chargementInterfaceBluetoothClient();
+	/** Obtenir le fichier d'interface du Client Bluetooth */
+	public ActiviteCreationPartieBluetoothClient getClient() {
+		return activiteCreationPartieBluetoothClient;
 	}
 	
-	
-	/** Démarrage du serveur Bluetooth */
-	public void demarrerServeurBluetooth() {
-		Log.d(TAG, "DEMARAGE DU SERVEUR BLUETOOTH");
-		serveurConnexionBluetooth = new TacheServeurConnexionBluetooth(this);
-		serveurConnexionBluetooth.execute();
-	}
-	
-	/** Démarrage du client Bluetooth */
-	public void demarrerClientBluetooth(BluetoothDevice device) {
-		Log.d(TAG, "DEMARAGE DU CLIENT BLUETOOTH");
-		
-		// Elements de l'interface
-		ProgressBar pbBluetoothAnalyse = (ProgressBar)activiteCreationPartie.findViewById(R.id.pb_bluetooth_analyse);
-		TextView tvMessage = (TextView)activiteCreationPartie.findViewById(R.id.tv_message);
-		
-		// On actualise l'interface graphique du client
-		pbBluetoothAnalyse.setVisibility(View.VISIBLE);
-		tvMessage.setText("Tentative de connexion en cours...");
-		
-		clientConnexionBluetooth = new TacheClientConnexionBluetooth(this, device);
-		clientConnexionBluetooth.execute();
-	}
 	
 	/** Gestion des demandes d'activation/visibilité du Bluetooth */
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -130,7 +95,7 @@ public class ActiviteCreationPartieBluetooth {
 			if (resultCode == Activity.RESULT_OK) {
 				// L'utilisateur a accepté d'activé le Bluetooth
 				
-				listerAppareilsJumeles();
+				getClient().listerAppareilsJumeles();
 			
 			} else {
 				// L'utilisateur a refusé d'activer le Bluetooth (ou il s'agit d'une erreur)
@@ -149,12 +114,12 @@ public class ActiviteCreationPartieBluetooth {
 				// (C'est un petit bizarre que le resultCode soit égale à la DUREE_VISIBILITE_BLUETOOTH mais ça marche comme ça !)
 				
 				// On actualise l'interface graphique pour le minuteur
-				actualisationMinuteur();
+				getServeur().actualisationMinuteur();
 				
 				// On start le minuteur
 				Log.v(TAG, "Début du minuteur");
-				ch = new TacheMinuteurVisibiliteBluetooth(this);
-				ch.executerTacheEnParralelle();
+				tacheMinuteurVisiviliteBlueooth = new TacheMinuteurVisibiliteBluetooth(this);
+				tacheMinuteurVisiviliteBlueooth.executerTacheEnParralelle();
 			} else {
 				// L'utilisateur a refusé l'activation de la visiblité du Bluetooth (ou il s'agit d'une erreur)
 				Log.v(TAG,"L'utilisateur a refusé l'activation de la visiblité du Bluetooth");
@@ -183,7 +148,7 @@ public class ActiviteCreationPartieBluetooth {
 					// TODO : éventuellement mettre cette appreil en tête de liste.
 					//        1) C'est comme ça que fait le système Android
 					//        2) Statistiquement, un appareil jumélée et Bluetooth-proximité a de fortes chances d'être un joueur potentielle
-					appareilProximite.add(device);
+					getClient().appareilProximite.add(device);
 					Log.v(TAG,"...en plus je l'avais pas encore !");
 				} else {
 					Log.v(TAG,"...en fait, je l'avais déjà !");
@@ -205,70 +170,40 @@ public class ActiviteCreationPartieBluetooth {
 		}
 	};
 	
-	
-	/** Actualisation de l'affichage du minuteur */
-	public void actualisationMinuteur() {
-		TextView tvMaVisibilite = (TextView)activiteCreationPartie.findViewById(R.id.tv_maVisibilite);
-		ProgressBar pbMinuteur = (ProgressBar)activiteCreationPartie.findViewById(R.id.pb_Minuteur);
-		
-		pbMinuteur.setVisibility(View.VISIBLE);
-		tvMaVisibilite.setText("Ma visibilité : ");
+	/** Démarrage du serveur Bluetooth */
+	public void demarrerServeurBluetooth() {
+		Log.d(TAG, "DEMARAGE DU SERVEUR BLUETOOTH");
+		serveurConnexionBluetooth = new TacheServeurConnexionBluetooth(this);
+		serveurConnexionBluetooth.execute();
 	}
 	
-	/** Liste les appareils bluetooth jumélés **/
-	public void listerAppareilsJumeles() {
-		Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
-		if (pairedDevices.size() > 0) {
-			appareilJumele.clear();
-			for (BluetoothDevice device : pairedDevices) {
-				// J'ajoute les appareils jumelés à une liste
-				appareilJumele.add(device);
-			}
-		}
+	/** Démarrage du client Bluetooth */
+	public void demarrerClientBluetooth(BluetoothDevice device) {
+		Log.d(TAG, "DEMARAGE DU CLIENT BLUETOOTH");
+		
+		// Elements de l'interface
+		ProgressBar pbBluetoothAnalyse = (ProgressBar)activiteCreationPartie.findViewById(R.id.pb_bluetooth_analyse);
+		TextView tvMessage = (TextView)activiteCreationPartie.findViewById(R.id.tv_message);
+		
+		// On actualise l'interface graphique du client
+		pbBluetoothAnalyse.setVisibility(View.VISIBLE);
+		tvMessage.setText("Tentative de connexion en cours...");
+		
+		clientConnexionBluetooth = new TacheClientConnexionBluetooth(this, device);
+		clientConnexionBluetooth.execute();
 	}
 	
-	/** Actualise la liste des appreils Bluetooth **/
-	public void rafraichirListeAppareils() {
-		final ListView lv = (ListView)activiteCreationPartie.findViewById(R.id.liste_appareils_bluetooth);
-		
-		// On vide la liste pour éventullement la remplir après
-		lv.setAdapter(null);
-		ArrayAdapter<BluetoothDevice> adapterA,adapterB;
-		BluetoothDevice[] valuesA, valuesB;
-		
-		
-		valuesA = new BluetoothDevice[appareilJumele.size()];
-		for (int j=0;j<appareilJumele.size();j++) {
-			BluetoothDevice device = appareilJumele.get(j);
-			valuesA[j] = device;
-		}
-		valuesB = new BluetoothDevice[appareilProximite.size()];
-		for (int j=0;j<appareilProximite.size();j++) {
-			BluetoothDevice device = appareilProximite.get(j);
-			valuesB[j] = device;
-		}
-		
-		// FIXME : j'ai pas compris les paramètres 2 et 3 du ArrayAdapter
-		// android.R.layout.simple_list_item_checked       simple_list_item_activated_1
-		adapterA = new ArrayAdapter<BluetoothDevice>(activiteCreationPartie, android.R.layout.simple_list_item_checked, valuesA);
-		adapterB = new ArrayAdapter<BluetoothDevice>(activiteCreationPartie, android.R.layout.simple_list_item_checked, valuesB);
-		
-		BluetoothCustomAdapter adapter = new BluetoothCustomAdapter(activiteCreationPartie);
-		
-		adapter.ajouterSections("Appareils appairés (jumelés ?)", adapterA);
-		adapter.ajouterSections("Appareils à proximité", adapterB);
-		
-		lv.setAdapter(adapter);
-	}
-	
+	/** Savoir si le serveur Bluetooth est lancé */
 	public boolean isServeurLance() {
 		return serveurLance;
 	}
-
+	
+	/** Définir si le serveur Bluetooth est lancé */
 	public void setServeurLance(boolean serveurLance) {
 		this.serveurLance = serveurLance;
 	}
 	
+	/** Lors de l'arrêt de l'activité, il faut arrêter proprement toutes les opérations en cours */
 	protected void onDestroy() {
 		// On s'assure de désactiver l'analyse des périphériques Bluetooth
 		if (mBluetoothAdapter != null) {
@@ -290,8 +225,8 @@ public class ActiviteCreationPartieBluetooth {
 			clientConnexionBluetooth.cancel(true);
 		}
 		
-		if (ch != null && ch.getStatus() == AsyncTask.Status.RUNNING) {
-			ch.cancel(true);
+		if (tacheMinuteurVisiviliteBlueooth != null && tacheMinuteurVisiviliteBlueooth.getStatus() == AsyncTask.Status.RUNNING) {
+			tacheMinuteurVisiviliteBlueooth.cancel(true);
 		}
 	}
 }

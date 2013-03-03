@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -18,7 +19,7 @@ import com.androworms.utile.Informations;
 
 public class ActiviteCreationPartieBluetoothServeur {
 	
-	private static final String TAG = "Androworms.ActiviteCreationPartie";
+	private static final String TAG = "Androworms.ActiviteCreationPartie.Bluetooth.Serveur";
 	private ActiviteCreationPartie activiteCreationPartie;
 	private ActiviteCreationPartieBluetooth activiteCreationPartieBluetooth;
 	
@@ -175,6 +176,44 @@ public class ActiviteCreationPartieBluetoothServeur {
 			pbMinuteur.setVisibility(View.INVISIBLE);
 			
 			pbAttenteConnexion.setVisibility(View.VISIBLE);
+		}
+	}
+	
+	/** Actualisation de l'affichage du minuteur */
+	public void actualisationMinuteur() {
+		TextView tvMaVisibilite = (TextView)activiteCreationPartie.findViewById(R.id.tv_maVisibilite);
+		ProgressBar pbMinuteur = (ProgressBar)activiteCreationPartie.findViewById(R.id.pb_Minuteur);
+		
+		pbMinuteur.setVisibility(View.VISIBLE);
+		tvMaVisibilite.setText("Ma visibilité : ");
+	}
+	
+	/** L'utilisateur demande à revenir au statut précédent.
+	 *  Dans certains cas, on veux afficher une popup pour lui demander s'il veux vraiment quitter */
+	public void faireActionPrecedent() {
+		ListView lv = (ListView)activiteCreationPartie.findViewById(R.id.liste_appareils_bluetoothS);
+		
+		if (lv.getCount() > 0) {
+			// Un utilisateur à rejoint la partie. On demande confirmation à l'utilisateur pour revenir au statut précédent.
+			AlertDialog.Builder builder = new AlertDialog.Builder(activiteCreationPartie);
+			builder.setMessage("Etes-vous sur de vouloir arrêter la partie ?");
+			builder.setCancelable(false);
+			builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					activiteCreationPartie.etapePrecedente(true);
+				}
+			});
+			builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					dialog.cancel();
+				}
+			});
+			AlertDialog alert = builder.create();
+			alert.show();
+		}
+		else {
+			// Aucune véritable action de l'utilisateur, donc il peut retourner au statut précédent
+			activiteCreationPartie.etapePrecedente(true);
 		}
 	}
 }
