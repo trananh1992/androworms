@@ -2,6 +2,8 @@ package com.androworms.debug;
 
 import java.util.List;
 
+import com.androworms.R;
+
 import android.app.Activity;
 import android.content.res.Configuration;
 import android.hardware.Sensor;
@@ -13,9 +15,6 @@ import android.view.Gravity;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-
-import com.androworms.Informations;
-import com.androworms.R;
 
 public class ActiviteDebug extends Activity {
 	
