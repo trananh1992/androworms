@@ -2,7 +2,6 @@ package com.androworms;
 
 import java.util.Date;
 
-import com.androworms.utile.Informations;
 
 import android.os.AsyncTask;
 import android.util.Log;

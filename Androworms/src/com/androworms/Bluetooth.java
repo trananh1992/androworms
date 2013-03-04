@@ -13,7 +13,6 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothSocket;
 import android.util.Log;
 
-
 /**
  * Cette classe inclue toutes les informations pour contacter
  * un joueur en bluetooth.
@@ -31,6 +30,9 @@ public class Bluetooth extends Contact {
 	
 	// Stockage ici de l'adaptateur Bluetooth de l'appareil
 	private static BluetoothAdapter bluetoothAdapter = null;
+	
+	/** Message de ACK pour singifie que le destinataire à bien reçu le message */
+	public static final String MESSAGE_ACK = "ACK";
 	
 	public Bluetooth(String adresse) {
 		super();
@@ -74,7 +76,7 @@ public class Bluetooth extends Contact {
 				res = is.read(buffer);
 				if (res != -1) {
 					String tmp = new String(buffer, CHARSET_NAME);
-					messageRecu.concat(tmp);
+					messageRecu = messageRecu.concat(tmp);
 				}
 			}
 		} catch (IOException e) {

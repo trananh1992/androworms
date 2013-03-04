@@ -14,8 +14,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.androworms.Informations;
 import com.androworms.R;
-import com.androworms.utile.Informations;
 
 public class ActiviteDebug extends Activity {
 	

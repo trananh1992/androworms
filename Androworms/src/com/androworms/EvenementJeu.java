@@ -10,7 +10,6 @@ import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
-import com.androworms.utile.Informations;
 
 public class EvenementJeu extends ScaleGestureDetector.SimpleOnScaleGestureListener implements OnTouchListener  {
 	
