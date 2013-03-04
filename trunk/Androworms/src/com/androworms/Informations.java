@@ -1,11 +1,10 @@
-package com.androworms.utile;
+package com.androworms;
 
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.util.DisplayMetrics;
 
-import com.androworms.Bluetooth;
 
 /** Classes qui contient des éléments sur les caractéristiques du téléphone.
  */

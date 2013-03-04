@@ -83,7 +83,7 @@ public class TacheClientConnexionBluetooth extends AsyncTask<Void, Integer, Bool
 				}
 			}
 			// je répond ACK au serveur
-			Bluetooth.envoyerTexte(socketServeur, "ACK");
+			Bluetooth.envoyerTexte(socketServeur, Bluetooth.MESSAGE_ACK);
 			// On affiche le nouveau nom dans la liste
 			publishProgress(2);
 		}

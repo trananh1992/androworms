@@ -24,7 +24,6 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.androworms.ui.BluetoothCustomAdapter;
-import com.androworms.utile.Informations;
 
 public class ActiviteCreationPartieBluetoothClient {
 	

@@ -5,7 +5,7 @@ import java.util.List;
 
 import android.bluetooth.BluetoothSocket;
 
-public class ParametresPartie {
+public final class ParametresPartie {
 	
 	// Mode de jeu
 	public static final int MODE_SOLO = 1;

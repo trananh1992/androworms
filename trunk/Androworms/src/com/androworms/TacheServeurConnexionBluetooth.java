@@ -66,7 +66,8 @@ public class TacheServeurConnexionBluetooth extends AsyncTask<Void, String, Bool
 				// on attend des connexions de clients
 				socket = socketServeur.accept();
 				
-				if (socket.getRemoteDevice() != null) { // FIXME : mieux gérer cette erreur
+				if (socket.getRemoteDevice() != null) {
+					// FIXME : mieux gérer cette erreur
 					Log.v(TAG, "Le serveur a accepté une connexion ! (device=" + socket.getRemoteDevice().getName() + ")");
 				}
 				else {
@@ -94,8 +95,8 @@ public class TacheServeurConnexionBluetooth extends AsyncTask<Void, String, Bool
 					// On communique avec les clients pour les informer qu'on passe à l'étape suivante
 					for (BluetoothSocket socket2 : ParametresPartie.getParametresPartie().getSocketsClients()) {
 						Bluetooth.envoyerObjet(socket2,true);
-						if (Bluetooth.recevoirTexte(socket2).equals("ACK")) {
-							Log.v(TAG,"ACK");
+						if (Bluetooth.recevoirTexte(socket2).equals(Bluetooth.MESSAGE_ACK)) {
+							Log.v(TAG,Bluetooth.MESSAGE_ACK);
 						}
 						else {
 							// FIXME : mieux traiter cette erreu
@@ -161,8 +162,8 @@ public class TacheServeurConnexionBluetooth extends AsyncTask<Void, String, Bool
 	private void envoyerAuxClientsLeNomDuNouveauJoueur(String nomNouveauJoueur) {
 		for (BluetoothSocket socket : ParametresPartie.getParametresPartie().getSocketsClients()) {
 			Bluetooth.envoyerObjet(socket, nomNouveauJoueur);
-			if (Bluetooth.recevoirTexte(socket).equals("ACK")) {
-				Log.v(TAG,"ACK");
+			if (Bluetooth.recevoirTexte(socket).equals(Bluetooth.MESSAGE_ACK)) {
+				Log.v(TAG,Bluetooth.MESSAGE_ACK);
 			}
 			else {
 				// FIXME : mieux traiter cette erreur
@@ -177,8 +178,8 @@ public class TacheServeurConnexionBluetooth extends AsyncTask<Void, String, Bool
 	private void envoyerAuNouveauJoueurLesNomsDesJoueursDejaConnecte(BluetoothSocket socket) {
 		// On envoie au nouveau client son nom pour qu'il se rajoute dans la liste
 		Bluetooth.envoyerObjet(socket, socket.getRemoteDevice().getName());
-		if (Bluetooth.recevoirTexte(socket).equals("ACK")) {
-			Log.v(TAG,"ACK");
+		if (Bluetooth.recevoirTexte(socket).equals(Bluetooth.MESSAGE_ACK)) {
+			Log.v(TAG,Bluetooth.MESSAGE_ACK);
 		}
 		else {
 			// FIXME : mieux traiter cette erreur
@@ -189,8 +190,8 @@ public class TacheServeurConnexionBluetooth extends AsyncTask<Void, String, Bool
 		
 		// On envoie au nouveau client le nom du serveur (le serveur est aussi un joueur !)
 		Bluetooth.envoyerObjet(socket, Bluetooth.getBluetoothAdapter().getName());
-		if (Bluetooth.recevoirTexte(socket).equals("ACK")) {
-			Log.v(TAG,"ACK");
+		if (Bluetooth.recevoirTexte(socket).equals(Bluetooth.MESSAGE_ACK)) {
+			Log.v(TAG,Bluetooth.MESSAGE_ACK);
 		}
 		else {
 			// FIXME : mieux traiter cette erreur
@@ -202,8 +203,8 @@ public class TacheServeurConnexionBluetooth extends AsyncTask<Void, String, Bool
 		// On lui envoie le nom des joueurs déjà connecté
 		for (BluetoothSocket bs : ParametresPartie.getParametresPartie().getSocketsClients()) {
 			Bluetooth.envoyerObjet(socket, bs.getRemoteDevice().getName());
-			if (Bluetooth.recevoirTexte(socket).equals("ACK")) {
-				Log.v(TAG,"ACK");
+			if (Bluetooth.recevoirTexte(socket).equals(Bluetooth.MESSAGE_ACK)) {
+				Log.v(TAG,Bluetooth.MESSAGE_ACK);
 			}
 			else {
 				// FIXME : mieux traiter cette erreur

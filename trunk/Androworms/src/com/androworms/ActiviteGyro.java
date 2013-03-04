@@ -12,7 +12,6 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
-import com.androworms.utile.Informations;
 
 public class ActiviteGyro extends Activity implements SensorEventListener {
 	
