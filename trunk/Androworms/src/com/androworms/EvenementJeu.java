@@ -1,5 +1,7 @@
 package com.androworms;
 
+import com.androworms.debug.Informations;
+
 import android.content.Context;
 import android.graphics.Matrix;
 import android.graphics.PointF;

@@ -1,5 +1,7 @@
 package com.androworms;
 
+import com.androworms.debug.Informations;
+
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;

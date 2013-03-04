@@ -23,6 +23,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.androworms.debug.Informations;
 import com.androworms.ui.BluetoothCustomAdapter;
 
 public class ActiviteCreationPartieBluetoothClient {
