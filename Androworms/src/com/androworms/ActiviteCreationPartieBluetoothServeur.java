@@ -1,6 +1,6 @@
 package com.androworms;
 
-import com.androworms.debug.Informations;
+import com.androworms.utile.Informations;
 
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
@@ -114,7 +114,7 @@ public class ActiviteCreationPartieBluetoothServeur {
 		});
 		
 		/** Démarrage du serveur Bluetooth **/
-		if (Informations.isBluetoothOn()) {
+		if (Bluetooth.getBluetoothAdapter().isEnabled()) {
 			activiteCreationPartieBluetooth.demarrerServeurBluetooth();
 		}
 	}
@@ -136,11 +136,11 @@ public class ActiviteCreationPartieBluetoothServeur {
 		// Désactivé si l'appareil est pas compatible Bluetooth :: TODO encore utile ??
 		tgEtatBluetooth.setEnabled(Informations.isCompatibleBluetooth());
 		// Coché si le Bluetooth est déjà activé
-		tgEtatBluetooth.setChecked(Informations.isBluetoothOn());
+		tgEtatBluetooth.setChecked(Bluetooth.getBluetoothAdapter().isEnabled());
 		
 		//btn_demarrerPartie.setEnabled(false);
 				
-		if (!Informations.isBluetoothOn()) {
+		if (!Bluetooth.getBluetoothAdapter().isEnabled()) {
 			// Le Bluetooth n'est pas actif
 			
 			// Elements visible + configuration

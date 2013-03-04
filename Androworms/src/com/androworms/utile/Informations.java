@@ -1,4 +1,4 @@
-package com.androworms.debug;
+package com.androworms.utile;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.res.Configuration;
@@ -18,13 +18,11 @@ public final class Informations {
 	private static int densityDpi = -1;
 	private static boolean compatibleBluetooth = false;
 	
-	private static BluetoothAdapter bluetoothAdapter = null;
-	
 	private Informations() {
 		
 	}
 	
-	public static void init(Resources r) {
+	public static void init(Resources r, BluetoothAdapter bluetoothAdapter) {
 		/* Chercher les informations sur la taille et la densité de l'écran */
 		DisplayMetrics metrics = r.getDisplayMetrics();
 		widthPixels = metrics.widthPixels;
@@ -35,7 +33,6 @@ public final class Informations {
 		screenLayoutSizeMask = c.screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
 		
 		/* Vérifie la compatibilité du Bluetooth */
-		bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		compatibleBluetooth = (bluetoothAdapter != null);
 	}
 
@@ -69,13 +66,5 @@ public final class Informations {
 
 	public static boolean isCompatibleBluetooth() {
 		return compatibleBluetooth;
-	}
-	
-	public static boolean isBluetoothOn() {
-		if (compatibleBluetooth) {
-			// Si le téléphone supporte le Bluetooth
-			return bluetoothAdapter.isEnabled();
-		}
-		return false;
 	}
 }

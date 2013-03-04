@@ -23,8 +23,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import com.androworms.debug.Informations;
 import com.androworms.ui.BluetoothCustomAdapter;
+import com.androworms.utile.Informations;
 
 public class ActiviteCreationPartieBluetoothClient {
 	
@@ -141,9 +141,9 @@ public class ActiviteCreationPartieBluetoothClient {
 		// Désactivé si l'appareil est pas compatible Bluetooth :: TODO encore utile ??
 		tgEtatBluetooth.setEnabled(Informations.isCompatibleBluetooth());
 		// Coché si le Bluetooth est déjà activé
-		tgEtatBluetooth.setChecked(Informations.isBluetoothOn());
+		tgEtatBluetooth.setChecked(Bluetooth.getBluetoothAdapter().isEnabled());
 		
-		if (Informations.isBluetoothOn()) {
+		if (Bluetooth.getBluetoothAdapter().isEnabled()) {
 			rafraichirListeAppareils();
 		}
 		

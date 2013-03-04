@@ -3,6 +3,7 @@ package com.androworms.debug;
 import java.util.List;
 
 import com.androworms.R;
+import com.androworms.utile.Informations;
 
 import android.app.Activity;
 import android.content.res.Configuration;
