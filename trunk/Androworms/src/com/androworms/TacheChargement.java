@@ -2,7 +2,7 @@ package com.androworms;
 
 import java.util.Date;
 
-import com.androworms.debug.Informations;
+import com.androworms.utile.Informations;
 
 
 import android.os.AsyncTask;
@@ -29,7 +29,7 @@ public class TacheChargement extends AsyncTask<ActiviteAndroworms, Integer, Bool
 		/** DEBUT DE ZONE SPECIAL POUR LES OPERATIONS DE CHARGEMENT DE DONNEES POUR ANDROWORMS **/
 		
 		/* Chargement des informations du téléphone */
-		Informations.init(activiteAndroworms.getResources());
+		Informations.init(activiteAndroworms.getResources(), Bluetooth.getBluetoothAdapter());
 		
 		
 		/** FIN DE ZONE SPECIAL POUR LES OPERATIONS DE CHARGEMENT DE DONNEES POUR ANDROWORMS **/

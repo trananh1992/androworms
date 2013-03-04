@@ -20,8 +20,8 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import com.androworms.debug.Informations;
 import com.androworms.ui.ClavierDirectionnel;
+import com.androworms.utile.Informations;
 
 public class ActiviteJeu extends Activity {
 	

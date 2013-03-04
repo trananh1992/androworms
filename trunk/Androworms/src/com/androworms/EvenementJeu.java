@@ -1,6 +1,6 @@
 package com.androworms;
 
-import com.androworms.debug.Informations;
+import com.androworms.utile.Informations;
 
 import android.content.Context;
 import android.graphics.Matrix;
