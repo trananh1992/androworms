@@ -56,6 +56,7 @@ public class ActiviteChoixOption extends Activity {
 				}
 				else
 				{
+					Log.e("activity","démare l'activité editeur");
 					demarreCreationCarte();
 				}
 			}
@@ -104,6 +105,10 @@ public class ActiviteChoixOption extends Activity {
 				adapter.notifyDataSetChanged();
 				Spinner mapChooser = (Spinner)findViewById(R.id.mapChooser);
 				mapChooser.setAdapter(adapter);
+			}
+			else
+			{
+				//select other element
 			}
 		}
 	}
