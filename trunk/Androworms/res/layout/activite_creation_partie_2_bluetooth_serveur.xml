@@ -83,7 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/attente_connexion" />
+            android:text="@string/pas_de_donnees" />
 
         <Button
             android:id="@+id/btn_precedent"

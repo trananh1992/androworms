@@ -1,7 +1,5 @@
 package com.androworms;
 
-import com.androworms.utile.Informations;
-
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
@@ -133,19 +131,17 @@ public class ActiviteCreationPartieBluetoothServeur {
 		ProgressBar pbAttenteConnexion = (ProgressBar)activiteCreationPartie.findViewById(R.id.pb_AttenteConnexion);
 		
 		/** Configuration des composants **/
-		// Désactivé si l'appareil est pas compatible Bluetooth :: TODO encore utile ??
-		tgEtatBluetooth.setEnabled(Informations.isCompatibleBluetooth());
-		// Coché si le Bluetooth est déjà activé
+		// Cocher si le Bluetooth est déjà activé
 		tgEtatBluetooth.setChecked(Bluetooth.getBluetoothAdapter().isEnabled());
 		
-		//btn_demarrerPartie.setEnabled(false);
-				
+		
+		
 		if (!Bluetooth.getBluetoothAdapter().isEnabled()) {
 			// Le Bluetooth n'est pas actif
 			
 			// Elements visible + configuration
 			tvInformation.setVisibility(View.VISIBLE);
-			tvInformation.setText("Veuillez activer le Bluetooth pour pouvoir jouer !");
+			tvInformation.setText(R.string.message_bluetooth_serveur_activer_bluetooth);
 			
 			// Elements masqués
 			btnMontrerBluetooth.setVisibility(View.INVISIBLE);
@@ -176,6 +172,9 @@ public class ActiviteCreationPartieBluetoothServeur {
 			pbMinuteur.setVisibility(View.INVISIBLE);
 			
 			pbAttenteConnexion.setVisibility(View.VISIBLE);
+			
+			tvInformation.setVisibility(View.VISIBLE);
+			tvInformation.setText(R.string.message_bluetooth_serveur_attente_connexion);
 		}
 	}
 	

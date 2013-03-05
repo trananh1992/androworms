@@ -66,7 +66,6 @@
     <string name="analyse">Analyse</string>
     <string name="connexion">Connexion</string>
     <string name="selectionner_appareil_Bluetooth">Veuillez sélectionner un appareil Bluetooth</string>
-    <string name="attente_connexion">Attente de connexion de joueurs&#8230;</string>
     <string name="montrer_bluetooth">Montrer Bluetooth</string>
     <string name="choix_difficulte_IA">Choix de la difficulté de l\'IA :</string>
     <string name="jouer_bluetooth">Jouer en Bluetooth</string>
@@ -77,5 +76,7 @@
     <string name="non">Non</string>
     <string name="annuler">Annuler</string>
     <string name="ok">OK</string>
+    <string name="message_bluetooth_serveur_activer_bluetooth">Veuillez activer le Bluetooth pour pouvoir jouer !</string>
+    <string name="message_bluetooth_serveur_attente_connexion">Attente de connexion de joueurs&#8230;</string>
     
 </resources>
