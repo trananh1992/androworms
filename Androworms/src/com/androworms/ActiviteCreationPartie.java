@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -16,6 +17,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+
+import com.androworms.utile.Informations;
 
 public class ActiviteCreationPartie extends Activity {
 	
@@ -41,15 +44,36 @@ public class ActiviteCreationPartie extends Activity {
 	private void etape1() {
 		// Etape courante
 		etape = ETAPE_1_CHOIX_MODE_JEU;
+		
 		// Affichage de la vue
 		setContentView(R.layout.activite_creation_partie_1_mode);
-		// Gestion des composants > Mode de jeu
+		
+		// Gestion des composants > Mode de jeu > 1 téléphone
 		findViewById(R.id.btn_partie_solo).setOnClickListener(evenements);
 		findViewById(R.id.btn_multi_joueur).setOnClickListener(evenements);
-		findViewById(R.id.btn_bluetooth_creer).setOnClickListener(evenements);
-		findViewById(R.id.btn_bluetooth_rejoindre).setOnClickListener(evenements);
-		findViewById(R.id.btn_wifi_creer).setOnClickListener(evenements);
-		findViewById(R.id.btn_wifi_rejoindre).setOnClickListener(evenements);
+		
+		// Gestion des composants > Mode de jeu > Bluetooth
+		if (Informations.isCompatibleBluetooth()) {
+			// Compatible Bluetooth
+			findViewById(R.id.btn_bluetooth_creer).setOnClickListener(evenements);
+			findViewById(R.id.btn_bluetooth_rejoindre).setOnClickListener(evenements);
+		} else {
+			// Pas compatible Bluetooth
+			findViewById(R.id.btn_bluetooth_creer).setEnabled(false);
+			findViewById(R.id.btn_bluetooth_rejoindre).setEnabled(false);
+		}
+		
+		// Gestion des composants > Mode de jeu > Wifi Direct
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+			// Compatible Wifi Direct
+			findViewById(R.id.btn_wifi_creer).setOnClickListener(evenements);
+			findViewById(R.id.btn_wifi_rejoindre).setOnClickListener(evenements);
+		} else {
+			// Pas compatible Wifi Direct
+			findViewById(R.id.btn_wifi_creer).setEnabled(false);
+			findViewById(R.id.btn_wifi_rejoindre).setEnabled(false);
+		}
+		
 		// Gestion des composants > Aide
 		findViewById(R.id.img_aide_1_telephone).setOnClickListener(evenements);
 		findViewById(R.id.img_aide_2_telephones).setOnClickListener(evenements);

@@ -85,7 +85,7 @@ public class ActiviteCreationPartieBluetooth {
 			}
 			
 			// On actualise l'interface graphique dans les deux cas (sinon, le ToggleButton se met quand même à ON)
-			activiteCreationPartieBluetoothServeur.actualisationInterfaceBluetoothServeur();
+			getServeur().actualisationInterfaceBluetoothServeur();
 			
 			break;
 		case DEMANDE_ACTIVATION_BLUETOOTH_CLIENT:
@@ -101,7 +101,7 @@ public class ActiviteCreationPartieBluetooth {
 			}
 			
 			// On actualise l'interface graphique dans les deux cas (sinon, le ToggleButton se met quand même à ON)
-			activiteCreationPartieBluetoothClient.actualisationInterfaceBluetoothClient();
+			getClient().actualisationInterfaceBluetoothClient();
 			
 			break;
 		case DEMANDE_VISIBILITE_BLUETOOTH_SERVEUR:
