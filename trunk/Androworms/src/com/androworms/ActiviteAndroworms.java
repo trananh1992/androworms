@@ -92,7 +92,8 @@ public class ActiviteAndroworms extends Activity {
 			nomVersion = this.getPackageManager().getPackageInfo(this.getPackageName(), 0).versionName;
 			codeVersion = this.getPackageManager().getPackageInfo(this.getPackageName(), 0).versionCode;
 		} catch (NameNotFoundException e) {
-			e.printStackTrace();
+			Log.e(TAG, "Erreur à la récupération du nom de version de l'application");
+			Log.e(TAG, "\t" + e.getMessage());
 		}
 		tvNumeroVersion.setText(nomVersion + " (" + codeVersion + ")");
 		
