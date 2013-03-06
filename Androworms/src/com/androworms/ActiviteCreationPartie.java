@@ -58,8 +58,8 @@ public class ActiviteCreationPartie extends Activity {
 	
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
-	    super.onConfigurationChanged(newConfig);
-	    Log.v(TAG,"onConfigurationChanged()");
+		super.onConfigurationChanged(newConfig);
+		Log.v(TAG,"onConfigurationChanged()");
 	}
 	
 	private void etape1() {

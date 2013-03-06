@@ -32,7 +32,7 @@
     <string name="btn_precedent">Précédent</string>
     <string name="btn_demarrer_la_partie">Démarrer la partie</string>
     <string name="tout_effacer">Tout effacer</string>
-    
+
     <string-array name="liste_developpeurs">
         <item>Audrey Ernewein</item>
         <item>Damien Finck</item>
@@ -40,7 +40,7 @@
         <item>Renaud Vanhoutreve</item>
         <item>William Bon</item>
     </string-array>
-    
+
     <string name="titre_choix_mode_jeu">Choix du mode de jeu</string>
     <string name="titre_config_mode_jeu">Configuration du mode de jeu</string>
     <string name="titre_choix_carte">Choix de la carte</string>
@@ -80,5 +80,5 @@
     <string name="message_bluetooth_serveur_confirmation_continuer">Tous les joueurs sont arrivé ?</string>
     <string name="message_bluetooth_serveur_confirmation_quitter">Etes-vous sûr de vouloir arrêter la partie ?</string>
     <string name="message_bluetooth_client_connexion_reussi">Connexion réussi ! En attente des autres joueurs&#8230;</string>
-    
+
 </resources>
