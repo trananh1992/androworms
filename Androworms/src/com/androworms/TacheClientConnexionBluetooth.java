@@ -112,7 +112,7 @@ public class TacheClientConnexionBluetooth extends AsyncTask<Void, Integer, Bool
 			break;
 		case 1:
 			// on affiche un message à l'écran
-			tvMessage.setText("Connexion réussi ! En attente des autres joueurs...");
+			tvMessage.setText(R.string.message_bluetooth_client_connexion_reussi);
 			
 			
 			// Gestion de la liste des clients qui vont aussi jouer (ce que le serveur nous envoie)

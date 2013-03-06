@@ -5,6 +5,7 @@ import java.io.File;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
@@ -39,6 +40,26 @@ public class ActiviteCreationPartie extends Activity {
 		Log.v(TAG, "Début de la création de la partie");
 		evenements = new ActiviteCreationPartieEvent(this);
 		etapeSuivante();
+	}
+	
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+		Log.v(TAG,"onRestart()");
+		if (ParametresPartie.getParametresPartie().getModeJeu() == ParametresPartie.MODE_BLUETOOTH_SERVEUR) {
+			Log.v(TAG, "SERVEUR");
+			activiteCreationPartieBluetooth.getServeur().actualisationInterfaceBluetoothServeur();
+		}
+		else if (ParametresPartie.getParametresPartie().getModeJeu() == ParametresPartie.MODE_BLUETOOTH_CLIENT) {
+			Log.v(TAG, "CLIENT");
+			activiteCreationPartieBluetooth.getClient().actualisationInterfaceBluetoothClient();
+		}
+	}
+	
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+	    super.onConfigurationChanged(newConfig);
+	    Log.v(TAG,"onConfigurationChanged()");
 	}
 	
 	private void etape1() {

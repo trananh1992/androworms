@@ -14,7 +14,6 @@
     <string name="menu_jeu">Jouer</string>
     <string name="menu_editeur">Editeur de carte</string>
     <string name="menu_parametres">Paramètres</string>
-    <string name="numero_version">0.0.1 Alpha</string>
     <string name="joueur1">Joueur 1</string>
     <string name="joueur2">Joueur 2</string>
     <string name="informations">Informations</string>
@@ -76,7 +75,10 @@
     <string name="non">Non</string>
     <string name="annuler">Annuler</string>
     <string name="ok">OK</string>
-    <string name="message_bluetooth_serveur_activer_bluetooth">Veuillez activer le Bluetooth pour pouvoir jouer !</string>
+    <string name="message_bluetooth_activer_bluetooth">Veuillez activer le Bluetooth pour pouvoir jouer !</string>
     <string name="message_bluetooth_serveur_attente_connexion">Attente de connexion de joueurs&#8230;</string>
+    <string name="message_bluetooth_serveur_confirmation_continuer">Tous les joueurs sont arrivé ?</string>
+    <string name="message_bluetooth_serveur_confirmation_quitter">Etes-vous sûr de vouloir arrêter la partie ?</string>
+    <string name="message_bluetooth_client_connexion_reussi">Connexion réussi ! En attente des autres joueurs&#8230;</string>
     
 </resources>

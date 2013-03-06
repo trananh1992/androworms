@@ -19,8 +19,10 @@ public class ActiviteCreationPartieBluetooth {
 	
 	// Codes de demande de l'Intent sur l'activation/visibilité du Bluetooth
 	public static final int DEMANDE_ACTIVATION_BLUETOOTH_SERVEUR = 1;
-	public static final int DEMANDE_ACTIVATION_BLUETOOTH_CLIENT = 2;
-	public static final int DEMANDE_VISIBILITE_BLUETOOTH_SERVEUR = 3;
+	public static final int DEMANDE_DESACTIVATION_BLUETOOTH_SERVEUR = 2;
+	public static final int DEMANDE_ACTIVATION_BLUETOOTH_CLIENT = 3;
+	public static final int DEMANDE_DESACTIVATION_BLUETOOTH_CLIENT = 4;
+	public static final int DEMANDE_VISIBILITE_BLUETOOTH_SERVEUR = 5;
 	
 	// Activité de création de la partie
 	private ActiviteCreationPartie activiteCreationPartie;
@@ -88,6 +90,9 @@ public class ActiviteCreationPartieBluetooth {
 			getServeur().actualisationInterfaceBluetoothServeur();
 			
 			break;
+		case DEMANDE_DESACTIVATION_BLUETOOTH_SERVEUR:
+			getServeur().actualisationInterfaceBluetoothServeur();
+			break;
 		case DEMANDE_ACTIVATION_BLUETOOTH_CLIENT:
 			// On reçois une réponse de l'activation Bluetooth
 			if (resultCode == Activity.RESULT_OK) {
@@ -103,6 +108,9 @@ public class ActiviteCreationPartieBluetooth {
 			// On actualise l'interface graphique dans les deux cas (sinon, le ToggleButton se met quand même à ON)
 			getClient().actualisationInterfaceBluetoothClient();
 			
+			break;
+		case DEMANDE_DESACTIVATION_BLUETOOTH_CLIENT:
+			getClient().actualisationInterfaceBluetoothClient();
 			break;
 		case DEMANDE_VISIBILITE_BLUETOOTH_SERVEUR:
 			// On reçois une réponse de l'activation de la visiblité du Bluetooth (uniquement pour le serveur Bluetooth)

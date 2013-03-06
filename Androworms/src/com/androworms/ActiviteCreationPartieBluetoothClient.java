@@ -24,7 +24,6 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.androworms.ui.BluetoothCustomAdapter;
-import com.androworms.utile.Informations;
 
 public class ActiviteCreationPartieBluetoothClient {
 	
@@ -67,8 +66,6 @@ public class ActiviteCreationPartieBluetoothClient {
 		
 		/** Création des évenements sur les composants graphiques **/
 		tgEtatBluetooth.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			// FIXME : ce bouton peut ne pas indiquer l'état réel du Bluetooth
-			// Exemple : on désactive le Bluetooth en Alt/Tab
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if (isChecked) {
 					// Activation du Bluetooth (2 possibilités)
@@ -78,17 +75,13 @@ public class ActiviteCreationPartieBluetoothClient {
 					// La seconde consiste à l'activer l'activer directement sans accord de l'utilisateur : mBluetoothAdapter.enable();
 					// La documentation est formel sur le sujet : IL EST INTERDIT DE FAIRE LA METHODE 2 !
 					// cf http://developer.android.com/reference/android/bluetooth/BluetoothAdapter.html#enable()
-					
-					// On refresh les infos
-					actualisationInterfaceBluetoothClient();
 				} else {
 					// Désactivation du Bluetooth
 					Bluetooth.getBluetoothAdapter().disable();
-					// On refresh les infos
-					actualisationInterfaceBluetoothClient();
-					// TODO : NE MARCHE PAS COMME IL DEVRAIT
-					// ce refresh devrait vider la liste. mais je pense que la désactivation du Bletooth prend quelques secondes
-					// et que du coup, la liste ne se vide pas.
+					
+					// On lance une surveillance du changement d'état du Bluetooth car c'est une opération asynchrone.
+					Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_STATE_CHANGED);
+					activiteCreationPartie.startActivityForResult(enableBtIntent, ActiviteCreationPartieBluetooth.DEMANDE_DESACTIVATION_BLUETOOTH_CLIENT);
 				}
 			}
 		});
@@ -138,15 +131,16 @@ public class ActiviteCreationPartieBluetoothClient {
 		ToggleButton tgEtatBluetooth = (ToggleButton)activiteCreationPartie.findViewById(R.id.tg_EtatBluetoothC);
 		
 		/** Configuration des composants **/
-		// Désactivé si l'appareil est pas compatible Bluetooth :: TODO encore utile ??
-		tgEtatBluetooth.setEnabled(Informations.isCompatibleBluetooth());
 		// Coché si le Bluetooth est déjà activé
 		tgEtatBluetooth.setChecked(Bluetooth.getBluetoothAdapter().isEnabled());
 		
 		if (Bluetooth.getBluetoothAdapter().isEnabled()) {
 			rafraichirListeAppareils();
 		}
-		
+		else {
+			ListView lv = (ListView)activiteCreationPartie.findViewById(R.id.liste_appareils_bluetooth);
+			lv.setAdapter(null);
+		}
 	}
 	
 	/** Liste les appareils bluetooth jumélés **/
@@ -189,7 +183,7 @@ public class ActiviteCreationPartieBluetoothClient {
 		
 		BluetoothCustomAdapter adapter = new BluetoothCustomAdapter(activiteCreationPartie);
 		
-		adapter.ajouterSections("Appareils appairés (jumelés ?)", adapterA);
+		adapter.ajouterSections("Appareils jumelés", adapterA);
 		adapter.ajouterSections("Appareils à proximité", adapterB);
 		
 		lv.setAdapter(adapter);
