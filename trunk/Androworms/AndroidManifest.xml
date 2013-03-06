@@ -3,7 +3,7 @@
     package="com.androworms"
     android:installLocation="auto"
     android:versionCode="1"
-    android:versionName="@string/numero_version" >
+    android:versionName="0.0.2 Alpha" >
 
     <uses-sdk
         android:minSdkVersion="10"

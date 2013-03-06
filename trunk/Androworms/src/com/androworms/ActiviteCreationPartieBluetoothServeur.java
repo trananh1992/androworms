@@ -29,7 +29,6 @@ public class ActiviteCreationPartieBluetoothServeur {
 	
 	/** Chargement de l'interface Bluetooth > Serveur **/
 	public void chargementInterfaceBluetoothServeur() {
-		
 		Log.v(TAG, "Chargement de l'interface : Bluetooth > Serveur");
 		
 		// Définition des composants
@@ -42,8 +41,6 @@ public class ActiviteCreationPartieBluetoothServeur {
 		
 		/** Actions sur les composants **/
 		tgEtatBluetooth.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			// FIXME : ce bouton peut ne pas indiquer l'état réel du Bluetooth
-			// Exemple : on désactive le Bluetooth en Alt/Tab
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if (isChecked) {
 					// Activation du Bluetooth (2 possibilités)
@@ -53,17 +50,13 @@ public class ActiviteCreationPartieBluetoothServeur {
 					// La seconde consiste à l'activer l'activer directement sans accord de l'utilisateur : mBluetoothAdapter.enable();
 					// La documentation est formel sur le sujet : IL EST INTERDIT DE FAIRE LA METHODE 2 !
 					// cf http://developer.android.com/reference/android/bluetooth/BluetoothAdapter.html#enable()
-					
-					// On refresh les infos
-					actualisationInterfaceBluetoothServeur();
 				} else {
 					// Désactivation du Bluetooth
 					Bluetooth.getBluetoothAdapter().disable();
-					// On refresh les infos
-					actualisationInterfaceBluetoothServeur();
-					// TODO : NE MARCHE PAS COMME IL DEVRAIT
-					// ce refresh devrait vider la liste. mais je pense que la désactivation du Bletooth prend quelques secondes
-					// et que du coup, la liste ne se vide pas.
+					
+					// On lance une surveillance du changement d'état du Bluetooth car c'est une opération asynchrone.
+					Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_STATE_CHANGED);
+					activiteCreationPartie.startActivityForResult(enableBtIntent, ActiviteCreationPartieBluetooth.DEMANDE_DESACTIVATION_BLUETOOTH_SERVEUR);
 				}
 			}
 		});
@@ -77,30 +70,29 @@ public class ActiviteCreationPartieBluetoothServeur {
 				//startActivity(discoverableIntent);
 				activiteCreationPartie.startActivityForResult(discoverableIntent, ActiviteCreationPartieBluetooth.DEMANDE_VISIBILITE_BLUETOOTH_SERVEUR);
 				
-				// On refresh les infos
+				// On refresh les informations
 				actualisationInterfaceBluetoothServeur();
 			}
 		});
 		
-		/* On démarrer la partie */
+		/* on passe à l'étape suivante */
 		btnSuivant.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				Log.v(TAG,"On démarre la partie ?");
 				if (activiteCreationPartieBluetooth.getServeurConnexionBluetooth() == null) {
 					Log.v(TAG,"Vous n'avez jamais lancer le serveur");
 				} else {
 					
 					AlertDialog.Builder builder = new AlertDialog.Builder(activiteCreationPartie);
-					builder.setMessage("Tous les joueurs sont arrivé ?");
+					builder.setMessage(R.string.message_bluetooth_serveur_confirmation_continuer);
 					builder.setCancelable(false);
-					builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+					builder.setPositiveButton(R.string.oui, new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int id) {
 							// On arrête le serveur de connexion Bluetooth
 							Log.v(TAG,"Arret du serveur de connexion Bluetooth");
 							activiteCreationPartieBluetooth.getServeurConnexionBluetooth().fermetureConnexionsForce();
 						}
 					});
-					builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+					builder.setNegativeButton(R.string.non, new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int id) {
 							dialog.cancel();
 						}
@@ -141,7 +133,7 @@ public class ActiviteCreationPartieBluetoothServeur {
 			
 			// Elements visible + configuration
 			tvInformation.setVisibility(View.VISIBLE);
-			tvInformation.setText(R.string.message_bluetooth_serveur_activer_bluetooth);
+			tvInformation.setText(R.string.message_bluetooth_activer_bluetooth);
 			
 			// Elements masqués
 			btnMontrerBluetooth.setVisibility(View.INVISIBLE);
@@ -195,14 +187,14 @@ public class ActiviteCreationPartieBluetoothServeur {
 		if (lv.getCount() > 0) {
 			// Un utilisateur à rejoint la partie. On demande confirmation à l'utilisateur pour revenir au statut précédent.
 			AlertDialog.Builder builder = new AlertDialog.Builder(activiteCreationPartie);
-			builder.setMessage("Etes-vous sur de vouloir arrêter la partie ?");
+			builder.setMessage(R.string.message_bluetooth_serveur_confirmation_quitter);
 			builder.setCancelable(false);
-			builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+			builder.setPositiveButton(R.string.oui, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
 					activiteCreationPartie.etapePrecedente(true);
 				}
 			});
-			builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+			builder.setNegativeButton(R.string.non, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
 					dialog.cancel();
 				}

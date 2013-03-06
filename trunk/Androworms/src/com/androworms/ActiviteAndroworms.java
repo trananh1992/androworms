@@ -2,6 +2,7 @@ package com.androworms;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -82,6 +83,18 @@ public class ActiviteAndroworms extends Activity {
 	public void chargerMenuCredits() {
 		/* Affiche la vue */
 		setContentView(R.layout.credits);
+		
+		/* Numéro de version */
+		TextView tvNumeroVersion = (TextView)findViewById(R.id.txt_version);
+		String nomVersion = "";
+		int codeVersion = 0;
+		try {
+			nomVersion = this.getPackageManager().getPackageInfo(this.getPackageName(), 0).versionName;
+			codeVersion = this.getPackageManager().getPackageInfo(this.getPackageName(), 0).versionCode;
+		} catch (NameNotFoundException e) {
+			e.printStackTrace();
+		}
+		tvNumeroVersion.setText(nomVersion + " (" + codeVersion + ")");
 		
 		/* Affiche la liste des développeurs */
 		String[] listeDev = getResources().getStringArray(R.array.liste_developpeurs);

@@ -99,7 +99,7 @@ public class TacheServeurConnexionBluetooth extends AsyncTask<Void, String, Bool
 							Log.v(TAG,Bluetooth.MESSAGE_ACK);
 						}
 						else {
-							// FIXME : mieux traiter cette erreu
+							// FIXME : mieux traiter cette erreur
 							// 1) relancer le client
 							// 2) supprimer le client
 							Log.e(TAG,"ERREUR --> !!");
