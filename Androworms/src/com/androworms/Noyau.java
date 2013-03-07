@@ -171,8 +171,12 @@ public class Noyau {
 		Log.v(TAG_NOYAU, "On tire");
 	}
 	
-	public void animerAndroid(Personnage p) {
-		graphique.animerAndroid(p);
+	public void animerAndroidDroite(Personnage p) {
+		graphique.animerAndroidDroite(p);
+	}
+	
+	public void animerAndroidGauche(Personnage p) {
+		graphique.animerAndroidGauche(p);
 	}
 	
 	public void stopAnimationAndroid() {
