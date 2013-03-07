@@ -84,8 +84,10 @@ public class MoteurGraphique extends RelativeLayout {
 	private List<ImageSurCarte> images;
 	private ProgressBar pbTest;
 	
-	public AnimationDrawable animPerso;
-	public AnimationDrawable animPerso2;
+	public AnimationDrawable animDroitePersoPrincipal;
+	public AnimationDrawable animGauchePersoPrincipal;
+	public AnimationDrawable animDroitePerso2;
+	public AnimationDrawable animGauchePerso2;
 	
 	public MoteurGraphique(Context context) {
 		super(context);
@@ -375,14 +377,7 @@ public class MoteurGraphique extends RelativeLayout {
 				images.add(imgSurCarte);
 				
 				ImageView perso = (ImageView) imgSurCarte;
-				perso.setBackgroundResource(R.drawable.animation_android);
-				Personnage persoPrincipal = noyau.getMonde().getPersonnagePrincipal();
-				if(persoPrincipal.equals(p)) {
-					animPerso = (AnimationDrawable) perso.getBackground();
-				}
-				else {
-					animPerso2 = (AnimationDrawable) perso.getBackground();
-				}
+				perso.setBackgroundResource(R.drawable.animation_android_droite);
 			}
 			
 			for(ObjetSurCarte objSurCarte : monde.getListeObjetCarte()) {
@@ -395,19 +390,69 @@ public class MoteurGraphique extends RelativeLayout {
 		}
 	}
 	
-	public void animerAndroid(Personnage p) {
+	public void animerAndroidDroite(Personnage p) {
 		Personnage persoPrincipal = noyau.getMonde().getPersonnagePrincipal();
-		if(persoPrincipal.equals(p)) {
-			animPerso.start();
+		
+		for(ImageSurCarte img : images) {
+			
+			if(img.getElement().equals(p)) {
+				ImageView perso = (ImageView) img;
+				perso.setBackgroundResource(R.drawable.animation_android_droite);
+				
+				if(persoPrincipal.equals(p)) {
+					animDroitePersoPrincipal = (AnimationDrawable) perso.getBackground();
+					animDroitePersoPrincipal.start();
+				}
+				else {
+					animDroitePerso2 = (AnimationDrawable) perso.getBackground();
+					animDroitePerso2.start();
+				}
+			}
 		}
-		else {
-			animPerso2.start();
+	}
+	
+	public void animerAndroidGauche(Personnage p) {
+		Personnage persoPrincipal = noyau.getMonde().getPersonnagePrincipal();
+		
+		for(ImageSurCarte img : images) {
+			
+			if(img.getElement().equals(p)) {
+				ImageView perso = (ImageView) img;
+				perso.setBackgroundResource(R.drawable.animation_android_gauche);
+				
+				if(persoPrincipal.equals(p)) {
+					animGauchePersoPrincipal = (AnimationDrawable) perso.getBackground();
+					animGauchePersoPrincipal.start();
+				}
+				else {
+					animGauchePerso2 = (AnimationDrawable) perso.getBackground();
+					animGauchePerso2.start();
+				}
+			}
 		}
 	}
 	
 	public void stopAnimationAndroid() {
-		animPerso.stop();
-		animPerso2.stop();
+		
+		if(animDroitePersoPrincipal != null)
+		{
+			animDroitePersoPrincipal.stop();
+		}
+		
+		if(animDroitePerso2 != null)
+		{
+			animDroitePerso2.stop();
+		}
+		
+		if(animGauchePersoPrincipal != null)
+		{
+			animGauchePersoPrincipal.stop();
+		}
+		
+		if(animGauchePerso2 != null)
+		{
+			animGauchePerso2.stop();
+		}
 	}
 	
 	public void ajouterElementSurCarte(ElementSurCarte elt) {
