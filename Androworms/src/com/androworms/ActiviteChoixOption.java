@@ -26,7 +26,7 @@ public class ActiviteChoixOption extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		/* Affiche la vue par défaut */
-		setContentView(R.layout.choix_options);
+		setContentView(R.layout.activite_choix_options);
 		
 		File root = Environment.getExternalStorageDirectory();
 		File sd = new File(root, ActiviteAndroworms.DOSSIER_CARTE);
