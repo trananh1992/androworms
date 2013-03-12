@@ -44,7 +44,7 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 		SurfaceView surfaceView;
 		SurfaceHolder surfaceHolder;
 		getWindow().setFormat(PixelFormat.TRANSLUCENT);
-		setContentView(R.layout.camera);
+		setContentView(R.layout.activite_camera);
 		surfaceView = (SurfaceView)findViewById(R.id.surface);
 		surfaceHolder = surfaceView.getHolder();
 		surfaceHolder.addCallback(this);
