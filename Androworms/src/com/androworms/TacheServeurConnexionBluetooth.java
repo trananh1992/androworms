@@ -94,16 +94,7 @@ public class TacheServeurConnexionBluetooth extends AsyncTask<Void, String, Bool
 					
 					// On communique avec les clients pour les informer qu'on passe à l'étape suivante
 					for (BluetoothSocket socket2 : ParametresPartie.getParametresPartie().getSocketsClients()) {
-						Bluetooth.envoyerObjet(socket2,true);
-						if (Bluetooth.recevoirTexte(socket2).equals(Bluetooth.MESSAGE_ACK)) {
-							Log.v(TAG,Bluetooth.MESSAGE_ACK);
-						}
-						else {
-							// FIXME : mieux traiter cette erreur
-							// 1) relancer le client
-							// 2) supprimer le client
-							Log.e(TAG,"ERREUR --> !!");
-						}
+						Bluetooth.envoyerObjet(socket2, true);
 					}
 				} else {
 					// C'est un cas non prévu -> génération d'une exception
@@ -162,15 +153,6 @@ public class TacheServeurConnexionBluetooth extends AsyncTask<Void, String, Bool
 	private void envoyerAuxClientsLeNomDuNouveauJoueur(String nomNouveauJoueur) {
 		for (BluetoothSocket socket : ParametresPartie.getParametresPartie().getSocketsClients()) {
 			Bluetooth.envoyerObjet(socket, nomNouveauJoueur);
-			if (Bluetooth.recevoirTexte(socket).equals(Bluetooth.MESSAGE_ACK)) {
-				Log.v(TAG,Bluetooth.MESSAGE_ACK);
-			}
-			else {
-				// FIXME : mieux traiter cette erreur
-				// 1) relancer le client
-				// 2) supprimer le client
-				Log.e(TAG,"ERREUR --> !!");
-			}
 		}
 	}
 	
@@ -178,40 +160,13 @@ public class TacheServeurConnexionBluetooth extends AsyncTask<Void, String, Bool
 	private void envoyerAuNouveauJoueurLesNomsDesJoueursDejaConnecte(BluetoothSocket socket) {
 		// On envoie au nouveau client son nom pour qu'il se rajoute dans la liste
 		Bluetooth.envoyerObjet(socket, socket.getRemoteDevice().getName());
-		if (Bluetooth.recevoirTexte(socket).equals(Bluetooth.MESSAGE_ACK)) {
-			Log.v(TAG,Bluetooth.MESSAGE_ACK);
-		}
-		else {
-			// FIXME : mieux traiter cette erreur
-			// 1) relancer le client
-			// 2) supprimer le client
-			Log.e(TAG,"ERREUR --> !!");
-		}
 		
 		// On envoie au nouveau client le nom du serveur (le serveur est aussi un joueur !)
 		Bluetooth.envoyerObjet(socket, Bluetooth.getBluetoothAdapter().getName());
-		if (Bluetooth.recevoirTexte(socket).equals(Bluetooth.MESSAGE_ACK)) {
-			Log.v(TAG,Bluetooth.MESSAGE_ACK);
-		}
-		else {
-			// FIXME : mieux traiter cette erreur
-			// 1) relancer le client
-			// 2) supprimer le client
-			Log.e(TAG,"ERREUR --> !!");
-		}
 		
 		// On lui envoie le nom des joueurs déjà connecté
 		for (BluetoothSocket bs : ParametresPartie.getParametresPartie().getSocketsClients()) {
 			Bluetooth.envoyerObjet(socket, bs.getRemoteDevice().getName());
-			if (Bluetooth.recevoirTexte(socket).equals(Bluetooth.MESSAGE_ACK)) {
-				Log.v(TAG,Bluetooth.MESSAGE_ACK);
-			}
-			else {
-				// FIXME : mieux traiter cette erreur
-				// 1) relancer le client
-				// 2) supprimer le client
-				Log.e(TAG,"ERREUR --> !!");
-			}
 		}
 	}
 }
