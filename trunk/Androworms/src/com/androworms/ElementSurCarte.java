@@ -1,10 +1,8 @@
 package com.androworms;
 
-import java.io.Serializable;
-
 import android.graphics.PointF;
 
-public abstract class ElementSurCarte implements Serializable {
+public abstract class ElementSurCarte {
 	
 	private PointF position;
 	private ImageInformation imageTerrain;
