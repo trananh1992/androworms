@@ -35,7 +35,7 @@ public class TacheMinuteurVisibiliteBluetooth extends AsyncTask<Void, Integer, B
 		 * Cette fonction n'est diponible que sur l'API 11+.
 		 * C'est pour ça que l'on ne fait pas exactement la même chose dans tous les cas et qu'il y a un @TargetApi code.
 		 * **/
-		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			// Sur les téléphones avec Android 3.0+
 			Log.d(TAG, "executeOnExecutor()");
 			executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
