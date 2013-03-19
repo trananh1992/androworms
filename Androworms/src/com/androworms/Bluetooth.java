@@ -70,8 +70,7 @@ public class Bluetooth extends Contact {
 	public static String recevoirTexte(BluetoothSocket socket) {
 		int tailleMessage = lectureEnteteTailleMessage(socket);
 		byte[] bufferComplet = lectureByte(socket, tailleMessage);
-		String messageRecu = new String(bufferComplet, 0, bufferComplet.length, Charset.defaultCharset());
-		return messageRecu;
+		return new String(bufferComplet, 0, bufferComplet.length, Charset.defaultCharset());
 	}
 	
 	/** Envoyer un objet à une socket Bluetooth.
@@ -184,8 +183,7 @@ public class Bluetooth extends Contact {
 	
 	/** Lecture du prefixe du message qui contient la taille du message */
 	public static int lectureEnteteTailleMessage(BluetoothSocket socket) {
-		byte[] buffer = new byte[ENTETE_TAILLE_MESSAGE];
-		buffer = lectureByte(socket, ENTETE_TAILLE_MESSAGE);
+		byte[] buffer = lectureByte(socket, ENTETE_TAILLE_MESSAGE);
 		
 		String messageRecu = new String(buffer, 0, buffer.length, Charset.defaultCharset());
 		return Integer.parseInt(messageRecu);

@@ -138,7 +138,7 @@ public class ActiviteEditeurCarte extends Activity implements OnClickListener,On
 				final EditText edit = new EditText(this);
 				edit.setSingleLine();
 				dlg.setView(edit);
-				dlg.setNegativeButton(R.string.non, new DialogInterface.OnClickListener() {
+				dlg.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
 						/* Création de l'intent pour passer à l'activité parent l'endroit où est la photo*/
 						Intent i = new Intent();
@@ -148,7 +148,7 @@ public class ActiviteEditeurCarte extends Activity implements OnClickListener,On
 					}
 				});
 				
-				dlg.setPositiveButton(R.string.oui, new DialogInterface.OnClickListener() {
+				dlg.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
 						String value = edit.getText().toString();
 						/* on crée le dossier pour stocker la photo */

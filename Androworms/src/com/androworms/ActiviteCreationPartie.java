@@ -18,6 +18,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 
 import com.androworms.utile.Informations;
 
@@ -182,32 +184,74 @@ public class ActiviteCreationPartie extends Activity {
 		/* Affichage de la vue */
 		setContentView(R.layout.activite_creation_partie_3);
 		
-		File root = Environment.getExternalStorageDirectory();
-		File sd = new File(root, ActiviteAndroworms.DOSSIER_CARTE);
+		// Gestion de l'affichage de la liste des cartes (soit des cartes systèmes ou des cartes persos)
+		ListView lvChoixCarte1 = (ListView)findViewById(R.id.lv_choixCartesSystemes);
+		ListView lvChoixCarte2 = (ListView)findViewById(R.id.lv_choixCartesPerso);
 		
-		//gets a list of the files
-		File[] sdDirList = sd.listFiles(); 
-		ListView mapChooser = (ListView)findViewById(R.id.mapChooser);
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.text_view_spinner);
-		int i = 0;
-		if (sdDirList != null) {
-			for(i=0;i<sdDirList.length;i++) {
-				Log.v(TAG, "adding item");
-				adapter.add(sdDirList[i].getName());
-				Log.v(TAG, "added item "+sdDirList[i].getName());
-			}
-		}
-		adapter.notifyDataSetChanged();
-		mapChooser.setAdapter(adapter);		
-		mapChooser.setOnItemClickListener(new OnItemClickListener() {
+		ArrayAdapter<String> adapterCartesSystemes = listeCartesSystemes();
+		ArrayAdapter<String> adapterCartesPersos = listeCartesPersos();
+		
+		lvChoixCarte1.setAdapter(adapterCartesSystemes);
+		lvChoixCarte2.setAdapter(adapterCartesPersos);
+		
+		// Evenements sur les listes
+		lvChoixCarte1.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parentView, View childView, int position, long id) {
-				afficheCarte((String)parentView.getAdapter().getItem(position));
+				afficheCarteSysteme((String)parentView.getAdapter().getItem(position));
+			}
+		});
+		lvChoixCarte2.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parentView, View childView, int position, long id) {
+				afficheCartePerso((String)parentView.getAdapter().getItem(position));
+			}
+		});
+		
+		// Pour le chargement de l'interface, on affiche les cartes systèmes
+		lvChoixCarte1.setAdapter(adapterCartesSystemes);
+		lvChoixCarte2.setVisibility(View.GONE);
+		
+		// Choix de la liste des cartes systèmes ou des cartes persos à afficher
+		RadioGroup d = (RadioGroup)findViewById(R.id.rg_choixCarte);
+		d.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				ListView lvChoixCarte1 = (ListView)findViewById(R.id.lv_choixCartesSystemes);
+				ListView lvChoixCarte2 = (ListView)findViewById(R.id.lv_choixCartesPerso);
+				if (group.getCheckedRadioButtonId() == R.id.rb_choixCartesSystemes) {
+					lvChoixCarte1.setVisibility(View.VISIBLE);
+					lvChoixCarte2.setVisibility(View.GONE);
+				} else if (group.getCheckedRadioButtonId() == R.id.rb_choixCartesPerso) {
+					lvChoixCarte1.setVisibility(View.GONE);
+					lvChoixCarte2.setVisibility(View.VISIBLE);
+				}
 			}
 		});
 		
 		// Boutons "Précédent" et "Suivant"
 		findViewById(R.id.btn_precedent).setOnClickListener(evenements);
 		findViewById(R.id.btn_suivant).setOnClickListener(evenements);
+	}
+	
+	public ArrayAdapter<String> listeCartesSystemes() {
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+		adapter.add("terrain_jeu_defaut_1");
+		adapter.add("terrain_jeu_defaut_2");
+		adapter.add("terrain_jeu_defaut_3");
+		adapter.add("terrain_jeu_defaut_4");
+		return adapter;
+	}
+	
+	public ArrayAdapter<String> listeCartesPersos() {
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+		File root = Environment.getExternalStorageDirectory();
+		File sd = new File(root, ActiviteAndroworms.DOSSIER_CARTE);
+		File[] sdDirList = sd.listFiles();
+		int i = 0;
+		if (sdDirList != null) {
+			for(i=0;i<sdDirList.length;i++) {
+				adapter.add(sdDirList[i].getName());
+			}
+		}
+		return adapter;
 	}
 	
 	private void etape4() {
@@ -221,12 +265,27 @@ public class ActiviteCreationPartie extends Activity {
 		findViewById(R.id.btn_demarrer_la_partie).setOnClickListener(evenements);
 	}
 	
-	private void afficheCarte(String map) {
+	private void afficheCarteSysteme(String nomCarte) {
+		ParametresPartie.getParametresPartie().setEstCartePerso(false);
+		ParametresPartie.getParametresPartie().setNomCarte(nomCarte);
+		ImageView v = (ImageView)findViewById(R.id.chosen_map);
+		if (nomCarte.equals("terrain_jeu_defaut_1")) {
+			v.setImageResource(R.drawable.terrain_jeu_defaut_1);
+		} else if (nomCarte.equals("terrain_jeu_defaut_2")) {
+			v.setImageResource(R.drawable.terrain_jeu_defaut_2);
+		} else if (nomCarte.equals("terrain_jeu_defaut_3")) {
+			v.setImageResource(R.drawable.terrain_jeu_defaut_3);
+		} else if (nomCarte.equals("terrain_jeu_defaut_4")) {
+			v.setImageResource(R.drawable.terrain_jeu_defaut_4);
+		}
+	}
+	
+	private void afficheCartePerso(String nomCarte) {
 		ParametresPartie.getParametresPartie().setEstCartePerso(true);
-		ParametresPartie.getParametresPartie().setNomCarte(map);	
+		ParametresPartie.getParametresPartie().setNomCarte(nomCarte);	
 		ImageView v = (ImageView)findViewById(R.id.chosen_map);
 		File root = Environment.getExternalStorageDirectory();
-		File sd = new File(root, ActiviteAndroworms.DOSSIER_CARTE + map);
+		File sd = new File(root, ActiviteAndroworms.DOSSIER_CARTE + nomCarte);
 		Bitmap b = BitmapFactory.decodeFile(sd.getAbsolutePath());
 		Bitmap thumbnail = Bitmap.createScaledBitmap(b, 300, 200, false);
 		v.setImageBitmap(thumbnail);
