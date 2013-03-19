@@ -85,14 +85,14 @@ public class ActiviteCreationPartieBluetoothServeur {
 					AlertDialog.Builder builder = new AlertDialog.Builder(activiteCreationPartie);
 					builder.setMessage(R.string.message_bluetooth_serveur_confirmation_continuer);
 					builder.setCancelable(false);
-					builder.setPositiveButton(R.string.oui, new DialogInterface.OnClickListener() {
+					builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int id) {
 							// On arrête le serveur de connexion Bluetooth
 							Log.v(TAG,"Arret du serveur de connexion Bluetooth");
 							activiteCreationPartieBluetooth.getServeurConnexionBluetooth().fermetureConnexionsForce();
 						}
 					});
-					builder.setNegativeButton(R.string.non, new DialogInterface.OnClickListener() {
+					builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int id) {
 							dialog.cancel();
 						}
@@ -189,12 +189,12 @@ public class ActiviteCreationPartieBluetoothServeur {
 			AlertDialog.Builder builder = new AlertDialog.Builder(activiteCreationPartie);
 			builder.setMessage(R.string.message_bluetooth_serveur_confirmation_quitter);
 			builder.setCancelable(false);
-			builder.setPositiveButton(R.string.oui, new DialogInterface.OnClickListener() {
+			builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
 					activiteCreationPartie.etapePrecedente(true);
 				}
 			});
-			builder.setNegativeButton(R.string.non, new DialogInterface.OnClickListener() {
+			builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
 					dialog.cancel();
 				}

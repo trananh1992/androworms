@@ -71,14 +71,18 @@
     <string name="jouer_wifi_direct">Jouer en Wifi Direct</string>
     <string name="sauvegarder_carte">Sauvegarder la carte ?</string>
     <string name="nom_carte">Nom de la carte :</string>
-    <string name="oui">Oui</string>
-    <string name="non">Non</string>
-    <string name="annuler">Annuler</string>
-    <string name="ok">OK</string>
     <string name="message_bluetooth_activer_bluetooth">Veuillez activer le Bluetooth pour pouvoir jouer !</string>
     <string name="message_bluetooth_serveur_attente_connexion">Attente de connexion de joueurs&#8230;</string>
     <string name="message_bluetooth_serveur_confirmation_continuer">Tous les joueurs sont arrivé ?</string>
     <string name="message_bluetooth_serveur_confirmation_quitter">Etes-vous sûr de vouloir arrêter la partie ?</string>
     <string name="message_bluetooth_client_connexion_reussi">Connexion réussi ! En attente des autres joueurs&#8230;</string>
+    <string name="creer_carte">Créer une carte</string>
+    <string name="editer_carte">Editer cette carte</string>
+    <string name="renommer">Renommer</string>
+    <string name="nouvelle_carte">Nouvelle carte</string>
+    <string name="supprimer_carte">Supprimer carte</string>
+    <string name="carte_selectionnee">Carte séléctionnée</string>
+    <string name="systeme">Système</string>
+    <string name="personnalisees">Personnalisées</string>
 
 </resources>
