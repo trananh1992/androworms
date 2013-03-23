@@ -1,120 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+	
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/barre_action"
+        android:background="@color/barre_action"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="@dimen/barre_action"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerCrop"
+            android:src="@drawable/logo_seul" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="@dimen/barre_action"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/aide"
+            android:scaleType="centerCrop"
+            android:src="@android:drawable/ic_menu_help" />
+    </LinearLayout>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp" >
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center" >
+
+            <Button
+                android:id="@+id/btn_menu_jouer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_jouer"
+                android:height="100dp"
+                android:text="@string/menu_jeu"
+                android:width="200dp" />
+
+            <Button
+                android:id="@+id/btn_menu_editeur"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_editeur"
+                android:height="100dp"
+                android:text="@string/menu_editeur"
+                android:width="200dp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center" >
+
+            <Button
+                android:id="@+id/btn_menu_score"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_score"
+                android:height="100dp"
+                android:text="@string/menu_score"
+                android:width="200dp" />
+
+            <Button
+                android:id="@+id/btn_menu_parametres"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_parametres"
+                android:height="100dp"
+                android:text="@string/menu_parametres"
+                android:width="200dp" />
+        </TableRow>
+    </TableLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:layout_height="wrap_content" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+        <Button
+            android:id="@+id/btn_DEBUG"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/menu_DEBUG" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/app_name"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-        </LinearLayout>
+        <Button
+            android:id="@+id/btn_GYRO"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/menu_gyro" />
 
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+        <Button
+            android:id="@+id/btn_test_jeu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:contentDescription="@string/test_jeu"
+            android:text="@string/test_jeu" />
 
-            <TableRow
-                android:id="@+id/tableRow1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center" >
+        <ImageView
+            android:id="@+id/img_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/credits"
+            android:src="@drawable/ic_info" />
 
-                <Button
-                    android:id="@+id/btn_menu_jouer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_jouer"
-                    android:height="100dp"
-                    android:text="@string/menu_jeu"
-                    android:width="200dp" />
-
-                <Button
-                    android:id="@+id/btn_menu_editeur"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_editeur"
-                    android:height="100dp"
-                    android:text="@string/menu_editeur"
-                    android:width="200dp" />
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center" >
-
-                <Button
-                    android:id="@+id/btn_menu_score"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_score"
-                    android:height="100dp"
-                    android:text="@string/menu_score"
-                    android:width="200dp" />
-
-                <Button
-                    android:id="@+id/btn_menu_parametres"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_parametres"
-                    android:height="100dp"
-                    android:text="@string/menu_parametres"
-                    android:width="200dp" />
-            </TableRow>
-        </TableLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <Button
-                android:id="@+id/btn_DEBUG"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:text="@string/menu_DEBUG" />
-
-            <Button
-                android:id="@+id/btn_GYRO"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:text="@string/menu_gyro" />
-
-            <Button
-                android:id="@+id/btn_test_jeu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/test_jeu"
-                android:text="@string/test_jeu" />
-        </LinearLayout>
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/img_aide"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:contentDescription="@string/aide"
-        android:src="@drawable/ic_aide" />
-
-    <ImageView
-        android:id="@+id/img_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:contentDescription="@string/credits"
-        android:src="@drawable/ic_info" />
-
-</RelativeLayout>
+</LinearLayout>
