@@ -186,8 +186,7 @@ public class MoteurGraphique extends RelativeLayout {
 			Matrix m = new Matrix();
 			canvas.setMatrix(m);
 			
-			PointF deplacement = new PointF(pointTir.x - positionTouche.x,
-					 pointTir.y - positionTouche.y);
+			PointF deplacement = new PointF(pointTir.x - positionTouche.x, pointTir.y - positionTouche.y);
 			float distance = deplacement.length();
 			
 			
@@ -199,7 +198,9 @@ public class MoteurGraphique extends RelativeLayout {
 			paint.setAntiAlias(true);
 			paint.setStrokeCap(Paint.Cap.ROUND);
 			
-			dessinerOnde(canvas, paint, angleBase, distance);
+			if (noyau.getParametresApplication().getBoolean(ActiviteParametres.PARAMETRE_AFFICHAGE_FORCE_CLE, ActiviteParametres.PARAMETRE_AFFICHAGE_FORCE_DEFAUT)) {
+				dessinerOnde(canvas, paint, angleBase, distance);
+			}
 			dessinerFleches(canvas, paint, angleBase, distance);
 		}
 	}
@@ -210,6 +211,7 @@ public class MoteurGraphique extends RelativeLayout {
 	 * @param distance
 	 */
 	public void dessinerOnde(Canvas canvas, Paint paint, float angleBase, float distance) {
+		// Mode de dessin
 		paint.setStrokeWidth(EPAISSEUR_ONDE_TIR);
 		paint.setStyle(Paint.Style.STROKE);
 		
@@ -234,6 +236,10 @@ public class MoteurGraphique extends RelativeLayout {
 	 * @param distance
 	 */
 	public void dessinerFleches( Canvas canvas, Paint paint, float angleBase, float distance) {
+		// Mode de dessin
+		paint.setStrokeWidth(EPAISSEUR_ONDE_TIR);
+		paint.setStyle(Paint.Style.STROKE);
+		
 		PointF ptMilieuJoueur = new PointF();
 		Personnage persoPrincipal = noyau.getMonde().getPersonnagePrincipal();
 		ptMilieuJoueur.set(persoPrincipal.getPosition());

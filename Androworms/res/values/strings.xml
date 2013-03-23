@@ -84,5 +84,6 @@
     <string name="carte_selectionnee">Carte séléctionnée</string>
     <string name="systeme">Système</string>
     <string name="personnalisees">Personnalisées</string>
+    <string name="afficher_retour_force">Afficher retour de force</string>
 
 </resources>
