@@ -3,12 +3,14 @@ package com.androworms;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.ImageView;
 
-public class ActiviteCreationPartieEvent implements OnClickListener {
+public class ActiviteCreationPartieEvent implements OnClickListener, OnTouchListener {
 	
 	private ActiviteCreationPartie activiteCreationPartie;
 	private static final String TAG = "Androworms.ActiviteCreationPartieEvent";
@@ -68,8 +70,6 @@ public class ActiviteCreationPartieEvent implements OnClickListener {
 				break;
 			}
 			
-			
-			
 		}
 		else if (v instanceof ImageView) {
 			ImageView imgv = (ImageView)v;
@@ -107,5 +107,30 @@ public class ActiviteCreationPartieEvent implements OnClickListener {
 				alert.show();
 			}
 		}
+	}
+
+	public boolean onTouch(View v, MotionEvent event) {
+		if (v instanceof ImageView) {
+			
+			switch (v.getId()) {
+			case R.id.ib_return_home:
+				ImageView ib = (ImageView)activiteCreationPartie.findViewById(R.id.ib_return_home);
+				switch (event.getActionMasked()) {
+				case MotionEvent.ACTION_DOWN:
+					ib.setBackgroundResource(R.color.barre_action_appuye);
+					break;
+				case MotionEvent.ACTION_UP:
+					ib.setBackgroundResource(R.color.barre_action);
+					break;
+				default:
+					break;
+				}
+				break;
+				
+			default:
+			}
+		}
+		
+		return false;
 	}
 }

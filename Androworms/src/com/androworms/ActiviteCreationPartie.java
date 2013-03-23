@@ -76,6 +76,7 @@ public class ActiviteCreationPartie extends Activity {
 		// Barre d'action
 		ImageView ib = (ImageView)findViewById(R.id.ib_return_home);
 		ib.setOnClickListener(evenements);
+		ib.setOnTouchListener(evenements);
 		
 		// Gestion des composants > Mode de jeu > 1 téléphone
 		findViewById(R.id.btn_partie_solo).setOnClickListener(evenements);
@@ -142,6 +143,7 @@ public class ActiviteCreationPartie extends Activity {
 		// Barre d'action
 		ImageView ib = (ImageView)findViewById(R.id.ib_return_home);
 		ib.setOnClickListener(evenements);
+		ib.setOnTouchListener(evenements);
 		
 		//FIXME : quand je clic sur "suivant", je dois sauvegarder l'état de la progressbar
 		// Regression en r236
@@ -197,6 +199,7 @@ public class ActiviteCreationPartie extends Activity {
 		// Barre d'action
 		ImageView ib = (ImageView)findViewById(R.id.ib_return_home);
 		ib.setOnClickListener(evenements);
+		ib.setOnTouchListener(evenements);
 		
 		// Gestion de l'affichage de la liste des cartes (soit des cartes systèmes ou des cartes persos)
 		ListView lvChoixCarte1 = (ListView)findViewById(R.id.lv_choixCartesSystemes);
@@ -277,6 +280,7 @@ public class ActiviteCreationPartie extends Activity {
 		// Barre d'action
 		ImageView ib = (ImageView)findViewById(R.id.ib_return_home);
 		ib.setOnClickListener(evenements);
+		ib.setOnTouchListener(evenements);
 		
 		// Boutons "Précédent"
 		findViewById(R.id.btn_precedent).setOnClickListener(evenements);
