@@ -16,10 +16,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.TextView;
 
 import com.androworms.utile.Informations;
 
@@ -70,6 +73,10 @@ public class ActiviteCreationPartie extends Activity {
 		
 		// Affichage de la vue
 		setContentView(R.layout.activite_creation_partie_1_mode);
+		
+		// Barre d'action
+		ImageView ib = (ImageView)findViewById(R.id.ib_return_home);
+		ib.setOnClickListener(evenements);
 		
 		// Gestion des composants > Mode de jeu > 1 téléphone
 		findViewById(R.id.btn_partie_solo).setOnClickListener(evenements);
@@ -133,6 +140,10 @@ public class ActiviteCreationPartie extends Activity {
 		/* Affichage de la vue */
 		setContentView(R.layout.activite_creation_partie_2_solo);
 		
+		// Barre d'action
+		ImageView ib = (ImageView)findViewById(R.id.ib_return_home);
+		ib.setOnClickListener(evenements);
+		
 		//FIXME : quand je clic sur "suivant", je dois sauvegarder l'état de la progressbar
 		// Regression en r236
 		// https://code.google.com/p/androworms/source/diff?path=/trunk/Androworms/src/com/androworms/ActiviteCreationPartie.java&format=side&r=236
@@ -184,6 +195,10 @@ public class ActiviteCreationPartie extends Activity {
 		/* Affichage de la vue */
 		setContentView(R.layout.activite_creation_partie_3);
 		
+		// Barre d'action
+		ImageView ib = (ImageView)findViewById(R.id.ib_return_home);
+		ib.setOnClickListener(evenements);
+		
 		// Gestion de l'affichage de la liste des cartes (soit des cartes systèmes ou des cartes persos)
 		ListView lvChoixCarte1 = (ListView)findViewById(R.id.lv_choixCartesSystemes);
 		ListView lvChoixCarte2 = (ListView)findViewById(R.id.lv_choixCartesPerso);
@@ -226,6 +241,8 @@ public class ActiviteCreationPartie extends Activity {
 			}
 		});
 		
+		afficheCarteSysteme(adapterCartesSystemes.getItem(0));
+		
 		// Boutons "Précédent" et "Suivant"
 		findViewById(R.id.btn_precedent).setOnClickListener(evenements);
 		findViewById(R.id.btn_suivant).setOnClickListener(evenements);
@@ -258,6 +275,10 @@ public class ActiviteCreationPartie extends Activity {
 		etape = ETAPE_4_CHOIX_EQUIPE;
 		setContentView(R.layout.activite_creation_partie_4);
 		
+		// Barre d'action
+		ImageView ib = (ImageView)findViewById(R.id.ib_return_home);
+		ib.setOnClickListener(evenements);
+		
 		// Boutons "Précédent"
 		findViewById(R.id.btn_precedent).setOnClickListener(evenements);
 		
@@ -278,6 +299,11 @@ public class ActiviteCreationPartie extends Activity {
 		} else if (nomCarte.equals("terrain_jeu_defaut_4")) {
 			v.setImageResource(R.drawable.terrain_jeu_defaut_4);
 		}
+		
+		TextView tvNomImage = (TextView)findViewById(R.id.tv_nomImage);
+		tvNomImage.setText(nomCarte);
+		Button btnRenommerCarte = (Button)findViewById(R.id.btn_renommerCarte);
+		btnRenommerCarte.setVisibility(View.INVISIBLE);
 	}
 	
 	private void afficheCartePerso(String nomCarte) {
@@ -289,6 +315,11 @@ public class ActiviteCreationPartie extends Activity {
 		Bitmap b = BitmapFactory.decodeFile(sd.getAbsolutePath());
 		Bitmap thumbnail = Bitmap.createScaledBitmap(b, 300, 200, false);
 		v.setImageBitmap(thumbnail);
+		
+		TextView tvNomImage = (TextView)findViewById(R.id.tv_nomImage);
+		tvNomImage.setText(nomCarte);
+		Button btnRenommerCarte = (Button)findViewById(R.id.btn_renommerCarte);
+		btnRenommerCarte.setVisibility(View.VISIBLE);
 	}
 	
 	@Override

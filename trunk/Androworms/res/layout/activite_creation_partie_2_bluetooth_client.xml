@@ -5,16 +5,36 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/bluetooth_icon"
-        android:drawableRight="@drawable/ic_aide"
-        android:gravity="center_vertical"
-        android:paddingLeft="20dp"
-        android:text="@string/btn_rejoindre_partie"
-        android:textAppearance="?android:attr/textAppearanceLarge" >
-    </TextView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:background="@color/ciel_bleu"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/ib_return_home"
+            android:layout_width="32dp"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerCrop"
+            android:src="@drawable/logo_fleche" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/btn_rejoindre_partie"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/aide"
+            android:scaleType="centerCrop"
+            android:src="@android:drawable/ic_menu_help" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,7 +53,6 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/bluetooth_analyse"
             android:text="@string/analyse" />
-
     </LinearLayout>
 
     <ListView
@@ -73,7 +92,6 @@
             android:layout_height="wrap_content"
             android:enabled="false"
             android:text="@string/btn_suivant" />
-
     </LinearLayout>
 
 </LinearLayout>
