@@ -54,6 +54,12 @@
                 android:layout_height="wrap_content"
                 android:text="@string/activer_sons" />
 
+            <CheckBox
+                android:id="@+id/chk_afficher_retour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/afficher_retour_force" />
+
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
@@ -71,7 +77,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/enregistrer" />
-
         </LinearLayout>
 
         <ImageView
@@ -80,7 +85,6 @@
             android:layout_weight="1"
             android:contentDescription="@string/image_perso"
             android:src="@drawable/android_face" />
-
     </LinearLayout>
 
 </LinearLayout>

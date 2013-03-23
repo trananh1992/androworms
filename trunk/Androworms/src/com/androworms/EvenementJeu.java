@@ -12,7 +12,6 @@ import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
-
 public class EvenementJeu extends ScaleGestureDetector.SimpleOnScaleGestureListener implements OnTouchListener  {
 	
 	private static final String TAG = "Androworms.EvenementJeu";
