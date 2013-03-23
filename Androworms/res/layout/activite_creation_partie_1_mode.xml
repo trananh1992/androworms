@@ -104,7 +104,7 @@
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="@string/jouer_avec_plusieurs_telephones"
+                    android:text="@string/jouer_avec_plusieurs_telephones_bluetooth"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textStyle="italic" />
 
@@ -119,9 +119,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/border"
-                android:padding="10dip" >
+                android:layout_height="wrap_content" >
 
                 <Button
                     android:id="@+id/btn_bluetooth_creer"
@@ -143,8 +141,30 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/border"
-                android:padding="10dip" >
+                android:background="#84d9e3"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/jouer_avec_plusieurs_telephones_wifi_direct"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textStyle="italic" />
+
+                <ImageView
+                    android:id="@+id/img_aide_3_telephones"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/aide"
+                    android:src="@drawable/ic_aide" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
                 <Button
                     android:id="@+id/btn_wifi_creer"

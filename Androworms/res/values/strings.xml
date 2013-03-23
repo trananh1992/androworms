@@ -9,7 +9,7 @@
     <string name="menu_solo">solo</string>
     <string name="menu_multi">Multi-joueurs</string>
     <string name="menu_principal">Menu principal</string>
-    <string name="menu_DEBUG">Informations DEBUG</string>
+    <string name="menu_DEBUG">DEBUG</string>
     <string name="menu_gyro">Test du gyro</string>
     <string name="menu_jeu">Jouer</string>
     <string name="menu_editeur">Editeur de carte</string>
@@ -85,5 +85,7 @@
     <string name="systeme">Système</string>
     <string name="personnalisees">Personnalisées</string>
     <string name="afficher_retour_force">Afficher retour de force</string>
+    <string name="jouer_avec_plusieurs_telephones_bluetooth">Jouer avec plusieurs telephones en Bluetooth</string>
+    <string name="jouer_avec_plusieurs_telephones_wifi_direct">Jouer avec plusieurs telephones Wifi direct</string>
 
 </resources>
