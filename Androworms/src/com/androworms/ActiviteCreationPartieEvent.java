@@ -30,6 +30,10 @@ public class ActiviteCreationPartieEvent implements OnClickListener {
 				break;
 			case R.id.btn_suivant:
 				activiteCreationPartie.etapeSuivante();
+				
+				//Intent intent = new Intent(this.activiteCreationPartie, ActiviteChoixOption.class);
+				//this.activiteCreationPartie.startActivity(intent);
+				
 				break;
 			// Boutons de la première page : Choix du mode de jeu
 			case R.id.btn_partie_solo:
@@ -70,31 +74,38 @@ public class ActiviteCreationPartieEvent implements OnClickListener {
 		else if (v instanceof ImageView) {
 			ImageView imgv = (ImageView)v;
 			
-			Log.v(TAG, "Affichage d'une popup d'aide");
+			switch (v.getId()) {
 			
-			AlertDialog.Builder builder = new AlertDialog.Builder(activiteCreationPartie);
-			
-			switch (imgv.getId()) {
-			// Boutons d'aide de la première page : Choix du mode de jeu
-			case R.id.img_aide_1_telephone:
-				builder.setMessage("Faire une partie quand vous n'avez que un seul téléphone à votre disposition.");
+			case R.id.ib_return_home :
+				this.activiteCreationPartie.finish();
 				break;
-			case R.id.img_aide_2_telephones:
-				builder.setMessage("Faire une partie quand vous avez plusieurs téléphones à votre disposition.");
-				break;
-			default:
-				break;
-			}
-			
-			builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-					dialog.dismiss();
+				
+			default :
+				Log.v(TAG, "Affichage d'une popup d'aide");
+				
+				AlertDialog.Builder builder = new AlertDialog.Builder(activiteCreationPartie);
+				
+				switch (imgv.getId()) {
+				// Boutons d'aide de la première page : Choix du mode de jeu
+				case R.id.img_aide_1_telephone:
+					builder.setMessage("Faire une partie quand vous n'avez que un seul téléphone à votre disposition.");
+					break;
+				case R.id.img_aide_2_telephones:
+					builder.setMessage("Faire une partie quand vous avez plusieurs téléphones à votre disposition.");
+					break;
+				default:
+					break;
 				}
-			});
-			builder.setCancelable(false);
-			AlertDialog alert = builder.create();
-			alert.show();
+				
+				builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.dismiss();
+					}
+				});
+				builder.setCancelable(false);
+				AlertDialog alert = builder.create();
+				alert.show();
+			}
 		}
-		
 	}
 }

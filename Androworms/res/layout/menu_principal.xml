@@ -13,7 +13,6 @@
             android:layout_height="wrap_content" >
 
             <TextView
-                android:id="@+id/textView1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -48,7 +47,6 @@
                     android:height="100dp"
                     android:text="@string/menu_editeur"
                     android:width="200dp" />
-
             </TableRow>
 
             <TableRow
@@ -74,7 +72,6 @@
                     android:height="100dp"
                     android:text="@string/menu_parametres"
                     android:width="200dp" />
-
             </TableRow>
         </TableLayout>
 
@@ -100,9 +97,7 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/test_jeu"
                 android:text="@string/test_jeu" />
-
         </LinearLayout>
-
     </LinearLayout>
 
     <ImageView
