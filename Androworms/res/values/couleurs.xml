@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="ciel_bleu">#77B5FE</color>
-    <color name="terrain_vert">#29B332</color>
-    <color name="terrain_marron">#9F551E</color>
+    <color name="ciel">#77B5FE</color>
+    <color name="herbe">#00ff00</color>
+    <color name="terre">#9F551E</color>
+    <color name="barre_action">#77B5FE</color>
+    <color name="barre_action_appuye">#3186E5</color>
 </resources>

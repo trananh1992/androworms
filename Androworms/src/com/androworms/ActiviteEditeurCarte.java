@@ -41,13 +41,9 @@ public class ActiviteEditeurCarte extends Activity implements OnClickListener,On
 	private boolean mustSave = false;
 	private Canvas drawCanvas = null;
 	private Bitmap upCalc = null;
-	static final int COULEUR_TERRE = 0xff9f551e;
-	static final int COULEUR_CIEL = 0xff77B5FE;
 	static final String TAG = "ActiviteCreationCarte";
 	static final int MAX_COLOR_VALUE = 255;
 	static final int DEFINITION = 3;
-	/* couleur herbe foncée : 0xff458B00  couleur fluo : 0xff00ff00;*/
-	static final int COULEUR_HERBE = 0xff00ff00;
 	
 	/** Gestionnaire d'évênement permettant le lancement de cette activité */
 	public void onClick(View arg0) {
@@ -62,7 +58,7 @@ public class ActiviteEditeurCarte extends Activity implements OnClickListener,On
 			for(int j=0;j<base.getHeight();j++)
 			{
 				int color = base.getPixel(i, j);
-				if (color == COULEUR_CIEL)
+				if (color == getResources().getColor(R.color.ciel))
 				{
 					result.setPixel(i, j, 0);
 				}
@@ -281,7 +277,7 @@ public class ActiviteEditeurCarte extends Activity implements OnClickListener,On
 		/* Affiche la vue par défaut */
 		setContentView(R.layout.activite_editeur_carte);
 		ImageView surface = (ImageView) findViewById(R.id.CurrentMap);
-		((ImageView)findViewById(R.id.background)).setBackgroundColor(COULEUR_CIEL);
+		((ImageView)findViewById(R.id.background)).setBackgroundResource(R.color.ciel);
 		
 		surface.setOnTouchListener(this);
 		
@@ -340,7 +336,7 @@ public class ActiviteEditeurCarte extends Activity implements OnClickListener,On
 				{
 					Paint paint = new Paint();
 					paint.setStrokeWidth(DEFINITION);
-					paint.setColor(COULEUR_CIEL);
+					paint.setColor(getResources().getColor(R.color.ciel));
 					drawCanvas.drawPoint(i, j, paint);
 					
 				}
@@ -444,14 +440,14 @@ public class ActiviteEditeurCarte extends Activity implements OnClickListener,On
 		{
 			Paint paint = new Paint();
 			paint.setStyle(Paint.Style.FILL);
-			paint.setColor(COULEUR_CIEL);
+			paint.setColor(getResources().getColor(R.color.ciel));
 			drawCanvas.drawCircle(x, y, size, paint);
 		}
 		else
 		{
 			Paint paint = new Paint();
 			paint.setStyle(Paint.Style.FILL);
-			paint.setColor(COULEUR_TERRE);
+			paint.setColor(getResources().getColor(R.color.terre));
 			drawCanvas.drawCircle(x, y, size, paint);
 			for(int i=0;i<(2*echantillonage*Math.PI);i++)
 			{
@@ -465,11 +461,12 @@ public class ActiviteEditeurCarte extends Activity implements OnClickListener,On
 					continue;
 				}
 				Paint paint2 = new Paint();
-				paint2.setColor(COULEUR_HERBE);
+				paint2.setColor(getResources().getColor(R.color.herbe));
 				paint2.setStyle(Paint.Style.FILL_AND_STROKE);
 				paint2.setStrokeWidth(tailleHerbe);
 				int currentColor = upCalc.getPixel(xG, yG);
-				if(currentColor!=COULEUR_TERRE && currentColor!=COULEUR_HERBE)
+				if (currentColor != getResources().getColor(R.color.terre) &&
+						currentColor != getResources().getColor(R.color.herbe))
 				{
 					drawCanvas.drawPoint(xG, yG, paint2);
 				}
