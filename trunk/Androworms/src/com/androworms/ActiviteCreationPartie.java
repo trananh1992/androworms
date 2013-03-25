@@ -49,12 +49,11 @@ public class ActiviteCreationPartie extends Activity {
 	@Override
 	protected void onRestart() {
 		super.onRestart();
-		Log.v(TAG,"onRestart()");
+		Log.v(TAG, "onRestart()");
 		if (ParametresPartie.getParametresPartie().getModeJeu() == ParametresPartie.MODE_BLUETOOTH_SERVEUR) {
 			Log.v(TAG, "SERVEUR");
 			activiteCreationPartieBluetooth.getServeur().actualisationInterfaceBluetoothServeur();
-		}
-		else if (ParametresPartie.getParametresPartie().getModeJeu() == ParametresPartie.MODE_BLUETOOTH_CLIENT) {
+		} else if (ParametresPartie.getParametresPartie().getModeJeu() == ParametresPartie.MODE_BLUETOOTH_CLIENT) {
 			Log.v(TAG, "CLIENT");
 			activiteCreationPartieBluetooth.getClient().actualisationInterfaceBluetoothClient();
 		}
@@ -63,7 +62,7 @@ public class ActiviteCreationPartie extends Activity {
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
-		Log.v(TAG,"onConfigurationChanged()");
+		Log.v(TAG, "onConfigurationChanged()");
 	}
 	
 	private void etape1() {
@@ -74,7 +73,7 @@ public class ActiviteCreationPartie extends Activity {
 		setContentView(R.layout.activite_creation_partie_1_mode);
 		
 		// Barre d'action
-		ImageView ib = (ImageView)findViewById(R.id.iv_return_home);
+		ImageView ib = (ImageView) findViewById(R.id.iv_return_home);
 		ib.setOnClickListener(evenements);
 		ib.setOnTouchListener(evenements);
 		
@@ -94,7 +93,7 @@ public class ActiviteCreationPartie extends Activity {
 		}
 		
 		// Gestion des composants > Mode de jeu > Wifi Direct
-		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 			// Compatible Wifi Direct
 			findViewById(R.id.btn_wifi_creer).setOnClickListener(evenements);
 			findViewById(R.id.btn_wifi_rejoindre).setOnClickListener(evenements);
@@ -141,11 +140,11 @@ public class ActiviteCreationPartie extends Activity {
 		setContentView(R.layout.activite_creation_partie_2_solo);
 		
 		// Barre d'action
-		ImageView ib = (ImageView)findViewById(R.id.iv_return_home);
+		ImageView ib = (ImageView) findViewById(R.id.iv_return_home);
 		ib.setOnClickListener(evenements);
 		ib.setOnTouchListener(evenements);
 		
-		//FIXME : quand je clic sur "suivant", je dois sauvegarder l'état de la progressbar
+		// FIXME : quand je clic sur "suivant", je dois sauvegarder l'état de la progressbar
 		// Regression en r236
 		// https://code.google.com/p/androworms/source/diff?path=/trunk/Androworms/src/com/androworms/ActiviteCreationPartie.java&format=side&r=236
 		
@@ -197,13 +196,13 @@ public class ActiviteCreationPartie extends Activity {
 		setContentView(R.layout.activite_creation_partie_3);
 		
 		// Barre d'action
-		ImageView ib = (ImageView)findViewById(R.id.iv_return_home);
+		ImageView ib = (ImageView) findViewById(R.id.iv_return_home);
 		ib.setOnClickListener(evenements);
 		ib.setOnTouchListener(evenements);
 		
 		// Gestion de l'affichage de la liste des cartes (soit des cartes systèmes ou des cartes persos)
-		ListView lvChoixCarte1 = (ListView)findViewById(R.id.lv_choixCartesSystemes);
-		ListView lvChoixCarte2 = (ListView)findViewById(R.id.lv_choixCartesPerso);
+		ListView lvChoixCarte1 = (ListView) findViewById(R.id.lv_choixCartesSystemes);
+		ListView lvChoixCarte2 = (ListView) findViewById(R.id.lv_choixCartesPerso);
 		
 		ArrayAdapter<String> adapterCartesSystemes = listeCartesSystemes();
 		ArrayAdapter<String> adapterCartesPersos = listeCartesPersos();
@@ -214,12 +213,12 @@ public class ActiviteCreationPartie extends Activity {
 		// Evenements sur les listes
 		lvChoixCarte1.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parentView, View childView, int position, long id) {
-				afficheCarteSysteme((String)parentView.getAdapter().getItem(position));
+				afficheCarteSysteme((String) parentView.getAdapter().getItem(position));
 			}
 		});
 		lvChoixCarte2.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parentView, View childView, int position, long id) {
-				afficheCartePerso((String)parentView.getAdapter().getItem(position));
+				afficheCartePerso((String) parentView.getAdapter().getItem(position));
 			}
 		});
 		
@@ -228,11 +227,11 @@ public class ActiviteCreationPartie extends Activity {
 		lvChoixCarte2.setVisibility(View.GONE);
 		
 		// Choix de la liste des cartes systèmes ou des cartes persos à afficher
-		RadioGroup d = (RadioGroup)findViewById(R.id.rg_choixCarte);
+		RadioGroup d = (RadioGroup) findViewById(R.id.rg_choixCarte);
 		d.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				ListView lvChoixCarte1 = (ListView)findViewById(R.id.lv_choixCartesSystemes);
-				ListView lvChoixCarte2 = (ListView)findViewById(R.id.lv_choixCartesPerso);
+				ListView lvChoixCarte1 = (ListView) findViewById(R.id.lv_choixCartesSystemes);
+				ListView lvChoixCarte2 = (ListView) findViewById(R.id.lv_choixCartesPerso);
 				if (group.getCheckedRadioButtonId() == R.id.rb_choixCartesSystemes) {
 					lvChoixCarte1.setVisibility(View.VISIBLE);
 					lvChoixCarte2.setVisibility(View.GONE);
@@ -266,7 +265,7 @@ public class ActiviteCreationPartie extends Activity {
 		File[] sdDirList = sd.listFiles();
 		int i = 0;
 		if (sdDirList != null) {
-			for(i=0;i<sdDirList.length;i++) {
+			for (i = 0; i < sdDirList.length; i++) {
 				adapter.add(sdDirList[i].getName());
 			}
 		}
@@ -278,7 +277,7 @@ public class ActiviteCreationPartie extends Activity {
 		setContentView(R.layout.activite_creation_partie_4);
 		
 		// Barre d'action
-		ImageView ib = (ImageView)findViewById(R.id.iv_return_home);
+		ImageView ib = (ImageView) findViewById(R.id.iv_return_home);
 		ib.setOnClickListener(evenements);
 		ib.setOnTouchListener(evenements);
 		
@@ -292,7 +291,7 @@ public class ActiviteCreationPartie extends Activity {
 	private void afficheCarteSysteme(String nomCarte) {
 		ParametresPartie.getParametresPartie().setEstCartePerso(false);
 		ParametresPartie.getParametresPartie().setNomCarte(nomCarte);
-		ImageView v = (ImageView)findViewById(R.id.iv_choisir_carte);
+		ImageView v = (ImageView) findViewById(R.id.iv_choisir_carte);
 		if (nomCarte.equals("terrain_jeu_defaut_1")) {
 			v.setImageResource(R.drawable.terrain_jeu_defaut_1);
 		} else if (nomCarte.equals("terrain_jeu_defaut_2")) {
@@ -303,25 +302,25 @@ public class ActiviteCreationPartie extends Activity {
 			v.setImageResource(R.drawable.terrain_jeu_defaut_4);
 		}
 		
-		TextView tvNomImage = (TextView)findViewById(R.id.tv_nomImage);
+		TextView tvNomImage = (TextView) findViewById(R.id.tv_nomImage);
 		tvNomImage.setText(nomCarte);
-		Button btnRenommerCarte = (Button)findViewById(R.id.btn_renommerCarte);
+		Button btnRenommerCarte = (Button) findViewById(R.id.btn_renommerCarte);
 		btnRenommerCarte.setVisibility(View.INVISIBLE);
 	}
 	
 	private void afficheCartePerso(String nomCarte) {
 		ParametresPartie.getParametresPartie().setEstCartePerso(true);
-		ParametresPartie.getParametresPartie().setNomCarte(nomCarte);	
-		ImageView v = (ImageView)findViewById(R.id.iv_choisir_carte);
+		ParametresPartie.getParametresPartie().setNomCarte(nomCarte);
+		ImageView v = (ImageView) findViewById(R.id.iv_choisir_carte);
 		File root = Environment.getExternalStorageDirectory();
 		File sd = new File(root, ActiviteAndroworms.DOSSIER_CARTE + nomCarte);
 		Bitmap b = BitmapFactory.decodeFile(sd.getAbsolutePath());
 		Bitmap thumbnail = Bitmap.createScaledBitmap(b, 300, 200, false);
 		v.setImageBitmap(thumbnail);
 		
-		TextView tvNomImage = (TextView)findViewById(R.id.tv_nomImage);
+		TextView tvNomImage = (TextView) findViewById(R.id.tv_nomImage);
 		tvNomImage.setText(nomCarte);
-		Button btnRenommerCarte = (Button)findViewById(R.id.btn_renommerCarte);
+		Button btnRenommerCarte = (Button) findViewById(R.id.btn_renommerCarte);
 		btnRenommerCarte.setVisibility(View.VISIBLE);
 	}
 	
@@ -347,7 +346,7 @@ public class ActiviteCreationPartie extends Activity {
 	/** Passer à l'étape suivante */
 	public void etapeSuivante() {
 		Log.v(TAG, "On est à l'étape " + etape + " et on va à l'étape SUIVANTE");
-		switch(etape) {
+		switch (etape) {
 		case ETAPE_1_CHOIX_MODE_JEU:
 			etape2();
 			break;
@@ -364,7 +363,7 @@ public class ActiviteCreationPartie extends Activity {
 			   on arrivera sur le menu principal */
 			finish();
 			break;
-		default :
+		default:
 			etape1();
 			break;
 		}
@@ -375,7 +374,7 @@ public class ActiviteCreationPartie extends Activity {
 		Log.v(TAG, "On est à l'étape " + etape + " et on va à l'étape PRECEDENTE");
 		if (avecApprobationUtilisateur || estOkPourPasserEtapePrecedente()) {
 			Log.v(TAG, "Ok pour faire précédent");
-			switch(etape) {
+			switch (etape) {
 			case ETAPE_1_CHOIX_MODE_JEU:
 				// Marche aussi si on précise pas "finish()"
 				finish();
@@ -389,18 +388,17 @@ public class ActiviteCreationPartie extends Activity {
 			case ETAPE_4_CHOIX_EQUIPE:
 				etape3();
 				break;
-			default :
+			default:
 				break;
 			}
-		}
-		else {
+		} else {
 			Log.v(TAG, "Impossible de faire précédent car non OK");
 		}
 	}
 	
 	private boolean estOkPourPasserEtapePrecedente() {
 		Log.v(TAG, "On est à l'étape " + etape + " et on va à l'étape PRECEDENTE");
-		switch(etape) {
+		switch (etape) {
 		case ETAPE_2_CONFIGURATION_MODE_JEU:
 			switch (ParametresPartie.getParametresPartie().getModeJeu()) {
 			case ParametresPartie.MODE_BLUETOOTH_SERVEUR:
@@ -417,9 +415,9 @@ public class ActiviteCreationPartie extends Activity {
 			// TODO
 			break;
 		case ETAPE_4_CHOIX_EQUIPE:
-			//TODO : en cas de partie BLuetooth
+			// TODO : en cas de partie BLuetooth
 			break;
-		default :
+		default:
 			break;
 		}
 		return true;

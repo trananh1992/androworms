@@ -6,9 +6,9 @@
 
     <ImageView
         android:id="@+id/background"
-        android:contentDescription="@+id/background_color"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:contentDescription="@+id/background_color" />
 
     <ImageView
         android:id="@+id/CurrentMap"
@@ -41,28 +41,27 @@
 
         <ImageButton
             android:id="@+id/draw_small_brush"
-            android:contentDescription="@+id/draw_small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="invisible"
-            android:src="@drawable/ic_small_brush" />
+            android:contentDescription="@+id/draw_small"
+            android:src="@drawable/ic_small_brush"
+            android:visibility="invisible" />
 
         <ImageButton
             android:id="@+id/draw_medium_brush"
-            android:contentDescription="@+id/draw_medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="invisible"
-            android:src="@drawable/ic_medium_brush" />
+            android:contentDescription="@+id/draw_medium"
+            android:src="@drawable/ic_medium_brush"
+            android:visibility="invisible" />
 
         <ImageButton
             android:id="@+id/draw_big_brush"
-            android:contentDescription="@+id/draw_big"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="invisible"
-            android:src="@drawable/ic_big_brush" />
-
+            android:contentDescription="@+id/draw_big"
+            android:src="@drawable/ic_big_brush"
+            android:visibility="invisible" />
     </LinearLayout>
 
     <LinearLayout
@@ -106,11 +105,11 @@
 
     <ImageButton
         android:id="@+id/alpha_auto"
-        android:contentDescription="@+id/alpha_auto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/alphaLinearLayout"
         android:layout_alignRight="@+id/TakePicture"
+        android:contentDescription="@+id/alpha_auto"
         android:src="@drawable/ic_auto" />
 
 </RelativeLayout>
