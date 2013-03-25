@@ -27,7 +27,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
-            android:id="@+id/txt_version"
+            android:id="@+id/tv_version"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/pas_de_donnees"
@@ -60,7 +60,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
-                android:id="@+id/txt_liste_developpeurs"
+                android:id="@+id/tv_liste_developpeurs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/pas_de_donnees"

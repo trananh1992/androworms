@@ -33,7 +33,7 @@ public class ActiviteChoixOption extends Activity {
 		
 		//gets a list of the files
 		File[] sdDirList = sd.listFiles(); 
-		Spinner mapChooser = (Spinner)findViewById(R.id.mapChooser);
+		Spinner mapChooser = (Spinner)findViewById(R.id.spn_mapChooser);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.text_view_spinner);
 		int i = 0;
 		if (sdDirList != null) {
@@ -63,7 +63,7 @@ public class ActiviteChoixOption extends Activity {
 			public void onNothingSelected(AdapterView<?> arg0) {
 			}
 		});
-		Button btn = (Button) findViewById(R.id.startGame);
+		Button btn = (Button) findViewById(R.id.btn_demarrer_jeu);
 		btn.setOnClickListener(new OnClickListener(){
 			
 			public void onClick(View arg0)
@@ -77,7 +77,7 @@ public class ActiviteChoixOption extends Activity {
 	
 	private void afficheCarte(String map) {
 		carte = map;
-		ImageView v = (ImageView)findViewById(R.id.chosen_map);
+		ImageView v = (ImageView)findViewById(R.id.iv_choisir_carte);
 		File root = Environment.getExternalStorageDirectory();
 		File sd = new File(root, ActiviteAndroworms.DOSSIER_CARTE + map);
 		Bitmap b = BitmapFactory.decodeFile(sd.getAbsolutePath());
@@ -91,7 +91,7 @@ public class ActiviteChoixOption extends Activity {
 	}
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent retour) {
-		Spinner sp = (Spinner) findViewById(R.id.mapChooser);
+		Spinner sp = (Spinner) findViewById(R.id.spn_mapChooser);
 		Log.v(TAG,"result");
 		if(resultCode == RESULT_OK)
 		{
@@ -103,7 +103,7 @@ public class ActiviteChoixOption extends Activity {
 				ArrayAdapter<String> adapter = (ArrayAdapter<String>) sp.getAdapter();
 				adapter.insert(photo,adapter.getCount()-1);
 				adapter.notifyDataSetChanged();
-				Spinner mapChooser = (Spinner)findViewById(R.id.mapChooser);
+				Spinner mapChooser = (Spinner)findViewById(R.id.spn_mapChooser);
 				mapChooser.setAdapter(adapter);
 			}
 			else

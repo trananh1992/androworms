@@ -53,7 +53,7 @@ public class ActiviteCreationPartieBluetoothClient {
 		/** Définition des composants **/
 		ToggleButton tgEtatBluetooth = (ToggleButton)activiteCreationPartie.findViewById(R.id.tg_EtatBluetoothC);
 		final Button btnAnalyse = (Button)activiteCreationPartie.findViewById(R.id.btn_analyse);
-		final ListView lvAppareilsBluetooth = (ListView)activiteCreationPartie.findViewById(R.id.liste_appareils_bluetooth);
+		final ListView lvAppareilsBluetooth = (ListView)activiteCreationPartie.findViewById(R.id.lv_appareils_bluetooth);
 		
 		/** Init des listes des appareils **/
 		appareilJumele = new ArrayList<BluetoothDevice>();
@@ -138,7 +138,7 @@ public class ActiviteCreationPartieBluetoothClient {
 			rafraichirListeAppareils();
 		}
 		else {
-			ListView lv = (ListView)activiteCreationPartie.findViewById(R.id.liste_appareils_bluetooth);
+			ListView lv = (ListView)activiteCreationPartie.findViewById(R.id.lv_appareils_bluetooth);
 			lv.setAdapter(null);
 		}
 	}
@@ -157,7 +157,7 @@ public class ActiviteCreationPartieBluetoothClient {
 	
 	/** Actualise la liste des appreils Bluetooth **/
 	public void rafraichirListeAppareils() {
-		final ListView lv = (ListView)activiteCreationPartie.findViewById(R.id.liste_appareils_bluetooth);
+		final ListView lv = (ListView)activiteCreationPartie.findViewById(R.id.lv_appareils_bluetooth);
 		
 		// On vide la liste pour éventullement la remplir après
 		lv.setAdapter(null);

@@ -292,7 +292,7 @@ public class ActiviteCreationPartie extends Activity {
 	private void afficheCarteSysteme(String nomCarte) {
 		ParametresPartie.getParametresPartie().setEstCartePerso(false);
 		ParametresPartie.getParametresPartie().setNomCarte(nomCarte);
-		ImageView v = (ImageView)findViewById(R.id.chosen_map);
+		ImageView v = (ImageView)findViewById(R.id.iv_choisir_carte);
 		if (nomCarte.equals("terrain_jeu_defaut_1")) {
 			v.setImageResource(R.drawable.terrain_jeu_defaut_1);
 		} else if (nomCarte.equals("terrain_jeu_defaut_2")) {
@@ -312,7 +312,7 @@ public class ActiviteCreationPartie extends Activity {
 	private void afficheCartePerso(String nomCarte) {
 		ParametresPartie.getParametresPartie().setEstCartePerso(true);
 		ParametresPartie.getParametresPartie().setNomCarte(nomCarte);	
-		ImageView v = (ImageView)findViewById(R.id.chosen_map);
+		ImageView v = (ImageView)findViewById(R.id.iv_choisir_carte);
 		File root = Environment.getExternalStorageDirectory();
 		File sd = new File(root, ActiviteAndroworms.DOSSIER_CARTE + nomCarte);
 		Bitmap b = BitmapFactory.decodeFile(sd.getAbsolutePath());

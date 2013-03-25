@@ -92,7 +92,7 @@
                     android:id="@+id/tv_nomImage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nom image" />
+                    android:text="@string/pas_de_donnees" />
 
                 <Button
                     android:id="@+id/btn_renommerCarte"
@@ -102,7 +102,7 @@
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/chosen_map"
+                android:id="@+id/iv_choisir_carte"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -113,12 +113,11 @@
                 android:layout_height="wrap_content" >
 
                 <HorizontalScrollView
-                    android:id="@+id/horizontalScrollView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" >
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:orientation="horizontal" >
 
@@ -140,6 +139,7 @@
                             android:id="@+id/ib_dupliquer"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:contentDescription="@string/dupliquer"
                             android:src="@android:drawable/ic_menu_report_image" />
 
                         <ImageButton
