@@ -118,7 +118,7 @@ public class TacheClientConnexionBluetooth extends AsyncTask<Void, Integer, Bool
 			adapter = new ArrayAdapter<String>(activiteCreationPartie, android.R.layout.simple_list_item_checked, listeClients);
 			
 			// Affichage de la liste des clients qui vont aussi jouer (ce que le serveur nous envoie)
-			ListView lvAppareilsBluetooth = (ListView)activiteCreationPartie.findViewById(R.id.liste_appareils_bluetooth);
+			ListView lvAppareilsBluetooth = (ListView)activiteCreationPartie.findViewById(R.id.lv_appareils_bluetooth);
 			lvAppareilsBluetooth.setAdapter(adapter);
 			
 			

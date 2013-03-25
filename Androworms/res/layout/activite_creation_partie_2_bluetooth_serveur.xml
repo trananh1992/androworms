@@ -55,7 +55,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tv_monNomBluetooth"
+        android:id="@+id/tv_mon_nom_bluetooth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/pas_de_donnees" />
@@ -80,7 +80,7 @@
     </LinearLayout>
 
     <ListView
-        android:id="@+id/liste_appareils_bluetoothS"
+        android:id="@+id/lv_appareils_bluetoothS"
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="1" >

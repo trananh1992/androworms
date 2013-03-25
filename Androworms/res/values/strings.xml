@@ -87,5 +87,6 @@
     <string name="afficher_retour_force">Afficher retour de force</string>
     <string name="jouer_avec_plusieurs_telephones_bluetooth">Jouer avec plusieurs telephones en Bluetooth</string>
     <string name="jouer_avec_plusieurs_telephones_wifi_direct">Jouer avec plusieurs telephones Wifi direct</string>
+    <string name="dupliquer">Dupliquer</string>
 
 </resources>

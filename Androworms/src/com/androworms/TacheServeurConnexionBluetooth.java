@@ -44,7 +44,7 @@ public class TacheServeurConnexionBluetooth extends AsyncTask<Void, String, Bool
 		adaptateurListeClients = new ArrayAdapter<String>(activiteCreationPartie, android.R.layout.simple_list_item_1, android.R.id.text1, listeClients);
 		
 		// Affichage de la liste des clients déjà connecté
-		ListView lv = (ListView)activiteCreationPartie.findViewById(R.id.liste_appareils_bluetoothS);
+		ListView lv = (ListView)activiteCreationPartie.findViewById(R.id.lv_appareils_bluetoothS);
 		lv.setAdapter(adaptateurListeClients);
 		lv.setVisibility(View.VISIBLE);
 		

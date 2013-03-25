@@ -4,7 +4,7 @@
     android:layout_height="match_parent" >
 
     <com.androworms.MoteurGraphique
-        android:id="@+id/trlCarte"
+        android:id="@+id/mg_carte"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
     </com.androworms.MoteurGraphique>
@@ -14,7 +14,7 @@
         android:layout_height="match_parent" >
 
         <TextView
-            android:id="@+id/score_joueur_1"
+            android:id="@+id/tv_score_joueur_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
@@ -22,7 +22,7 @@
             android:text="@string/score_joueur_1" />
 
         <TextView
-            android:id="@+id/score_joueur_2"
+            android:id="@+id/tv_score_joueur_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -32,7 +32,7 @@
             android:text="@string/score_joueur_2" />
 
         <TextView
-            android:id="@+id/mode_jeu"
+            android:id="@+id/tv_mode_jeu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -48,7 +48,7 @@
         </com.androworms.ui.ClavierDirectionnel>
 
         <ToggleButton
-            android:id="@+id/toggleButton1"
+            android:id="@+id/tg_mode_tir"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -57,14 +57,14 @@
             android:textOn="@string/mode_tir" />
 
         <ToggleButton
-            android:id="@+id/toggleButton2"
+            android:id="@+id/tg_clavier"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="80dp"
-            android:textOff="Paddle"
-            android:textOn="Paddle" />
+            android:textOff="Clavier"
+            android:textOn="Clavier" />
 
         <SlidingDrawer
             android:id="@+id/selecteur_arme"
@@ -141,7 +141,7 @@
             android:id="@+id/iv_recentrer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/toggleButton1"
+            android:layout_above="@+id/tg_mode_tir"
             android:layout_alignParentLeft="true"
             android:layout_marginBottom="15dp"
             android:layout_marginLeft="15dp"

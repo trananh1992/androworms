@@ -6,7 +6,7 @@
     tools:context=".ActiviteChoixOption" >
 
     <Button
-        android:id="@+id/startGame"
+        android:id="@+id/btn_demarrer_jeu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -14,23 +14,22 @@
         android:text="@string/lancer" />
 
     <ImageView
-        android:id="@+id/chosen_map"
+        android:id="@+id/iv_choisir_carte"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:contentDescription="@+id/chosen_map" />
+        android:contentDescription="@+id/iv_choisir_carte" />
 
     <Spinner
-        android:id="@+id/mapChooser"
+        android:id="@+id/spn_mapChooser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/chosen_map"
+        android:layout_below="@+id/iv_choisir_carte"
         tools:listitem="@android:layout/simple_spinner_item" />
 
     <TextView
-        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"

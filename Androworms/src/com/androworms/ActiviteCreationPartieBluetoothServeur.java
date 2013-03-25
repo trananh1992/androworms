@@ -115,7 +115,7 @@ public class ActiviteCreationPartieBluetoothServeur {
 		
 		/** Définition des composants **/
 		ToggleButton tgEtatBluetooth = (ToggleButton)activiteCreationPartie.findViewById(R.id.tg_EtatBluetoothS);
-		TextView tvMonNomBluetooth = (TextView)activiteCreationPartie.findViewById(R.id.tv_monNomBluetooth);
+		TextView tvMonNomBluetooth = (TextView)activiteCreationPartie.findViewById(R.id.tv_mon_nom_bluetooth);
 		TextView tvMaVisibilite = (TextView)activiteCreationPartie.findViewById(R.id.tv_maVisibilite);
 		TextView tvInformation = (TextView)activiteCreationPartie.findViewById(R.id.tv_message);
 		Button btnMontrerBluetooth = (Button)activiteCreationPartie.findViewById(R.id.btn_MontrerBluetooth);
@@ -182,7 +182,7 @@ public class ActiviteCreationPartieBluetoothServeur {
 	/** L'utilisateur demande à revenir au statut précédent.
 	 *  Dans certains cas, on veux afficher une popup pour lui demander s'il veux vraiment quitter */
 	public void faireActionPrecedent() {
-		ListView lv = (ListView)activiteCreationPartie.findViewById(R.id.liste_appareils_bluetoothS);
+		ListView lv = (ListView)activiteCreationPartie.findViewById(R.id.lv_appareils_bluetoothS);
 		
 		if (lv.getCount() > 0) {
 			// Un utilisateur à rejoint la partie. On demande confirmation à l'utilisateur pour revenir au statut précédent.

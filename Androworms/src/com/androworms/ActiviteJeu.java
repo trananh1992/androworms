@@ -48,7 +48,7 @@ public class ActiviteJeu extends Activity {
 		setContentView(R.layout.activite_jeu);
 		
 		/* Récupération du layout de fond */
-		moteurGraph = (MoteurGraphique)findViewById(R.id.trlCarte);
+		moteurGraph = (MoteurGraphique)findViewById(R.id.mg_carte);
 		
 		/* Récupération des paramètres envoyé à l'activity */
 		Bundle bundle = this.getIntent().getExtras();
@@ -58,29 +58,29 @@ public class ActiviteJeu extends Activity {
 		moteurGraph.setNoyau(noyau);
 		
 		/* Mode TIR */
-		ToggleButton tgb = (ToggleButton) findViewById(R.id.toggleButton1);
+		ToggleButton tgb = (ToggleButton) findViewById(R.id.tg_mode_tir);
 		tgb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if (!isChecked && (mode == TIR || mode == TIR_EN_COURS)) {
 					setMode(RIEN);
-					findViewById(R.id.toggleButton2).setEnabled(true);
+					findViewById(R.id.tg_clavier).setEnabled(true);
 				} else if (isChecked && mode != SELECTION_ARME) {
 					setMode(TIR);
-					findViewById(R.id.toggleButton2).setEnabled(false);
+					findViewById(R.id.tg_clavier).setEnabled(false);
 				}
 			}
 		});
 		
 		/* Mode déplacement */
-		ToggleButton tgb2 = (ToggleButton)findViewById(R.id.toggleButton2);
+		ToggleButton tgb2 = (ToggleButton)findViewById(R.id.tg_clavier);
 		tgb2.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if (isChecked) {
 					findViewById(R.id.clavier).setVisibility(View.VISIBLE);
-					findViewById(R.id.toggleButton1).setEnabled(false);
+					findViewById(R.id.tg_mode_tir).setEnabled(false);
 				} else {
 					findViewById(R.id.clavier).setVisibility(View.INVISIBLE);
-					findViewById(R.id.toggleButton1).setEnabled(true);
+					findViewById(R.id.tg_mode_tir).setEnabled(true);
 				}
 			}
 		});
@@ -105,7 +105,7 @@ public class ActiviteJeu extends Activity {
 		
 		
 		/* Affichage du mode de jeu */
-		tv = (TextView)findViewById(R.id.mode_jeu);
+		tv = (TextView)findViewById(R.id.tv_mode_jeu);
 		updateAffichageMode();
 
 		/* Gestion du clavier*/
@@ -176,7 +176,7 @@ public class ActiviteJeu extends Activity {
 	protected void onDestroy() {
 		super.onDestroy();
 		Log.v(TAG, "ActiviteJeu destroy");
-		moteurGraph = (MoteurGraphique)findViewById(R.id.trlCarte);
+		moteurGraph = (MoteurGraphique)findViewById(R.id.mg_carte);
 		moteurGraph.nettoyer();
 	}
 	

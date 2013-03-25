@@ -85,7 +85,7 @@ public class ActiviteAndroworms extends Activity {
 		setContentView(R.layout.credits);
 		
 		/* Numéro de version */
-		TextView tvNumeroVersion = (TextView)findViewById(R.id.txt_version);
+		TextView tvNumeroVersion = (TextView)findViewById(R.id.tv_version);
 		String nomVersion = "";
 		int codeVersion = 0;
 		try {
@@ -106,7 +106,7 @@ public class ActiviteAndroworms extends Activity {
 		}
 		String txtDev = buf.toString();
 		TextView tvDevelopers;
-		tvDevelopers = (TextView)findViewById(R.id.txt_liste_developpeurs);
+		tvDevelopers = (TextView)findViewById(R.id.tv_liste_developpeurs);
 		tvDevelopers.setText(Html.fromHtml(txtDev));
 		
 		/* Revenir au menu principal */
