@@ -12,7 +12,7 @@
         android:orientation="horizontal" >
 
         <ImageView
-            android:id="@+id/ib_return_home"
+            android:id="@+id/iv_return_home"
             android:layout_width="@dimen/barre_action"
             android:layout_height="match_parent"
             android:contentDescription="@string/app_name"
@@ -75,7 +75,7 @@
 
         <TextView
             android:id="@+id/tv_message"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/selectionner_appareil_Bluetooth" />

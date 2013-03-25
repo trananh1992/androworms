@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/rlGlobale"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
+
     <com.androworms.MoteurGraphique
         android:id="@+id/trlCarte"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
     </com.androworms.MoteurGraphique>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
+
         <TextView
             android:id="@+id/score_joueur_1"
             android:layout_width="wrap_content"
@@ -18,6 +20,7 @@
             android:layout_marginLeft="40dp"
             android:layout_marginTop="40dp"
             android:text="@string/score_joueur_1" />
+
         <TextView
             android:id="@+id/score_joueur_2"
             android:layout_width="wrap_content"
@@ -27,6 +30,7 @@
             android:layout_marginRight="40dp"
             android:layout_marginTop="40dp"
             android:text="@string/score_joueur_2" />
+
         <TextView
             android:id="@+id/mode_jeu"
             android:layout_width="wrap_content"
@@ -34,121 +38,124 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
             android:text="@string/pas_de_donnees" />
-		<com.androworms.ui.ClavierDirectionnel
-	        android:id="@+id/clavier"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentBottom="true"
-	        android:layout_alignParentRight="true" >
-	    </com.androworms.ui.ClavierDirectionnel>
-		<ToggleButton
-		    android:id="@+id/toggleButton1"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_alignParentBottom="true"
-		    android:layout_alignParentLeft="true"
-		    android:textOff="@string/mode_tir"
-		    android:textOn="@string/mode_tir" />
 
-		<ToggleButton
-		    android:id="@+id/toggleButton2"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_alignParentBottom="true"
-		    android:layout_alignParentLeft="true"
-		    android:layout_marginLeft="80dp"
-		    android:textOff="Paddle"
-		    android:textOn="Paddle" />
+        <com.androworms.ui.ClavierDirectionnel
+            android:id="@+id/clavier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true" >
+        </com.androworms.ui.ClavierDirectionnel>
 
-		<SlidingDrawer
-		    android:id="@+id/selecteur_arme"
-		    android:layout_width="match_parent"
-		    android:layout_height="match_parent"
-		    android:content="@+id/selecteur_arme_contenu"
-		    android:handle="@+id/selecteur_arme_bouton"
-		    android:orientation="horizontal" >
-		    <Button
-		        android:id="@+id/selecteur_arme_bouton"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:text="@string/Armes" />
-		    	<TableLayout
-	            android:id="@+id/selecteur_arme_contenu"
-	            android:layout_width="fill_parent"
-	            android:layout_height="fill_parent"
-	            android:orientation="vertical"
-	            android:shrinkColumns="5"
-	            android:stretchColumns="5" >
-	            <TableRow
-	                android:id="@+id/tableRow1"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:padding="10dp" >
-	                <ImageView
-	                    android:id="@+id/imageView1"
-	                    android:layout_width="wrap_content"
-	                    android:layout_height="wrap_content"
-	                    android:contentDescription="@string/Armes"
-	                    android:src="@drawable/icone_hache" 
-	                    android:paddingRight="20dp"/>
-	                <ImageView
-	                    android:id="@+id/ImageView04"
-	                    android:layout_width="wrap_content"
-	                    android:layout_height="wrap_content"
-	                    android:contentDescription="@string/Armes"
-	                    android:src="@drawable/icone_pistolet" 
-	                    android:paddingRight="20dp"/>
-	                <ImageView
-	                    android:id="@+id/ImageView03"
-	                    android:layout_width="wrap_content"
-	                    android:layout_height="wrap_content"
-	                    android:contentDescription="@string/Armes"
-	                    android:src="@drawable/icone_bazooka" 
-	                    android:paddingRight="20dp"/>
-	            </TableRow>
-	            <TableRow
-	                android:id="@+id/tableRow2"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content" 
-	                android:padding="10dp" >
-	                <ImageView
-	                    android:id="@+id/ImageView07"
-	                    android:layout_width="wrap_content"
-	                    android:layout_height="wrap_content"
-	                    android:contentDescription="@string/Armes"
-	                    android:src="@drawable/icone_grenade" 
-	                    android:paddingRight="20dp"/>
-	                <ImageView
-	                    android:id="@+id/ImageView08"
-	                    android:layout_width="wrap_content"
-	                    android:layout_height="wrap_content"
-	                    android:contentDescription="@string/Armes"
-	                    android:src="@drawable/icone_mine" 
-	                    android:paddingRight="20dp"/>
-	            
-	            </TableRow>
-	        </TableLayout>
-		</SlidingDrawer>
+        <ToggleButton
+            android:id="@+id/toggleButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:textOff="@string/mode_tir"
+            android:textOn="@string/mode_tir" />
 
-		<ImageView
-		    android:id="@+id/iv_recentrer"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_above="@+id/toggleButton1"
-		    android:layout_alignParentLeft="true"
-		    android:layout_marginBottom="15dp"
-		    android:layout_marginLeft="15dp"
-		    android:contentDescription="@string/recentrer_sur_le_joueur"
-		    android:src="@drawable/ic_position" />
-		
-		<ImageView
-		    android:id="@+id/iv_pause"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_alignParentLeft="true"
-		    android:layout_alignParentTop="true"
-		    android:contentDescription="@string/pause"
-		    android:src="@drawable/ic_pause" />
-		
+        <ToggleButton
+            android:id="@+id/toggleButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="80dp"
+            android:textOff="Paddle"
+            android:textOn="Paddle" />
+
+        <SlidingDrawer
+            android:id="@+id/selecteur_arme"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:content="@+id/selecteur_arme_contenu"
+            android:handle="@+id/selecteur_arme_bouton"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/selecteur_arme_bouton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Armes" />
+
+            <TableLayout
+                android:id="@+id/selecteur_arme_contenu"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:shrinkColumns="5"
+                android:stretchColumns="5" >
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/Armes"
+                        android:paddingRight="20dp"
+                        android:src="@drawable/icone_hache" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/Armes"
+                        android:paddingRight="20dp"
+                        android:src="@drawable/icone_pistolet" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/Armes"
+                        android:paddingRight="20dp"
+                        android:src="@drawable/icone_bazooka" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/Armes"
+                        android:paddingRight="20dp"
+                        android:src="@drawable/icone_grenade" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/Armes"
+                        android:paddingRight="20dp"
+                        android:src="@drawable/icone_mine" />
+                </TableRow>
+            </TableLayout>
+        </SlidingDrawer>
+
+        <ImageView
+            android:id="@+id/iv_recentrer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/toggleButton1"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="15dp"
+            android:contentDescription="@string/recentrer_sur_le_joueur"
+            android:src="@drawable/ic_position" />
+
+        <ImageView
+            android:id="@+id/iv_pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:contentDescription="@string/pause"
+            android:src="@drawable/ic_pause" />
     </RelativeLayout>
+
 </RelativeLayout>

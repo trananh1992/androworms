@@ -74,7 +74,7 @@ public class ActiviteCreationPartie extends Activity {
 		setContentView(R.layout.activite_creation_partie_1_mode);
 		
 		// Barre d'action
-		ImageView ib = (ImageView)findViewById(R.id.ib_return_home);
+		ImageView ib = (ImageView)findViewById(R.id.iv_return_home);
 		ib.setOnClickListener(evenements);
 		ib.setOnTouchListener(evenements);
 		
@@ -105,8 +105,8 @@ public class ActiviteCreationPartie extends Activity {
 		}
 		
 		// Gestion des composants > Aide
-		findViewById(R.id.img_aide_1_telephone).setOnClickListener(evenements);
-		findViewById(R.id.img_aide_2_telephones).setOnClickListener(evenements);
+		findViewById(R.id.iv_aide_1_telephone).setOnClickListener(evenements);
+		findViewById(R.id.iv_aide_2_telephones).setOnClickListener(evenements);
 	}
 	
 	private void etape2() {
@@ -141,7 +141,7 @@ public class ActiviteCreationPartie extends Activity {
 		setContentView(R.layout.activite_creation_partie_2_solo);
 		
 		// Barre d'action
-		ImageView ib = (ImageView)findViewById(R.id.ib_return_home);
+		ImageView ib = (ImageView)findViewById(R.id.iv_return_home);
 		ib.setOnClickListener(evenements);
 		ib.setOnTouchListener(evenements);
 		
@@ -197,7 +197,7 @@ public class ActiviteCreationPartie extends Activity {
 		setContentView(R.layout.activite_creation_partie_3);
 		
 		// Barre d'action
-		ImageView ib = (ImageView)findViewById(R.id.ib_return_home);
+		ImageView ib = (ImageView)findViewById(R.id.iv_return_home);
 		ib.setOnClickListener(evenements);
 		ib.setOnTouchListener(evenements);
 		
@@ -278,7 +278,7 @@ public class ActiviteCreationPartie extends Activity {
 		setContentView(R.layout.activite_creation_partie_4);
 		
 		// Barre d'action
-		ImageView ib = (ImageView)findViewById(R.id.ib_return_home);
+		ImageView ib = (ImageView)findViewById(R.id.iv_return_home);
 		ib.setOnClickListener(evenements);
 		ib.setOnTouchListener(evenements);
 		
