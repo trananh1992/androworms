@@ -161,9 +161,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/btn_suivant" />
                     </LinearLayout>
-
                 </HorizontalScrollView>
-
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

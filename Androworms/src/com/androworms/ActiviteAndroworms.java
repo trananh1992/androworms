@@ -25,7 +25,7 @@ public class ActiviteAndroworms extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Log.v(TAG,"Androworms : Bienvenue sur le spashscreen");
+		Log.v(TAG, "Androworms : Bienvenue sur le spashscreen");
 		
 		/* Affiche la vue */
 		setContentView(R.layout.splash_screen);
@@ -43,7 +43,7 @@ public class ActiviteAndroworms extends Activity {
 		ch.execute(this);
 		
 		/* Gestion de l'utilisateur qui touche l'écran pour passer le SplashScreen */
-		LinearLayout ll = (LinearLayout)findViewById(R.id.ll_splash_screen);
+		LinearLayout ll = (LinearLayout) findViewById(R.id.ll_splash_screen);
 		ll.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				ch.terminerChargement();
@@ -53,7 +53,7 @@ public class ActiviteAndroworms extends Activity {
 	
 	/** Chargement du menu principal quand le SplashScreen est fini */
 	public void chargerMenuPrincipal() {
-		Log.v(TAG,"Lancement de l'activité du menu principale");
+		Log.v(TAG, "Lancement de l'activité du menu principale");
 		
 		/* Affiche la vue */
 		setContentView(R.layout.menu_principal);
@@ -71,7 +71,7 @@ public class ActiviteAndroworms extends Activity {
 		findViewById(R.id.btn_test_jeu).setOnClickListener(cl);
 		
 		/* Interface des credits */
-		ImageView img = (ImageView)findViewById(R.id.img_info);
+		ImageView img = (ImageView) findViewById(R.id.img_info);
 		img.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				chargerMenuCredits();
@@ -85,7 +85,7 @@ public class ActiviteAndroworms extends Activity {
 		setContentView(R.layout.credits);
 		
 		/* Numéro de version */
-		TextView tvNumeroVersion = (TextView)findViewById(R.id.tv_version);
+		TextView tvNumeroVersion = (TextView) findViewById(R.id.tv_version);
 		String nomVersion = "";
 		int codeVersion = 0;
 		try {
@@ -100,17 +100,17 @@ public class ActiviteAndroworms extends Activity {
 		/* Affiche la liste des développeurs */
 		String[] listeDev = getResources().getStringArray(R.array.liste_developpeurs);
 		StringBuffer buf = new StringBuffer();
-		for (int i=0;i<listeDev.length;i++) {
+		for (int i = 0; i < listeDev.length; i++) {
 			buf.append(listeDev[i]);
 			buf.append(RETOUR_LIGNE_HTML);
 		}
 		String txtDev = buf.toString();
 		TextView tvDevelopers;
-		tvDevelopers = (TextView)findViewById(R.id.tv_liste_developpeurs);
+		tvDevelopers = (TextView) findViewById(R.id.tv_liste_developpeurs);
 		tvDevelopers.setText(Html.fromHtml(txtDev));
 		
 		/* Revenir au menu principal */
-		LinearLayout ll = (LinearLayout)findViewById(R.id.ll_credits);
+		LinearLayout ll = (LinearLayout) findViewById(R.id.ll_credits);
 		ll.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				chargerMenuPrincipal();
