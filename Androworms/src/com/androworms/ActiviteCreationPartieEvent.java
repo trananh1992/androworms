@@ -76,7 +76,7 @@ public class ActiviteCreationPartieEvent implements OnClickListener, OnTouchList
 			
 			switch (v.getId()) {
 			
-			case R.id.ib_return_home :
+			case R.id.iv_return_home :
 				this.activiteCreationPartie.finish();
 				break;
 				
@@ -87,10 +87,10 @@ public class ActiviteCreationPartieEvent implements OnClickListener, OnTouchList
 				
 				switch (imgv.getId()) {
 				// Boutons d'aide de la première page : Choix du mode de jeu
-				case R.id.img_aide_1_telephone:
+				case R.id.iv_aide_1_telephone:
 					builder.setMessage("Faire une partie quand vous n'avez que un seul téléphone à votre disposition.");
 					break;
-				case R.id.img_aide_2_telephones:
+				case R.id.iv_aide_2_telephones:
 					builder.setMessage("Faire une partie quand vous avez plusieurs téléphones à votre disposition.");
 					break;
 				default:
@@ -113,8 +113,8 @@ public class ActiviteCreationPartieEvent implements OnClickListener, OnTouchList
 		if (v instanceof ImageView) {
 			
 			switch (v.getId()) {
-			case R.id.ib_return_home:
-				ImageView ib = (ImageView)activiteCreationPartie.findViewById(R.id.ib_return_home);
+			case R.id.iv_return_home:
+				ImageView ib = (ImageView)activiteCreationPartie.findViewById(R.id.iv_return_home);
 				switch (event.getActionMasked()) {
 				case MotionEvent.ACTION_DOWN:
 					ib.setBackgroundResource(R.color.barre_action_appuye);

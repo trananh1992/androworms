@@ -95,7 +95,7 @@ public class ActiviteAndroworms extends Activity {
 			Log.e(TAG, "Erreur à la récupération du nom de version de l'application");
 			Log.e(TAG, "\t" + e.getMessage());
 		}
-		tvNumeroVersion.setText(nomVersion + " (" + codeVersion + ")");
+		tvNumeroVersion.setText(nomVersion + " (r" + codeVersion + ")");
 		
 		/* Affiche la liste des développeurs */
 		String[] listeDev = getResources().getStringArray(R.array.liste_developpeurs);
