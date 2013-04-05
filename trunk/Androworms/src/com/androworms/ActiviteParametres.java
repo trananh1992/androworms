@@ -8,6 +8,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 public class ActiviteParametres extends Activity {
 	
@@ -32,6 +33,8 @@ public class ActiviteParametres extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activite_parametres);
 		
+		ActiviteParametresEvent evenements = new ActiviteParametresEvent(this);
+		
 		// Chargement des préférences
 		SharedPreferences settings = getSharedPreferences(PARAMETRES_CLE, 0);
 		String paramPseudo = settings.getString(PARAMETRE_PSEUDO_CLE, PARAMETRE_PSEUDO_DEFAUT_1);
@@ -49,13 +52,18 @@ public class ActiviteParametres extends Activity {
 		CheckBox chkAfficherRetour = (CheckBox)findViewById(R.id.chk_afficher_retour);
 		chkAfficherRetour.setChecked(paramAfficherRetour);
 		
-		/* Bouton enregistrer */
+		// Bouton enregistrer
 		Button btn = (Button)findViewById(R.id.btn_enregistrer);
 		btn.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				finish();
 			}
 		});
+		
+		// Barre d'action
+		ImageView ib = (ImageView) findViewById(R.id.iv_return_home);
+		ib.setOnClickListener(evenements);
+		ib.setOnTouchListener(evenements);
 	}
 	
 	protected void onStop() {
