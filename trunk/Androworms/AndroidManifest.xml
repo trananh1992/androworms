@@ -42,7 +42,7 @@
             android:screenOrientation="landscape" >
         </activity>
         <activity
-            android:name="com.androworms.ActiviteEditeurCarte"
+            android:name="com.androworms.ActiviteEditeur"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="landscape" >
         </activity>

@@ -28,7 +28,7 @@ import android.view.View.OnTouchListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-public class ActiviteEditeurCarte extends Activity implements OnClickListener, OnTouchListener {
+public class ActiviteEditeur extends Activity implements OnClickListener, OnTouchListener {
 	private ActiviteAndroworms activiteMenuPrincipal;
 	static final int TAKE_PICTURE = 0;
 	private static final int BIG_BRUSH = 3;
@@ -45,11 +45,11 @@ public class ActiviteEditeurCarte extends Activity implements OnClickListener, O
 	static final int MAX_COLOR_VALUE = 255;
 	static final int DEFINITION = 3;
 	
-	public ActiviteEditeurCarte() {
+	public ActiviteEditeur() {
 		super();
 	}
 	
-	public ActiviteEditeurCarte(ActiviteAndroworms activiteMenuPrincipal) {
+	public ActiviteEditeur(ActiviteAndroworms activiteMenuPrincipal) {
 		this.activiteMenuPrincipal = activiteMenuPrincipal;
 	}
 	
@@ -81,7 +81,7 @@ public class ActiviteEditeurCarte extends Activity implements OnClickListener, O
 	
 	/** Gestionnaire d'évênement permettant le lancement de cette activité */
 	public void onClick(View arg0) {
-		Intent intent = new Intent(this.activiteMenuPrincipal, ActiviteEditeurCarte.class);
+		Intent intent = new Intent(this.activiteMenuPrincipal, ActiviteEditeur.class);
 		this.activiteMenuPrincipal.startActivity(intent);
 		
 	}
