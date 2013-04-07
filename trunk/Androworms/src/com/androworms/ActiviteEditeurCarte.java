@@ -28,7 +28,7 @@ import android.view.View.OnTouchListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-public class ActiviteEditeurCarte extends Activity implements OnClickListener,OnTouchListener {
+public class ActiviteEditeurCarte extends Activity implements OnClickListener, OnTouchListener {
 	private ActiviteAndroworms activiteMenuPrincipal;
 	static final int TAKE_PICTURE = 0;
 	private static final int BIG_BRUSH = 3;
@@ -45,6 +45,40 @@ public class ActiviteEditeurCarte extends Activity implements OnClickListener,On
 	static final int MAX_COLOR_VALUE = 255;
 	static final int DEFINITION = 3;
 	
+	public ActiviteEditeurCarte() {
+		super();
+	}
+	
+	public ActiviteEditeurCarte(ActiviteAndroworms activiteMenuPrincipal) {
+		this.activiteMenuPrincipal = activiteMenuPrincipal;
+	}
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		
+		/* Affiche la vue par défaut */
+		setContentView(R.layout.activite_editeur_carte);
+		ImageView surface = (ImageView) findViewById(R.id.CurrentMap);
+		((ImageView) findViewById(R.id.background)).setBackgroundResource(R.color.ciel);
+		
+		surface.setOnTouchListener(this);
+		
+		/* Ajout du gestionnaire d'évenement pour le bouton de caméra */
+		OnClickListener camCl = new ActiviteCamera(this);
+		findViewById(R.id.TakePicture).setOnClickListener(camCl);
+		
+		/* Ajout des gestionnaires d'évênements pour les boutons de dessins */
+		this.setAlphaListener();
+		this.setDrawListener();
+		
+		findViewById(R.id.alpha_auto).setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				autoAlpha();
+			}
+		});
+	}
+	
 	/** Gestionnaire d'évênement permettant le lancement de cette activité */
 	public void onClick(View arg0) {
 		Intent intent = new Intent(this.activiteMenuPrincipal, ActiviteEditeurCarte.class);
@@ -52,18 +86,13 @@ public class ActiviteEditeurCarte extends Activity implements OnClickListener,On
 		
 	}
 	
-	private void fusionnerCalques(Bitmap result,Bitmap base) {
-		for(int i=0;i<base.getWidth();i++)
-		{
-			for(int j=0;j<base.getHeight();j++)
-			{
+	private void fusionnerCalques(Bitmap result, Bitmap base) {
+		for (int i = 0; i < base.getWidth(); i++) {
+			for (int j = 0; j < base.getHeight(); j++) {
 				int color = base.getPixel(i, j);
-				if (color == getResources().getColor(R.color.ciel))
-				{
+				if (color == getResources().getColor(R.color.ciel)) {
 					result.setPixel(i, j, 0);
-				}
-				else if (Color.alpha(color) != 0)
-				{
+				} else if (Color.alpha(color) != 0) {
 					result.setPixel(i, j, color);
 				}
 			}
@@ -80,13 +109,13 @@ public class ActiviteEditeurCarte extends Activity implements OnClickListener,On
 		}
 		
 		/* échec lors de la création du dossier */
-		if(!status) {
-			Log.e(TAG,"échec lors de la création du dossier Androworms.");
+		if (!status) {
+			Log.e(TAG, "Echec lors de la création du dossier Androworms.");
 			return;
 		}
 		
 		/* création du path complet vers la photo */
-		File photoPath = new File(fichierCarte,name);
+		File photoPath = new File(fichierCarte, name);
 		/* sauvegarde de la photo */
 		FileOutputStream filoutputStream;
 		try {
@@ -94,38 +123,33 @@ public class ActiviteEditeurCarte extends Activity implements OnClickListener,On
 			ImageView background = (ImageView) findViewById(R.id.background);
 			BitmapDrawable drawable = (BitmapDrawable) background.getDrawable();
 			Bitmap backgroundBitmap = null;
-			if(null != drawable)
-			{
+			if (null != drawable) {
 				backgroundBitmap = drawable.getBitmap();
 			}
 			ImageView surface = (ImageView) findViewById(R.id.CurrentMap);
-			Bitmap b = ((BitmapDrawable)((ImageView)surface).getDrawable()).getBitmap();
+			Bitmap b = ((BitmapDrawable) ((ImageView) surface).getDrawable()).getBitmap();
 			Bitmap result = null;
 			/* fusion des calques si il y en à deux */
-			if(backgroundBitmap!=null)
-			{
-				result = backgroundBitmap.copy(Bitmap.Config.ARGB_8888,true);
-			}
-			else
-			{
+			if (backgroundBitmap != null) {
+				result = backgroundBitmap.copy(Bitmap.Config.ARGB_8888, true);
+			} else {
 				result = Bitmap.createBitmap(b.getWidth(), b.getHeight(), Bitmap.Config.ARGB_8888);
 			}
-			fusionnerCalques(result,b);
+			fusionnerCalques(result, b);
 			
 			result.compress(Bitmap.CompressFormat.PNG, compression, filoutputStream);
 			filoutputStream.flush();
 			filoutputStream.close();
 		} catch (FileNotFoundException e) {
-			Log.e(TAG,"file not found");
+			Log.e(TAG, "file not found");
 		} catch (IOException e) {
-			Log.e(TAG,"IO Exception");
+			Log.e(TAG, "IO Exception");
 		}
 	}
 	
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			if(mustSave)
-			{
+			if (mustSave) {
 				AlertDialog.Builder dlg = new AlertDialog.Builder(this);
 				
 				dlg.setTitle(R.string.sauvegarder_carte);
@@ -136,10 +160,10 @@ public class ActiviteEditeurCarte extends Activity implements OnClickListener,On
 				dlg.setView(edit);
 				dlg.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
-						/* Création de l'intent pour passer à l'activité parent l'endroit où est la photo*/
+						/* Création de l'intent pour passer à l'activité parent l'endroit où est la photo */
 						Intent i = new Intent();
 						i.putExtra("image", "");
-						setResult(RESULT_OK,i);
+						setResult(RESULT_OK, i);
 						finish();
 					}
 				});
@@ -148,14 +172,13 @@ public class ActiviteEditeurCarte extends Activity implements OnClickListener,On
 					public void onClick(DialogInterface dialog, int whichButton) {
 						String value = edit.getText().toString();
 						/* on crée le dossier pour stocker la photo */
-						if(value.length()>0)
-						{
+						if (value.length() > 0) {
 							saveMap(value);
 						}
-						/* Création de l'intent pour passer à l'activité parent l'endroit où est la photo*/
+						/* Création de l'intent pour passer à l'activité parent l'endroit où est la photo */
 						Intent i = new Intent();
 						i.putExtra("image", value);
-						setResult(RESULT_OK,i);
+						setResult(RESULT_OK, i);
 						finish();
 					}
 				});
@@ -166,27 +189,17 @@ public class ActiviteEditeurCarte extends Activity implements OnClickListener,On
 		return false;
 	}
 	
-	public ActiviteEditeurCarte(ActiviteAndroworms activiteMenuPrincipal) {
-		this.activiteMenuPrincipal = activiteMenuPrincipal;
-	}
-	
-	public ActiviteEditeurCarte() {
-		super();
-	}
-	
 	/** Ajout du gestionnaire d'évenement pour les boutons de taille de brosse Alpha */
 	private void setAlphaBrushSizeListener() {
 		OnClickListener brushSizeAlpha = new OnClickListener() {
 			public void onClick(View v) {
 				drawSolid = NO_BRUSH;
 				drawAlpha = NO_BRUSH;
-				if( v.equals(findViewById(R.id.alpha_small_brush))) {
+				if (v.equals(findViewById(R.id.alpha_small_brush))) {
 					drawAlpha = SMALL_BRUSH;
-				}
-				else if( v.equals(findViewById(R.id.alpha_medium_brush))) {
+				} else if (v.equals(findViewById(R.id.alpha_medium_brush))) {
 					drawAlpha = MEDIUM_BRUSH;
-				}
-				else if( v.equals(findViewById(R.id.alpha_big_brush))) {
+				} else if (v.equals(findViewById(R.id.alpha_big_brush))) {
 					drawAlpha = BIG_BRUSH;
 				}
 				findViewById(R.id.alpha_small_brush).setVisibility(View.INVISIBLE);
@@ -206,13 +219,12 @@ public class ActiviteEditeurCarte extends Activity implements OnClickListener,On
 				findViewById(R.id.draw_small_brush).setVisibility(View.INVISIBLE);
 				findViewById(R.id.draw_medium_brush).setVisibility(View.INVISIBLE);
 				findViewById(R.id.draw_big_brush).setVisibility(View.INVISIBLE);
-				if(findViewById(R.id.alpha_big_brush).getVisibility()==View.VISIBLE) {
+				if (findViewById(R.id.alpha_big_brush).getVisibility() == View.VISIBLE) {
 					findViewById(R.id.alpha_big_brush).setVisibility(View.INVISIBLE);
 					findViewById(R.id.alpha_medium_brush).setVisibility(View.INVISIBLE);
 					findViewById(R.id.alpha_small_brush).setVisibility(View.INVISIBLE);
 					drawAlpha = NO_BRUSH;
-				}
-				else {
+				} else {
 					findViewById(R.id.alpha_big_brush).setVisibility(View.VISIBLE);
 					findViewById(R.id.alpha_medium_brush).setVisibility(View.VISIBLE);
 					findViewById(R.id.alpha_small_brush).setVisibility(View.VISIBLE);
@@ -228,13 +240,11 @@ public class ActiviteEditeurCarte extends Activity implements OnClickListener,On
 			public void onClick(View v) {
 				drawSolid = NO_BRUSH;
 				drawAlpha = NO_BRUSH;
-				if( v.equals(findViewById(R.id.draw_small_brush))) {
+				if (v.equals(findViewById(R.id.draw_small_brush))) {
 					drawSolid = SMALL_BRUSH;
-				}
-				else if( v.equals(findViewById(R.id.draw_medium_brush))) {
+				} else if (v.equals(findViewById(R.id.draw_medium_brush))) {
 					drawSolid = MEDIUM_BRUSH;
-				}
-				else if( v.equals(findViewById(R.id.draw_big_brush))) {
+				} else if (v.equals(findViewById(R.id.draw_big_brush))) {
 					drawSolid = BIG_BRUSH;
 				}
 				findViewById(R.id.draw_big_brush).setVisibility(View.INVISIBLE);
@@ -254,13 +264,12 @@ public class ActiviteEditeurCarte extends Activity implements OnClickListener,On
 				findViewById(R.id.alpha_small_brush).setVisibility(View.INVISIBLE);
 				findViewById(R.id.alpha_medium_brush).setVisibility(View.INVISIBLE);
 				findViewById(R.id.alpha_big_brush).setVisibility(View.INVISIBLE);
-				if(findViewById(R.id.draw_big_brush).getVisibility()==View.VISIBLE) {
+				if (findViewById(R.id.draw_big_brush).getVisibility() == View.VISIBLE) {
 					findViewById(R.id.draw_big_brush).setVisibility(View.INVISIBLE);
 					findViewById(R.id.draw_small_brush).setVisibility(View.INVISIBLE);
 					findViewById(R.id.draw_medium_brush).setVisibility(View.INVISIBLE);
 					drawSolid = NO_BRUSH;
-				}
-				else {
+				} else {
 					findViewById(R.id.draw_big_brush).setVisibility(View.VISIBLE);
 					findViewById(R.id.draw_small_brush).setVisibility(View.VISIBLE);
 					findViewById(R.id.draw_medium_brush).setVisibility(View.VISIBLE);
@@ -270,70 +279,38 @@ public class ActiviteEditeurCarte extends Activity implements OnClickListener,On
 		this.setSolidBrushSizeListener();
 	}
 	
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		
-		/* Affiche la vue par défaut */
-		setContentView(R.layout.activite_editeur_carte);
-		ImageView surface = (ImageView) findViewById(R.id.CurrentMap);
-		((ImageView)findViewById(R.id.background)).setBackgroundResource(R.color.ciel);
-		
-		surface.setOnTouchListener(this);
-		
-		/* Ajout du gestionnaire d'évenement pour le bouton de caméra */
-		OnClickListener camCl = new ActiviteCamera(this);
-		findViewById(R.id.TakePicture).setOnClickListener(camCl);
-		
-		/* Ajout des gestionnaires d'évênements pour les boutons de dessins */
-		this.setAlphaListener();
-		this.setDrawListener();
-		
-		findViewById(R.id.alpha_auto).setOnClickListener(new OnClickListener() {
-			public void onClick(View v)
-			{
-				autoAlpha();
-			}
-		});
-	}
-	
 	/** Initialisation de la surface de dessin avec une image vide */
 	private void initImageView() {
 		ImageView surface = (ImageView) findViewById(R.id.CurrentMap);
 		Bitmap b = Bitmap.createBitmap(surface.getWidth(), surface.getHeight(), Bitmap.Config.ARGB_8888);
 		upCalc = Bitmap.createBitmap(b.getWidth(), b.getHeight(), b.getConfig());
 		drawCanvas = new Canvas(upCalc);
-		drawCanvas.drawBitmap(b, null, new Rect(0,0,drawCanvas.getWidth(),drawCanvas.getHeight()), null);
+		drawCanvas.drawBitmap(b, null, new Rect(0, 0, drawCanvas.getWidth(), drawCanvas.getHeight()), null);
 		surface.setImageBitmap(upCalc);
 	}
 	
 	private void separeAlpha(int width, int height, Bitmap base, int densityL, int densityD) {
-		int i,j;
+		int i, j;
 		final int nComponents = 3;
 		
-		//for(i=0;i<(width-DEFINITION+1);i+=DEFINITION)
-		for(i=0;i<width;i+=DEFINITION)
-		{
-			//for(j=0;j<(height-DEFINITION+1);j+=DEFINITION)
-			for(j=0;j<height;j+=DEFINITION)
-			{
-				int k,l;
+		// for(i=0;i<(width-DEFINITION+1);i+=DEFINITION)
+		for (i = 0; i < width; i += DEFINITION) {
+			// for(j=0;j<(height-DEFINITION+1);j+=DEFINITION)
+			for (j = 0; j < height; j += DEFINITION) {
+				int k, l;
 				int density = 0;
-				int sizeX = Math.min(DEFINITION, width-i);
-				int sizeY = Math.min(DEFINITION, height-j);
-				//for(k=0;k<DEFINITION;k++)
-				for(k=0;k<sizeX;k++)
-				{
-					//for(l=0;l<DEFINITION;l++)
-					for(l=0;l<sizeY;l++)
-					{
-						int color = base.getPixel(i+k, j+l);
-						density += ((Color.red(color)+Color.green(color)+Color.blue(color))/nComponents);
+				int sizeX = Math.min(DEFINITION, width - i);
+				int sizeY = Math.min(DEFINITION, height - j);
+				// for(k=0;k<DEFINITION;k++)
+				for (k = 0; k < sizeX; k++) {
+					// for(l=0;l<DEFINITION;l++)
+					for (l = 0; l < sizeY; l++) {
+						int color = base.getPixel(i + k, j + l);
+						density += ((Color.red(color) + Color.green(color) + Color.blue(color)) / nComponents);
 					}
 				}
-				density = density / (sizeX*sizeY);
-				if(Math.abs(densityL-density)>Math.abs(densityD-density))
-				{
+				density = density / (sizeX * sizeY);
+				if (Math.abs(densityL - density) > Math.abs(densityD - density)) {
 					Paint paint = new Paint();
 					paint.setStrokeWidth(DEFINITION);
 					paint.setColor(getResources().getColor(R.color.ciel));
@@ -346,56 +323,47 @@ public class ActiviteEditeurCarte extends Activity implements OnClickListener,On
 	
 	private void autoAlpha4() {
 		ImageView surface = (ImageView) findViewById(R.id.CurrentMap);
-		BitmapDrawable drawable = ((BitmapDrawable)((ImageView)findViewById(R.id.background)).getDrawable());
-		if( null == drawable)
-		{
+		BitmapDrawable drawable = ((BitmapDrawable) ((ImageView) findViewById(R.id.background)).getDrawable());
+		if (null == drawable) {
 			return;
 		}
 		Bitmap b = drawable.getBitmap();
-		if( null == b)
-		{
+		if (null == b) {
 			return;
 		}
 		int height = b.getHeight();
 		int width = b.getWidth();
-		int i,j;
+		int i, j;
 		final int nComponents = 3;
-		int origin = b.getPixel(0,0);
-		int densityD = (Color.red(origin)+Color.green(origin)+Color.blue(origin))/nComponents;
-		int densityL = (Color.red(origin)+Color.green(origin)+Color.blue(origin))/nComponents;
-		if(!initializedImageView)
-		{
+		int origin = b.getPixel(0, 0);
+		int densityD = (Color.red(origin) + Color.green(origin) + Color.blue(origin)) / nComponents;
+		int densityL = (Color.red(origin) + Color.green(origin) + Color.blue(origin)) / nComponents;
+		if (!initializedImageView) {
 			initImageView();
 			initializedImageView = true;
 		}
 		
-		for(i=0;i<(width-DEFINITION+1);i+=DEFINITION)
-		{
-			for(j=0;j<(height-DEFINITION+1);j+=DEFINITION)
-			{
+		for (i = 0; i < (width - DEFINITION + 1); i += DEFINITION) {
+			for (j = 0; j < (height - DEFINITION + 1); j += DEFINITION) {
 				
 				int color = b.getPixel(i, j);
-				if(Color.alpha(color)!=MAX_COLOR_VALUE)
-				{
+				if (Color.alpha(color) != MAX_COLOR_VALUE) {
 					continue;
 				}
-				int density = (Color.red(color)+Color.green(color)+Color.blue(color))/nComponents;
-				if(density<densityL)
-				{
+				int density = (Color.red(color) + Color.green(color) + Color.blue(color)) / nComponents;
+				if (density < densityL) {
 					densityL = density;
-				}
-				else if(density > densityD)
-				{
+				} else if (density > densityD) {
 					densityD = density;
 				}
 			}
 		}
-		separeAlpha(width,height,b,densityL,densityD);
+		separeAlpha(width, height, b, densityL, densityD);
 		
 		((ImageView) surface).draw(drawCanvas);
 		((ImageView) surface).invalidate();
 	}
-
+	
 	private void autoAlpha() {
 		autoAlpha4();
 		mustSave = true;
@@ -407,23 +375,19 @@ public class ActiviteEditeurCarte extends Activity implements OnClickListener,On
 		final float tailleHerbe = 10f;
 		int size = 0;
 		/* Sélection de la taille de la brosse de dessin */
-		if(drawAlpha != NO_BRUSH)
-		{
-			size = factorSize*drawAlpha;
+		if (drawAlpha != NO_BRUSH) {
+			size = factorSize * drawAlpha;
+		} else {
+			size = factorSize * drawSolid;
 		}
-		else
-		{
-			size = factorSize*drawSolid;
-		}
-		int x=0;
-		int y=0;
+		int x = 0;
+		int y = 0;
 		mustSave = true;
 		/* récupération de l'image sur laquelle on dessine */
-		Bitmap bitmap = ((BitmapDrawable)((ImageView)surface).getDrawable()).getBitmap();
+		Bitmap bitmap = ((BitmapDrawable) ((ImageView) surface).getDrawable()).getBitmap();
 		int action = event.getAction();
 		/* On ne dessine qu'en cas d'appuie ou de déplacement */
-		switch (action)
-		{
+		switch (action) {
 		case MotionEvent.ACTION_DOWN:
 		case MotionEvent.ACTION_MOVE:
 			break;
@@ -432,32 +396,27 @@ public class ActiviteEditeurCarte extends Activity implements OnClickListener,On
 		}
 		x = (int) event.getX();
 		x = Math.max(0, x);
-		x = Math.min(bitmap.getWidth()-1, x);
+		x = Math.min(bitmap.getWidth() - 1, x);
 		y = (int) event.getY();
 		y = Math.max(0, y);
-		y = Math.min(bitmap.getHeight()-1, y);
-		if(drawAlpha != NO_BRUSH)
-		{
+		y = Math.min(bitmap.getHeight() - 1, y);
+		if (drawAlpha != NO_BRUSH) {
 			Paint paint = new Paint();
 			paint.setStyle(Paint.Style.FILL);
 			paint.setColor(getResources().getColor(R.color.ciel));
 			drawCanvas.drawCircle(x, y, size, paint);
-		}
-		else
-		{
+		} else {
 			Paint paint = new Paint();
 			paint.setStyle(Paint.Style.FILL);
 			paint.setColor(getResources().getColor(R.color.terre));
 			drawCanvas.drawCircle(x, y, size, paint);
-			for(int i=0;i<(2*echantillonage*Math.PI);i++)
-			{
-				double radian = ((double) size)+(tailleHerbe/2);
-				double cos = Math.cos((double)i/echantillonage);
-				double sin = Math.sin((double)i/echantillonage);
-				int xG = (int) ((double)x+(double)(radian*cos));
-				int yG = (int) ((double)y+(double)(radian*sin));
-				if(yG>=drawCanvas.getHeight() || yG<0 || xG>= drawCanvas.getWidth() || xG<0 )
-				{
+			for (int i = 0; i < (2 * echantillonage * Math.PI); i++) {
+				double radian = ((double) size) + (tailleHerbe / 2);
+				double cos = Math.cos((double) i / echantillonage);
+				double sin = Math.sin((double) i / echantillonage);
+				int xG = (int) ((double) x + (double) (radian * cos));
+				int yG = (int) ((double) y + (double) (radian * sin));
+				if (yG >= drawCanvas.getHeight() || yG < 0 || xG >= drawCanvas.getWidth() || xG < 0) {
 					continue;
 				}
 				Paint paint2 = new Paint();
@@ -465,9 +424,7 @@ public class ActiviteEditeurCarte extends Activity implements OnClickListener,On
 				paint2.setStyle(Paint.Style.FILL_AND_STROKE);
 				paint2.setStrokeWidth(tailleHerbe);
 				int currentColor = upCalc.getPixel(xG, yG);
-				if (currentColor != getResources().getColor(R.color.terre) &&
-						currentColor != getResources().getColor(R.color.herbe))
-				{
+				if (currentColor != getResources().getColor(R.color.terre) && currentColor != getResources().getColor(R.color.herbe)) {
 					drawCanvas.drawPoint(xG, yG, paint2);
 				}
 			}
@@ -477,17 +434,16 @@ public class ActiviteEditeurCarte extends Activity implements OnClickListener,On
 		return true;
 	}
 	
-	
 	public boolean onTouch(View surface, MotionEvent event) {
 		/* Si aucune brosse n'est sélectionnée, on a rien à dessiner */
-		if(drawAlpha == NO_BRUSH && drawSolid == NO_BRUSH) {
+		if (drawAlpha == NO_BRUSH && drawSolid == NO_BRUSH) {
 			return false;
 		}
-		if(!initializedImageView) {
+		if (!initializedImageView) {
 			initImageView();
 			initializedImageView = true;
 		}
-		return drawEvent(surface,event);
+		return drawEvent(surface, event);
 	}
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent retour) {
@@ -503,9 +459,8 @@ public class ActiviteEditeurCarte extends Activity implements OnClickListener,On
 				byte data[] = new byte[stream.available()];
 				stream.read(data);
 				
-				
 				/* on libère le précédent bitmap */
-				if(upCalc != null) {
+				if (upCalc != null) {
 					upCalc.recycle();
 				}
 				
@@ -514,25 +469,24 @@ public class ActiviteEditeurCarte extends Activity implements OnClickListener,On
 				Bitmap overlay = Bitmap.createBitmap(surface.getWidth(), surface.getHeight(), upCalc.getConfig());
 				
 				drawCanvas = new Canvas(overlay);
-				drawCanvas.drawBitmap(upCalc, new Rect(0,0,upCalc.getWidth(),upCalc.getHeight()), new Rect(0,0,surface.getWidth(),surface.getHeight()), null);
-				((ImageView)findViewById(R.id.background)).setImageBitmap(overlay);
+				drawCanvas.drawBitmap(upCalc, new Rect(0, 0, upCalc.getWidth(), upCalc.getHeight()),
+						new Rect(0, 0, surface.getWidth(), surface.getHeight()), null);
+				((ImageView) findViewById(R.id.background)).setImageBitmap(overlay);
 				stream.close();
 				boolean success = new File(photoPath).delete();
-				if(!success) {
-					Log.e(TAG,"Unable to delete temporary file");
+				if (!success) {
+					Log.e(TAG, "Unable to delete temporary file");
 				}
 			} catch (FileNotFoundException e) {
 				finish();
 			} catch (IOException e) {
 				finish();
-			}
-			finally {
+			} finally {
 				try {
-					if (stream!=null) {
+					if (stream != null) {
 						stream.close();
 					}
-				}
-				catch (Exception e) {
+				} catch (Exception e) {
 				}
 			}
 		}
