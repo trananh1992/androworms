@@ -37,15 +37,23 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 	private ActiviteEditeurCarte activiteCreationCarte;
 	static final int TAKE_PICTURE = 0;
 	
+	public ActiviteCamera() {
+		super();
+	}
+	
+	public ActiviteCamera(ActiviteEditeurCarte activiteCreationCarte) {
+		this.activiteCreationCarte = activiteCreationCarte;
+	}
+	
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		
-		/* On attache la vue de fond avec la caméra*/
+		/* On attache la vue de fond avec la caméra */
 		SurfaceView surfaceView;
 		SurfaceHolder surfaceHolder;
 		getWindow().setFormat(PixelFormat.TRANSLUCENT);
 		setContentView(R.layout.activite_camera);
-		surfaceView = (SurfaceView)findViewById(R.id.surface);
+		surfaceView = (SurfaceView) findViewById(R.id.surface);
 		surfaceHolder = surfaceView.getHolder();
 		surfaceHolder.addCallback(this);
 		surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
@@ -57,7 +65,7 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 				takeThePicture();
 			}
 		});
-		Log.v(TAG,"Androworms : ending on create");
+		Log.v(TAG, "Androworms : ending on create");
 	}
 	
 	/** Début de section des callbacks appelés automatiquement lors de la prise de photo */
@@ -76,17 +84,18 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 				filoutputStream.flush();
 				filoutputStream.close();
 				
-				/* Création de l'intent pour passer à l'activité parent l'endroit où est la photo*/
+				/* Création de l'intent pour passer à l'activité parent l'endroit où est la photo */
 				Intent i = new Intent();
 				i.putExtra("image", photoPath.getAbsolutePath().toString());
-				setResult(RESULT_OK,i);
+				setResult(RESULT_OK, i);
 				
-				/* on force la fin de l'activité*/
+				/* on force la fin de l'activité */
 				finish();
 			} catch (IOException e) {
 			}
 		}
 	};
+	
 	/** Fonction appelée en cas d'appuie sur le bouton de photo */
 	private void takeThePicture() {
 		try {
@@ -99,24 +108,24 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 			}
 			
 			/* échec lors de la création du dossier */
-			if(!status) {
-				Log.e(TAG,"échec lors de la création du dossier Androworms.");
+			if (!status) {
+				Log.e(TAG, "échec lors de la création du dossier Androworms.");
 				return;
 			}
 			
 			/* création du path complet vers la photo */
-			photoPath = new File(fichierPhoto,"maPhoto.jpg");
+			photoPath = new File(fichierPhoto, "maPhoto.jpg");
 			
 			/* lancement de la capture de la photo */
 			camera.takePicture(mShutterCallback, null, mPictureCallbackJpeg);
-		} catch(Exception ex ) {
+		} catch (Exception ex) {
 			Log.e(getClass().getSimpleName(), ex.getMessage(), ex);
 		}
 	}
 	
 	/** L'appuie sur la touche DPAD CENTER prend aussi une photo (non testé) */
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if(keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
+		if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
 			takeThePicture();
 			return true;
 		}
@@ -135,18 +144,20 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 	}
 	
 	public void surfaceCreated(SurfaceHolder holder) {
-		/* la surface de visualisation à été créer, 
-		 * on affiche alors les données de la caméra*/
+		/*
+		 * la surface de visualisation à été créer, on affiche alors les données de la caméra
+		 */
 		camera = Camera.open();
-		if(camera == null) {
-			/* Si l'appareil android ne dispose pas de caméra arrière,
-			 * on ouvre alors la caméra de face */
+		if (camera == null) {
+			/*
+			 * Si l'appareil android ne dispose pas de caméra arrière, on ouvre alors la caméra de face
+			 */
 			camera = Camera.open(0);
 			
-			
-			/* L'appareil ne dispose probablement pas de caméra, 
-			 * ou alors elle est déjà utilisée */
-			if(null == camera) {
+			/*
+			 * L'appareil ne dispose probablement pas de caméra, ou alors elle est déjà utilisée
+			 */
+			if (null == camera) {
 				finish();
 			}
 		}
@@ -162,8 +173,8 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 			camera.setPreviewDisplay(holder);
 			Parameters param = camera.getParameters();
 			List<Size> sizes = param.getSupportedPreviewSizes();
-			for(int i=sizes.size()-1; i>=0 ;i--) {
-				if(sizes.get(i).width<=w && sizes.get(i).height<=h) {
+			for (int i = sizes.size() - 1; i >= 0; i--) {
+				if (sizes.get(i).width <= w && sizes.get(i).height <= h) {
 					param.setPreviewSize(sizes.get(i).width, sizes.get(i).height);
 					camera.setParameters(param);
 					break;
@@ -199,15 +210,7 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 	/** Gestionnaire d'évênement lançant cette activité */
 	public void onClick(View v) {
 		Intent intent = new Intent(this.activiteCreationCarte, ActiviteCamera.class);
-		this.activiteCreationCarte.startActivityForResult(intent,TAKE_PICTURE);
+		this.activiteCreationCarte.startActivityForResult(intent, TAKE_PICTURE);
 		
-	}
-	
-	public ActiviteCamera(ActiviteEditeurCarte activiteCreationCarte) {
-		this.activiteCreationCarte = activiteCreationCarte;
-	}
-	
-	public ActiviteCamera() {
-		super();
 	}
 }

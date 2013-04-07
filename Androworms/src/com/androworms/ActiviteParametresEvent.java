@@ -17,8 +17,6 @@ public class ActiviteParametresEvent implements OnClickListener, OnTouchListener
 	@Override
 	public void onClick(View v) {
 		if (v instanceof ImageView) {
-			ImageView imgv = (ImageView) v;
-			
 			switch (v.getId()) {
 			case R.id.iv_return_home:
 				this.activiteParametres.finish();

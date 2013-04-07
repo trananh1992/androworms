@@ -14,7 +14,6 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
-
 public class ActiviteGyro extends Activity implements SensorEventListener {
 	
 	public static final int TAILLE_IMAGE = 50;
@@ -32,9 +31,9 @@ public class ActiviteGyro extends Activity implements SensorEventListener {
 		matrix = new Matrix();
 		
 		// Position de départ
-		pos = new PointF(Informations.getWidthPixels() / (float)2, Informations.getHeightPixels() / (float)2);
+		pos = new PointF(Informations.getWidthPixels() / (float) 2, Informations.getHeightPixels() / (float) 2);
 		
-		ImageView iv = (ImageView)findViewById(R.id.iv_missile);
+		ImageView iv = (ImageView) findViewById(R.id.iv_missile);
 		iv.setScaleType(ScaleType.MATRIX);
 	}
 	
@@ -54,10 +53,9 @@ public class ActiviteGyro extends Activity implements SensorEventListener {
 		float x = values[0];
 		float y = values[1];
 		float z = values[2];
-		ImageView iv = (ImageView)findViewById(R.id.iv_missile);
+		ImageView iv = (ImageView) findViewById(R.id.iv_missile);
 		
-		
-		Log.v("Gyro","(x,y,z)=(" + x + "," + y + "," + z + ")");
+		Log.v("Gyro", "(x,y,z)=(" + x + "," + y + "," + z + ")");
 		
 		pos.x += y * SensorManager.GRAVITY_EARTH;
 		pos.y += x * SensorManager.GRAVITY_EARTH;
@@ -65,10 +63,10 @@ public class ActiviteGyro extends Activity implements SensorEventListener {
 		float angle = (float) (Math.toDegrees(Math.atan2(y, -x)));
 		
 		// Translation
-		iv.layout((int)pos.x, (int)pos.y, (int)pos.x + TAILLE_IMAGE, (int)pos.y + TAILLE_IMAGE);
+		iv.layout((int) pos.x, (int) pos.y, (int) pos.x + TAILLE_IMAGE, (int) pos.y + TAILLE_IMAGE);
 		// Rotation
 		matrix = new Matrix();
-		matrix.postRotate(angle, TAILLE_IMAGE/2, TAILLE_IMAGE/2);
+		matrix.postRotate(angle, TAILLE_IMAGE / 2, TAILLE_IMAGE / 2);
 		iv.setImageMatrix(matrix);
 	}
 	
@@ -78,7 +76,7 @@ public class ActiviteGyro extends Activity implements SensorEventListener {
 		// register this class as a listener for the orientation and accelerometer sensors
 		sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
 	}
-
+	
 	@Override
 	protected void onPause() {
 		// unregister listener
