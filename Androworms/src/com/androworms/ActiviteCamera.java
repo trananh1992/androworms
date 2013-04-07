@@ -34,14 +34,14 @@ public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, 
 	private Handler mAutoFocusHandler;
 	private int mAutoFocusMessage;
 	private File photoPath;
-	private ActiviteEditeurCarte activiteCreationCarte;
+	private ActiviteEditeur activiteCreationCarte;
 	static final int TAKE_PICTURE = 0;
 	
 	public ActiviteCamera() {
 		super();
 	}
 	
-	public ActiviteCamera(ActiviteEditeurCarte activiteCreationCarte) {
+	public ActiviteCamera(ActiviteEditeur activiteCreationCarte) {
 		this.activiteCreationCarte = activiteCreationCarte;
 	}
 	
