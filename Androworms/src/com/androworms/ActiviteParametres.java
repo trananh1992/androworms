@@ -1,5 +1,7 @@
 package com.androworms;
 
+import com.androworms.ui.BarreAction;
+
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,7 +10,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 public class ActiviteParametres extends Activity {
 	
@@ -61,9 +62,8 @@ public class ActiviteParametres extends Activity {
 		});
 		
 		// Barre d'action
-		ImageView ib = (ImageView) findViewById(R.id.iv_return_home);
-		ib.setOnClickListener(evenements);
-		ib.setOnTouchListener(evenements);
+		BarreAction barreAction = (BarreAction)findViewById(R.id.ba_barre_action);
+		barreAction.configure(this, false, R.string.menu_parametres, false);
 	}
 	
 	protected void onStop() {

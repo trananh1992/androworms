@@ -23,6 +23,7 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
+import com.androworms.ui.BarreAction;
 import com.androworms.utile.Informations;
 
 public class ActiviteCreationPartie extends Activity {
@@ -73,9 +74,8 @@ public class ActiviteCreationPartie extends Activity {
 		setContentView(R.layout.activite_creation_partie_1_mode);
 		
 		// Barre d'action
-		ImageView ib = (ImageView) findViewById(R.id.iv_return_home);
-		ib.setOnClickListener(evenements);
-		ib.setOnTouchListener(evenements);
+		BarreAction barreAction = (BarreAction)findViewById(R.id.ba_barre_action);
+		barreAction.configure(this, false, R.string.titre_choix_mode_jeu, false);
 		
 		// Gestion des composants > Mode de jeu > 1 téléphone
 		findViewById(R.id.btn_partie_solo).setOnClickListener(evenements);
@@ -140,9 +140,8 @@ public class ActiviteCreationPartie extends Activity {
 		setContentView(R.layout.activite_creation_partie_2_solo);
 		
 		// Barre d'action
-		ImageView ib = (ImageView) findViewById(R.id.iv_return_home);
-		ib.setOnClickListener(evenements);
-		ib.setOnTouchListener(evenements);
+		BarreAction barreAction = (BarreAction)findViewById(R.id.ba_barre_action);
+		barreAction.configure(this, false, R.string.titre_config_mode_jeu, true);
 		
 		// FIXME : quand je clic sur "suivant", je dois sauvegarder l'état de la progressbar
 		// Regression en r236
@@ -196,9 +195,8 @@ public class ActiviteCreationPartie extends Activity {
 		setContentView(R.layout.activite_creation_partie_3);
 		
 		// Barre d'action
-		ImageView ib = (ImageView) findViewById(R.id.iv_return_home);
-		ib.setOnClickListener(evenements);
-		ib.setOnTouchListener(evenements);
+		BarreAction barreAction = (BarreAction)findViewById(R.id.ba_barre_action);
+		barreAction.configure(this, false, R.string.titre_choix_carte, false);
 		
 		// Gestion de l'affichage de la liste des cartes (soit des cartes systèmes ou des cartes persos)
 		ListView lvChoixCarte1 = (ListView) findViewById(R.id.lv_choixCartesSystemes);
@@ -277,9 +275,8 @@ public class ActiviteCreationPartie extends Activity {
 		setContentView(R.layout.activite_creation_partie_4);
 		
 		// Barre d'action
-		ImageView ib = (ImageView) findViewById(R.id.iv_return_home);
-		ib.setOnClickListener(evenements);
-		ib.setOnTouchListener(evenements);
+		BarreAction barreAction = (BarreAction)findViewById(R.id.ba_barre_action);
+		barreAction.configure(this, false, R.string.titre_choix_team, false);
 		
 		// Boutons "Précédent"
 		findViewById(R.id.btn_precedent).setOnClickListener(evenements);
@@ -415,7 +412,7 @@ public class ActiviteCreationPartie extends Activity {
 			// TODO
 			break;
 		case ETAPE_4_CHOIX_EQUIPE:
-			// TODO : en cas de partie BLuetooth
+			// TODO : en cas de partie Bluetooth
 			break;
 		default:
 			break;

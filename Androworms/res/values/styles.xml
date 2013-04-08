@@ -17,4 +17,9 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
+    <style name="BarreAction">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/barre_action</item>
+    </style>
+
 </resources>

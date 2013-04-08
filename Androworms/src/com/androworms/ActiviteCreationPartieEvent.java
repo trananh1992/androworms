@@ -3,14 +3,12 @@ package com.androworms;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.ImageView;
 
-public class ActiviteCreationPartieEvent implements OnClickListener, OnTouchListener {
+public class ActiviteCreationPartieEvent implements OnClickListener {
 	
 	private ActiviteCreationPartie activiteCreationPartie;
 	private static final String TAG = "Androworms.ActiviteCreationPartieEvent";
@@ -75,11 +73,6 @@ public class ActiviteCreationPartieEvent implements OnClickListener, OnTouchList
 			ImageView imgv = (ImageView)v;
 			
 			switch (v.getId()) {
-			
-			case R.id.iv_return_home :
-				this.activiteCreationPartie.finish();
-				break;
-				
 			default :
 				Log.v(TAG, "Affichage d'une popup d'aide");
 				
@@ -107,30 +100,5 @@ public class ActiviteCreationPartieEvent implements OnClickListener, OnTouchList
 				alert.show();
 			}
 		}
-	}
-
-	public boolean onTouch(View v, MotionEvent event) {
-		if (v instanceof ImageView) {
-			
-			switch (v.getId()) {
-			case R.id.iv_return_home:
-				ImageView ib = (ImageView)activiteCreationPartie.findViewById(R.id.iv_return_home);
-				switch (event.getActionMasked()) {
-				case MotionEvent.ACTION_DOWN:
-					ib.setBackgroundResource(R.color.barre_action_appuye);
-					break;
-				case MotionEvent.ACTION_UP:
-					ib.setBackgroundResource(R.color.barre_action);
-					break;
-				default:
-					break;
-				}
-				break;
-				
-			default:
-			}
-		}
-		
-		return false;
 	}
 }

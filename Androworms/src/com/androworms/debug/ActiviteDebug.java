@@ -3,6 +3,7 @@ package com.androworms.debug;
 import java.util.List;
 
 import com.androworms.R;
+import com.androworms.ui.BarreAction;
 import com.androworms.utile.Informations;
 
 import android.app.Activity;
@@ -28,6 +29,10 @@ public class ActiviteDebug extends Activity {
 		
 		// On affiche les informations sur le téléphone
 		afficherInformationsTelephone();
+		
+		// Barre d'action
+		BarreAction barreAction = (BarreAction)findViewById(R.id.ba_barre_action);
+		barreAction.configure(this, false, R.string.menu_DEBUG, false);
 	}
 	
 	public void afficherInformationsTelephone() {
