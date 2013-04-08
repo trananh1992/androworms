@@ -1,5 +1,7 @@
 package com.androworms;
 
+import com.androworms.ui.BarreAction;
+
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -12,8 +14,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-/** Activité de démarrage de l'application. C'est aussi l'activité principale de l'application.
- *  Cette application gère le SplashScreen, le menu principale ainsi que les informations de l'application. */
+/**
+ * Activité de démarrage de l'application. C'est aussi l'activité principale de l'application. Cette application gère le SplashScreen, le menu
+ * principale ainsi que les informations de l'application.
+ */
 public class ActiviteAndroworms extends Activity {
 	
 	private static final String TAG = "Androworms.ActiviteAndroworms";
@@ -77,6 +81,10 @@ public class ActiviteAndroworms extends Activity {
 				chargerMenuCredits();
 			}
 		});
+		
+		// Barre d'action
+		BarreAction barreAction = (BarreAction) findViewById(R.id.ba_barre_action);
+		barreAction.configure(this, true, R.string.app_name, false);
 	}
 	
 	/** Chargement des credits */
@@ -116,5 +124,9 @@ public class ActiviteAndroworms extends Activity {
 				chargerMenuPrincipal();
 			}
 		});
+		
+		// Barre d'action
+		BarreAction barreAction = (BarreAction) findViewById(R.id.ba_barre_action);
+		barreAction.configure(this, true, R.string.app_name, false);
 	}
 }
