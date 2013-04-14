@@ -5,4 +5,5 @@
     <color name="terre">#9F551E</color>
     <color name="barre_action">#77B5FE</color>
     <color name="barre_action_appuye">#3186E5</color>
+    <color name="erreur">#FF0000</color>
 </resources>

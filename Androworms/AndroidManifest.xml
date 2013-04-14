@@ -71,6 +71,11 @@
             android:configChanges="orientation|screenSize"
             android:screenOrientation="landscape" >
         </activity>
+        <activity
+            android:name="com.androworms.ActivitePartage"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="landscape" >
+        </activity>
     </application>
 
 </manifest>

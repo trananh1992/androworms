@@ -90,6 +90,12 @@
             android:contentDescription="@string/test_jeu"
             android:text="@string/test_jeu" />
 
+        <ImageButton
+            android:id="@+id/ib_partager"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_share" />
+
         <ImageView
             android:id="@+id/img_info"
             android:layout_width="wrap_content"
