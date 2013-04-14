@@ -73,6 +73,7 @@ public class ActiviteAndroworms extends Activity {
 		findViewById(R.id.btn_DEBUG).setOnClickListener(cl);
 		findViewById(R.id.btn_GYRO).setOnClickListener(cl);
 		findViewById(R.id.btn_test_jeu).setOnClickListener(cl);
+		findViewById(R.id.ib_partager).setOnClickListener(cl);
 		
 		/* Interface des credits */
 		ImageView img = (ImageView) findViewById(R.id.img_info);

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.androworms.debug.ActiviteDebug;
 
@@ -19,9 +20,9 @@ public class ActiviteAndrowormsEvent implements OnClickListener {
 		this.activiteAndroworms = activiteAndroworms;
 	}
 	
-	public void onClick(View arg0) {
-		if (arg0 instanceof Button) {
-			Button btn = (Button) arg0;
+	public void onClick(View v) {
+		if (v instanceof Button) {
+			Button btn = (Button) v;
 			if (btn.getId() == R.id.btn_menu_jouer) {
 				// Bouton pour jouer
 				Log.v(TAG, "Clic sur le bouton pour jouer");
@@ -57,6 +58,12 @@ public class ActiviteAndrowormsEvent implements OnClickListener {
 				ParametresPartie.getParametresPartie().setModeJeu(ParametresPartie.MODE_SOLO);
 				ParametresPartie.getParametresPartie().setEstCartePerso(false);
 				ParametresPartie.getParametresPartie().setNomCarte("terrain_jeu_defaut_1.png");
+				this.activiteAndroworms.startActivity(intent);
+			}
+		} else if (v instanceof ImageButton) {
+			ImageButton ib = (ImageButton) v;
+			if (ib.getId() == R.id.ib_partager) {
+				Intent intent = new Intent(this.activiteAndroworms, ActivitePartage.class);
 				this.activiteAndroworms.startActivity(intent);
 			}
 		}
