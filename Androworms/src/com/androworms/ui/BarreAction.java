@@ -68,7 +68,6 @@ class BarreActionEvent implements OnClickListener {
 		this.activitePrincipale = activitePrincipale;
 	}
 	
-	@Override
 	public void onClick(View v) {
 		if (!this.activitePrincipale) {
 			this.activite.finish();

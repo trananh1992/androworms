@@ -11,7 +11,6 @@ public class ActiviteParametresEvent implements OnClickListener {
 		this.activiteParametres = activiteParametres;
 	}
 	
-	@Override
 	public void onClick(View v) {
 		
 	}

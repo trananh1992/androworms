@@ -2,8 +2,10 @@ package com.androworms;
 
 import java.util.List;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PointF;
+import android.util.Log;
 
 /**
  * Cette classe génère la physique du jeu.
@@ -15,12 +17,21 @@ public class MoteurPhysique {
 	private Monde monde;
 	public static final int TAILLE_DEPLACEMENT_JOUEUR = 1;
 	public static final int HAUTEUR_DEPLACEMENT_JOUEUR = 5;
+	public static final String TAG = "Androworms.MOTEURPHYSIQUE";
+	private final float rafraichissement = 0.2f;
+	
 	
 	public MoteurPhysique(Noyau n, Monde monde) {
 		this.noyau = n;
 		this.monde = monde;
 	}
 	
+	public float getRafraichissement() {
+		return rafraichissement;
+	}
+
+
+
 	public void deplacementJoueurDroite(String personnage) {
 		Personnage p = monde.getPersonnage(personnage);
 		noyau.animerAndroidDroite(p);
@@ -32,112 +43,113 @@ public class MoteurPhysique {
 		noyau.animerAndroidGauche(p);
 		deplacementJoueur(p, -1, p.getMouvementGauche());
 	}
-	
+	;
 	public void deplacementJoueur(Personnage pOld, int addToX, List<PointF> path) {
 		Personnage pNew = pOld.clone();
+		Bitmap carte = monde.getTerrainSansPersonnageCible(pOld.getNom());
 		for(int i = 0; i < TAILLE_DEPLACEMENT_JOUEUR; i++) {
-			pNew.setPosition(pNew.getPosition().x + addToX, 
-					pNew.getPosition().y-HAUTEUR_DEPLACEMENT_JOUEUR);
-			if( !estEnCollision(pNew) && estDansTerrain(pNew)) {
-				//pOld.setPosition(new PointF(pNew.getPosition().x, pNew.getPosition().y));
-				gravite(pNew);
-				//path.add(pNew.getPosition());
+			float x = pOld.getPosition().x + addToX;
+			float y = pOld.getPosition().y;
+			for(int j = HAUTEUR_DEPLACEMENT_JOUEUR; j > -HAUTEUR_DEPLACEMENT_JOUEUR; j--) {
+				pNew.setPosition(x,	y+j);
+				if(dessinPossible(pNew, carte)) {
+					pOld.setPosition(new PointF(x,y+j));
+					return;
+				}
 			}
 		}
-		pOld.setPosition(pNew.getPosition());
-		//noyau.actualiserGraphisme()
-		//noyau.mouvementForces();
-	}
-	
-	
-	
-	private boolean estEnCollision(Personnage personnage) {
-		boolean result = false;
-		for(int i = 0; i < monde.nombrePersonnage() && !result; i++) {
-			Personnage p = monde.getListePersonnage().get(i);
-			if( p.getNom().compareTo(personnage.getNom()) != 0 && personnage.estEnCollision(p)) {
-				result = true;
-			}
-		}
-		if( !result ) {
-			List<PointF> enveloppeConvexe = personnage.getEnveloppeConvexe();
-			for(int i = 0; i < enveloppeConvexe.size() && !result; i++) {
-				result = result || collision(enveloppeConvexe.get(i)) ;				
-			}
-		}
-		return result;
 	}
 	
 	/** Cette fonction verifie que la gravite est respectee. */
 	public void gravite() {
 		for(int i = 0; i < monde.nombrePersonnage(); i++) {
-			Personnage p = monde.getListePersonnage().get(i);
-			Personnage pNew = p.clone();
-			while(personnageVolant(pNew)) {
-				p.addMouvementForces(new PointF(pNew.getPosition().x, pNew.getPosition().y));
-				pNew.setPosition(pNew.getPosition().x, pNew.getPosition().y+1);
-			}
+			Log.v(TAG, "Au tour de " + monde.getPersonnage(i).getNom());
+			monde.unsetTerrainSansPersonnageSave();
+			gravite(monde.getPersonnage(i));
 		}
-		noyau.mouvementForces();
-		//noyau.actualiserGraphisme();
+		monde.unsetTerrainSansPersonnageSave();
 	}
-	
+	//TODO a finir
 	/** Cette fonction verifie que toutes les regles de la physique implementees sont respectees. */
 	public void gravite(Personnage p) {
-		//Personnage pNew = p.clone();
-		while(personnageVolant(p)) {
-			//p.addMouvementForces(new PointF(pNew.getPosition().x, pNew.getPosition().y));
-			p.setPosition(p.getPosition().x, p.getPosition().y+1);
+		Bitmap carte = monde.getPremierPlan();
+		Personnage pNew = p.clone();
+		float i = rafraichissement;
+		while( applyAcceleration(pNew, i, carte) && dessinPossible (pNew, carte) ) {
+			p.addMouvementForces(new PointF(pNew.getPosition().x, pNew.getPosition().y));
+			i += rafraichissement;
+			pNew.setPosition(p.getPosition().x, p.getPosition().y);
 		}
-		//noyau.actualiserGraphisme();
-		//noyau.mouvementForces();
-
+		
 	}		
 	
-	/** On teste si le personnage n'a rien sous les pieds.
-	    Renvoie vrai si le personnage vole et faux si non. */
-	public boolean personnageVolant(Personnage p) {
-		List<PointF> tmp = p.getEnveloppeConvexeBas();
-		for(int i =0; i < tmp.size(); i ++) {
-			if(collision(tmp.get(i))) {
-				return false;
+	/**
+	 * Applique les accelerations sur un element sur carte pour un temps donnee.
+	 * @param esc l'element sur carte à modifer
+	 * @param temps le temps depuis lequel l'objet subit l'acceleration.
+	 * @param carte la carte pour le teste d l'element sur carte.
+	 * @return true si l'element a bouge, false si l'element est reste a la meme place.
+	 */
+	public boolean applyAcceleration(ElementSurCarte esc, float temps, Bitmap carte) {
+		List<Vector2D> acceleration = monde.getAcceleration();
+		for(int i = 0; i < acceleration.size(); i++) {
+			esc.setPosition(esc.getPosition().x + acceleration.get(i).x * Math.pow(temps,2)
+					, esc.getPosition().y + acceleration.get(i).y * Math.pow(temps,2) );
+		}
+		if(dessinPossible(esc, carte)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean dessinPossible(ElementSurCarte p, Bitmap carte) {
+		return dessinPossible(p.getImageView(), (int)p.getPosition().x, (int) p.getPosition().y,
+				carte);
+	}
+	
+	public boolean dessinPossible(Personnage p) {
+		return dessinPossible(p, monde.getTerrainSansPersonnageCible(p.getNom()));
+	}
+	
+	public boolean dessinPossible(Bitmap petiteImage,  int Ox, int Oy, Bitmap grandeImage) {
+		if(!estDansTerrain(petiteImage, Ox, Oy, grandeImage)) {
+			return false;
+		}
+		for(int i =0; i < petiteImage.getWidth(); i++) {
+			for(int j=0; j < petiteImage.getHeight(); j++) {
+				if( !estTransparent(petiteImage, i, j)
+						&& !estTransparent(grandeImage, i+Ox, j+Oy)) {
+					return false;
+				}
 			}
 		}
 		return true;
 	}
 	
-	public boolean collision(int x, int y) {
-		return Color.alpha(monde.getTerrain().getPixel(x, y)) > 0;
+	private boolean estTransparent(Bitmap b, int x, int y) {
+		return Color.alpha(b.getPixel(x, y)) == Color.TRANSPARENT;
 	}
 	
-	public boolean collision(PointF p) {
-		return collision((int)p.x, (int)p.y);
+	public boolean collision(Bitmap bm, int x, int y) {
+		return dessinPossible(bm, x, y, monde.getPremierPlan());
 	}
 	
 	public boolean collision(Personnage p) {
-		return collision(p.getPosition());
+		return collision(p.getImageView(), (int)p.getPosition().x, (int)p.getPosition().y);
 	}
 	
 	public void sautJoueurDroite(String nomPersonnage) {
-		Personnage personnage = monde.getPersonnage(nomPersonnage);
-		Personnage p = personnage.clone();
-		for(int i = 0; i < 30 && !estDansTerrain(p); i++) {
-			p.setPosition(p.getPosition().x +1, p.getPosition().y+1);
-			if(!estDansTerrain(p)) {
-				personnage.addMouvementForces(p.getPosition());
-			}
-		}
-		gravite(p);
 	}
 	
 	public void sautJoueurGauche(String nomPersonnage) {
 		sautJoueurDroite(nomPersonnage);
 	}
 	
-	public boolean estDansTerrain(Personnage p) {
-		return monde.getTerrain().getHeight() - (p.getHeightImageTerrain()+(int)p.getPosition().y) > 1
-				&& monde.getTerrain().getWidth() - (p.getWidthImageTerrain()+(int)p.getPosition().x) > 1
-				&& p.getPosition().y >= 1 
-				&& p.getPosition().x >= 1;
+	public boolean estDansTerrain(Bitmap petiteImage, int Ox, int Oy, Bitmap grandeImage) {
+		return  0 <= Ox 
+				&& (Ox+petiteImage.getWidth()) < grandeImage.getWidth()
+				&& 0 <= Oy 
+				&& (Oy + petiteImage.getHeight()) < grandeImage.getHeight();
 	}
 }

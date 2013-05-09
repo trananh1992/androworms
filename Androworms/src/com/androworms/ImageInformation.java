@@ -1,16 +1,24 @@
 package com.androworms;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+
 public class ImageInformation {
 	private int width;
 	private int height;
 	private int idImage;
+	private float echelle;
+	private Bitmap imageView;
 	
 	public ImageInformation(){}
 	
-	public ImageInformation(int idImage, int width, int height) {
-		this.idImage = idImage;		
+	public ImageInformation(int pidImage, int width, int height, Context c) {
+		this.idImage = pidImage;		
 		this.height = height;
 		this.width = width;
+		this.echelle = 1f;
+		imageView = ((BitmapDrawable)c.getResources().getDrawable(pidImage)).getBitmap();
 	}
 	
 	public void set(int idImage, int width, int height) {
@@ -42,6 +50,15 @@ public class ImageInformation {
 	public void setIdImage(int idImage) {
 		this.idImage = idImage;
 	}
+
+	public Bitmap getImageView() {
+		return Bitmap.createScaledBitmap(imageView,(int)(getWidth()*echelle), (int)(getHeight()*echelle), true);
+	}
+
+	public void setImageView(Bitmap imageView) {
+		this.imageView = imageView;
+	}
+	
 	
 	
 	
