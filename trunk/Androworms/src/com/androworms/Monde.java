@@ -10,26 +10,80 @@ public class Monde {
 	
 	private static final String TAG = "Androworms.Monde";
 	
-	private Bitmap terrain;
+	private TerrainMonde tm;
 	private MoteurGraphique mg;
 	private List<Personnage> listePersonnage;
 	private List<ObjetSurCarte> listeObjetCarte;
 	private List<Objet> tousLesObjets;
+	private List<Vector2D> acceleration;
+	
+	private Bitmap terrainSansPersonnageSave;
 	
 	public Monde() {
 		super();
 		tousLesObjets = new ArrayList<Objet>();
 		listePersonnage = new ArrayList<Personnage>();
 		listeObjetCarte = new ArrayList<ObjetSurCarte>();
+		tm = new TerrainMonde();
+		acceleration = new ArrayList<Vector2D>();
+		acceleration.add(new Vector2D(0, 10));
 	}
 	
+	
+
+	public List<Vector2D> getAcceleration() {
+		return acceleration;
+	}
+
+
+
+	public void setAcceleration(List<Vector2D> acceleration) {
+		this.acceleration = acceleration;
+	}
+
+
+
 	public void setTerrain(Bitmap b, int width, int height){
-		terrain = Bitmap.createScaledBitmap(b, width, height, true);
+		tm.setArrierePlan(Bitmap.createScaledBitmap(b, width, height, true));
+	}
+	
+	public void setPremierPlan(Bitmap b) {
+		tm.setPremierPlan(b);
+	}
+	
+	public void setArrierePlan(Bitmap b) {
+		tm.setArrierePlan(b);
 	}
 	
 	public Bitmap getTerrain() {
-		return terrain;
+		return tm.getTerrain();
 	}
+	
+	public Bitmap getPremierPlan() {
+		return tm.getPremierPlan();
+	}
+	
+	public void unsetTerrainSansPersonnageSave() {
+		terrainSansPersonnageSave = null;
+	}
+	
+	public Bitmap getTerrainSansPersonnageCible(String nomPer) {
+		if( terrainSansPersonnageSave != null ) {
+			return terrainSansPersonnageSave;
+		} else {
+			Bitmap terrain = getPremierPlan().copy(getPremierPlan().getConfig(), true);
+			for(int i = 0; i < listePersonnage.size(); i++) {
+				Personnage p = listePersonnage.get(i);
+				if( p.getNom().compareTo(nomPer) != 0 ) {
+					tm.dessinPersonnageSurCarte(p.getImageView(), p.getPosition(), terrain);
+				}
+			}
+			terrainSansPersonnageSave = terrain;
+			return terrain;
+		}
+	}
+	
+
 	
 	public MoteurGraphique getMg() {
 		return mg;
@@ -41,6 +95,10 @@ public class Monde {
 
 	public List<Personnage> getListePersonnage() {
 		return listePersonnage;
+	}
+	
+	public Personnage getPersonnage(int i) {
+		return listePersonnage.get(i);
 	}
 
 	public void setListePersonnage(List<Personnage> listePersonnage) {

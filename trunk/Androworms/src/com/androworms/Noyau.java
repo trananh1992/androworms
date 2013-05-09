@@ -23,7 +23,7 @@ public class Noyau {
 	public static final int DEPLACEMENT_DROITE = 0;
 	public static final int DEPLACEMENT_GAUCHE = 1;
 	public static final int DEPLACEMENT_HAUT = 2;
-	public static final int VITESSE_CHUTE = 400;
+	public static final int VITESSE_CHUTE = 40;
 	
 	private static final String TAG_NOYAU = "Androworms.Noyau";
 	private Connexion connexion;
@@ -34,8 +34,8 @@ public class Noyau {
 	private MoteurGraphique graphique;
 	
 	// Variable de débug
-	public static final Point DEBUG_POSITION_JOUEUR_1 = new Point(220, 200);
-	public static final Point DEBUG_POSITION_JOUEUR_2 = new Point(620, 200);
+	public static final Point DEBUG_POSITION_JOUEUR_1 = new Point(700, 200);
+	public static final Point DEBUG_POSITION_JOUEUR_2 = new Point(1100, 200);
 	public static final Point TAILLE_IMAGE_JOUEUR = new Point(81, 107);
 	public static final Point TAILLE_IMAGE_FOND = new Point(1280, 720);
 	
@@ -71,13 +71,14 @@ public class Noyau {
 			break;
 		}
 		
-		ImageInformation ii = new ImageInformation(R.drawable.android_face, TAILLE_IMAGE_JOUEUR.x, TAILLE_IMAGE_JOUEUR.y);
+		ImageInformation ii = new ImageInformation(R.drawable.android_face, TAILLE_IMAGE_JOUEUR.x, TAILLE_IMAGE_JOUEUR.y, context);
 		Personnage johnDoe = new Personnage("John Doe", ii);
 		johnDoe.setPosition(new PointF(DEBUG_POSITION_JOUEUR_1));
 		
-		String pseudo = this.parametresApplication.getString(ActiviteParametres.PARAMETRE_PSEUDO_CLE, ActiviteParametres.PARAMETRE_PSEUDO_DEFAUT_2);
-		
-		Personnage tux = new Personnage(pseudo, ii);
+		//String pseudo = this.parametresApplication.getString(ActiviteParametres.PARAMETRE_PSEUDO_CLE, ActiviteParametres.PARAMETRE_PSEUDO_DEFAUT_2);
+		String pseudo = "Tux";
+		ImageInformation ii2 = new ImageInformation(R.drawable.android_face, TAILLE_IMAGE_JOUEUR.x, TAILLE_IMAGE_JOUEUR.y, context);
+		Personnage tux = new Personnage(pseudo, ii2);
 		tux.setPosition(new PointF(DEBUG_POSITION_JOUEUR_2));
 		monde.addPersonnage(tux);
 		monde.addPersonnage(johnDoe);
@@ -87,16 +88,21 @@ public class Noyau {
 				File root = Environment.getExternalStorageDirectory();
 				File sd = new File(root, ActiviteAndroworms.DOSSIER_CARTE + paramNomCarte);
 				Bitmap b = BitmapFactory.decodeFile(sd.getAbsolutePath());
-				monde.setTerrain(b, TAILLE_IMAGE_FOND.x, TAILLE_IMAGE_FOND.y);
+				//monde.setTerrain(b, TAILLE_IMAGE_FOND.x, TAILLE_IMAGE_FOND.y);
+				monde.setPremierPlan(Bitmap.createScaledBitmap(b, TAILLE_IMAGE_FOND.x, TAILLE_IMAGE_FOND.y, true));
 			}
 			else {
 				// TODO : prendre en compte ce paramètre
 				// afficher la carte parmi les cartes par défaut de l'application.
 				Bitmap b = ((BitmapDrawable)context.getResources().getDrawable(R.drawable.terrain_jeu_defaut_4)).getBitmap();
-				monde.setTerrain(b, TAILLE_IMAGE_FOND.x, TAILLE_IMAGE_FOND.y);
+				//monde.setTerrain(b, TAILLE_IMAGE_FOND.x, TAILLE_IMAGE_FOND.y);
+				//monde.setPremierPlan(b);
 			}
 		}
-		
+
+		monde.setPremierPlan(((BitmapDrawable)context.getResources().getDrawable(R.drawable.terrain_jeu_defaut_4)).getBitmap());
+		monde.setArrierePlan(((BitmapDrawable)context.getResources().getDrawable(R.drawable.image_fond)).getBitmap());
+				
 		//physique.gravite();
 		//mouvementForces();
 
@@ -140,12 +146,14 @@ public class Noyau {
 		//physique.sautJoueurDroite(nomPersonnage);
 		physique.gravite();
 		//graphique.setGravityInFuture();
+		mouvementForces();
 	}
 	
 	public void sautJoueurGaucheFromIHM() {
 		//physique.sautJoueurGauche(nomPersonnage);
 		physique.gravite();
 		//graphique.setGravityInFuture();
+		mouvementForces();
 	}
 	
 	public void deplacementJoueurDroiteFromIHM() {
@@ -192,6 +200,6 @@ public class Noyau {
 	 * qu'il y a des mouvements que des joueurs doivent exécuter
 	 */
 	public void mouvementForces() {
-		graphique.remetAplusTard(new RunnableMouvementForce(graphique, this), VITESSE_CHUTE);
+		graphique.remetAplusTard(new RunnableMouvementForce(graphique, this, (int) (physique.getRafraichissement()*100f)), VITESSE_CHUTE);
 	}
 }

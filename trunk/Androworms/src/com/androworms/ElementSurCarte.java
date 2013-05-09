@@ -1,5 +1,6 @@
 package com.androworms;
 
+import android.graphics.Bitmap;
 import android.graphics.PointF;
 
 public abstract class ElementSurCarte {
@@ -11,6 +12,8 @@ public abstract class ElementSurCarte {
 		this.position = position;
 		this.imageTerrain = ii;
 	}
+	
+	public abstract ElementSurCarte clone();
 
 	public PointF getPosition() {
 		return position;
@@ -44,7 +47,13 @@ public abstract class ElementSurCarte {
 		return imageTerrain.getHeight();
 	}
 	
-	
+	public Bitmap getImageView() {
+		return imageTerrain.getImageView();
+	}
+
+	public void setPosition(double d, double e) {
+		setPosition((float)d, (float)e);		
+	}
 	
 
 }

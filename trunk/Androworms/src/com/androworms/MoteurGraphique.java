@@ -167,10 +167,13 @@ public class MoteurGraphique extends RelativeLayout {
 		// Application de la matrice avec la translation et le zoom à tout le canvas
 		canvas.setMatrix(matrix);
 		// Dessin des objets du jeu
+		/*
 		canvas.drawBitmap(bmFond, 0, 0, null);
-		if (bmTerrain != null) {
-			canvas.drawBitmap(bmTerrain, 0, 0, null);
+		if (noyau.getMonde().getTerrain() != null) {
+			canvas.drawBitmap(noyau.getMonde().getTerrain(), 0, 0, null);
 		}
+		*/
+		canvas.drawBitmap(noyau.getMonde().getTerrain(), 0,0,null);
 		
 		for(ImageSurCarte v : this.images) {
 			v.actualiser();

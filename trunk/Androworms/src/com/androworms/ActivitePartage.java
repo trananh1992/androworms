@@ -20,7 +20,6 @@ public class ActivitePartage extends Activity {
 		ImageButton ibPartagerGeneral = (ImageButton)findViewById(R.id.ib_partager_general);
 		ibPartagerGeneral.setOnClickListener(new OnClickListener() {
 
-			@Override
 			public void onClick(View v) {
 				// création de l'Intent pour envoyer
 				Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);

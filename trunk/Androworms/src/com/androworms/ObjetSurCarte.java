@@ -17,4 +17,10 @@ public class ObjetSurCarte extends ElementSurCarte{
 	public void setObjet(Objet objet) {
 		this.objet = objet;
 	}
+
+	@Override
+	public ElementSurCarte clone() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
