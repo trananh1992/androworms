@@ -16,6 +16,7 @@ public class EvenementClavier implements OnTouchListener {
 	private Handler mHandler;
 	private int idBtnCourrant;
 	private Noyau noyau;
+	private int dernierDeplacement;
 
 	/*
 	 * Thread pour gérer toutes les x secondes le déplacement du joueur
@@ -77,16 +78,22 @@ public class EvenementClavier implements OnTouchListener {
 			case ClavierDirectionnel.BOUTON_DROITE:
 				Log.v(TAG, "Déplacement vers la droite");
 				noyau.deplacementJoueurDroiteFromIHM();
+				dernierDeplacement = ClavierDirectionnel.BOUTON_DROITE;
 				break;
 			// Déplacement vers le haut
 			case ClavierDirectionnel.BOUTON_HAUT:
 				Log.v(TAG, "Déplacement vers la haut");
-				noyau.sautJoueurDroiteFromIHM();
+				if(dernierDeplacement == ClavierDirectionnel.BOUTON_DROITE) {
+					noyau.sautJoueurDroiteFromIHM();
+				} else if(dernierDeplacement == ClavierDirectionnel.BOUTON_GAUCHE) {
+					noyau.sautJoueurGaucheFromIHM();
+				}
 				break;
 			// Déplacement vers la gauche
 			case ClavierDirectionnel.BOUTON_GAUCHE:
 				Log.v(TAG, "Déplacement vers la gauche");
 				noyau.deplacementJoueurGaucheFromIHM();
+				dernierDeplacement = ClavierDirectionnel.BOUTON_GAUCHE;
 				break;
 			default:
 				Log.v(TAG, "Déplacement default");

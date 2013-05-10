@@ -1,5 +1,7 @@
 package com.androworms;
 
+import android.graphics.PointF;
+
 public class Vector2D {
 	public float x;
 	public float y;
@@ -23,6 +25,13 @@ public class Vector2D {
 		this.y = y;
 	}
 	
+	public static Vector2D vecteurAB(PointF a, PointF b) {
+		return new Vector2D(b.x - a.x, b.y - a.y);
+	}
+	
+	public float size() {
+		return (float) Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+	}
 	
 
 }

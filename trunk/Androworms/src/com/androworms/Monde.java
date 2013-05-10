@@ -82,7 +82,6 @@ public class Monde {
 			return terrain;
 		}
 	}
-	
 
 	
 	public MoteurGraphique getMg() {

@@ -35,16 +35,16 @@ public class MoteurPhysique {
 	public void deplacementJoueurDroite(String personnage) {
 		Personnage p = monde.getPersonnage(personnage);
 		noyau.animerAndroidDroite(p);
-		deplacementJoueur(p, 1, p.getMouvementDroite());
+		deplacementJoueur(p, 1);
 	}
 	
 	public void deplacementJoueurGauche(String personnage) {
 		Personnage p = monde.getPersonnage(personnage);
 		noyau.animerAndroidGauche(p);
-		deplacementJoueur(p, -1, p.getMouvementGauche());
+		deplacementJoueur(p, -1);
 	}
 	;
-	public void deplacementJoueur(Personnage pOld, int addToX, List<PointF> path) {
+	public void deplacementJoueur(Personnage pOld, int addToX) {
 		Personnage pNew = pOld.clone();
 		Bitmap carte = monde.getTerrainSansPersonnageCible(pOld.getNom());
 		for(int i = 0; i < TAILLE_DEPLACEMENT_JOUEUR; i++) {
@@ -69,20 +69,33 @@ public class MoteurPhysique {
 		}
 		monde.unsetTerrainSansPersonnageSave();
 	}
+	
 	//TODO a finir
 	/** Cette fonction verifie que toutes les regles de la physique implementees sont respectees. */
-	public void gravite(Personnage p) {
-		Bitmap carte = monde.getPremierPlan();
-		Personnage pNew = p.clone();
+	public void gravite(ElementSurCarte p) {
+		// TODO monde.getTerrainSansPersonnageCible(p.getNom());
+		applyForce(p, monde.getPremierPlan(), new Vector2D(0,0));
+		/*
+		Bitmap carte = monde.getPremierPlan(); 
+		// TODO monde.getTerrainSansPersonnageCible(p.getNom());
+		ElementSurCarte pNew = p.clone();
 		float i = rafraichissement;
-		while( applyAcceleration(pNew, i, carte) && dessinPossible (pNew, carte) ) {
+		applyAcceleration(pNew, i);
+		while( dessinPossible (pNew, carte) ) {
 			p.addMouvementForces(new PointF(pNew.getPosition().x, pNew.getPosition().y));
 			i += rafraichissement;
 			pNew.setPosition(p.getPosition().x, p.getPosition().y);
+			applyAcceleration(pNew, i);
 		}
-		
-	}		
-	
+		// TODO a tester
+		p.addMouvementForces(pNew.getPosition());
+		do {
+			pNew.getPosition().y++;
+		} while(dessinPossible(pNew, carte));
+		pNew.getPosition().y--;
+		*/
+		}		
+
 	/**
 	 * Applique les accelerations sur un element sur carte pour un temps donnee.
 	 * @param esc l'element sur carte à modifer
@@ -90,17 +103,52 @@ public class MoteurPhysique {
 	 * @param carte la carte pour le teste d l'element sur carte.
 	 * @return true si l'element a bouge, false si l'element est reste a la meme place.
 	 */
-	public boolean applyAcceleration(ElementSurCarte esc, float temps, Bitmap carte) {
+	public void applyAcceleration(ElementSurCarte esc, float temps) {
 		List<Vector2D> acceleration = monde.getAcceleration();
 		for(int i = 0; i < acceleration.size(); i++) {
 			esc.setPosition(esc.getPosition().x + acceleration.get(i).x * Math.pow(temps,2)
 					, esc.getPosition().y + acceleration.get(i).y * Math.pow(temps,2) );
 		}
-		if(dessinPossible(esc, carte)) {
-			return true;
-		} else {
-			return false;
+	}
+	
+	public void applyVecteur(ElementSurCarte esc, float temps, Vector2D vd) {
+		esc.getPosition().x += (vd.x * temps);
+		esc.getPosition().y += (vd.y * temps);
+	}
+	
+	public void applyForce(ElementSurCarte esc, Bitmap carte, Vector2D vd) { 
+		PointF save = new PointF();
+		ElementSurCarte pNew = esc.clone();
+		float i = rafraichissement;
+		applyAcceleration(pNew, i);
+		applyVecteur(pNew, i, vd);
+		while( dessinPossible (pNew, carte) ) {
+			esc.addMouvementForces(new PointF(pNew.getPosition().x, pNew.getPosition().y));
+			save.set(pNew.getPosition().x, pNew.getPosition().y);
+			i += rafraichissement;
+			pNew.setPosition(esc.getPosition().x, esc.getPosition().y);
+			applyAcceleration(pNew, i);
+			applyVecteur(pNew, i, vd);
 		}
+		if( save.x + save.y != 0.) {
+			Vector2D tmp = Vector2D.vecteurAB(save, pNew.getPosition());
+			Log.v(TAG, "tmp = " + tmp.x + "  " + tmp.y);
+			pNew.setPosition(save.x, save.y);
+			if(tmp.size() > 1) {
+				esc.addMouvementForces(dernierePositionSuivantVecteur(pNew, carte, tmp));
+			}
+		}
+	}
+	
+	public PointF dernierePositionSuivantVecteur(ElementSurCarte esc, Bitmap carte, Vector2D vd) {
+		float deplacement = Math.abs(1/Math.max(vd.x, vd.y));
+		PointF result = new PointF();
+		do {
+			result.set(esc.getPosition().x, esc.getPosition().y);
+			applyVecteur(esc, deplacement, vd);
+		} while(dessinPossible(esc, carte));
+		Log.v(TAG, "ajustement = " + result.x + "  " + result.y);
+		return result;
 	}
 	
 	public boolean dessinPossible(ElementSurCarte p, Bitmap carte) {
@@ -112,14 +160,14 @@ public class MoteurPhysique {
 		return dessinPossible(p, monde.getTerrainSansPersonnageCible(p.getNom()));
 	}
 	
-	public boolean dessinPossible(Bitmap petiteImage,  int Ox, int Oy, Bitmap grandeImage) {
-		if(!estDansTerrain(petiteImage, Ox, Oy, grandeImage)) {
+	public boolean dessinPossible(Bitmap petiteImage,  int ox, int oy, Bitmap grandeImage) {
+		if(!estDansTerrain(petiteImage, ox, oy, grandeImage)) {
 			return false;
 		}
 		for(int i =0; i < petiteImage.getWidth(); i++) {
 			for(int j=0; j < petiteImage.getHeight(); j++) {
 				if( !estTransparent(petiteImage, i, j)
-						&& !estTransparent(grandeImage, i+Ox, j+Oy)) {
+						&& !estTransparent(grandeImage, i+ox, j+oy)) {
 					return false;
 				}
 			}
@@ -140,16 +188,21 @@ public class MoteurPhysique {
 	}
 	
 	public void sautJoueurDroite(String nomPersonnage) {
+		applyForce(monde.getPersonnage(nomPersonnage), 
+				monde.getTerrainSansPersonnageCible(nomPersonnage), 
+				new Vector2D(50, -50));
 	}
 	
 	public void sautJoueurGauche(String nomPersonnage) {
-		sautJoueurDroite(nomPersonnage);
+		applyForce(monde.getPersonnage(nomPersonnage), 
+				monde.getTerrainSansPersonnageCible(nomPersonnage), 
+				new Vector2D(-50, -50));
 	}
 	
-	public boolean estDansTerrain(Bitmap petiteImage, int Ox, int Oy, Bitmap grandeImage) {
-		return  0 <= Ox 
-				&& (Ox+petiteImage.getWidth()) < grandeImage.getWidth()
-				&& 0 <= Oy 
-				&& (Oy + petiteImage.getHeight()) < grandeImage.getHeight();
+	public boolean estDansTerrain(Bitmap petiteImage, int ox, int oy, Bitmap grandeImage) {
+		return  0 <= ox 
+				&& (ox+petiteImage.getWidth()) < grandeImage.getWidth()
+				&& 0 <= oy 
+				&& (oy + petiteImage.getHeight()) < grandeImage.getHeight();
 	}
 }

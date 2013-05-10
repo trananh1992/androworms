@@ -1,8 +1,5 @@
 package com.androworms;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.graphics.Bitmap;
 import android.graphics.PointF;
 
@@ -16,17 +13,10 @@ public class Personnage extends ElementSurCarte implements Cloneable {
 
 	private String nom;
 
-	private List<PointF> mouvementGauche;
-	private List<PointF> mouvementDroite;
-	private List<PointF> mouvementForces;
-
 
 	public Personnage(String nom, ImageInformation ii) {
 		super(new PointF(), ii);
 		this.nom = nom;
-		mouvementGauche = new ArrayList<PointF>();
-		mouvementDroite = new ArrayList<PointF>();
-		mouvementForces = new ArrayList<PointF>();
 	}
 
 	public Personnage clone() {
@@ -68,33 +58,7 @@ public class Personnage extends ElementSurCarte implements Cloneable {
 		return super.getImageView();
 	}
 	
-	public void addMouvementForces(PointF p) {
-		mouvementForces.add(p);
-	}
 
-	public List<PointF> getMouvementGauche() {
-		return mouvementGauche;
-	}
-
-	public void setMouvementGauche(List<PointF> mouvementGauche) {
-		this.mouvementGauche = mouvementGauche;
-	}
-
-	public List<PointF> getMouvementDroite() {
-		return mouvementDroite;
-	}
-
-	public void setMouvementDroite(List<PointF> mouvementDroite) {
-		this.mouvementDroite = mouvementDroite;
-	}
-
-	public List<PointF> getMouvementForces() {
-		return mouvementForces;
-	}
-
-	public void setMouvementForces(List<PointF> mouvementForces) {
-		this.mouvementForces = mouvementForces;
-	}
 	
 	
 }
