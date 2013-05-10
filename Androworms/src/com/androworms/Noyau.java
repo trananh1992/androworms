@@ -35,7 +35,7 @@ public class Noyau {
 	
 	// Variable de débug
 	public static final Point DEBUG_POSITION_JOUEUR_1 = new Point(700, 200);
-	public static final Point DEBUG_POSITION_JOUEUR_2 = new Point(1100, 200);
+	public static final Point DEBUG_POSITION_JOUEUR_2 = new Point(500, 200);
 	public static final Point TAILLE_IMAGE_JOUEUR = new Point(81, 107);
 	public static final Point TAILLE_IMAGE_FOND = new Point(1280, 720);
 	
@@ -96,15 +96,11 @@ public class Noyau {
 				// afficher la carte parmi les cartes par défaut de l'application.
 				Bitmap b = ((BitmapDrawable)context.getResources().getDrawable(R.drawable.terrain_jeu_defaut_4)).getBitmap();
 				//monde.setTerrain(b, TAILLE_IMAGE_FOND.x, TAILLE_IMAGE_FOND.y);
-				//monde.setPremierPlan(b);
+				monde.setPremierPlan(b);
 			}
 		}
 
-		monde.setPremierPlan(((BitmapDrawable)context.getResources().getDrawable(R.drawable.terrain_jeu_defaut_4)).getBitmap());
 		monde.setArrierePlan(((BitmapDrawable)context.getResources().getDrawable(R.drawable.image_fond)).getBitmap());
-				
-		//physique.gravite();
-		//mouvementForces();
 
 		this.nomPersonnage = pseudo;
 	}
@@ -143,16 +139,13 @@ public class Noyau {
 	
 	/** Gestion des messages venanat de l'IHM */
 	public void sautJoueurDroiteFromIHM() {
-		//physique.sautJoueurDroite(nomPersonnage);
-		physique.gravite();
-		//graphique.setGravityInFuture();
+		physique.sautJoueurDroite(nomPersonnage);
 		mouvementForces();
 	}
 	
 	public void sautJoueurGaucheFromIHM() {
-		//physique.sautJoueurGauche(nomPersonnage);
-		physique.gravite();
-		//graphique.setGravityInFuture();
+		//physique.gravite();
+		physique.sautJoueurGauche(nomPersonnage);
 		mouvementForces();
 	}
 	

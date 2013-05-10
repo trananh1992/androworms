@@ -21,6 +21,6 @@ public class ObjetSurCarte extends ElementSurCarte{
 	@Override
 	public ElementSurCarte clone() {
 		// TODO Auto-generated method stub
-		return null;
+		return new ObjetSurCarte(objet, getPosition(), getImageInformation());
 	}
 }

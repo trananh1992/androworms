@@ -1,5 +1,8 @@
 package com.androworms;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.graphics.Bitmap;
 import android.graphics.PointF;
 
@@ -7,10 +10,12 @@ public abstract class ElementSurCarte {
 	
 	private PointF position;
 	private ImageInformation imageTerrain;
+	private List<PointF> mouvementForces;
 	
 	public ElementSurCarte(PointF position, ImageInformation ii) {
 		this.position = position;
 		this.imageTerrain = ii;
+		mouvementForces = new ArrayList<PointF>();
 	}
 	
 	public abstract ElementSurCarte clone();
@@ -55,5 +60,15 @@ public abstract class ElementSurCarte {
 		setPosition((float)d, (float)e);		
 	}
 	
-
+	public void addMouvementForces(PointF p) {
+		mouvementForces.add(p);
+	}
+	
+	public void setMouvementForces(List<PointF> mouvementForces) {
+		this.mouvementForces = mouvementForces;
+	}
+	
+	public List<PointF> getMouvementForces() {
+		return mouvementForces;
+	}
 }
