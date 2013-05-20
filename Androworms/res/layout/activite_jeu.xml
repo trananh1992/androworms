@@ -92,47 +92,49 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp" >
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/Armes"
-                        android:paddingRight="20dp"
-                        android:src="@drawable/icone_hache" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/Armes"
-                        android:paddingRight="20dp"
-                        android:src="@drawable/icone_pistolet" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/Armes"
-                        android:paddingRight="20dp"
-                        android:src="@drawable/icone_bazooka" />
+                    
+                    <ImageButton
+			            android:id="@+id/hache"
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:paddingRight="20dp"
+			            android:contentDescription="@string/Armes"
+			            android:src="@drawable/icone_hache"/>
+                    <ImageButton
+			            android:id="@+id/pistolet"
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:paddingRight="20dp"
+			            android:contentDescription="@string/Armes"
+			            android:src="@drawable/icone_pistolet"/>
+                    <ImageButton
+			            android:id="@+id/bazooka"
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:paddingRight="20dp"
+			            android:contentDescription="@string/Armes"
+			            android:src="@drawable/icone_bazooka"/>
                 </TableRow>
 
                 <TableRow
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp" >
+					<ImageButton
+			            android:id="@+id/grenade"
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:paddingRight="20dp"
+			            android:contentDescription="@string/Armes"
+			            android:src="@drawable/icone_grenade"/>
+					<ImageButton
+			            android:id="@+id/mine"
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:paddingRight="20dp"
+			            android:contentDescription="@string/Armes"
+			            android:src="@drawable/icone_mine"/>
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/Armes"
-                        android:paddingRight="20dp"
-                        android:src="@drawable/icone_grenade" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/Armes"
-                        android:paddingRight="20dp"
-                        android:src="@drawable/icone_mine" />
                 </TableRow>
             </TableLayout>
         </SlidingDrawer>
