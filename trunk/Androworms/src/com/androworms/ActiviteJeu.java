@@ -1,17 +1,30 @@
 package com.androworms;
 
+import java.io.File;
+
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PointF;
+import android.graphics.Rect;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SlidingDrawer;
 import android.widget.SlidingDrawer.OnDrawerCloseListener;
@@ -23,7 +36,7 @@ import android.widget.ToggleButton;
 import com.androworms.ui.ClavierDirectionnel;
 import com.androworms.utile.Informations;
 
-public class ActiviteJeu extends Activity {
+public class ActiviteJeu extends Activity implements OnClickListener {
 	
 	private static final String TAG = "Androworms.ActiviteJeu";
 	
@@ -99,9 +112,22 @@ public class ActiviteJeu extends Activity {
 				setMode(RIEN);
 			}
 		});
+		
 		TableLayout tl = (TableLayout)findViewById(R.id.selecteur_arme_contenu);
 		tl.setBackgroundColor(Color.WHITE);
 		tl.getBackground().setAlpha(80);
+		
+		ImageButton hache, pistolet, bazooka, grenade, mine;
+		hache = (ImageButton) findViewById(R.id.hache);
+		pistolet = (ImageButton) findViewById(R.id.pistolet);
+		bazooka = (ImageButton) findViewById(R.id.bazooka);
+		grenade = (ImageButton) findViewById(R.id.grenade);
+		mine = (ImageButton) findViewById(R.id.mine);
+		hache.setOnClickListener(this);
+		pistolet.setOnClickListener(this);
+		bazooka.setOnClickListener(this);
+		grenade.setOnClickListener(this);
+		mine.setOnClickListener(this);
 		
 		
 		/* Affichage du mode de jeu */
@@ -233,5 +259,25 @@ public class ActiviteJeu extends Activity {
 		});
 		AlertDialog alert = builder.create();
 		alert.show();
+	}
+
+	@Override
+	public void onClick(View arg0) {
+		 ImageButton b = (ImageButton)arg0;
+		 Personnage persoPrincipal = this.noyau.getMonde().getPersonnagePrincipal();
+		 switch(b.getId()) {
+		 	case R.id.hache : 	moteurGraph.ajouterArme(persoPrincipal, R.drawable.bras_hache);
+		 						break;
+		 	case R.id.pistolet : 	moteurGraph.ajouterArme(persoPrincipal, R.drawable.bras_pistolet);
+									break;
+		 	case R.id.bazooka : 	moteurGraph.ajouterArme(persoPrincipal, R.drawable.bras_bazooka);
+									break;
+		 	case R.id.grenade : 	moteurGraph.ajouterArme(persoPrincipal, R.drawable.bras_grenade);
+									break;
+		 	case R.id.mine : 	moteurGraph.ajouterArme(persoPrincipal, R.drawable.bras_mine);
+								break;
+		 	default : 	break;
+		 
+		 }
 	}
 }

@@ -399,6 +399,16 @@ public class MoteurGraphique extends RelativeLayout {
 		}
 	}
 	
+	public void ajouterArme(Personnage p, int image) {	
+		for(ImageSurCarte img : images) {
+			
+			if(img.getElement().equals(p)) {
+				ImageView perso = (ImageView) img;
+				perso.setBackgroundResource(image);
+			}
+		}
+	}
+	
 	public void animerAndroidDroite(Personnage p) {
 		Personnage persoPrincipal = noyau.getMonde().getPersonnagePrincipal();
 		
