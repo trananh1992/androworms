@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -14,6 +15,8 @@ import android.graphics.PointF;
 import android.graphics.RectF;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.util.LruCache;
@@ -404,7 +407,19 @@ public class MoteurGraphique extends RelativeLayout {
 			
 			if(img.getElement().equals(p)) {
 				ImageView perso = (ImageView) img;
-				perso.setBackgroundResource(image);
+				Drawable[] layers = new Drawable[2];
+				if(perso.getBackground().getClass() == LayerDrawable.class)
+				{
+					LayerDrawable draw = (LayerDrawable) perso.getBackground();
+					layers[0] = draw.getDrawable(0);
+				}
+				else
+				{
+					layers[0] = perso.getBackground();
+				}
+				layers[1] = context.getResources().getDrawable(image);
+				LayerDrawable layerDrawable = new LayerDrawable(layers);
+				perso.setBackground(layerDrawable);
 			}
 		}
 	}
