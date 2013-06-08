@@ -9,17 +9,18 @@ import android.widget.ImageButton;
 
 public class ActivitePartage extends Activity {
 	
+	public static String TAG = "Partage";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activite_partage);
 		
 		
-		
-		// Bouton partager
+		// Bouton "partager"
 		ImageButton ibPartagerGeneral = (ImageButton)findViewById(R.id.ib_partager_general);
 		ibPartagerGeneral.setOnClickListener(new OnClickListener() {
-
+			
 			public void onClick(View v) {
 				// création de l'Intent pour envoyer
 				Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
