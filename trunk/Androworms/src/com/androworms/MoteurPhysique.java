@@ -18,7 +18,7 @@ public class MoteurPhysique {
 	public static final int TAILLE_DEPLACEMENT_JOUEUR = 1;
 	public static final int HAUTEUR_DEPLACEMENT_JOUEUR = 5;
 	public static final String TAG = "Androworms.MOTEURPHYSIQUE";
-	private static final float rafraichissement = 0.2f;
+	private static final float RAFRAICHISSEMENT = 0.2f;
 	
 	
 	public MoteurPhysique(Noyau n, Monde monde) {
@@ -27,11 +27,11 @@ public class MoteurPhysique {
 	}
 	
 	public float getRafraichissement() {
-		return rafraichissement;
+		return RAFRAICHISSEMENT;
 	}
-
-
-
+	
+	
+	
 	public void deplacementJoueurDroite(String personnage) {
 		Personnage p = monde.getPersonnage(personnage);
 		noyau.animerAndroidDroite(p);
@@ -93,7 +93,7 @@ public class MoteurPhysique {
 			pNew.getPosition().y++;
 		} while(dessinPossible(pNew, carte));
 		pNew.getPosition().y--;
-		*/
+		 */
 	}
 	
 	/**
@@ -119,13 +119,13 @@ public class MoteurPhysique {
 	public void applyForce(ElementSurCarte esc, Bitmap carte, Vector2D vd) { 
 		PointF save = new PointF();
 		ElementSurCarte pNew = esc.clone();
-		float i = rafraichissement;
+		float i = RAFRAICHISSEMENT;
 		applyAcceleration(pNew, i);
 		applyVecteur(pNew, i, vd);
 		while( dessinPossible (pNew, carte) ) {
 			esc.addMouvementForces(new PointF(pNew.getPosition().x, pNew.getPosition().y));
 			save.set(pNew.getPosition().x, pNew.getPosition().y);
-			i += rafraichissement;
+			i += RAFRAICHISSEMENT;
 			pNew.setPosition(esc.getPosition().x, esc.getPosition().y);
 			applyAcceleration(pNew, i);
 			applyVecteur(pNew, i, vd);
