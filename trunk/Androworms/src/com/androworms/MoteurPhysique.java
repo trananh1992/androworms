@@ -18,7 +18,7 @@ public class MoteurPhysique {
 	public static final int TAILLE_DEPLACEMENT_JOUEUR = 1;
 	public static final int HAUTEUR_DEPLACEMENT_JOUEUR = 5;
 	public static final String TAG = "Androworms.MOTEURPHYSIQUE";
-	private final float rafraichissement = 0.2f;
+	private static final float rafraichissement = 0.2f;
 	
 	
 	public MoteurPhysique(Noyau n, Monde monde) {
@@ -43,7 +43,7 @@ public class MoteurPhysique {
 		noyau.animerAndroidGauche(p);
 		deplacementJoueur(p, -1);
 	}
-	;
+	
 	public void deplacementJoueur(Personnage pOld, int addToX) {
 		Personnage pNew = pOld.clone();
 		Bitmap carte = monde.getTerrainSansPersonnageCible(pOld.getNom());
@@ -94,8 +94,8 @@ public class MoteurPhysique {
 		} while(dessinPossible(pNew, carte));
 		pNew.getPosition().y--;
 		*/
-		}		
-
+	}
+	
 	/**
 	 * Applique les accelerations sur un element sur carte pour un temps donnee.
 	 * @param esc l'element sur carte à modifer
