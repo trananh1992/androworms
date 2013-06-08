@@ -112,8 +112,8 @@ public class MoteurPhysique {
 	}
 	
 	public void applyVecteur(ElementSurCarte esc, float temps, Vector2D vd) {
-		esc.getPosition().x += (vd.x * temps);
-		esc.getPosition().y += (vd.y * temps);
+			esc.getPosition().x += (vd.x * temps);
+			esc.getPosition().y += (vd.y * temps);
 	}
 	
 	public void applyForce(ElementSurCarte esc, Bitmap carte, Vector2D vd) { 
