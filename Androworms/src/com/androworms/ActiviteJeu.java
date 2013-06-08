@@ -1,27 +1,15 @@
 package com.androworms;
 
-import java.io.File;
-
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PointF;
-import android.graphics.Rect;
-import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageButton;
@@ -266,18 +254,24 @@ public class ActiviteJeu extends Activity implements OnClickListener {
 		 ImageButton b = (ImageButton)arg0;
 		 Personnage persoPrincipal = this.noyau.getMonde().getPersonnagePrincipal();
 		 switch(b.getId()) {
-		 	case R.id.hache : 	moteurGraph.ajouterArme(persoPrincipal, R.drawable.bras_hache);
-		 						break;
-		 	case R.id.pistolet : 	moteurGraph.ajouterArme(persoPrincipal, R.drawable.bras_pistolet);
-									break;
-		 	case R.id.bazooka : 	moteurGraph.ajouterArme(persoPrincipal, R.drawable.bras_bazooka);
-									break;
-		 	case R.id.grenade : 	moteurGraph.ajouterArme(persoPrincipal, R.drawable.bras_grenade);
-									break;
-		 	case R.id.mine : 	moteurGraph.ajouterArme(persoPrincipal, R.drawable.bras_mine);
-								break;
-		 	default : 	break;
-		 
+		 	case R.id.hache:
+				moteurGraph.ajouterArme(persoPrincipal, R.drawable.bras_hache);
+		 		break;
+		 	case R.id.pistolet:
+				moteurGraph.ajouterArme(persoPrincipal, R.drawable.bras_pistolet);
+				break;
+		 	case R.id.bazooka:
+				moteurGraph.ajouterArme(persoPrincipal, R.drawable.bras_bazooka);
+				break;
+		 	case R.id.grenade:
+				moteurGraph.ajouterArme(persoPrincipal, R.drawable.bras_grenade);
+				break;
+		 	case R.id.mine:
+				moteurGraph.ajouterArme(persoPrincipal, R.drawable.bras_mine);
+				break;
+		 	default :
+				break;
+			
 		 }
 	}
 }
