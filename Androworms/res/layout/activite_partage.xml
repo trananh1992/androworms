@@ -3,17 +3,27 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/btn_partager_google"
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/btn_login_google"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <com.facebook.widget.LoginButton
+        android:id="@+id/btn_login_facebook"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Google+ (pas encore fait)" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp" />
 
     <Button
         android:id="@+id/btn_partager_facebook"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Facebook (pas encore fait)" />
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:text="share"
+        android:textStyle="bold"
+        android:visibility="invisible" />
 
     <Button
         android:id="@+id/btn_partager_twitter"

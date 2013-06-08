@@ -3,19 +3,21 @@ package com.androworms;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 
 public class ActivitePartage extends Activity {
 	
-	public static String TAG = "Partage";
+	private static final String TAG = "Partage";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activite_partage);
 		
+		Log.v(TAG, "Activité de partage de l'application");
 		
 		// Bouton "partager"
 		ImageButton ibPartagerGeneral = (ImageButton)findViewById(R.id.ib_partager_general);
@@ -45,5 +47,11 @@ public class ActivitePartage extends Activity {
 			}
 			
 		});
+		
+		// Bouton "Facebook"
+		// TODO
+		
+		// Bouton "Google+"
+		// TODO
 	}
 }
