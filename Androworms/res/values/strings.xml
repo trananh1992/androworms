@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">Androworms</string>
+    <string name="facebook_app_id">612578295437725</string>
     <string name="contentDescription_logo_androworms">Logo Androworms</string>
     <string name="texte_developpeurs">Développeurs :</string>
     <string name="pas_de_donnees">Pas de données</string>
