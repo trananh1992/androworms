@@ -6,8 +6,7 @@
     <com.androworms.MoteurGraphique
         android:id="@+id/mg_carte"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-    </com.androworms.MoteurGraphique>
+        android:layout_height="match_parent" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -44,8 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true" >
-        </com.androworms.ui.ClavierDirectionnel>
+            android:layout_alignParentRight="true" />
 
         <ToggleButton
             android:id="@+id/tg_mode_tir"
@@ -92,50 +90,53 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp" >
-                    
+
                     <ImageButton
-			            android:id="@+id/hache"
-			            android:layout_width="wrap_content"
-			            android:layout_height="wrap_content"
-			            android:paddingRight="20dp"
-			            android:contentDescription="@string/Armes"
-			            android:src="@drawable/icone_hache"
-                    	android:onClick="clickHandler"/>
+                        android:id="@+id/hache"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/Armes"
+                        android:onClick="clickHandler"
+                        android:paddingRight="20dp"
+                        android:src="@drawable/icone_hache" />
+
                     <ImageButton
-			            android:id="@+id/pistolet"
-			            android:layout_width="wrap_content"
-			            android:layout_height="wrap_content"
-			            android:paddingRight="20dp"
-			            android:contentDescription="@string/Armes"
-			            android:src="@drawable/icone_pistolet"/>
+                        android:id="@+id/pistolet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/Armes"
+                        android:paddingRight="20dp"
+                        android:src="@drawable/icone_pistolet" />
+
                     <ImageButton
-			            android:id="@+id/bazooka"
-			            android:layout_width="wrap_content"
-			            android:layout_height="wrap_content"
-			            android:paddingRight="20dp"
-			            android:contentDescription="@string/Armes"
-			            android:src="@drawable/icone_bazooka"/>
+                        android:id="@+id/bazooka"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/Armes"
+                        android:paddingRight="20dp"
+                        android:src="@drawable/icone_bazooka" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp" >
-					<ImageButton
-			            android:id="@+id/grenade"
-			            android:layout_width="wrap_content"
-			            android:layout_height="wrap_content"
-			            android:paddingRight="20dp"
-			            android:contentDescription="@string/Armes"
-			            android:src="@drawable/icone_grenade"/>
-					<ImageButton
-			            android:id="@+id/mine"
-			            android:layout_width="wrap_content"
-			            android:layout_height="wrap_content"
-			            android:paddingRight="20dp"
-			            android:contentDescription="@string/Armes"
-			            android:src="@drawable/icone_mine"/>
 
+                    <ImageButton
+                        android:id="@+id/grenade"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/Armes"
+                        android:paddingRight="20dp"
+                        android:src="@drawable/icone_grenade" />
+
+                    <ImageButton
+                        android:id="@+id/mine"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/Armes"
+                        android:paddingRight="20dp"
+                        android:src="@drawable/icone_mine" />
                 </TableRow>
             </TableLayout>
         </SlidingDrawer>
