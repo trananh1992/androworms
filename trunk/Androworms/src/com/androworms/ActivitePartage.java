@@ -111,8 +111,8 @@ public class ActivitePartage extends Activity implements ConnectionCallbacks, On
 		});
 		
 		mPlusClient = new PlusClient.Builder(this, this, this)
-		.setVisibleActivities("http://schemas.google.com/AddActivity", "http://schemas.google.com/BuyActivity")
-		.build();
+			.setVisibleActivities("http://schemas.google.com/AddActivity", "http://schemas.google.com/BuyActivity")
+			.build();
 		// Barre de progression à afficher si l'échec de connexion n'est pas résolu.
 		mConnectionProgressDialog = new ProgressDialog(this);
 		mConnectionProgressDialog.setMessage("Connexion...");
