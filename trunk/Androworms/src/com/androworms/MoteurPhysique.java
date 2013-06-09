@@ -106,14 +106,14 @@ public class MoteurPhysique {
 	public void applyAcceleration(ElementSurCarte esc, float temps) {
 		List<Vector2D> acceleration = monde.getAcceleration();
 		for(int i = 0; i < acceleration.size(); i++) {
-			esc.setPosition(esc.getPosition().x + acceleration.get(i).x * Math.pow(temps,2)
-					, esc.getPosition().y + acceleration.get(i).y * Math.pow(temps,2) );
+			esc.setPosition(esc.getPosition().x + acceleration.get(i).getX() * Math.pow(temps,2)
+					, esc.getPosition().y + acceleration.get(i).getY() * Math.pow(temps,2) );
 		}
 	}
 	
 	public void applyVecteur(ElementSurCarte esc, float temps, Vector2D vd) {
-			esc.getPosition().x += (vd.x * temps);
-			esc.getPosition().y += (vd.y * temps);
+		esc.getPosition().x += (vd.getX() * temps);
+		esc.getPosition().y += (vd.getY() * temps);
 	}
 	
 	public void applyForce(ElementSurCarte esc, Bitmap carte, Vector2D vd) { 
@@ -132,7 +132,7 @@ public class MoteurPhysique {
 		}
 		if( save.x + save.y != 0.) {
 			Vector2D tmp = Vector2D.vecteurAB(save, pNew.getPosition());
-			Log.v(TAG, "tmp = " + tmp.x + "  " + tmp.y);
+			Log.v(TAG, "tmp = " + tmp.getX() + "  " + tmp.getY());
 			pNew.setPosition(save.x, save.y);
 			if(tmp.size() > 1) {
 				esc.addMouvementForces(dernierePositionSuivantVecteur(pNew, carte, tmp));
@@ -141,7 +141,7 @@ public class MoteurPhysique {
 	}
 	
 	public PointF dernierePositionSuivantVecteur(ElementSurCarte esc, Bitmap carte, Vector2D vd) {
-		float deplacement = Math.abs(1/Math.max(vd.x, vd.y));
+		float deplacement = Math.abs(1/Math.max(vd.getX(), vd.getY()));
 		PointF result = new PointF();
 		do {
 			result.set(esc.getPosition().x, esc.getPosition().y);
