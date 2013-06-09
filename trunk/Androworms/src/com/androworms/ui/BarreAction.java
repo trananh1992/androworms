@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.androworms.R;
 
+/** Composant graphique pour simuler la barre d'action de Android 4.0+
+ */
 public class BarreAction extends LinearLayout {
 	
 	public BarreAction(Context context) {

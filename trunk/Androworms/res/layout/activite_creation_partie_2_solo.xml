@@ -37,14 +37,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Facile" />
+            android:text="@string/niveau_facile" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text=">" />
+            android:text="@string/niveau_separateur" />
 
         <TextView
             android:id="@+id/tv_IA_moyen"
@@ -52,14 +52,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Moyen" />
+            android:text="@string/niveau_moyen" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text=">" />
+            android:text="@string/niveau_separateur" />
 
         <TextView
             android:id="@+id/tv_IA_difficile"
@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Difficile" />
+            android:text="@string/niveau_difficile" />
     </LinearLayout>
 
     <ListView

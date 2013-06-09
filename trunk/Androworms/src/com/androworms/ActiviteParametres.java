@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+/** Adaptateur pour les paramètres utilisateurs de l'application
+ */
 public class ActiviteParametres extends Activity {
 	
 	// Constante de nom du fichier de préférences
