@@ -89,5 +89,7 @@
     <string name="jouer_avec_plusieurs_telephones_bluetooth">Jouer avec plusieurs telephones en Bluetooth</string>
     <string name="jouer_avec_plusieurs_telephones_wifi_direct">Jouer avec plusieurs telephones Wifi direct</string>
     <string name="dupliquer">Dupliquer</string>
+    <string name="partage_apps">Partager l\'application</string>
+    <string name="evaluer_play_store">Évaluer sur le Play Store</string>
 
 </resources>

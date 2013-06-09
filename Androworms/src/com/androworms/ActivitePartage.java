@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.awl.tumlabs.twitter.android.TwitterAuth;
+import com.awl.tumlabs.twitter.android.TwitterLoginButton;
 import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
@@ -22,17 +24,26 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
 import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
 import com.google.android.gms.plus.PlusClient;
+import com.awl.tumlabs.twitter.android.TwitterAuth.AuthListener;
 
 public class ActivitePartage extends Activity implements ConnectionCallbacks, OnConnectionFailedListener {
 	
 	private static final String TAG = "Partage";
 	
+	// Google+
 	private static final int REQUEST_CODE_RESOLVE_ERR = 9000;
-	
 	private ProgressDialog mConnectionProgressDialog;
 	private PlusClient mPlusClient;
 	private ConnectionResult mConnectionResult;
 	
+	// Twitter
+	private static final String CONSUMER_KEY = "5cZsqLqO1CsjkX0J5BXfQ";
+    private static final String CONSUMER_SECRET = "obwiu1CwSOrBUEY5bCEyxaQkeEP58UhQvXxQE9Vw";
+    private static final String CALLBACK_URL = "myApp:///twitter";
+    private static TwitterAuth mTwitterAuth = new TwitterAuth(CONSUMER_KEY, CONSUMER_SECRET);
+    private TwitterLoginButton twitterLoginButton;
+    
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -105,6 +116,11 @@ public class ActivitePartage extends Activity implements ConnectionCallbacks, On
 		// Barre de progression à afficher si l'échec de connexion n'est pas résolu.
 		mConnectionProgressDialog = new ProgressDialog(this);
 		mConnectionProgressDialog.setMessage("Connexion...");
+		
+		
+		// Bouton "Twitter"
+		twitterLoginButton = (TwitterLoginButton) findViewById(R.id.btn_login_twitter);
+        twitterLoginButton.init(this, mTwitterAuth, new TwitterAuthListener());
 	}
 	
 	
@@ -187,4 +203,25 @@ public class ActivitePartage extends Activity implements ConnectionCallbacks, On
 	public void onDisconnected() {
 		Log.d(TAG, "disconnected");
 	}
+	
+	private class TwitterAuthListener implements AuthListener {
+
+        @Override
+        public void onAuthSucceed() {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void onLogoutSucceed() {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void onError(String error) {
+            // TODO Auto-generated method stub
+
+        }
+    }
 }
