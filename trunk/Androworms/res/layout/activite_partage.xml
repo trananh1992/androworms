@@ -1,42 +1,63 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal" >
+    android:orientation="vertical" >
 
-    <ImageButton
-        android:id="@+id/ib_partager_general"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@android:drawable/ic_menu_share" />
-
-    <Button
-        android:id="@+id/btn_play_store"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="Evaluer sur le Play Store"
-        android:drawableLeft="@drawable/google_play_store" />
-
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/btn_login_google"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <com.facebook.widget.LoginButton
-        android:id="@+id/btn_login_facebook"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/btn_partager_facebook"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Share on Facebook"
-        android:visibility="visible" />
+        android:layout_height="wrap_content" >
 
-    <Button
-        android:id="@+id/btn_partager_twitter"
+        <ImageButton
+            android:id="@+id/ib_partager_general"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/partage_apps"
+            android:src="@android:drawable/ic_menu_share" />
+
+        <Button
+            android:id="@+id/btn_play_store"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/evaluer_play_store"
+            android:drawableLeft="@drawable/google_play_store" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/btn_login_google"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+        </com.google.android.gms.common.SignInButton>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Twitter (pas encore fait)" />
+        android:layout_height="wrap_content" >
+
+        <com.facebook.widget.LoginButton
+            android:id="@+id/btn_login_facebook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btn_partager_facebook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Share on Facebook"
+            android:visibility="visible" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <com.awl.tumlabs.twitter.android.TwitterLoginButton
+            android:id="@+id/btn_login_twitter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
 </LinearLayout>
