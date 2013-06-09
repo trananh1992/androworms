@@ -91,5 +91,9 @@
     <string name="dupliquer">Dupliquer</string>
     <string name="partage_apps">Partager l\'application</string>
     <string name="evaluer_play_store">Évaluer sur le Play Store</string>
+    <string name="niveau_facile">Facile</string>
+    <string name="niveau_moyen">Moyen</string>
+    <string name="niveau_difficile">Difficile</string>
+    <string name="niveau_separateur">></string>
 
 </resources>

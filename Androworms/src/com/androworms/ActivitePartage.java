@@ -26,6 +26,9 @@ import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailed
 import com.google.android.gms.plus.PlusClient;
 import com.awl.tumlabs.twitter.android.TwitterAuth.AuthListener;
 
+/** Activité de gestion du partage de l'application via les réseaux sociaux
+ */
+
 public class ActivitePartage extends Activity implements ConnectionCallbacks, OnConnectionFailedListener {
 	
 	private static final String TAG = "Partage";

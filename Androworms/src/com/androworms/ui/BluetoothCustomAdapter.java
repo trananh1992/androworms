@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.androworms.R;
 
+/** Adaptateur pour lister les appareils Bluetooth
+ */
 public class BluetoothCustomAdapter extends BaseAdapter {
 	
 	/* Descrition de ce composant liste :

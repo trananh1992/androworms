@@ -28,6 +28,8 @@ import android.view.View.OnTouchListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+/** Activité de l'éditeur de carte
+ */
 public class ActiviteEditeur extends Activity implements OnClickListener, OnTouchListener {
 	private ActiviteAndroworms activiteMenuPrincipal;
 	static final int TAKE_PICTURE = 0;
