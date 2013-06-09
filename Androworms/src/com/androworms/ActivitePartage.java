@@ -38,12 +38,12 @@ public class ActivitePartage extends Activity implements ConnectionCallbacks, On
 	
 	// Twitter
 	private static final String CONSUMER_KEY = "5cZsqLqO1CsjkX0J5BXfQ";
-    private static final String CONSUMER_SECRET = "obwiu1CwSOrBUEY5bCEyxaQkeEP58UhQvXxQE9Vw";
-    private static final String CALLBACK_URL = "myApp:///twitter";
-    private static TwitterAuth mTwitterAuth = new TwitterAuth(CONSUMER_KEY, CONSUMER_SECRET);
-    private TwitterLoginButton twitterLoginButton;
-    
-    
+	private static final String CONSUMER_SECRET = "obwiu1CwSOrBUEY5bCEyxaQkeEP58UhQvXxQE9Vw";
+	private static final String CALLBACK_URL = "myApp:///twitter";
+	private static TwitterAuth mTwitterAuth = new TwitterAuth(CONSUMER_KEY, CONSUMER_SECRET);
+	private TwitterLoginButton twitterLoginButton;
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -120,7 +120,7 @@ public class ActivitePartage extends Activity implements ConnectionCallbacks, On
 		
 		// Bouton "Twitter"
 		twitterLoginButton = (TwitterLoginButton) findViewById(R.id.btn_login_twitter);
-        twitterLoginButton.init(this, mTwitterAuth, new TwitterAuthListener());
+		twitterLoginButton.init(this, mTwitterAuth, new TwitterAuthListener());
 	}
 	
 	
@@ -205,23 +205,23 @@ public class ActivitePartage extends Activity implements ConnectionCallbacks, On
 	}
 	
 	private class TwitterAuthListener implements AuthListener {
-
-        @Override
-        public void onAuthSucceed() {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
-        public void onLogoutSucceed() {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
-        public void onError(String error) {
-            // TODO Auto-generated method stub
-
-        }
-    }
+		
+		@Override
+		public void onAuthSucceed() {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void onLogoutSucceed() {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void onError(String error) {
+			// TODO Auto-generated method stub
+			
+		}
+	}
 }
