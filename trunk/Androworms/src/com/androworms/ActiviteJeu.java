@@ -251,26 +251,28 @@ public class ActiviteJeu extends Activity implements OnClickListener {
 	
 	@Override
 	public void onClick(View arg0) {
-		ImageButton b = (ImageButton)arg0;
-		Personnage persoPrincipal = this.noyau.getMonde().getPersonnagePrincipal();
-		switch(b.getId()) {
-		case R.id.hache:
-			moteurGraph.ajouterArme(persoPrincipal, R.drawable.bras_hache);
-			break;
-		case R.id.pistolet:
-			moteurGraph.ajouterArme(persoPrincipal, R.drawable.bras_pistolet);
-			break;
-		case R.id.bazooka:
-			moteurGraph.ajouterArme(persoPrincipal, R.drawable.bras_bazooka);
-			break;
-		case R.id.grenade:
-			moteurGraph.ajouterArme(persoPrincipal, R.drawable.bras_grenade);
-			break;
-		case R.id.mine:
-			moteurGraph.ajouterArme(persoPrincipal, R.drawable.bras_mine);
-			break;
-		default :
-			break;
+		if (arg0 instanceof ImageButton) {
+			ImageButton b = (ImageButton)arg0;
+			Personnage persoPrincipal = this.noyau.getMonde().getPersonnagePrincipal();
+			switch(b.getId()) {
+			case R.id.hache:
+				moteurGraph.ajouterArme(persoPrincipal, R.drawable.bras_hache);
+				break;
+			case R.id.pistolet:
+				moteurGraph.ajouterArme(persoPrincipal, R.drawable.bras_pistolet);
+				break;
+			case R.id.bazooka:
+				moteurGraph.ajouterArme(persoPrincipal, R.drawable.bras_bazooka);
+				break;
+			case R.id.grenade:
+				moteurGraph.ajouterArme(persoPrincipal, R.drawable.bras_grenade);
+				break;
+			case R.id.mine:
+				moteurGraph.ajouterArme(persoPrincipal, R.drawable.bras_mine);
+				break;
+			default :
+				break;
+			}
 		}
 	}
 }
