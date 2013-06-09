@@ -98,10 +98,7 @@ public class ActiviteChoixOption extends Activity {
 				ArrayAdapter<String> adapter = (ArrayAdapter<String>) sp.getAdapter();
 				adapter.insert(photo, adapter.getCount() - 1);
 				adapter.notifyDataSetChanged();
-				Spinner mapChooser = (Spinner) findViewById(R.id.spn_mapChooser);
-				mapChooser.setAdapter(adapter);
-			} else {
-				// select other element
+				sp.setAdapter(adapter);
 			}
 		}
 	}

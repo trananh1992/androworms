@@ -86,10 +86,10 @@ public class MoteurGraphique extends RelativeLayout {
 	private List<ImageSurCarte> images;
 	private ProgressBar pbTest;
 	
-	public AnimationDrawable animDroitePersoPrincipal;
-	public AnimationDrawable animGauchePersoPrincipal;
-	public AnimationDrawable animDroitePerso2;
-	public AnimationDrawable animGauchePerso2;
+	private AnimationDrawable animDroitePersoPrincipal;
+	private AnimationDrawable animGauchePersoPrincipal;
+	private AnimationDrawable animDroitePerso2;
+	private AnimationDrawable animGauchePerso2;
 	
 	public MoteurGraphique(Context context) {
 		super(context);
@@ -508,15 +508,23 @@ public class MoteurGraphique extends RelativeLayout {
 	 * set ourselves as a target and we can use the sleep()
 	 * function to cause an update/invalidate to occur at a later date.
 	 */
-	private RefreshHandler mRedrawHandler = new RefreshHandler();
-
-	class RefreshHandler extends Handler {
-
+	private RefreshHandler mRedrawHandler = new RefreshHandler(noyau, this);
+	
+	static class RefreshHandler extends Handler {
+		
+		private Noyau noyau;
+		private MoteurGraphique moteurGraphique;
+		
+		public RefreshHandler(Noyau noyau, MoteurGraphique moteurGraphique) {
+			this.noyau = noyau;
+			this.moteurGraphique = moteurGraphique;
+		}
+		
 		@Override
 		public void handleMessage(Message msg) {
 			//MoteurGraphique.this.update();
-			noyau.getPhysique().gravite();
-			MoteurGraphique.this.invalidate();
+			this.noyau.getPhysique().gravite();
+			this.moteurGraphique.invalidate();
 		}
 
 		public void sleep(long delayMillis) {
@@ -541,7 +549,6 @@ public class MoteurGraphique extends RelativeLayout {
 	public void setGraviteInFuture(final int nbtrucs) {
 		postDelayed(new Runnable() {		
 			public void run() {
-				int i = nbtrucs;
 				noyau.getPhysique().gravite();
 				MoteurGraphique.this.invalidate();
 				setGraviteInFuture(3);

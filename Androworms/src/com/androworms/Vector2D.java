@@ -3,9 +3,10 @@ package com.androworms;
 import android.graphics.PointF;
 
 public class Vector2D {
-	public float x;
-	public float y;
-
+	
+	private float x;
+	private float y;
+	
 	public Vector2D(float x, float y) {
 		super();
 		this.x = x;
@@ -15,12 +16,15 @@ public class Vector2D {
 	public float getX() {
 		return x;
 	}
+	
 	public void setX(float x) {
 		this.x = x;
 	}
+	
 	public float getY() {
 		return y;
 	}
+	
 	public void setY(float y) {
 		this.y = y;
 	}
@@ -32,6 +36,4 @@ public class Vector2D {
 	public float size() {
 		return (float) Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
 	}
-	
-
 }

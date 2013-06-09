@@ -14,8 +14,6 @@ import com.androworms.R;
 
 public class BarreAction extends LinearLayout {
 	
-	private BarreActionEvent evenements;
-	
 	public BarreAction(Context context) {
 		super(context);
 		constructeurPartage(context);
@@ -36,7 +34,7 @@ public class BarreAction extends LinearLayout {
 	
 	public void configure(Activity activite, boolean activitePrincipale, int titre, boolean aide) {
 		// Gestion des evenements de la barre
-		this.evenements = new BarreActionEvent(activite, activitePrincipale);
+		BarreActionEvent evenements = new BarreActionEvent(activite, activitePrincipale);
 		
 		ImageView ivIcone = (ImageView) findViewById(R.id.iv_barre_action_logo);
 		if (activitePrincipale) {

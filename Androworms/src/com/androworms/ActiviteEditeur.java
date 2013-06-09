@@ -117,7 +117,7 @@ public class ActiviteEditeur extends Activity implements OnClickListener, OnTouc
 		/* création du path complet vers la photo */
 		File photoPath = new File(fichierCarte, name);
 		/* sauvegarde de la photo */
-		FileOutputStream filoutputStream;
+		FileOutputStream filoutputStream = null;
 		try {
 			filoutputStream = new FileOutputStream(photoPath);
 			ImageView background = (ImageView) findViewById(R.id.background);
@@ -139,11 +139,18 @@ public class ActiviteEditeur extends Activity implements OnClickListener, OnTouc
 			
 			result.compress(Bitmap.CompressFormat.PNG, compression, filoutputStream);
 			filoutputStream.flush();
-			filoutputStream.close();
 		} catch (FileNotFoundException e) {
 			Log.e(TAG, "file not found");
 		} catch (IOException e) {
 			Log.e(TAG, "IO Exception");
+		} finally {
+			try {
+				if (filoutputStream != null) {
+					filoutputStream.close();
+				}
+			} catch (IOException e) {
+				Log.e(TAG, "IO Exception");
+			}
 		}
 	}
 	
