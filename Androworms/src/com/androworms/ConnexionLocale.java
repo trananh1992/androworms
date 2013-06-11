@@ -30,5 +30,12 @@ public class ConnexionLocale extends Connexion {
 	@Override
 	public void tempsEcoule() {
 		finDuTourJoueur();
-	} 
+	}
+
+	@Override
+	public void effectuerTir(Vector2D vd) {
+		chronoStop();
+		getNoyau().effectuerTir(vd);
+	}
+
 }

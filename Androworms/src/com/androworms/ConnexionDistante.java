@@ -69,4 +69,10 @@ public class ConnexionDistante extends Connexion {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void effectuerTir(Vector2D vd) {
+		// TODO Auto-generated method stub
+		
+	}
 }
