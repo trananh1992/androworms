@@ -80,8 +80,15 @@ public class Noyau {
 		ImageInformation ii2 = new ImageInformation(R.drawable.android_face, TAILLE_IMAGE_JOUEUR.x, TAILLE_IMAGE_JOUEUR.y, context);
 		Personnage tux = new Personnage(pseudo, ii2);
 		tux.setPosition(new PointF(DEBUG_POSITION_JOUEUR_2));
+		/*
+		ImageInformation ii3 = new ImageInformation(R.drawable.missile, 40, 30, context);
+		Objet o = new Objet("missile", ii3);
+		ObjetSurCarte osc = new ObjetSurCarte(o, new PointF(150,150), ii3);
+		*/
 		monde.addPersonnage(tux);
 		monde.addPersonnage(johnDoe);
+		//monde.addObjetSurCarte(osc);
+
 		
 		if (paramEstCartePerso != null && paramNomCarte != null) {
 			if (paramEstCartePerso) {
@@ -103,6 +110,12 @@ public class Noyau {
 		monde.setArrierePlan(((BitmapDrawable)context.getResources().getDrawable(R.drawable.image_fond)).getBitmap());
 
 		this.nomPersonnage = pseudo;
+		/*
+		Log.v(TAG_NOYAU, "Début de l'initialisation de la matrice de collision");
+		//physique.initMatriceCollision();
+		Log.v(TAG_NOYAU, "Fin de l'initialisation de la matrice de collision");
+		*/
+		
 	}
 	
 	public String getNomPersonnage() {
@@ -168,8 +181,19 @@ public class Noyau {
 		this.graphique.actualiserGraphisme();
 	}
 
-	public void effectuerTir(float puissance, float angle) {
-		Log.v(TAG_NOYAU, "On tire");
+	public void effectuerTir(Vector2D vd) {
+		Bitmap image = graphique.getImage(R.drawable.missile);
+		ImageInformation ii = new ImageInformation(image, R.drawable.missile);
+		ii.setHeight(30);
+		ii.setWidth(40);
+		float seconde = 0.05f;
+		PointF position =  monde.getPersonnagePrincipal().clone().getPosition();
+		position.set(position.x+20, position.y + 20);
+		ObjetSurCarte esc = new ObjetSurCarte(new Objet("missile", ii), position, ii);
+		physique.effectuerTir(esc, vd, seconde);
+		mouvementTir(esc, seconde);
+		//graphique.ajouterElementSurCarte(esc);
+		Log.v(TAG_NOYAU,"On tire ou pas !");
 	}
 	
 	public void animerAndroidDroite(Personnage p) {
@@ -194,5 +218,10 @@ public class Noyau {
 	 */
 	public void mouvementForces() {
 		graphique.remetAplusTard(new RunnableMouvementForce(graphique, this, (int) (physique.getRafraichissement()*100f)), VITESSE_CHUTE);
+	}
+	
+	public void mouvementTir(ObjetSurCarte esc, float seconde) {
+		//graphique.remetAplusTard(new RunnableMouvementForce(graphique, this, (int) (physique.getRafraichissement()*100f)), VITESSE_CHUTE);
+		graphique.remetAplusTard(new RunnableTir(esc, graphique, this, (int) (physique.getRafraichissement()*100f)), (int) (seconde*1000));
 	}
 }

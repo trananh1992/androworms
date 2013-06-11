@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.PointF;
 import android.util.Log;
 
 public class Monde {
@@ -153,6 +155,24 @@ public class Monde {
 		}
 		Log.v(TAG, "Le personnage n'a pas été trouvé.");
 		return null;
+	}
+	
+	public Bitmap getMondeView() {
+		Bitmap terrain = getTerrain();
+		for(Personnage p : listePersonnage) {
+			dessineSurBitmap(terrain, p.getImageView(), p.getPosition());
+		}
+		return terrain;
+	}
+	
+	public void dessineSurBitmap(Bitmap fond, Bitmap dessin, PointF centre) {
+		for(int i = 0; i < dessin.getWidth(); i++) {
+			for(int j = 0; j < dessin.getHeight(); j++) {
+				if(Color.alpha(dessin.getPixel(i, j)) != Color.TRANSPARENT) {
+					fond.setPixel(((int)centre.x)+i, ((int)centre.y)+j, dessin.getPixel(i, j));
+				}
+			}
+		}
 	}
 	
 }

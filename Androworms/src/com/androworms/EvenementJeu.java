@@ -159,10 +159,10 @@ public class EvenementJeu extends ScaleGestureDetector.SimpleOnScaleGestureListe
 			ActiviteJeu.setMode(ActiviteJeu.TIR);
 			PointF deplacement = new PointF(this.moteurGraph.getPointTir().x - positionNouvelleTouche.x,
 					this.moteurGraph.getPointTir().y - positionNouvelleTouche.y);
-			float distance = deplacement.length();
-			float angle = ((float)(Math.atan2 (deplacement.y, deplacement.x)* MoteurGraphique.ANGLE_DEMITOUR /Math.PI));
-		
-			noyau.effectuerTir(distance, angle);
+
+			//float angle = ((float)(Math.atan2 (deplacement.y, deplacement.x)* MoteurGraphique.ANGLE_DEMITOUR /Math.PI));
+			//Log.v(TAG, "Deplacement x " + deplacement.x + " et y " + deplacement.y);
+			noyau.effectuerTir(new Vector2D(deplacement.x/5,deplacement.y/5));
 			
 			
 			// FIXME : ce code est là juste pour tester
