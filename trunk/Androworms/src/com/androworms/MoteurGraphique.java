@@ -186,7 +186,7 @@ public class MoteurGraphique extends RelativeLayout {
 		int count =1;
 		for(ImageSurCarte v : this.images) {
 			v.actualiser();
-			Log.v(TAG, "count = " + count++);
+			//Log.v(TAG, "count = " + count++);
 		}
 		
 		//canvas.drawBitmap(noyau.getMonde().getMondeView(), 0,0,null);

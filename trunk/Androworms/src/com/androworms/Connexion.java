@@ -36,5 +36,6 @@ public abstract class Connexion {
 	public abstract void deplacementJoueurSaut(String nomPersonnage);
 	public abstract void finDuTourJoueur();
 	public abstract void tempsEcoule();
+	public abstract void effectuerTir(Vector2D vd);
 	
 }

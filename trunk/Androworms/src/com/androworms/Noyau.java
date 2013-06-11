@@ -169,6 +169,10 @@ public class Noyau {
 		connexion.deplacementJoueurGauche(monde.getPersonnagePrincipal().getNom());
 	}
 	
+	public void effectuerTirFromIHM(Vector2D vd) {
+		connexion.effectuerTir(vd);
+	}
+	
 	// FIN des fonctions venant de l'IHM ou des runnables
 	
 	public void prochainJoueur() {
@@ -213,7 +217,6 @@ public class Noyau {
 	public void stopAnimationAndroid() {
 		graphique.stopAnimationAndroid();
 	}
-	
 	
 	public Monde getMonde() {
 		return monde;
