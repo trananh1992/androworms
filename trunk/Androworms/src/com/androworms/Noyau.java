@@ -27,7 +27,7 @@ public class Noyau {
 	
 	private static final String TAG_NOYAU = "Androworms.Noyau";
 	private Connexion connexion;
-	private String nomPersonnage;
+
 	private Monde monde;
 
 	private MoteurPhysique physique;
@@ -60,6 +60,7 @@ public class Noyau {
 		monde = new Monde();
 		physique = new MoteurPhysique(this, monde);
 		
+		/*
 		switch (paramMode) {
 		case ParametresPartie.MODE_BLUETOOTH_SERVEUR:
 		case ParametresPartie.MODE_BLUETOOTH_CLIENT:
@@ -70,6 +71,8 @@ public class Noyau {
 			creationPartieLocale();
 			break;
 		}
+		*/
+		creationPartieLocale();
 		
 		ImageInformation ii = new ImageInformation(R.drawable.android_face, TAILLE_IMAGE_JOUEUR.x, TAILLE_IMAGE_JOUEUR.y, context);
 		Personnage johnDoe = new Personnage("John Doe", ii);
@@ -109,22 +112,15 @@ public class Noyau {
 
 		monde.setArrierePlan(((BitmapDrawable)context.getResources().getDrawable(R.drawable.image_fond)).getBitmap());
 
-		this.nomPersonnage = pseudo;
 		/*
 		Log.v(TAG_NOYAU, "Début de l'initialisation de la matrice de collision");
 		//physique.initMatriceCollision();
 		Log.v(TAG_NOYAU, "Fin de l'initialisation de la matrice de collision");
 		*/
-		
-	}
-	
-	public String getNomPersonnage() {
-		return nomPersonnage;
+		graphique.remetAplusTard(new RunnableGravite(physique, this), 3);
 	}
 
-	public void setNomPersonnage(String nomPersonnage) {
-		this.nomPersonnage = nomPersonnage;
-	}
+	
 	
 	public MoteurPhysique getPhysique() {
 		return physique;
@@ -150,24 +146,34 @@ public class Noyau {
 		connexion = new ConnexionDistante(this);
 	}
 	
-	/** Gestion des messages venanat de l'IHM */
+	/** Gestion des messages venanat de l'IHM  et runnable */
 	public void sautJoueurDroiteFromIHM() {
-		physique.sautJoueurDroite(nomPersonnage);
+		physique.sautJoueurDroite(monde.getPersonnagePrincipal().getNom());
 		mouvementForces();
 	}
 	
+	public void finDuTourFromIHM() { 
+		connexion.finDuTourJoueur();
+	}
+	
 	public void sautJoueurGaucheFromIHM() {
-		//physique.gravite();
-		physique.sautJoueurGauche(nomPersonnage);
+		physique.sautJoueurGauche(monde.getPersonnagePrincipal().getNom());
 		mouvementForces();
 	}
 	
 	public void deplacementJoueurDroiteFromIHM() {
-		connexion.deplacementJoueurDroite(nomPersonnage);
+		connexion.deplacementJoueurDroite(monde.getPersonnagePrincipal().getNom());
 	}
 	
 	public void deplacementJoueurGaucheFromIHM() {
-		connexion.deplacementJoueurGauche(nomPersonnage);
+		connexion.deplacementJoueurGauche(monde.getPersonnagePrincipal().getNom());
+	}
+	
+	// FIN des fonctions venant de l'IHM ou des runnables
+	
+	public void prochainJoueur() {
+		monde.setPersonnageSuivant();
+		monde.unsetTerrainSansPersonnageSave();
 	}
 	
 	public void deplacementJoueurDroite(String personnage) {

@@ -57,4 +57,16 @@ public class ConnexionDistante extends Connexion {
 	public void arretServeur() {
 		getServeur().arret();
 	}
+
+	@Override
+	public void finDuTourJoueur() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void tempsEcoule() {
+		// TODO Auto-generated method stub
+		
+	}
 }

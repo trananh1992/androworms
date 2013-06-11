@@ -437,7 +437,7 @@ public class MoteurGraphique extends RelativeLayout {
 				}
 				layers[1] = context.getResources().getDrawable(image);
 				LayerDrawable layerDrawable = new LayerDrawable(layers);
-				//perso.setBackground(layerDrawable);
+				//TODO erreur sur cette ligne perso.setBackground(layerDrawable);
 			}
 		}
 	}
