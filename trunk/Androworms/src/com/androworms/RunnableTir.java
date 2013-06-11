@@ -1,10 +1,8 @@
 package com.androworms;
 
-import java.util.List;
 
 import android.graphics.Bitmap;
 import android.graphics.PointF;
-import android.util.Log;
 
 public class RunnableTir implements Runnable {
 	private MoteurGraphique mg;

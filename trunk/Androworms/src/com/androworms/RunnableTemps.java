@@ -18,7 +18,7 @@ public class RunnableTemps extends Handler {
 		tempsRestant = TEMPS_TOUR;
 	}
 	
-	public void re_initialise() {
+	public void reInitialise() {
 		tempsRestant = TEMPS_TOUR;
 	}
 	
