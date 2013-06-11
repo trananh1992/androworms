@@ -10,6 +10,7 @@ public class RunnableTir implements Runnable {
 	private MoteurGraphique mg;
 	private ImageSurCarte isc;
 	private int milliseconde ;
+	private Noyau noyau;
 	private static final String TAG = "Androworms.runnableMovementForce";
 	private boolean explosion = false;
 	private ObjetSurCarte objetExplosion;
@@ -27,7 +28,7 @@ public class RunnableTir implements Runnable {
 		ii.setHeight(200);
 		ii.setWidth(200);
 		this.objetExplosion = new ObjetSurCarte(new Objet("explosion", ii), new PointF(0f, 0f), ii);
-
+		this.noyau = noyau;
 		
 	}
 	
@@ -42,6 +43,7 @@ public class RunnableTir implements Runnable {
 			mg.remetAplusTard(this, milliseconde);
 		} else if(explosion){
 			mg.supprimerElementSurCarte(isc.getElement());
+			noyau.finDuTourFromIHM();
 		} else  {
 			mg.supprimerElementSurCarte(isc.getElement());
 			PointF position = isc.getElement().getPosition();

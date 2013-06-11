@@ -14,6 +14,7 @@ public class Monde {
 	
 	private TerrainMonde tm;
 	private MoteurGraphique mg;
+	private Personnage personnageEnTrainDeJouer;
 	private List<Personnage> listePersonnage;
 	private List<ObjetSurCarte> listeObjetCarte;
 	private List<Objet> tousLesObjets;
@@ -139,12 +140,30 @@ public class Monde {
 		}
 	}
 	
-	public Personnage getPersonnagePrincipal() {
-		if (this.listePersonnage == null || this.listePersonnage.size() == 0) {
-			return null;
-		} else {
-			return this.listePersonnage.get(0);
+	public void setPersonnageEnTrainDeJouer(int location) {
+		if( location < listePersonnage.size()) {
+			personnageEnTrainDeJouer = listePersonnage.get(location);
 		}
+	}
+	
+	public void setPersonnageSuivant() {
+		personnageEnTrainDeJouer = listePersonnage.get((joueurNumero(getPersonnagePrincipal())+1) % listePersonnage.size());
+	}
+	
+	public int joueurNumero(Personnage p) {
+		for(int i = 0; i < listePersonnage.size(); i++) {
+			if(p == listePersonnage.get(i)) {
+				return i;
+			}
+		}
+		return -123;
+	}
+	
+	public Personnage getPersonnagePrincipal() {
+		if(personnageEnTrainDeJouer == null) {
+			personnageEnTrainDeJouer = listePersonnage.get(1);
+		}
+		return personnageEnTrainDeJouer;
 	}
 	
 	public Personnage getPersonnage(String nom) {

@@ -16,5 +16,19 @@ public class ConnexionLocale extends Connexion {
 	
 	public void deplacementJoueurSaut(String nomPersonnage) {
 		
+	}
+
+	@Override
+	public void finDuTourJoueur() {
+		chronoStop();
+		getNoyau().prochainJoueur();
+		chronoInit();
+		chronoReprise();
+		
+	}
+
+	@Override
+	public void tempsEcoule() {
+		finDuTourJoueur();
 	} 
 }
