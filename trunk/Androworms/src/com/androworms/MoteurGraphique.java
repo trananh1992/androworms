@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -106,6 +107,11 @@ public class MoteurGraphique extends RelativeLayout {
 		constructeurPartage(context);
 	}
 	
+	public Bitmap getImage(int reference) {
+		//this.premierPlan = Bitmap.createBitmap(tag, 1280, 720, true);
+		return BitmapFactory.decodeResource(context.getResources(), reference);
+	}
+	
 	/**
 	 * Cette fonction initialise le composants avec un constructeur partagé
 	 * 
@@ -175,11 +181,15 @@ public class MoteurGraphique extends RelativeLayout {
 			canvas.drawBitmap(noyau.getMonde().getTerrain(), 0, 0, null);
 		}
 		*/
-		canvas.drawBitmap(noyau.getMonde().getTerrain(), 0,0,null);
 		
+		canvas.drawBitmap(noyau.getMonde().getTerrain(), 0,0,null);
+		int count =1;
 		for(ImageSurCarte v : this.images) {
 			v.actualiser();
+			Log.v(TAG, "count = " + count++);
 		}
+		
+		//canvas.drawBitmap(noyau.getMonde().getMondeView(), 0,0,null);
 		
 		//Quand on a modifié tous les imageView on peut dessiner
 		super.dispatchDraw(canvas);
@@ -193,6 +203,12 @@ public class MoteurGraphique extends RelativeLayout {
 			
 			PointF deplacement = new PointF(pointTir.x - positionTouche.x, pointTir.y - positionTouche.y);
 			float distance = deplacement.length();
+			float distanceMax = 250;
+			if( distance > distanceMax) {
+			deplacement.x = ((distanceMax/distance)* deplacement.x) ;
+			deplacement.y = ((distanceMax/distance)* deplacement.y);
+			distance = deplacement.length();
+			}
 			
 			
 			float angleBase = ((float)(Math.atan2 (deplacement.y, deplacement.x)* ANGLE_DEMITOUR /Math.PI));
@@ -395,6 +411,9 @@ public class MoteurGraphique extends RelativeLayout {
 				ImageSurCarte imgSurCarte = new ImageSurCarte(this.context, objSurCarte, this);
 				//On garde la référence pour le zoom et translation
 				images.add(imgSurCarte);
+				ImageView objet = (ImageView) imgSurCarte;
+				objet.setBackgroundResource(R.drawable.missile);
+				Log.v(TAG,"Traitement d'un objet sur carte.");
 			}
 			
 			this.actualiserGraphisme();
@@ -418,7 +437,7 @@ public class MoteurGraphique extends RelativeLayout {
 				}
 				layers[1] = context.getResources().getDrawable(image);
 				LayerDrawable layerDrawable = new LayerDrawable(layers);
-				perso.setBackground(layerDrawable);
+				//perso.setBackground(layerDrawable);
 			}
 		}
 	}
@@ -488,18 +507,28 @@ public class MoteurGraphique extends RelativeLayout {
 		}
 	}
 	
-	public void ajouterElementSurCarte(ElementSurCarte elt) {
-		ImageSurCarte imgSurCarte = new ImageSurCarte(this.context, elt, this);
+	public ImageSurCarte ajouterElementSurCarte(ElementSurCarte elt) {
+		ImageSurCarte isc = new ImageSurCarte(this.context, elt, this);
+		isc.setBackgroundResource(elt.getImageTerrain());
 		//On garde la référence pour le zoom et translation
-		images.add(imgSurCarte);
+		images.add(isc);
+		Log.v(TAG,"Traitement d'un objet sur carte.");
+		return isc;
 	}
 	
-	public void supprimerElementSurCarte(ElementSurCarte elt) {
+	public boolean supprimerElementSurCarte(ElementSurCarte elt) {
 		for(ImageSurCarte img : this.images) {
 			if (img.getElement() == elt) {
 				this.removeView(img);
 			}
 		}
+		for(int i = 0; i < images.size(); i++) {
+			if(images.get(i).getElement() == elt) {
+				images.remove(i);
+				return true;
+			}
+		}
+		return false;
 	}
 
 

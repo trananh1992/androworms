@@ -10,6 +10,7 @@ public class ObjetSurCarte extends ElementSurCarte{
 		this.objet = o;
 	}
 
+	/*
 	public Objet getObjet() {
 		return objet;
 	}
@@ -17,6 +18,7 @@ public class ObjetSurCarte extends ElementSurCarte{
 	public void setObjet(Objet objet) {
 		this.objet = objet;
 	}
+	*/
 
 	@Override
 	public ElementSurCarte clone() {

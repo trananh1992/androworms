@@ -1,35 +1,11 @@
 package com.androworms;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.content.IntentSender.SendIntentException;
-import android.net.Uri;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.Toast;
-
-import com.awl.tumlabs.twitter.android.TwitterAuth;
-import com.awl.tumlabs.twitter.android.TwitterLoginButton;
-import com.facebook.Request;
-import com.facebook.Response;
-import com.facebook.Session;
-import com.facebook.SessionState;
-import com.facebook.model.GraphUser;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
-import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
-import com.google.android.gms.plus.PlusClient;
-import com.awl.tumlabs.twitter.android.TwitterAuth.AuthListener;
 
 /** Activité de gestion du partage de l'application via les réseaux sociaux
  */
 
-public class ActivitePartage extends Activity implements ConnectionCallbacks, OnConnectionFailedListener {
+public class ActivitePartage extends Activity { /*implements ConnectionCallbacks, OnConnectionFailedListener {
 	
 	private static final String TAG = "Partage";
 	
@@ -227,4 +203,5 @@ public class ActivitePartage extends Activity implements ConnectionCallbacks, On
 			
 		}
 	}
+	*/
 }

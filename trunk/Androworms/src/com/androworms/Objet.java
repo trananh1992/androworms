@@ -3,7 +3,7 @@ package com.androworms;
 
 import android.graphics.PointF;
 
-public abstract class Objet  {
+public class Objet  {
 	private String nom;
 	private ImageInformation imageTerrain;
 	

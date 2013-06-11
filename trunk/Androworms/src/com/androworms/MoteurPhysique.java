@@ -74,7 +74,7 @@ public class MoteurPhysique {
 	/** Cette fonction verifie que toutes les regles de la physique implementees sont respectees. */
 	public void gravite(ElementSurCarte p) {
 		// TODO monde.getTerrainSansPersonnageCible(p.getNom());
-		applyForce(p, monde.getPremierPlan(), new Vector2D(0,0));
+		applyForce(p, monde.getPremierPlan(), new Vector2D(0,0), 0.2f);
 		/*
 		Bitmap carte = monde.getPremierPlan(); 
 		// TODO monde.getTerrainSansPersonnageCible(p.getNom());
@@ -116,16 +116,16 @@ public class MoteurPhysique {
 		esc.getPosition().y += (vd.getY() * temps);
 	}
 	
-	public void applyForce(ElementSurCarte esc, Bitmap carte, Vector2D vd) { 
+	public void applyForce(ElementSurCarte esc, Bitmap carte, Vector2D vd, float seconde) { 
 		PointF save = new PointF();
 		ElementSurCarte pNew = esc.clone();
-		float i = RAFRAICHISSEMENT;
+		float i = seconde;
 		applyAcceleration(pNew, i);
 		applyVecteur(pNew, i, vd);
 		while( dessinPossible (pNew, carte) ) {
 			esc.addMouvementForces(new PointF(pNew.getPosition().x, pNew.getPosition().y));
 			save.set(pNew.getPosition().x, pNew.getPosition().y);
-			i += RAFRAICHISSEMENT;
+			i += seconde;
 			pNew.setPosition(esc.getPosition().x, esc.getPosition().y);
 			applyAcceleration(pNew, i);
 			applyVecteur(pNew, i, vd);
@@ -138,6 +138,11 @@ public class MoteurPhysique {
 				esc.addMouvementForces(dernierePositionSuivantVecteur(pNew, carte, tmp));
 			}
 		}
+	}
+	
+	public void effectuerTir(ElementSurCarte esc, Vector2D vd, float seconde) {
+		applyForce(esc, monde.getTerrainSansPersonnageCible(monde.getPersonnagePrincipal().getNom()), 
+				vd, seconde);
 	}
 	
 	public PointF dernierePositionSuivantVecteur(ElementSurCarte esc, Bitmap carte, Vector2D vd) {
@@ -159,6 +164,8 @@ public class MoteurPhysique {
 	public boolean dessinPossible(Personnage p) {
 		return dessinPossible(p, monde.getTerrainSansPersonnageCible(p.getNom()));
 	}
+	
+
 	
 	public boolean dessinPossible(Bitmap petiteImage,  int ox, int oy, Bitmap grandeImage) {
 		if(!estDansTerrain(petiteImage, ox, oy, grandeImage)) {
@@ -190,13 +197,13 @@ public class MoteurPhysique {
 	public void sautJoueurDroite(String nomPersonnage) {
 		applyForce(monde.getPersonnage(nomPersonnage), 
 				monde.getTerrainSansPersonnageCible(nomPersonnage), 
-				new Vector2D(50, -50));
+				new Vector2D(50, -50), 0.2f);
 	}
 	
 	public void sautJoueurGauche(String nomPersonnage) {
 		applyForce(monde.getPersonnage(nomPersonnage), 
 				monde.getTerrainSansPersonnageCible(nomPersonnage), 
-				new Vector2D(-50, -50));
+				new Vector2D(-50, -50), 0.2f);
 	}
 	
 	public boolean estDansTerrain(Bitmap petiteImage, int ox, int oy, Bitmap grandeImage) {

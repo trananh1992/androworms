@@ -26,7 +26,7 @@ public class TerrainMonde {
 	}
 	
 	public Bitmap getTerrain() {
-		return terrain;
+		return terrain;//.copy(terrain.getConfig(), true);
 	}
 	
 	public void dessinPersonnageSurCarte(Bitmap personnage, PointF position, Bitmap carte) {
