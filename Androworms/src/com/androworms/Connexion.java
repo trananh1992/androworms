@@ -20,7 +20,7 @@ public abstract class Connexion {
 	}
 	
 	public void chronoInit() {
-		chrono.re_initialise();
+		chrono.reInitialise();
 	}
 
 	public void chronoReprise() {

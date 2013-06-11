@@ -80,7 +80,7 @@ public class MoteurGraphique extends RelativeLayout {
 	// position touchée en ce moment (ou dernière position touchée)
 	private PointF positionTouche;
 	
-	private Noyau noyau;
+	private Noyau noyau = null;
 	private EvenementJeu evtJeu;
 	
 	private Context context;
@@ -183,10 +183,8 @@ public class MoteurGraphique extends RelativeLayout {
 		*/
 		
 		canvas.drawBitmap(noyau.getMonde().getTerrain(), 0,0,null);
-		int count =1;
 		for(ImageSurCarte v : this.images) {
 			v.actualiser();
-			//Log.v(TAG, "count = " + count++);
 		}
 		
 		//canvas.drawBitmap(noyau.getMonde().getMondeView(), 0,0,null);
@@ -205,9 +203,9 @@ public class MoteurGraphique extends RelativeLayout {
 			float distance = deplacement.length();
 			float distanceMax = 250;
 			if( distance > distanceMax) {
-			deplacement.x = ((distanceMax/distance)* deplacement.x) ;
-			deplacement.y = ((distanceMax/distance)* deplacement.y);
-			distance = deplacement.length();
+				deplacement.x = ((distanceMax/distance)* deplacement.x) ;
+				deplacement.y = ((distanceMax/distance)* deplacement.y);
+				distance = deplacement.length();
 			}
 			
 			
@@ -437,7 +435,7 @@ public class MoteurGraphique extends RelativeLayout {
 				}
 				layers[1] = context.getResources().getDrawable(image);
 				LayerDrawable layerDrawable = new LayerDrawable(layers);
-				//TODO erreur sur cette ligne perso.setBackground(layerDrawable);
+				perso.setBackgroundDrawable(layerDrawable);
 			}
 		}
 	}
