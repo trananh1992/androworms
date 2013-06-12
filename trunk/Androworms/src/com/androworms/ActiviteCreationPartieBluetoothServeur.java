@@ -151,14 +151,14 @@ public class ActiviteCreationPartieBluetoothServeur {
 			btnMontrerBluetooth.setVisibility(View.VISIBLE);
 			
 			tvMonNomBluetooth.setVisibility(View.VISIBLE);
-			tvMonNomBluetooth.setText(R.string.mon_nom + Bluetooth.getBluetoothAdapter().getName());
+			tvMonNomBluetooth.setText(tvMonNomBluetooth.getContext().getString(R.string.mon_nom) + Bluetooth.getBluetoothAdapter().getName());
 			
 			tvMaVisibilite.setVisibility(View.VISIBLE);
 			String maVisibilite = tvMaVisibilite.getContext().getString(R.string.ma_visibilite);
 			if (Bluetooth.getBluetoothAdapter().getScanMode() == BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
-				maVisibilite += R.string.visibilite_visible;
+				maVisibilite += tvMaVisibilite.getContext().getString(R.string.visibilite_visible);
 			} else {
-				maVisibilite += R.string.visibilite_invisible;
+				maVisibilite += tvMaVisibilite.getContext().getString(R.string.visibilite_invisible);
 			}
 			tvMaVisibilite.setText(maVisibilite);
 			
