@@ -34,9 +34,6 @@ public class ImageSurCarte extends ImageView {
 		
 		mg.addView(this);
 		
-		//Bitmap bm = MoteurGraphique.getBitmap(ctx, elt.getImageTerrain(), elt.getWidthImageTerrain(), elt.getHeightImageTerrain());
-		//On dessine le personnage
-		//this.setImageBitmap(bm);
 		//Pour pouvoir ensuite appliquer une matrice
 		this.setScaleType(ScaleType.MATRIX);
 		

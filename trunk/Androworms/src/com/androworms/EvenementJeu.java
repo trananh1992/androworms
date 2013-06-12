@@ -17,6 +17,8 @@ public class EvenementJeu extends ScaleGestureDetector.SimpleOnScaleGestureListe
 	private static final String TAG = "Androworms.EvenementJeu";
 	
 	private static final int TAILLE_MATRIX = 9;
+	private static final int TEMPS_VIBRATION = 300;
+	private static final int FACTEUR_TRANSFORMATION = 5;
 	
 	private MoteurGraphique moteurGraph;
 	private Noyau noyau;
@@ -160,7 +162,7 @@ public class EvenementJeu extends ScaleGestureDetector.SimpleOnScaleGestureListe
 			PointF deplacement = new PointF(this.moteurGraph.getPointTir().x - positionNouvelleTouche.x,
 					this.moteurGraph.getPointTir().y - positionNouvelleTouche.y);
 			
-			noyau.effectuerTirFromIHM(new Vector2D(deplacement.x/5,deplacement.y/5));
+			noyau.effectuerTirFromIHM(new Vector2D(deplacement.x/FACTEUR_TRANSFORMATION,deplacement.y/FACTEUR_TRANSFORMATION));
 			
 			
 			// FIXME : ce code est là juste pour tester
@@ -170,7 +172,7 @@ public class EvenementJeu extends ScaleGestureDetector.SimpleOnScaleGestureListe
 				// On récupère l'instance Vibrator depuis le context de l'activité
 				Vibrator v = (Vibrator)ctx.getSystemService(Context.VIBRATOR_SERVICE);
 				// Vibration durant 300 milliseconds
-				v.vibrate(300);
+				v.vibrate(TEMPS_VIBRATION);
 			}
 		}
 		positionAncienneTouche = new PointF(-1, -1);

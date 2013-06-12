@@ -50,7 +50,6 @@ public class MoteurGraphique extends RelativeLayout {
 	public static final int COEFF_ACCELERATION = 3;
 	
 	// Constantes qui servent pour dessiner un tir en cours
-	//private static final int EPAISSEUR_FLECHE_TIR = 30;
 	private static final int EPAISSEUR_ONDE_TIR = 10;
 	private static final float ANGLE_ONDE_TIR = 30f;
 	public static final int ANGLE_DEMITOUR = 180;
@@ -59,6 +58,8 @@ public class MoteurGraphique extends RelativeLayout {
 	private static final float INCREMENT_COULEUR = 0.5f;
 	private static final int TAILLE_BOUT_FLECHE_TIR = 50;
 	private static final int ANGLE_BOUT_FLECHE_TIR = 45;
+	
+	private static final int DISTANCE_MAX = 250;
 	
 	private static final int TAILLE_MATRIX = 9;
 	// Nombre maximum d'images stockees dans le cache
@@ -201,10 +202,9 @@ public class MoteurGraphique extends RelativeLayout {
 			
 			PointF deplacement = new PointF(pointTir.x - positionTouche.x, pointTir.y - positionTouche.y);
 			float distance = deplacement.length();
-			float distanceMax = 250;
-			if( distance > distanceMax) {
-				deplacement.x = ((distanceMax/distance)* deplacement.x) ;
-				deplacement.y = ((distanceMax/distance)* deplacement.y);
+			if( distance > DISTANCE_MAX) {
+				deplacement.x = ((DISTANCE_MAX/distance)* deplacement.x) ;
+				deplacement.y = ((DISTANCE_MAX/distance)* deplacement.y);
 				distance = deplacement.length();
 			}
 			
@@ -567,25 +567,8 @@ public class MoteurGraphique extends RelativeLayout {
 		pbTest.setVisibility(View.INVISIBLE);
 	}
 
-
-
 	public void remetAplusTard(Runnable r, int tps) {
 		postDelayed(r, tps);
-	}
-
-	public void setGraviteInFuture(final int nbtrucs) {
-		postDelayed(new Runnable() {		
-			public void run() {
-				noyau.getPhysique().gravite();
-				MoteurGraphique.this.invalidate();
-				setGraviteInFuture(3);
-			}
-		}, 10000);
-	}
-
-	public void setGravityInFuture() {
-		mRedrawHandler.sleep(10000);
-
 	}
 
 	public EvenementJeu getEvtJeu() {
