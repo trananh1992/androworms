@@ -45,7 +45,7 @@
     <string name="titre_choix_mode_jeu">Choix du mode de jeu</string>
     <string name="titre_config_mode_jeu">Configuration du mode de jeu</string>
     <string name="titre_choix_carte">Choix de la carte</string>
-    <string name="titre_choix_team">Choix de la team</string>
+    <string name="titre_choix_team">Choix des équipes et des paramètres</string>
     <string name="btn_jeu_solo">1 joueur contre le téléphone</string>
     <string name="btn_2_joueurs">2 joueurs sur un téléphone</string>
     <string name="btn_creation_partie">Créer une partie</string>
@@ -97,5 +97,12 @@
     <string name="niveau_separateur">></string>
     <string name="message_partage">Toi aussi viens jouer à Androworms. C\'est un jeu de plateforme où l\'objectif est de tirer sur ses amis ! Viens le télécharger sur https://code.google.com/p/androworms/</string>
     <string name="url_google_code">https://code.google.com/p/androworms/</string>
+
+    <string-array name="choix_vent">
+        <item>Aléatoire</item>
+        <item>Pas de vent</item>
+        <item>Vent faible</item>
+        <item>Vent fort</item>
+    </string-array>
 
 </resources>
