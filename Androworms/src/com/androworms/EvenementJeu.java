@@ -159,9 +159,7 @@ public class EvenementJeu extends ScaleGestureDetector.SimpleOnScaleGestureListe
 			ActiviteJeu.setMode(ActiviteJeu.TIR);
 			PointF deplacement = new PointF(this.moteurGraph.getPointTir().x - positionNouvelleTouche.x,
 					this.moteurGraph.getPointTir().y - positionNouvelleTouche.y);
-
-			//float angle = ((float)(Math.atan2 (deplacement.y, deplacement.x)* MoteurGraphique.ANGLE_DEMITOUR /Math.PI));
-			//Log.v(TAG, "Deplacement x " + deplacement.x + " et y " + deplacement.y);
+			
 			noyau.effectuerTirFromIHM(new Vector2D(deplacement.x/5,deplacement.y/5));
 			
 			
@@ -257,8 +255,7 @@ public class EvenementJeu extends ScaleGestureDetector.SimpleOnScaleGestureListe
 		}
 	}
 	
-	//Retourne la valeur à ajouter à la translation pour qu'elle se trouve bien
-	// entre -transMax et 0
+	// Retourne la valeur à ajouter à la translation pour qu'elle se trouve bien entre -transMax et 0
 	private float getFixTrans(float trans, float transMax) {
 		//Attention trans est forcement négatif donc il faut qu'il soit entre -transMax et 0
 		if (trans > 0) {

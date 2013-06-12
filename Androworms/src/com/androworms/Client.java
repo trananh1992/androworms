@@ -12,7 +12,6 @@ public class Client extends Communication {
 	// Pour un serveur primaire local.
 	public Client(ConnexionDistante n) {
 		super(n);
-		//contactServeur = new Localhost();
 	}
 
 	public Contact getContactServeur() {
