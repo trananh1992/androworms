@@ -128,6 +128,6 @@ public class ActiviteAndroworms extends Activity {
 		
 		// Barre d'action
 		BarreAction barreAction = (BarreAction) findViewById(R.id.ba_barre_action);
-		barreAction.configure(this, true, R.string.app_name, false);
+		barreAction.configure(this, true, R.string.credits, false);
 	}
 }

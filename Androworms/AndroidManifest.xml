@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.androworms"
     android:installLocation="auto"
-    android:versionCode="1"
-    android:versionName="0.0.2 Alpha" >
+    android:versionCode="316"
+    android:versionName="0.1.0 Bêta" >
 
     <uses-sdk
         android:minSdkVersion="10"
