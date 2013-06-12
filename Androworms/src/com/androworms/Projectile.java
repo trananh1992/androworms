@@ -1,5 +1,7 @@
 package com.androworms;
 
+/** Gestion du projectile
+ */
 public class Projectile  {
 	// Variable global pour connaitre le type de projectile.
 	//missile, grenade

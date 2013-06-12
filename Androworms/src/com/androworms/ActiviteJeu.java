@@ -24,6 +24,8 @@ import android.widget.ToggleButton;
 import com.androworms.ui.ClavierDirectionnel;
 import com.androworms.utile.Informations;
 
+/** Activité de gestion de la parite
+ */
 public class ActiviteJeu extends Activity implements OnClickListener {
 	
 	private static final String TAG = "Androworms.ActiviteJeu";

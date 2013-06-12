@@ -10,6 +10,8 @@ import android.widget.ImageButton;
 
 import com.androworms.debug.ActiviteDebug;
 
+/** Gestion des évenements de l'activité principale de Androworms (le menu principale)
+ */
 public class ActiviteAndrowormsEvent implements OnClickListener {
 	
 	private static final String TAG = "Androworms.ActiviteAndrowormsEvent";

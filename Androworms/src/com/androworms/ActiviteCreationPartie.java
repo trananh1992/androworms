@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -41,6 +42,9 @@ public class ActiviteCreationPartie extends Activity {
 	private static final int ETAPE_2_CONFIGURATION_MODE_JEU = 2;
 	private static final int ETAPE_3_CHOIX_CARTE = 3;
 	private static final int ETAPE_4_CHOIX_EQUIPE = 4;
+	
+	// Constantes
+	private static final Point TAILLE_IMAGE = new Point(300,200);
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -315,7 +319,7 @@ public class ActiviteCreationPartie extends Activity {
 		File root = Environment.getExternalStorageDirectory();
 		File sd = new File(root, ActiviteAndroworms.DOSSIER_CARTE + nomCarte);
 		Bitmap b = BitmapFactory.decodeFile(sd.getAbsolutePath());
-		Bitmap thumbnail = Bitmap.createScaledBitmap(b, 300, 200, false);
+		Bitmap thumbnail = Bitmap.createScaledBitmap(b, TAILLE_IMAGE.x, TAILLE_IMAGE.y, false);
 		v.setImageBitmap(thumbnail);
 		
 		TextView tvNomImage = (TextView) findViewById(R.id.tv_nomImage);
