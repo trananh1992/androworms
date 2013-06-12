@@ -302,17 +302,14 @@ public class ActiviteEditeur extends Activity implements OnClickListener, OnTouc
 		int i, j;
 		final int nComponents = 3;
 		
-		// for(i=0;i<(width-DEFINITION+1);i+=DEFINITION)
 		for (i = 0; i < width; i += DEFINITION) {
-			// for(j=0;j<(height-DEFINITION+1);j+=DEFINITION)
 			for (j = 0; j < height; j += DEFINITION) {
 				int k, l;
 				int density = 0;
 				int sizeX = Math.min(DEFINITION, width - i);
 				int sizeY = Math.min(DEFINITION, height - j);
-				// for(k=0;k<DEFINITION;k++)
+				
 				for (k = 0; k < sizeX; k++) {
-					// for(l=0;l<DEFINITION;l++)
 					for (l = 0; l < sizeY; l++) {
 						int color = base.getPixel(i + k, j + l);
 						density += ((Color.red(color) + Color.green(color) + Color.blue(color)) / nComponents);

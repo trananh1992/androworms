@@ -36,8 +36,6 @@ public class ActiviteParametres extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activite_parametres);
 		
-		ActiviteParametresEvent evenements = new ActiviteParametresEvent(this);
-		
 		// Chargement des préférences
 		SharedPreferences settings = getSharedPreferences(PARAMETRES_CLE, 0);
 		String paramPseudo = settings.getString(PARAMETRE_PSEUDO_CLE, PARAMETRE_PSEUDO_DEFAUT_1);
