@@ -32,6 +32,7 @@ import android.util.Log;
 public class Bluetooth extends Contact {
 	
 	private static final String TAG = "Androworms.Bluetooth";
+	private static final int BLUETOOTH_QUALITE_TRANSMISSION_IMAGE = 100;
 	
 	// Taille de l'en-tête
 	public static final int ENTETE_TAILLE_MESSAGE = 5;
@@ -140,7 +141,7 @@ public class Bluetooth extends Contact {
 		try {
 			OutputStream os = socket.getOutputStream();
 			bos = new ByteArrayOutputStream();
-			bm.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+			bm.compress(Bitmap.CompressFormat.JPEG, BLUETOOTH_QUALITE_TRANSMISSION_IMAGE, bos);
 			byte[] yourBytes = bos.toByteArray();
 			os.write(creationEntete(yourBytes.length));
 			os.write(yourBytes);

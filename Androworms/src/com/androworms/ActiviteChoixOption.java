@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -21,6 +22,8 @@ import android.widget.Spinner;
 public class ActiviteChoixOption extends Activity {
 	
 	private static final String TAG = "Androworms.ActiviteChoixOption";
+	
+	private static final Point TAILLE_IMAGE = new Point(300,200);
 	
 	private String carte;
 	
@@ -78,7 +81,7 @@ public class ActiviteChoixOption extends Activity {
 		File root = Environment.getExternalStorageDirectory();
 		File sd = new File(root, ActiviteAndroworms.DOSSIER_CARTE + map);
 		Bitmap b = BitmapFactory.decodeFile(sd.getAbsolutePath());
-		Bitmap thumbnail = Bitmap.createScaledBitmap(b, 300, 200, false);
+		Bitmap thumbnail = Bitmap.createScaledBitmap(b, TAILLE_IMAGE.x, TAILLE_IMAGE.y, false);
 		v.setImageBitmap(thumbnail);
 	}
 	

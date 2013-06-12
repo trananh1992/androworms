@@ -37,6 +37,9 @@ public class ActiviteJeu extends Activity implements OnClickListener {
 	public static final int TIR = 4;
 	public static final int TIR_EN_COURS = 5;
 	
+	// Constantes
+	private static final int EFFET_TRANSPARENT = 80;
+	
 	private static TextView tv;
 	private Noyau noyau;
 	private MoteurGraphique moteurGraph;
@@ -103,7 +106,7 @@ public class ActiviteJeu extends Activity implements OnClickListener {
 		
 		TableLayout tl = (TableLayout)findViewById(R.id.selecteur_arme_contenu);
 		tl.setBackgroundColor(Color.WHITE);
-		tl.getBackground().setAlpha(80);
+		tl.getBackground().setAlpha(EFFET_TRANSPARENT);
 		
 		ImageButton hache, pistolet, bazooka, grenade, mine;
 		hache = (ImageButton) findViewById(R.id.hache);
