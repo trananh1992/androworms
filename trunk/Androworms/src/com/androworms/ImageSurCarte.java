@@ -1,7 +1,7 @@
 package com.androworms;
 
 import android.content.Context;
-import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.graphics.PointF;
 import android.view.Gravity;
 import android.widget.ImageView;
@@ -9,9 +9,14 @@ import android.widget.TextView;
 
 public class ImageSurCarte extends ImageView {
 	
+	// Constantes
+	private static final int DECALAGE_NOM_JOUEUR = 10;
+	private static final Point DECALAGE_POINTS_VIE = new Point(70, 40);
+	private static final int TAILLE_TEXTE_VIE = 8;
+	
 	private ElementSurCarte elt;
-	private TextView textV;
-	private TextView tvVie;
+	private TextView tvNomJoueur;
+	private TextView tvPointsVie;
 	
 	private PointF anciennePosition;
 	
@@ -29,7 +34,7 @@ public class ImageSurCarte extends ImageView {
 		
 		mg.addView(this);
 		
-		Bitmap bm = MoteurGraphique.getBitmap(ctx, elt.getImageTerrain(), elt.getWidthImageTerrain(), elt.getHeightImageTerrain());
+		//Bitmap bm = MoteurGraphique.getBitmap(ctx, elt.getImageTerrain(), elt.getWidthImageTerrain(), elt.getHeightImageTerrain());
 		//On dessine le personnage
 		//this.setImageBitmap(bm);
 		//Pour pouvoir ensuite appliquer une matrice
@@ -46,28 +51,28 @@ public class ImageSurCarte extends ImageView {
 		
 		if (elt instanceof Personnage) {
 			Personnage p = (Personnage)elt;
-			textV = new TextView(ctx);
-			textV.setText(p.getNom());
-			textV.layout((int) ptCourant.x,
-				(int) ptCourant.y - 20,
+			tvNomJoueur = new TextView(ctx);
+			tvNomJoueur.setText(p.getNom());
+			tvNomJoueur.layout((int) ptCourant.x,
+				(int) ptCourant.y - DECALAGE_NOM_JOUEUR,
 				(int)( ptCourant.x + taille.x),
-				(int)( ptCourant.y + 10));
-			textV.setGravity(Gravity.CENTER);
-			textV.setTextSize(8);
-			mg.addView(textV);
+				(int)( ptCourant.y + DECALAGE_NOM_JOUEUR));
+			tvNomJoueur.setGravity(Gravity.CENTER);
+			tvNomJoueur.setTextSize(TAILLE_TEXTE_VIE);
+			mg.addView(tvNomJoueur);
 			
-			tvVie = new TextView(ctx);
-			tvVie.setText("100");
-			tvVie.setTextSize(8);
-			tvVie.layout((int)ptCourant.x,
-				(int)ptCourant.y - 40,
-				(int)(ptCourant.x + 70),
+			tvPointsVie = new TextView(ctx);
+			tvPointsVie.setText("100");
+			tvPointsVie.setTextSize(TAILLE_TEXTE_VIE);
+			tvPointsVie.layout((int)ptCourant.x,
+				(int)ptCourant.y - DECALAGE_POINTS_VIE.y,
+				(int)(ptCourant.x + DECALAGE_POINTS_VIE.x),
 				(int)(ptCourant.y));
 			 // ça affiche l'image à gauche et le texte à droite
-			tvVie.setCompoundDrawablesWithIntrinsicBounds(R.drawable.vie_2, 0, 0, 0);
-			tvVie.setCompoundDrawablePadding(0);
+			tvPointsVie.setCompoundDrawablesWithIntrinsicBounds(R.drawable.vie_3, 0, 0, 0);
+			tvPointsVie.setCompoundDrawablePadding(0);
 			
-			mg.addView(tvVie);
+			mg.addView(tvPointsVie);
 		}
 		
 		this.actualiser();
@@ -83,17 +88,17 @@ public class ImageSurCarte extends ImageView {
 				(int)( ptCourant.x + taille.x),
 				(int)( ptCourant.y + taille.y));
 		
-		if (textV != null) {
-			textV.layout((int) ptCourant.x,
-					(int) ptCourant.y - 10,
+		if (tvNomJoueur != null) {
+			tvNomJoueur.layout((int) ptCourant.x,
+					(int) ptCourant.y - DECALAGE_NOM_JOUEUR,
 					(int)( ptCourant.x + taille.x),
-					(int)( ptCourant.y +10));
+					(int)( ptCourant.y + DECALAGE_NOM_JOUEUR));
 		}
 
-		if (tvVie != null) {
-			tvVie.layout((int)ptCourant.x,
-					(int)ptCourant.y - 40,
-					(int)(ptCourant.x + 70),
+		if (tvPointsVie != null) {
+			tvPointsVie.layout((int)ptCourant.x,
+					(int)ptCourant.y - DECALAGE_POINTS_VIE.y,
+					(int)(ptCourant.x + DECALAGE_POINTS_VIE.x),
 					(int)(ptCourant.y));
 		}
 		

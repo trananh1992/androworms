@@ -4,6 +4,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+/** Handler de gestion du temps pour chaque joueurs
+ */
 public class RunnableTemps extends Handler {
 	private Connexion connexion;
 	/** Temps qu'un joueur dispose pour jouer */
@@ -11,6 +13,8 @@ public class RunnableTemps extends Handler {
 	private int tempsRestant;
 	private boolean arretDemande = false;
 	private static final String TAG = "Androworms.Noyau";
+	
+	private static final int TEMPS_ATTENTE = 1000;
 	
 	public RunnableTemps(Connexion co) {
 		this.connexion = co;
@@ -45,7 +49,7 @@ public class RunnableTemps extends Handler {
 
 	public void sleep() {
 		this.removeMessages(0);
-		sendMessageDelayed(obtainMessage(0), 1000);
+		sendMessageDelayed(obtainMessage(0), TEMPS_ATTENTE);
 	}
 
 	/*

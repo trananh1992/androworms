@@ -15,10 +15,11 @@ public class MoteurPhysique {
 	
 	private Noyau noyau;
 	private Monde monde;
-	public static final int TAILLE_DEPLACEMENT_JOUEUR = 1;
-	public static final int HAUTEUR_DEPLACEMENT_JOUEUR = 5;
-	public static final String TAG = "Androworms.MOTEURPHYSIQUE";
+	private static final int TAILLE_DEPLACEMENT_JOUEUR = 1;
+	private static final int HAUTEUR_DEPLACEMENT_JOUEUR = 5;
+	private static final String TAG = "Androworms.MOTEURPHYSIQUE";
 	private static final float RAFRAICHISSEMENT = 0.2f;
+	private static final int SAUT_JOUEUR = 50;
 	
 	
 	public MoteurPhysique(Noyau n, Monde monde) {
@@ -197,13 +198,13 @@ public class MoteurPhysique {
 	public void sautJoueurDroite(String nomPersonnage) {
 		applyForce(monde.getPersonnage(nomPersonnage), 
 				monde.getTerrainSansPersonnageCible(nomPersonnage), 
-				new Vector2D(50, -50), 0.2f);
+				new Vector2D(SAUT_JOUEUR, -SAUT_JOUEUR), RAFRAICHISSEMENT);
 	}
 	
 	public void sautJoueurGauche(String nomPersonnage) {
 		applyForce(monde.getPersonnage(nomPersonnage), 
 				monde.getTerrainSansPersonnageCible(nomPersonnage), 
-				new Vector2D(-50, -50), 0.2f);
+				new Vector2D(-SAUT_JOUEUR, -SAUT_JOUEUR), RAFRAICHISSEMENT);
 	}
 	
 	public boolean estDansTerrain(Bitmap petiteImage, int ox, int oy, Bitmap grandeImage) {

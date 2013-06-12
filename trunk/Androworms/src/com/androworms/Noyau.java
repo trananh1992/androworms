@@ -19,11 +19,17 @@ import android.graphics.drawable.BitmapDrawable;
  */
 public class Noyau {
 
-	// private ihm...
-	public static final int DEPLACEMENT_DROITE = 0;
-	public static final int DEPLACEMENT_GAUCHE = 1;
-	public static final int DEPLACEMENT_HAUT = 2;
-	public static final int VITESSE_CHUTE = 40;
+	// Constantes de jeu
+	private static final int DEPLACEMENT_DROITE = 0;
+	private static final int DEPLACEMENT_GAUCHE = 1;
+	private static final int DEPLACEMENT_HAUT = 2;
+	private static final int VITESSE_CHUTE = 40;
+	private static final float VITESSE_PROJECTILE = 0.05f;
+	private static final int DECALAGE_JOUEUR = 20;
+	private static final float VITESSE_RAFRAICHISSEMENT = 100f;
+	
+	// Constantes de tailles
+	public static final Point TAILLE_PROJECTILE = new Point(40, 30);
 	
 	private static final String TAG_NOYAU = "Androworms.Noyau";
 	private Connexion connexion;
@@ -194,11 +200,11 @@ public class Noyau {
 	public void effectuerTir(Vector2D vd) {
 		Bitmap image = graphique.getImage(R.drawable.missile);
 		ImageInformation ii = new ImageInformation(image, R.drawable.missile);
-		ii.setHeight(30);
-		ii.setWidth(40);
-		float seconde = 0.05f;
+		ii.setHeight(TAILLE_PROJECTILE.y);
+		ii.setWidth(TAILLE_PROJECTILE.x);
+		float seconde = VITESSE_PROJECTILE;
 		PointF position =  monde.getPersonnagePrincipal().clone().getPosition();
-		position.set(position.x+20, position.y + 20);
+		position.set(position.x + DECALAGE_JOUEUR, position.y + DECALAGE_JOUEUR);
 		ObjetSurCarte esc = new ObjetSurCarte(new Objet("missile", ii), position, ii);
 		physique.effectuerTir(esc, vd, seconde);
 		mouvementTir(esc, seconde);
@@ -226,11 +232,11 @@ public class Noyau {
 	 * qu'il y a des mouvements que des joueurs doivent exécuter
 	 */
 	public void mouvementForces() {
-		graphique.remetAplusTard(new RunnableMouvementForce(graphique, this, (int) (physique.getRafraichissement()*100f)), VITESSE_CHUTE);
+		graphique.remetAplusTard(new RunnableMouvementForce(graphique, this, (int) (physique.getRafraichissement() * VITESSE_RAFRAICHISSEMENT)), VITESSE_CHUTE);
 	}
 	
 	public void mouvementTir(ObjetSurCarte esc, float seconde) {
 		//graphique.remetAplusTard(new RunnableMouvementForce(graphique, this, (int) (physique.getRafraichissement()*100f)), VITESSE_CHUTE);
-		graphique.remetAplusTard(new RunnableTir(esc, graphique, this, (int) (physique.getRafraichissement()*100f)), (int) (seconde*1000));
+		graphique.remetAplusTard(new RunnableTir(esc, graphique, this, (int) (physique.getRafraichissement() * VITESSE_RAFRAICHISSEMENT)), (int) (seconde*1000));
 	}
 }
