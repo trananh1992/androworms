@@ -26,6 +26,9 @@ import android.widget.TextView;
 import com.androworms.ui.BarreAction;
 import com.androworms.utile.Informations;
 
+/** Activité de création d'une partie.
+ * Lors de la création d'une partie on peut choisir de nombreux paramètres comme le nombre de joueurs où la carte du jeu.
+ */
 public class ActiviteCreationPartie extends Activity {
 	
 	private static final String TAG = "Androworms.ActiviteCreationPartie";
