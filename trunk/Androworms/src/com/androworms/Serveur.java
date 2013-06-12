@@ -2,6 +2,8 @@ package com.androworms;
 
 import android.util.Log;
 
+/** Serveur de jeu lors de parties à plusieurs joueurs
+ */
 public class Serveur extends Communication implements Runnable {
 	
 	private static final String TAG_SERVEUR = "Androworms.Serveur";

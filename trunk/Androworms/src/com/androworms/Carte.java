@@ -9,6 +9,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+/** Gestion des cartes pour le terrain de jeu
+ */
 public class Carte {
 	private static final String TAG = "Androworms.Carte.Evenements";
 	private Bitmap transformed;
@@ -25,20 +27,16 @@ public class Carte {
 		final int nComponents = 3;
 		final int maxComponentValue = 255;
 		Log.v(TAG, "begin computing alpha");
-		for(i=0;i<width;i++)
-		{
-			for(j=0;j<height;j++)
-			{
+		for(i=0;i<width;i++) {
+			for(j=0;j<height;j++) {
 				color = b.getPixel(i, j);
 				int blue = Color.blue(color);
 				int red = Color.red(color);
 				int green = Color.green(color);
-				if(((red + green + blue)/nComponents)>seuil)
-				{
+				if(((red + green + blue)/nComponents)>seuil) {
 					transformed.setPixel(i, j, Color.argb(0,red,green,blue));
 				}
-				else
-				{
+				else {
 					transformed.setPixel(i, j, Color.argb(maxComponentValue,red,green,blue));
 				}
 			}
@@ -60,8 +58,7 @@ public class Carte {
 			Log.e(TAG,"IO Exception in save");
 		} finally {
 			try {
-				if(s!=null)
-				{
+				if(s!=null) {
 					s.close();
 				}
 			}

@@ -1,9 +1,9 @@
 package com.androworms;
 
-
-
-public class Arme extends Objet 
-{
+/** Gestion des armes du jeu
+ */
+public class Arme extends Objet {
+	
 	private ImageInformation imageMenu;
 	private int portee;
 	private Munition munition;
@@ -12,7 +12,6 @@ public class Arme extends Objet
 		super(nom);
 		imageMenu = new ImageInformation();		
 	}
-	
 	
 	public int getPortee() {
 		return portee;

@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+/** Création d'une partie Bluetooth (liée à l'activité de création de partie)
+ */
 public class ActiviteCreationPartieBluetooth {
 	
 	private static final String TAG = "Androworms.ActiviteCreationPartie.Bluetooth";

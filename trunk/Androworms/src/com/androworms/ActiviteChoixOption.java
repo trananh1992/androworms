@@ -19,6 +19,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
+/** Activité de gestion des choix de la carte
+ */
 public class ActiviteChoixOption extends Activity {
 	
 	private static final String TAG = "Androworms.ActiviteChoixOption";

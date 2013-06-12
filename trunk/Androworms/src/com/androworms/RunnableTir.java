@@ -1,6 +1,5 @@
 package com.androworms;
 
-
 import android.graphics.Bitmap;
 import android.graphics.PointF;
 
@@ -53,7 +52,5 @@ public class RunnableTir implements Runnable {
 			mg.remetAplusTard(this, TEMPS_ATTENTE);
 			explosion = true;
 		}
-
 	}
-
 }
