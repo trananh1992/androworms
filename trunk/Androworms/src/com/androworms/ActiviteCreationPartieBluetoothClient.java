@@ -25,6 +25,9 @@ import android.widget.ToggleButton;
 
 import com.androworms.ui.BluetoothCustomAdapter;
 
+/** Activité de gestion de la création d'une partie Blueooth.
+ * Cette activité est l'activité exécuté sur l'appareil qui fais serveur client
+ */
 public class ActiviteCreationPartieBluetoothClient {
 	
 	private static final String TAG = "Androworms.ActiviteCreationPartie.Bluetooth.Client";
@@ -95,7 +98,7 @@ public class ActiviteCreationPartieBluetoothClient {
 				ProgressBar pb = (ProgressBar)activiteCreationPartie.findViewById(R.id.pb_bluetooth_analyse);
 				pb.setVisibility(View.VISIBLE);
 				TextView tvMessage = (TextView)activiteCreationPartie.findViewById(R.id.tv_message);
-				tvMessage.setText("Recherche des appareils à proximité...");
+				tvMessage.setText(R.string.recherche_appareils_proximite);
 				
 				// Si j'étais déjà en mode analyse, je stop l'analyse
 				if (Bluetooth.getBluetoothAdapter().isDiscovering()) {
@@ -105,7 +108,7 @@ public class ActiviteCreationPartieBluetoothClient {
 				// Recherche des périphériques visibles
 				boolean res = Bluetooth.getBluetoothAdapter().startDiscovery();
 				if (!res) {
-					new AlertDialog.Builder(activiteCreationPartie).setTitle("Androworms").setMessage("Une erreur c'est produite. Contacter le 5556 pour avoir plus d'infos.").setNeutralButton("Close", null).show();
+					new AlertDialog.Builder(activiteCreationPartie).setTitle(R.string.app_name).setMessage(R.string.erreur_produite).setNeutralButton(R.string.fermer, null).show();
 				}
 			}
 		});
@@ -183,8 +186,8 @@ public class ActiviteCreationPartieBluetoothClient {
 		
 		BluetoothCustomAdapter adapter = new BluetoothCustomAdapter(activiteCreationPartie);
 		
-		adapter.ajouterSections("Appareils jumelés", adapterA);
-		adapter.ajouterSections("Appareils à proximité", adapterB);
+		adapter.ajouterSections(lv.getContext().getString(R.string.appareils_jumeles), adapterA);
+		adapter.ajouterSections(lv.getContext().getString(R.string.appareils_proximite), adapterB);
 		
 		lv.setAdapter(adapter);
 	}

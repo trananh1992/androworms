@@ -25,6 +25,8 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.ImageButton;
 
+/** Activité de gestion de l'appareil photo pour la création de cartes.
+ */
 public class ActiviteCamera extends Activity implements SurfaceHolder.Callback, OnClickListener, OnTouchListener {
 	
 	private static final String TAG = "Androworms.ActiviteCamera.Event";

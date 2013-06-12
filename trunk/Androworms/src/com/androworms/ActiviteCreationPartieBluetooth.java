@@ -198,7 +198,7 @@ public class ActiviteCreationPartieBluetooth {
 		
 		// On actualise l'interface graphique du client
 		pbBluetoothAnalyse.setVisibility(View.VISIBLE);
-		tvMessage.setText("Tentative de connexion en cours...");
+		tvMessage.setText(R.string.tentative_connexion_en_cours);
 		
 		clientConnexionBluetooth = new TacheClientConnexionBluetooth(this, device);
 		clientConnexionBluetooth.execute();

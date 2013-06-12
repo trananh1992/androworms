@@ -81,16 +81,16 @@ public class ActiviteCreationPartieEvent implements OnClickListener {
 				switch (imgv.getId()) {
 				// Boutons d'aide de la première page : Choix du mode de jeu
 				case R.id.iv_aide_1_telephone:
-					builder.setMessage("Faire une partie quand vous n'avez que un seul téléphone à votre disposition.");
+					builder.setMessage(R.string.aide_partie_un_joueur);
 					break;
 				case R.id.iv_aide_2_telephones:
-					builder.setMessage("Faire une partie quand vous avez plusieurs téléphones à votre disposition.");
+					builder.setMessage(R.string.aide_partie_n_joueurs);
 					break;
 				default:
 					break;
 				}
 				
-				builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+				builder.setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						dialog.dismiss();
 					}

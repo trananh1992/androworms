@@ -104,5 +104,22 @@
         <item>Vent faible</item>
         <item>Vent fort</item>
     </string-array>
-
+    
+    <string name="fermer">Fermer</string>
+    <string name="gestion_score_non_disponible">La gestion des scores n\'est pas encore disponible dans cette version</string>
+    <string name="partie_deux_joueurs_non_disponible">Les parties 2 joueurs ne sont pas encore disponible !</string>
+    <string name="partie_wifi_non_disponible">Les parties en Wifi-Direct ne sont pas encore disponible !</string>
+    <string name="tentative_connexion_en_cours">Tentative de connexion en cours&#8230;</string>
+    <string name="recherche_appareils_proximite">Recherche des appareils à proximité&#8230;</string>
+    <string name="erreur_produite">Une erreur c\'est produite. Veuillez contacter le support pour avoir plus d\'informations</string>
+    <string name="appareils_jumeles">Appareils jumelés</string>
+    <string name="appareils_proximite">Appareils à proximité</string>
+    <string name="mon_nom">Mon nom : </string>
+    <string name="ma_visibilite">Ma visibilité : </string>
+    <string name="visibilite_visible">visible</string>
+    <string name="visibilite_invisible">invisible</string>
+    <string name="aide_partie_un_joueur">Faire une partie quand vous n\'avez que un seul téléphone à votre disposition.</string>
+    <string name="aide_partie_n_joueurs">Faire une partie quand vous avez plusieurs téléphones à votre disposition.</string>
+    <string name="voulez_vous_quitter">Voulez-vous vraiment quitter la partie ?</string>
+    
 </resources>
