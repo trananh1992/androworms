@@ -69,7 +69,6 @@ public class ActiviteCreationPartieBluetoothServeur {
 				Log.v(TAG, "On rendre le Bluetooth visible pour x secondes");
 				Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
 				discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, ActiviteCreationPartieBluetooth.DUREE_VISIBILITE_BLUETOOTH);
-				//startActivity(discoverableIntent);
 				activiteCreationPartie.startActivityForResult(discoverableIntent, ActiviteCreationPartieBluetooth.DEMANDE_VISIBILITE_BLUETOOTH_SERVEUR);
 				
 				// On refresh les informations

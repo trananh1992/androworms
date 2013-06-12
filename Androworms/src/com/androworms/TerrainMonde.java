@@ -14,14 +14,14 @@ public class TerrainMonde {
 		return premierPlan;
 	}
 	public void setPremierPlan(Bitmap premierPlan) {
-		this.premierPlan = Bitmap.createScaledBitmap(premierPlan, 1280, 720, true);
+		this.premierPlan = Bitmap.createScaledBitmap(premierPlan, MoteurGraphique.MAP_WIDTH, MoteurGraphique.MAP_HEIGHT, true);
 		setTerrain();
 	}
 	public Bitmap getArrierePlan() {
 		return arrierePlan;
 	}
 	public void setArrierePlan(Bitmap arrierePlan) {
-		this.arrierePlan = Bitmap.createScaledBitmap(arrierePlan, 1280, 720, true);
+		this.arrierePlan = Bitmap.createScaledBitmap(arrierePlan, MoteurGraphique.MAP_WIDTH, MoteurGraphique.MAP_HEIGHT, true);
 		setTerrain();
 	}
 	

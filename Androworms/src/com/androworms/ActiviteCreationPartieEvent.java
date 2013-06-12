@@ -30,10 +30,6 @@ public class ActiviteCreationPartieEvent implements OnClickListener {
 				break;
 			case R.id.btn_suivant:
 				activiteCreationPartie.etapeSuivante();
-				
-				//Intent intent = new Intent(this.activiteCreationPartie, ActiviteChoixOption.class);
-				//this.activiteCreationPartie.startActivity(intent);
-				
 				break;
 			// Boutons de la première page : Choix du mode de jeu
 			case R.id.btn_partie_solo:
