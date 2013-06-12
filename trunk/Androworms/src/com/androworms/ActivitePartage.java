@@ -1,11 +1,32 @@
 package com.androworms;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.IntentSender.SendIntentException;
+import android.net.Uri;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.webkit.WebView;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.Toast;
+
+import com.facebook.Request;
+import com.facebook.Response;
+import com.facebook.Session;
+import com.facebook.SessionState;
+import com.facebook.model.GraphUser;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
+import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
+import com.google.android.gms.plus.PlusClient;
 
 /** Activité de gestion du partage de l'application via les réseaux sociaux
  */
-
-public class ActivitePartage extends Activity { /*implements ConnectionCallbacks, OnConnectionFailedListener {
+public class ActivitePartage extends Activity implements ConnectionCallbacks, OnConnectionFailedListener {
 	
 	private static final String TAG = "Partage";
 	
@@ -15,19 +36,11 @@ public class ActivitePartage extends Activity { /*implements ConnectionCallbacks
 	private PlusClient mPlusClient;
 	private ConnectionResult mConnectionResult;
 	
-	// Twitter
-	private static final String CONSUMER_KEY = "5cZsqLqO1CsjkX0J5BXfQ";
-	private static final String CONSUMER_SECRET = "obwiu1CwSOrBUEY5bCEyxaQkeEP58UhQvXxQE9Vw";
-	private static final String CALLBACK_URL = "myApp:///twitter";
-	private static TwitterAuth mTwitterAuth = new TwitterAuth(CONSUMER_KEY, CONSUMER_SECRET);
-	private TwitterLoginButton twitterLoginButton;
-	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activite_partage);
-		
 		
 		
 		// Bouton "partager"
@@ -44,14 +57,8 @@ public class ActivitePartage extends Activity { /*implements ConnectionCallbacks
 				// on ajoute un sujet
 				shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Viens jouer à Androworms !");
 				
-				// On définit le coprs du message à partager
-				String shareMessage = "Toi aussi viens jouer à Androworms. " +
-						"C'est un jeu qui est vraiment trop cool. " +
-						"Il faut bouger le téléphone sans perdre la flèche rose !\n" +
-						"Viens le télécharger https://code.google.com/p/androworms/";
-				
 				// On ajoute le message
-				shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareMessage);
+				shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, R.string.message_partage);
 				
 				// On démarre le sélécteur d'applications pour le partage
 				startActivity(Intent.createChooser(shareIntent, "Partager l'application"));
@@ -98,8 +105,20 @@ public class ActivitePartage extends Activity { /*implements ConnectionCallbacks
 		
 		
 		// Bouton "Twitter"
-		twitterLoginButton = (TwitterLoginButton) findViewById(R.id.btn_login_twitter);
-		twitterLoginButton.init(this, mTwitterAuth, new TwitterAuthListener());
+		Button btnPartageTwitter = (Button)findViewById(R.id.btn_partager_twitter);
+		btnPartageTwitter.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String tweetUrl = "https://twitter.com/intent/tweet?text=" +
+						v.getContext().getString(R.string.message_partage) +
+						"&url=" + v.getContext().getString(R.string.url_google_code);
+				
+				Log.v(TAG, "Twitter-URL:" + tweetUrl);
+				findViewById(R.id.inc_pageweb).setVisibility(View.VISIBLE);
+				WebView pageWeb = (WebView)findViewById(R.id.wv_pageweb);
+				pageWeb.loadUrl(tweetUrl);
+			}
+		});
 	}
 	
 	
@@ -183,25 +202,4 @@ public class ActivitePartage extends Activity { /*implements ConnectionCallbacks
 		Log.d(TAG, "disconnected");
 	}
 	
-	private class TwitterAuthListener implements AuthListener {
-		
-		@Override
-		public void onAuthSucceed() {
-			// TODO Auto-generated method stub
-			
-		}
-		
-		@Override
-		public void onLogoutSucceed() {
-			// TODO Auto-generated method stub
-			
-		}
-		
-		@Override
-		public void onError(String error) {
-			// TODO Auto-generated method stub
-			
-		}
-	}
-	*/
 }

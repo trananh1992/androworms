@@ -95,5 +95,7 @@
     <string name="niveau_moyen">Moyen</string>
     <string name="niveau_difficile">Difficile</string>
     <string name="niveau_separateur">></string>
+    <string name="message_partage">Toi aussi viens jouer à Androworms. C\'est un jeu de plateforme où l\'objectif est de tirer sur ses amis ! Viens le télécharger sur https://code.google.com/p/androworms/</string>
+    <string name="url_google_code">https://code.google.com/p/androworms/</string>
 
 </resources>
