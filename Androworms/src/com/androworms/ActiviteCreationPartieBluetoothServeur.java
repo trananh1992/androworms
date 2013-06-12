@@ -15,7 +15,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-
+/** Activité de gestion de la création d'une partie Blueooth.
+ * Cette activité est l'activité exécuté sur l'appareil qui fais serveur Bluetoth
+ */
 public class ActiviteCreationPartieBluetoothServeur {
 	
 	private static final String TAG = "Androworms.ActiviteCreationPartie.Bluetooth.Serveur";
@@ -150,14 +152,14 @@ public class ActiviteCreationPartieBluetoothServeur {
 			btnMontrerBluetooth.setVisibility(View.VISIBLE);
 			
 			tvMonNomBluetooth.setVisibility(View.VISIBLE);
-			tvMonNomBluetooth.setText("Mon nom : " + Bluetooth.getBluetoothAdapter().getName());
+			tvMonNomBluetooth.setText(R.string.mon_nom + Bluetooth.getBluetoothAdapter().getName());
 			
 			tvMaVisibilite.setVisibility(View.VISIBLE);
-			String maVisibilite = "Ma visibilité : ";
+			String maVisibilite = tvMaVisibilite.getContext().getString(R.string.ma_visibilite);
 			if (Bluetooth.getBluetoothAdapter().getScanMode() == BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
-				maVisibilite += "visible";
+				maVisibilite += R.string.visibilite_visible;
 			} else {
-				maVisibilite += "invisible";
+				maVisibilite += R.string.visibilite_invisible;
 			}
 			tvMaVisibilite.setText(maVisibilite);
 			
@@ -176,7 +178,7 @@ public class ActiviteCreationPartieBluetoothServeur {
 		ProgressBar pbMinuteur = (ProgressBar)activiteCreationPartie.findViewById(R.id.pb_Minuteur);
 		
 		pbMinuteur.setVisibility(View.VISIBLE);
-		tvMaVisibilite.setText("Ma visibilité : ");
+		tvMaVisibilite.setText(R.string.ma_visibilite);
 	}
 	
 	/** L'utilisateur demande à revenir au statut précédent.

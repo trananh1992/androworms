@@ -14,6 +14,8 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
+/** Activité de gestion du Gyroscope pour faire un tir de missile.
+ */
 public class ActiviteGyro extends Activity implements SensorEventListener {
 	
 	public static final int TAILLE_IMAGE = 50;

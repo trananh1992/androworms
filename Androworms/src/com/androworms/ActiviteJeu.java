@@ -233,14 +233,14 @@ public class ActiviteJeu extends Activity implements OnClickListener {
 	@Override
 	public void onBackPressed() {	
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage("Voulez-vous vraiment quitter la partie ?");
+		builder.setMessage(R.string.voulez_vous_quitter);
 		builder.setCancelable(false);
-		builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+		builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 				finish();
 			}
 		});
-		builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+		builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 				dialog.cancel();
 			}

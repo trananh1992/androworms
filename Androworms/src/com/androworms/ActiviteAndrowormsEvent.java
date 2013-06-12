@@ -36,7 +36,7 @@ public class ActiviteAndrowormsEvent implements OnClickListener {
 			} else if (btn.getId() == R.id.btn_menu_score) {
 				// Bouton de gestion des scores
 				Log.v(TAG, "Clic sur le bouton de la gestion des scores");
-				new AlertDialog.Builder(activiteAndroworms).setTitle("Androworms").setMessage("La gestion des scores n'est pas encore disponible dans cette version").setNeutralButton("Close", null).show();
+				new AlertDialog.Builder(activiteAndroworms).setTitle(R.string.app_name).setMessage(R.string.gestion_score_non_disponible).setNeutralButton(R.string.fermer, null).show();
 			} else if (btn.getId() == R.id.btn_menu_parametres) {
 				// Bouton de paramètres
 				Log.v(TAG, "Clic sur le bouton des paramètres");

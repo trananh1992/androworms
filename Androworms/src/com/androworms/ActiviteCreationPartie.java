@@ -157,7 +157,7 @@ public class ActiviteCreationPartie extends Activity {
 	
 	private void etape2ModeDeuxjoueurs() {
 		// Non disponible pour le moment
-		new AlertDialog.Builder(this).setTitle(R.string.app_name).setMessage("Les parties 2 joueurs ne sont pas encore dispo !").setNeutralButton("Close", null).show();
+		new AlertDialog.Builder(this).setTitle(R.string.app_name).setMessage(R.string.partie_deux_joueurs_non_disponible).setNeutralButton(R.string.fermer, null).show();
 	}
 	
 	private void etape2ModeBluetoothServeur() {
@@ -184,12 +184,12 @@ public class ActiviteCreationPartie extends Activity {
 	
 	private void etape2ModeWifiServeur() {
 		// Non disponible pour le moment
-		new AlertDialog.Builder(this).setTitle(R.string.app_name).setMessage("Les parties en Wifi-Direct ne sont pas encore dispo !").setNeutralButton("Close", null).show();
+		new AlertDialog.Builder(this).setTitle(R.string.app_name).setMessage(R.string.partie_wifi_non_disponible).setNeutralButton(R.string.fermer, null).show();
 	}
 	
 	private void etape2ModeWifiClient() {
 		// Non disponible pour le moment
-		new AlertDialog.Builder(this).setTitle(R.string.app_name).setMessage("Les parties en Wifi-Direct ne sont pas encore dispo !").setNeutralButton("Close", null).show();
+		new AlertDialog.Builder(this).setTitle(R.string.app_name).setMessage(R.string.partie_wifi_non_disponible).setNeutralButton(R.string.fermer, null).show();
 	}
 	
 	private void etape3() {
