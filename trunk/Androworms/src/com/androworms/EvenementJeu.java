@@ -1,23 +1,21 @@
 package com.androworms;
 
-import com.androworms.utile.Informations;
-
 import android.content.Context;
 import android.graphics.Matrix;
 import android.graphics.PointF;
-import android.os.Vibrator;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
+import com.androworms.utile.Informations;
+
 public class EvenementJeu extends ScaleGestureDetector.SimpleOnScaleGestureListener implements OnTouchListener  {
 	
 	private static final String TAG = "Androworms.EvenementJeu";
 	
 	private static final int TAILLE_MATRIX = 9;
-	private static final int TEMPS_VIBRATION = 300;
 	private static final int FACTEUR_TRANSFORMATION = 5;
 	
 	private MoteurGraphique moteurGraph;
@@ -35,13 +33,10 @@ public class EvenementJeu extends ScaleGestureDetector.SimpleOnScaleGestureListe
 	private float zoomMin;
 	//zoom qui dépend de zoomMin
 	private float zoomMax;
-	
-	private Context ctx;
 		
 	public EvenementJeu(Context ctx, MoteurGraphique mg) {
 		Log.v(TAG, "constructeur EvenementJeu()");
 		this.moteurGraph = mg;
-		this.ctx = ctx;
 		
 		positionNouvelleTouche = new PointF(-1, -1);
 		positionAncienneTouche = new PointF(-1, -1);
@@ -163,17 +158,6 @@ public class EvenementJeu extends ScaleGestureDetector.SimpleOnScaleGestureListe
 					this.moteurGraph.getPointTir().y - positionNouvelleTouche.y);
 			
 			noyau.effectuerTirFromIHM(new Vector2D(deplacement.x/FACTEUR_TRANSFORMATION,deplacement.y/FACTEUR_TRANSFORMATION));
-			
-			
-			// FIXME : ce code est là juste pour tester
-			// Pour le moment : a chaque tir, on fait une petite vibration; mais au final, il faudrait mettre ce code pour
-			// que à chaque fois qu'on a des dégats sur notre joueur, on reçoit une vibration (si le joueur a activé l'option dans les paramètres).
-			if (noyau.getParametresApplication().getBoolean(ActiviteParametres.PARAMETRE_VIBRATIONS_CLE, ActiviteParametres.PARAMETRE_VIBRATIONS_DEFAUT)) {
-				// On récupère l'instance Vibrator depuis le context de l'activité
-				Vibrator v = (Vibrator)ctx.getSystemService(Context.VIBRATOR_SERVICE);
-				// Vibration durant 300 milliseconds
-				v.vibrate(TEMPS_VIBRATION);
-			}
 		}
 		positionAncienneTouche = new PointF(-1, -1);
 	}

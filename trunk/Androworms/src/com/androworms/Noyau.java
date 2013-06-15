@@ -209,7 +209,7 @@ public class Noyau {
 		physique.effectuerTir(esc, vd, seconde);
 		mouvementTir(esc, seconde);
 		//graphique.ajouterElementSurCarte(esc);
-		Log.v(TAG_NOYAU,"On tire ou pas !");
+		Log.v(TAG_NOYAU,"On fais un tir !");
 	}
 	
 	public void animerAndroidDroite(Personnage p) {
