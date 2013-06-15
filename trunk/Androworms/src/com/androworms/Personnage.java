@@ -34,10 +34,6 @@ public class Personnage extends ElementSurCarte implements Cloneable {
 		this.nom = nom;
 	}
 
-	public static int getIdImage() {
-		return R.drawable.test_android_face;
-	}
-
 	public void deplacementDroite(int pas, int max) {
 		if (getPosition().x + pas > max) {
 			setPosition(max, getPosition().y);
@@ -57,9 +53,4 @@ public class Personnage extends ElementSurCarte implements Cloneable {
 	public Bitmap getImageView() {
 		return super.getImageView();
 	}
-	
-
-	
-	
 }
-

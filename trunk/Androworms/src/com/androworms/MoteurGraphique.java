@@ -383,7 +383,6 @@ public class MoteurGraphique extends RelativeLayout {
 	}
 	
 	/* Méthodes à appeler depuis le noyau */
-	
 	public void setNoyau(Noyau noyau) {
 		this.noyau = noyau;
 		Monde monde = this.noyau.getMonde();
@@ -403,8 +402,11 @@ public class MoteurGraphique extends RelativeLayout {
 				//On garde la référence pour le zoom et translation
 				images.add(imgSurCarte);
 				
-				ImageView perso = (ImageView) imgSurCarte;
-				perso.setBackgroundResource(R.drawable.animation_android_droite);
+				if (p.equals(monde.getPersonnagePrincipal())) {
+					imgSurCarte.setBackgroundResource(R.drawable.animation_android_droite);
+				} else {
+					imgSurCarte.setBackgroundResource(R.drawable.android_face_desactive);
+				}
 			}
 			
 			for(ObjetSurCarte objSurCarte : monde.getListeObjetCarte()) {
@@ -445,10 +447,9 @@ public class MoteurGraphique extends RelativeLayout {
 	public void animerAndroidDroite(Personnage p) {
 		Personnage persoPrincipal = noyau.getMonde().getPersonnagePrincipal();
 		
-		for(ImageSurCarte img : images) {
+		for(ImageSurCarte perso : images) {
 			
-			if(img.getElement().equals(p)) {
-				ImageView perso = (ImageView) img;
+			if(perso.getElement().equals(p)) {
 				perso.setBackgroundResource(R.drawable.animation_android_droite);
 				
 				if(persoPrincipal.equals(p)) {
@@ -466,10 +467,9 @@ public class MoteurGraphique extends RelativeLayout {
 	public void animerAndroidGauche(Personnage p) {
 		Personnage persoPrincipal = noyau.getMonde().getPersonnagePrincipal();
 		
-		for(ImageSurCarte img : images) {
+		for(ImageSurCarte perso : images) {
 			
-			if(img.getElement().equals(p)) {
-				ImageView perso = (ImageView) img;
+			if(perso.getElement().equals(p)) {
 				perso.setBackgroundResource(R.drawable.animation_android_gauche);
 				
 				if(persoPrincipal.equals(p)) {
@@ -584,6 +584,24 @@ public class MoteurGraphique extends RelativeLayout {
 			Vibrator v = (Vibrator)this.context.getSystemService(Context.VIBRATOR_SERVICE);
 			// Vibration durant 300 milliseconds
 			v.vibrate(TEMPS_VIBRATION);
+		}
+	}
+	
+	public void desactiveJoueur() {
+		Personnage p = this.noyau.getMonde().getPersonnagePrincipal();
+		for(ImageSurCarte perso : this.images) {
+			if (perso.getElement().equals(p)) {
+				perso.setBackgroundResource(R.drawable.android_face_desactive);
+			}
+		}
+	}
+	
+	public void activeJoueur() {
+		Personnage p = this.noyau.getMonde().getPersonnagePrincipal();
+		for(ImageSurCarte perso : this.images) {
+			if (perso.getElement().equals(p)) {
+				perso.setBackgroundResource(R.drawable.android_face);
+			}
 		}
 	}
 }

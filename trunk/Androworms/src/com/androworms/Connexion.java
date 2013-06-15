@@ -19,8 +19,8 @@ public abstract class Connexion {
 		this.noyau = noyau;
 	}
 	
-	public void chronoInit() {
-		chrono.reInitialise();
+	public void chronoInit(String nomJoueur) {
+		chrono.reInitialise(nomJoueur);
 	}
 
 	public void chronoReprise() {

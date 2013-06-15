@@ -182,8 +182,11 @@ public class Noyau {
 	// FIN des fonctions venant de l'IHM ou des runnables
 	
 	public void prochainJoueur() {
+		Log.v("Damien","prochainJoueur()");
+		graphique.desactiveJoueur();
 		monde.setPersonnageSuivant();
 		monde.unsetTerrainSansPersonnageSave();
+		graphique.activeJoueur();
 	}
 	
 	public void deplacementJoueurDroite(String personnage) {
