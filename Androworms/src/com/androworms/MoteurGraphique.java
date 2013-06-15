@@ -17,8 +17,6 @@ import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
-import android.os.Handler;
-import android.os.Message;
 import android.os.Vibrator;
 import android.support.v4.util.LruCache;
 import android.util.AttributeSet;
