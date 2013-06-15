@@ -1,5 +1,7 @@
 package com.androworms;
 
+import android.util.Log;
+
 public class ConnexionLocale extends Connexion {
 	
 	public ConnexionLocale(Noyau n) {
@@ -22,9 +24,9 @@ public class ConnexionLocale extends Connexion {
 	public void finDuTourJoueur() {
 		chronoStop();
 		getNoyau().prochainJoueur();
-		chronoInit();
+		String nomJoueurCourant = getNoyau().getMonde().getPersonnagePrincipal().getNom();
+		chronoInit(nomJoueurCourant);
 		chronoReprise();
-		
 	}
 
 	@Override

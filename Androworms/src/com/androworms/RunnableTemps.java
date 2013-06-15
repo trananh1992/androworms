@@ -12,9 +12,11 @@ public class RunnableTemps extends Handler {
 	private static final int TEMPS_TOUR = 14;
 	private int tempsRestant;
 	private boolean arretDemande = false;
-	private static final String TAG = "Androworms.Noyau";
+	private static final String TAG = "Androworms.RunnableTemps";
 	
 	private static final int TEMPS_ATTENTE = 1000;
+	
+	private String nomJoueur = "anonymous";
 	
 	public RunnableTemps(Connexion co) {
 		this.connexion = co;
@@ -22,8 +24,9 @@ public class RunnableTemps extends Handler {
 		tempsRestant = TEMPS_TOUR;
 	}
 	
-	public void reInitialise() {
+	public void reInitialise(String nomJoueur) {
 		tempsRestant = TEMPS_TOUR;
+		this.nomJoueur = nomJoueur;
 	}
 	
 	public void stop() {
@@ -39,10 +42,10 @@ public class RunnableTemps extends Handler {
 	public void handleMessage(Message msg) {
 		if(!arretDemande) {
 			tempsRestant--;
-			if(tempsRestant <= 0) {
+			if (tempsRestant <= 0) {
 				connexion.tempsEcoule();
 			}
-			Log.v(TAG, "Il reste " + tempsRestant + " secondes au joueur");
+			Log.v(TAG, "Il reste " + tempsRestant + " secondes au joueur qui s'appelle '" + this.nomJoueur + "'");
 			sleep();
 		}
 	}
@@ -66,5 +69,4 @@ public class RunnableTemps extends Handler {
 		
 	}
 	*/
-	
 }
