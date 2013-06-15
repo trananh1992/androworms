@@ -8,7 +8,6 @@ public class RunnableTir implements Runnable {
 	private ImageSurCarte isc;
 	private int milliseconde ;
 	private Noyau noyau;
-	private static final String TAG = "Androworms.runnableMovementForce";
 	private boolean explosion = false;
 	private ObjetSurCarte objetExplosion;
 	private static final int TAILLE_TIR = 200;
@@ -32,18 +31,17 @@ public class RunnableTir implements Runnable {
 	}
 	
 	public void run() {
-		/*
-		isc.getElement().setPosition(nbSaut, nbSaut--);
-		*/
 		if(!isc.getElement().getMouvementForces().isEmpty()) {
 			isc.getElement().setPosition(isc.getElement().getMouvementForces().remove(0));
 			
 			mg.actualiserGraphisme();
 			mg.remetAplusTard(this, milliseconde);
-		} else if(explosion){
+		} else if(explosion) {
+			// Explosion
 			mg.supprimerElementSurCarte(isc.getElement());
 			noyau.finDuTourFromIHM();
-		} else  {
+		} else {
+			mg.vibration();
 			mg.supprimerElementSurCarte(isc.getElement());
 			PointF position = isc.getElement().getPosition();
 			objetExplosion.getPosition().set(position.x -TAILLE_TIR/2, position.y -TAILLE_TIR/2);

@@ -19,6 +19,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Vibrator;
 import android.support.v4.util.LruCache;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -40,6 +41,7 @@ public class MoteurGraphique extends RelativeLayout {
 	public static final int MAP_HEIGHT = 720;
 	
 	private static final int TAILLE_MAX_TIR = 300;
+	private static final int TEMPS_VIBRATION = 300;
 	
 	// Valeurs du zoom maximum et du zoom de lancement en fonction du zoom minimum
 	public static final float ZOOM_MAX_MULT = 4;
@@ -573,5 +575,15 @@ public class MoteurGraphique extends RelativeLayout {
 
 	public EvenementJeu getEvtJeu() {
 		return evtJeu;
+	}
+	
+	public void vibration() {
+		// On fais une vibration à chaque explosion
+		if (noyau.getParametresApplication().getBoolean(ActiviteParametres.PARAMETRE_VIBRATIONS_CLE, ActiviteParametres.PARAMETRE_VIBRATIONS_DEFAUT)) {
+			// On récupère l'instance Vibrator depuis le context de l'activité
+			Vibrator v = (Vibrator)this.context.getSystemService(Context.VIBRATOR_SERVICE);
+			// Vibration durant 300 milliseconds
+			v.vibrate(TEMPS_VIBRATION);
+		}
 	}
 }
