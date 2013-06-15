@@ -3,6 +3,8 @@ package com.androworms;
 import android.graphics.Bitmap;
 import android.graphics.PointF;
 
+/** Gestion du thread qui fait le tir
+ */
 public class RunnableTir implements Runnable {
 	private MoteurGraphique mg;
 	private ImageSurCarte isc;

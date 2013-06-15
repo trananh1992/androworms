@@ -54,19 +54,4 @@ public class RunnableTemps extends Handler {
 		this.removeMessages(0);
 		sendMessageDelayed(obtainMessage(0), TEMPS_ATTENTE);
 	}
-
-	/*
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		if(!arretDemande) {
-			tempsRestant--;
-			if(tempsRestant <= 0) {
-				connexion.tempsEcoule();
-			}
-			postDelayed(this, 1000);
-		}
-		
-	}
-	*/
 }
