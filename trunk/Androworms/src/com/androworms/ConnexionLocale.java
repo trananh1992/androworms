@@ -1,7 +1,5 @@
 package com.androworms;
 
-import android.util.Log;
-
 public class ConnexionLocale extends Connexion {
 	
 	public ConnexionLocale(Noyau n) {

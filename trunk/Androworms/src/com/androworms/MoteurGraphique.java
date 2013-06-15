@@ -485,24 +485,16 @@ public class MoteurGraphique extends RelativeLayout {
 	}
 	
 	public void stopAnimationAndroid() {
-		
-		if(animDroitePersoPrincipal != null)
-		{
+		if (animDroitePersoPrincipal != null) {
 			animDroitePersoPrincipal.stop();
 		}
-		
-		if(animDroitePerso2 != null)
-		{
+		if (animDroitePerso2 != null) {
 			animDroitePerso2.stop();
 		}
-		
-		if(animGauchePersoPrincipal != null)
-		{
+		if (animGauchePersoPrincipal != null) {
 			animGauchePersoPrincipal.stop();
 		}
-		
-		if(animGauchePerso2 != null)
-		{
+		if (animGauchePerso2 != null) {
 			animGauchePerso2.stop();
 		}
 	}
@@ -530,37 +522,6 @@ public class MoteurGraphique extends RelativeLayout {
 		}
 		return false;
 	}
-
-
-	/**
-	 * Create a simple handler that we can use to cause animation to happen.  We
-	 * set ourselves as a target and we can use the sleep()
-	 * function to cause an update/invalidate to occur at a later date.
-	 */
-	private RefreshHandler mRedrawHandler = new RefreshHandler(noyau, this);
-	
-	static class RefreshHandler extends Handler {
-		
-		private Noyau noyau;
-		private MoteurGraphique moteurGraphique;
-		
-		public RefreshHandler(Noyau noyau, MoteurGraphique moteurGraphique) {
-			this.noyau = noyau;
-			this.moteurGraphique = moteurGraphique;
-		}
-		
-		@Override
-		public void handleMessage(Message msg) {
-			//MoteurGraphique.this.update();
-			this.noyau.getPhysique().gravite();
-			this.moteurGraphique.invalidate();
-		}
-
-		public void sleep(long delayMillis) {
-			this.removeMessages(0);
-			sendMessageDelayed(obtainMessage(0), delayMillis);
-		}
-	};
 
 	public void debutCalcul() {
 		pbTest.setVisibility(View.VISIBLE);
