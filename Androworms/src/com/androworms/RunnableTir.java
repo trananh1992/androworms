@@ -3,8 +3,14 @@ package com.androworms;
 import android.graphics.Bitmap;
 import android.graphics.PointF;
 
-/** Gestion du thread qui fait le tir
+
+/**
+ * Cette classe effectue le mouvement d'un tir en déplacant l'objet sur carte esc en 
+ * chaque point de la trajectoire.
+ * Après le dernier déplacement, une explosion sera visible à l'écran et le tour du personnage sera fini.
  */
+=======
+
 public class RunnableTir implements Runnable {
 	private MoteurGraphique mg;
 	private ImageSurCarte isc;
@@ -35,7 +41,6 @@ public class RunnableTir implements Runnable {
 	public void run() {
 		if(!isc.getElement().getMouvementForces().isEmpty()) {
 			isc.getElement().setPosition(isc.getElement().getMouvementForces().remove(0));
-			
 			mg.actualiserGraphisme();
 			mg.remetAplusTard(this, milliseconde);
 		} else if(explosion) {
