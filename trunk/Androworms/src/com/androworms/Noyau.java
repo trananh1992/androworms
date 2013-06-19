@@ -153,6 +153,7 @@ public class Noyau {
 	}
 	
 	/** Gestion des messages venanat de l'IHM  et runnable */
+	
 	public void sautJoueurDroiteFromIHM() {
 		physique.sautJoueurDroite(monde.getPersonnagePrincipal().getNom());
 		mouvementForces();
@@ -179,8 +180,11 @@ public class Noyau {
 		connexion.effectuerTir(vd);
 	}
 	
-	// FIN des fonctions venant de l'IHM ou des runnables
+	/** FIN des fonctions venant de l'IHM ou des runnables */
 	
+	/**
+	 * Défini le prochain joueur et libère les caches terrains.
+	 */
 	public void prochainJoueur() {
 		Log.v("Damien","prochainJoueur()");
 		graphique.desactiveJoueur();
@@ -200,6 +204,11 @@ public class Noyau {
 		this.graphique.actualiserGraphisme();
 	}
 
+	/**
+	 * Effectue le tir suivant un vecteur en deux dimensions
+	 * La fonction au préalabe créer l'objet visuel qu'il faut tirer.
+	 * @param vd vecteur de référence
+	 */
 	public void effectuerTir(Vector2D vd) {
 		Bitmap image = graphique.getImage(R.drawable.missile);
 		ImageInformation ii = new ImageInformation(image, R.drawable.missile);
@@ -234,10 +243,21 @@ public class Noyau {
 	/** Cette fonction informe l'interface graphique 
 	 * qu'il y a des mouvements que des joueurs doivent exécuter
 	 */
+	/**
+	 * Cette fonction créé et applique un runable qui effectuera les mouvements forcés.
+	 * Les mouvements forcés sont :
+	 *  - les sauts ;
+	 *  - les projections (lié à une explosion à proximité (TODO))
+	 *  - la gravité.
+	 */
 	public void mouvementForces() {
 		graphique.remetAplusTard(new RunnableMouvementForce(graphique, this, (int) (physique.getRafraichissement() * VITESSE_RAFRAICHISSEMENT)), VITESSE_CHUTE);
 	}
-	
+	/**
+	 * Cette fonction crée et applique un runnable qui effectuera le mouvement du missile et l'explosion.
+	 * @param esc l'objet sur carte, un missile de préférence qu'il faudra dessiner 
+	 * @param seconde vitesse/puissance du projectile en seconde.
+	 */
 	public void mouvementTir(ObjetSurCarte esc, float seconde) {
 		//graphique.remetAplusTard(new RunnableMouvementForce(graphique, this, (int) (physique.getRafraichissement()*100f)), VITESSE_CHUTE);
 		graphique.remetAplusTard(new RunnableTir(esc, graphique, this, (int) (physique.getRafraichissement() * VITESSE_RAFRAICHISSEMENT)), (int) (seconde*1000));

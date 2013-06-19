@@ -70,6 +70,12 @@ public class Monde {
 		terrainSansPersonnageSave = null;
 	}
 	
+	/**
+	 * Crée un cache d'une map afin d'éviter de la générer à chaque fois que nécessaire.
+	 * Il faudra aussi gérer à la main la destruction de celle-ci.
+	 * @param nomPer le nom du personnage qu'il ne faudra pas dessiner sur la map
+	 * @return la map telle qu'elle devrait être affiché à l'écran (sans le personnage en paramètre)
+	 */
 	public Bitmap getTerrainSansPersonnageCible(String nomPer) {
 		if( terrainSansPersonnageSave != null ) {
 			return terrainSansPersonnageSave;
@@ -126,11 +132,16 @@ public class Monde {
 	public void addObjetSurCarte(ObjetSurCarte osc) {
 		listeObjetCarte.add(osc);
 	}
-	
+
 	public int nombrePersonnage() {
 		return listePersonnage.size();
 	}
 	
+	/**
+	 * Ajout des munitions à une arme.
+	 * @param nomObjet nom de l'arme.
+	 * @param nombre nombre de munition à rajouter.
+	 */
 	public void ajouterMunition(String nomObjet, int nombre) {
 		for(int i = 0; i < tousLesObjets.size(); i++) {
 			if(nomObjet.compareTo(tousLesObjets.get(i).getNom()) == 0
@@ -140,6 +151,10 @@ public class Monde {
 		}
 	}
 	
+	/**
+	 * Défini le personnage qui est en train de jouer
+	 * @param location la position du personnage dans la structure de données.
+	 */
 	public void setPersonnageEnTrainDeJouer(int location) {
 		if( location < listePersonnage.size()) {
 			personnageEnTrainDeJouer = listePersonnage.get(location);
@@ -150,6 +165,11 @@ public class Monde {
 		personnageEnTrainDeJouer = listePersonnage.get((joueurNumero(getPersonnagePrincipal())+1) % listePersonnage.size());
 	}
 	
+	/**
+	 * Le numéro du joueur
+	 * @param p le personnage pour lequel on désire le numéro dans la structure de données
+	 * @return le numéro du personnage dans ls structure de données.
+	 */
 	public int joueurNumero(Personnage p) {
 		for(int i = 0; i < listePersonnage.size(); i++) {
 			if(p == listePersonnage.get(i)) {
@@ -176,6 +196,10 @@ public class Monde {
 		return null;
 	}
 	
+	/**
+	 * Dessine le terrain tel qu'il sera visible, mais sans les objets sur cartes.
+	 * @return une bitmap du terrain.
+	 */
 	public Bitmap getMondeView() {
 		Bitmap terrain = getTerrain();
 		for(Personnage p : listePersonnage) {
@@ -184,6 +208,12 @@ public class Monde {
 		return terrain;
 	}
 	
+	/**
+	 * Dessine une image sur un fond.
+	 * @param fond le fond sur lequel il faut dessiner
+	 * @param dessin le dessin à utiliser pour la modification du fond.
+	 * @param centre la position du dessin.
+	 */
 	public void dessineSurBitmap(Bitmap fond, Bitmap dessin, PointF centre) {
 		for(int i = 0; i < dessin.getWidth(); i++) {
 			for(int j = 0; j < dessin.getHeight(); j++) {
