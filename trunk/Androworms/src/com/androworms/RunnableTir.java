@@ -9,7 +9,6 @@ import android.graphics.PointF;
  * chaque point de la trajectoire.
  * Après le dernier déplacement, une explosion sera visible à l'écran et le tour du personnage sera fini.
  */
-=======
 
 public class RunnableTir implements Runnable {
 	private MoteurGraphique mg;

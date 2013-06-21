@@ -65,8 +65,8 @@ public class ActiviteAndrowormsEvent implements OnClickListener {
 		} else if (v instanceof ImageButton) {
 			ImageButton ib = (ImageButton) v;
 			if (ib.getId() == R.id.ib_partager) {
-				Intent intent = new Intent(this.activiteAndroworms, ActivitePartage.class);
-				this.activiteAndroworms.startActivity(intent);
+				//Intent intent = new Intent(this.activiteAndroworms, ActivitePartage.class);
+				//this.activiteAndroworms.startActivity(intent);
 			}
 		}
 	}
