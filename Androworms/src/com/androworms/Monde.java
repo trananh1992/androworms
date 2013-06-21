@@ -30,6 +30,7 @@ public class Monde {
 		tm = new TerrainMonde();
 		acceleration = new ArrayList<Vector2D>();
 		acceleration.add(new Vector2D(0, 10));
+		acceleration.add(new Vector2D(10,0));
 	}
 	
 	
