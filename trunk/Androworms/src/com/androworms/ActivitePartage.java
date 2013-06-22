@@ -13,7 +13,7 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
-/*
+
 import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
@@ -23,10 +23,10 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
 import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
 import com.google.android.gms.plus.PlusClient;
-*/
+
 /** Activité de gestion du partage de l'application via les réseaux sociaux
  */
-/*
+
 public class ActivitePartage extends Activity implements ConnectionCallbacks, OnConnectionFailedListener {
 	
 	private static final String TAG = "Partage";
@@ -202,6 +202,4 @@ public class ActivitePartage extends Activity implements ConnectionCallbacks, On
 	public void onDisconnected() {
 		Log.d(TAG, "disconnected");
 	}
-	
 }
-*/
