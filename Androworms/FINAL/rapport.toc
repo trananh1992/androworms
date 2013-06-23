@@ -1,0 +1,25 @@
+\select@language {french}
+\contentsline {section}{\numberline {I}Introduction}{3}
+\contentsline {section}{\numberline {II}Choix du sujet}{3}
+\contentsline {subsection}{\numberline {II.1}Nos sp\IeC {\'e}cifications}{3}
+\contentsline {subsection}{\numberline {II.2}Vos sp\IeC {\'e}cifications}{3}
+\contentsline {section}{\numberline {III}Analyse du sujet}{4}
+\contentsline {subsection}{\numberline {III.1}Moyens techniques}{4}
+\contentsline {subsubsection}{Choix du langage et de l'API}{4}
+\contentsline {subsubsection}{L'environnement de d\IeC {\'e}veloppement}{4}
+\contentsline {subsubsection}{Le gestionnaire de version}{5}
+\contentsline {subsubsection}{La gestion de la qualit\IeC {\'e}}{5}
+\contentsline {subsubsection}{Communication}{5}
+\contentsline {section}{\numberline {IV}Moyens techniques mis en place}{5}
+\contentsline {section}{\numberline {V}R\IeC {\'e}alisations et difficult\IeC {\'e}s}{8}
+\contentsline {subsection}{\numberline {V.1}Pr\IeC {\'e}sentation du projet}{8}
+\contentsline {subsection}{\numberline {V.2}Architecture du projet}{8}
+\contentsline {subsection}{\numberline {V.3}La GUI}{9}
+\contentsline {subsection}{\numberline {V.4}Les graphismes}{9}
+\contentsline {subsection}{\numberline {V.5}Le jeu et la physique}{10}
+\contentsline {subsubsection}{Les collisions}{10}
+\contentsline {subsubsection}{Les d\IeC {\'e}placements}{10}
+\contentsline {subsubsection}{Les sauts et les tirs}{10}
+\contentsline {subsection}{\numberline {V.6}Le r\IeC {\'e}seau}{11}
+\contentsline {subsection}{\numberline {V.7}G\IeC {\'e}n\IeC {\'e}rateur de cartes}{11}
+\contentsline {subsection}{\numberline {V.8}Probl\IeC {\`e}mes rencontr\IeC {\'e}s et solutions appliqu\IeC {\'e}es}{12}
