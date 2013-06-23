@@ -99,8 +99,8 @@
     <string name="url_google_code">https://code.google.com/p/androworms/</string>
 
     <string-array name="choix_vent">
-        <item>Aléatoire</item>
         <item>Pas de vent</item>
+        <item>Aléatoire</item>
         <item>Vent faible</item>
         <item>Vent fort</item>
     </string-array>

@@ -22,15 +22,17 @@ public class Monde {
 	
 	private Bitmap terrainSansPersonnageSave;
 	
-	public Monde() {
+	public Monde(Vector2D vent) {
 		super();
 		tousLesObjets = new ArrayList<Objet>();
 		listePersonnage = new ArrayList<Personnage>();
 		listeObjetCarte = new ArrayList<ObjetSurCarte>();
 		tm = new TerrainMonde();
 		acceleration = new ArrayList<Vector2D>();
+		// Vecteur de gravité
 		acceleration.add(new Vector2D(0, 10));
-		acceleration.add(new Vector2D(10,0));
+		// Vecteur du vent
+		acceleration.add(vent);
 	}
 	
 	

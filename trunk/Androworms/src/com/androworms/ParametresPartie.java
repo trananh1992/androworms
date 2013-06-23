@@ -32,6 +32,9 @@ public final class ParametresPartie {
 	// Mode Bluetooth Client
 	private BluetoothSocket socketServeur;
 	
+	//Vent
+	private Vector2D vent = new Vector2D(0,0);
+	
 	// Singleton de ParametresPartie
 	private static ParametresPartie parametres;
 	
@@ -126,5 +129,13 @@ public final class ParametresPartie {
 
 	public void setSocketServeur(BluetoothSocket socketServeur) {
 		this.socketServeur = socketServeur;
+	}
+	
+	public Vector2D getVent() {
+		return vent;
+	}
+
+	public void setVent(Vector2D vent) {
+		this.vent = vent;
 	}
 }
