@@ -310,11 +310,12 @@ public class ActiviteCreationPartie extends Activity {
 				}
 				int vitesseVent = min + (int)(Math.random() * ((max - min) + 1));
 				if (Math.random() > 0.5) {
-					ParametresPartie.getParametresPartie().setVent(new Vector2D(0, vitesseVent));
-				}
-				else {
 					ParametresPartie.getParametresPartie().setVent(new Vector2D(vitesseVent, 0));
 				}
+				else {
+					ParametresPartie.getParametresPartie().setVent(new Vector2D(-vitesseVent, 0));
+				}
+				
 			}
 
 			@Override
