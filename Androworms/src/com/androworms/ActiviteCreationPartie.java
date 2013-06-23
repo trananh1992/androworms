@@ -16,12 +16,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.androworms.ui.BarreAction;
@@ -280,6 +282,47 @@ public class ActiviteCreationPartie extends Activity {
 	private void etape4() {
 		etape = ETAPE_4_CHOIX_EQUIPE;
 		setContentView(R.layout.activite_creation_partie_4);
+		
+		final Spinner spVent = (Spinner)findViewById(R.id.sp_vent);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.text_view_spinner);
+		adapter.add("Pas de vent");
+		adapter.add("Aléatoire");
+		adapter.add("Vent faible");
+		adapter.add("Vent fort");
+		spVent.setAdapter(adapter);
+		
+		spVent.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+				int min = 0;
+				int max = 0;
+				
+				if (spVent.getSelectedItemPosition() == 1) {
+					max = 14;
+				}
+				else if (spVent.getSelectedItemPosition() == 2) {
+					max = 7;
+				}
+				else if (spVent.getSelectedItemPosition() == 3) {
+					min = 7;
+					max = 14;
+				}
+				int vitesseVent = min + (int)(Math.random() * ((max - min) + 1));
+				if (Math.random() > 0.5) {
+					ParametresPartie.getParametresPartie().setVent(new Vector2D(0, vitesseVent));
+				}
+				else {
+					ParametresPartie.getParametresPartie().setVent(new Vector2D(vitesseVent, 0));
+				}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				ParametresPartie.getParametresPartie().setVent(new Vector2D(0, 0));
+			}
+		});
+		
 		
 		// Barre d'action
 		BarreAction barreAction = (BarreAction)findViewById(R.id.ba_barre_action);

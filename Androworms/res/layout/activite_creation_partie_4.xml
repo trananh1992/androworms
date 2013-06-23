@@ -59,7 +59,7 @@
             android:text="Vent :" />
 
         <Spinner
-            android:id="@+id/spinner1"
+            android:id="@+id/sp_vent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:entries="@array/choix_vent"

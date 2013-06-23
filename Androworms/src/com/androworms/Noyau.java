@@ -62,8 +62,9 @@ public class Noyau {
 		Integer paramMode = params.getModeJeu();
 		Boolean paramEstCartePerso = params.isEstCartePerso();
 		String paramNomCarte = params.getNomCarte();
+		Vector2D vent = params.getVent();
 
-		monde = new Monde();
+		monde = new Monde(vent);
 		physique = new MoteurPhysique(this, monde);
 		
 		/*
