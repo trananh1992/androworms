@@ -52,7 +52,11 @@ Vanhoutreve Renaud
 \tableofcontents
 \newpage
 
+\newpage
+
 \section{Introduction}
+\bigskip
+
 Dans le cadre du projet 140h à sujet libre, nous avons choisi de faire
 une application pour Android, un jeu de plate-forme.
 Les projets de jeux vidéo sont souvent mal estimés. Bon nombre de
@@ -78,9 +82,14 @@ objectifs ci-dessous :
 \end{itemize}
 
 
+\newpage
+
 \section{Choix du sujet}
+\bigskip
 
 \subsection{Les spécifications que nous avons choisies}
+\bigskip
+
 
 Le choix d’un projet mobile s’est imposé pour plusieurs raisons. 
 En effet, ce projet nous est apparu comme une occasion de découvrir
@@ -111,6 +120,9 @@ notre application sont les suivantes :
 \end{itemize}
 
 \subsection{Les contraintes du sujet}
+\bigskip
+
+
 Lors de la définition de notre projet, nous avons compris que l’objectif
 de ce projet était de faire un site internet ou une application mobile
 selon le travail effectué en entreprise. Nous sommes plusieurs dans le
@@ -150,9 +162,15 @@ en cours d’utilisation.
 dans le cadre de ce tout premier projet d’application mobile.
 \end{itemize}
 
+\newpage
+
 \section{Analyse du sujet}
+\bigskip
+
 
 \subsection{Moyens techniques}
+\bigskip
+
 
 \subsubsection{Choix du langage et de l'API}
 
@@ -236,9 +254,16 @@ D’autres moyens de communications ont été utilisés :
 charges, élaboration de la vidéo finale, etc...
 \end{itemize}
 
+\newpage
+
 \section{Moyens techniques mis en place}
+\bigskip
+
 
 \subsection{Début du projet}
+\bigskip
+
+
 Pour commencer le projet, nous avons fait plusieurs réunions pour
 choisir le sujet du projet et le définir précisément. Nous avons
 également à cette occasion choisi les technologies employées.
@@ -287,6 +312,8 @@ installer Sonar sur un serveur. Ensuite, nous avons chacun étudié le
 onctionnement du SDK Android et commencé à faire des essais.
 
 \subsection{Diagramme d’utilisation}
+\bigskip
+
 
 Dans un premier temps, nous avons défini notre projet et mis en place un
 diagramme d’utilisation. Cela correspondait au cours «Analyse et
@@ -298,6 +325,8 @@ de notre application.
 \includegraphics[scale=0.5]{images/graph3}
 
 \subsection{Élaboration d’un diagramme de classe}
+\bigskip
+
 
 Lors de la spécification du projet, un diagramme de classes avait été
 construit. Ce diagramme comportait un nombre de classes réduit. Étant
@@ -320,9 +349,15 @@ fin de l’exécuter sur l’appareil le plus puissant et réduire les temps
 de calcul ou l’attacher au noyau pour simplifier le développement ?
 \end{itemize}
 
+\newpage
+
 \section{Réalisations et difficultés}
+\bigskip
+
 
 \subsection{Présentation du projet}
+\bigskip
+
 
 Le but du projet était d'acquérir des compétences complémentaires à
 celle acquises en entreprise, d’où l’idée de créer un mini jeu mobile
@@ -335,6 +370,8 @@ sous projets articulés. Ci-dessous une présentation de ces sous projets
 et de leur avancement.
 
 \subsection{Architecture du projet}
+\bigskip
+
 
 Comme précisé dans la section précédente, le diagramme de classes a bien
 guidé les développements. Cependant, il manquait de précision en raison
@@ -350,14 +387,14 @@ application actuelle :
 Dans ce schéma, les flèches noires représentent l’agrégation : les
 flèches pointent vers un objet appelant l’objet d’où la flèche part.
 Les losanges blancs indiquent la composition et les traits impliquent
-ne agrégation dans les deux sens. Seules les classes créées et utilisées
+une agrégation dans les deux sens. Seules les classes créées et utilisées
 apparaissent dans le schéma afin de simplifier la lecture du schéma.
 
 On remarque que le diagramme de classe initial à bien été respecté,
 malgré quelques erreurs. Par exemple, la classe « ImageSurCarte » est
-tilisé uniquement pour stocker les informations du « Personnage » pour
+utilisé uniquement pour stocker les informations du « Personnage » pour
 permettre son affichage. Il aurait été possible de fusionner les deux
-lasses afin d’en garder une seule et unique classe « Personnage »
+classes afin d’en garder une seule et unique classe « Personnage »
 accessible via le noyau.
 
 La classe « TerrainMonde » a remplacé la classe carte, pour deux
@@ -406,6 +443,8 @@ certains cas particuliers comme pour la création de la partie).
 \includegraphics[scale=0.5]{images/graph6}
 
 \subsection{L’interface utilisateur}
+\bigskip
+
 
 Nous avons lu les spécifications de Google sur les normes d’interface
 utilisateur afin de permettre aux personnes d’avoir un retour uniforme
@@ -421,6 +460,9 @@ Le projet contient un menu qui permet d'accéder à :
 \end{itemize}
 
 \subsection{Les graphismes}
+\bigskip
+
+
 En France, il n’est pas nécessaire de déposer une œuvre pour qu’elle
 soit considérée comme telle et protégée. De ce fait, une majorité des
 images présentes sur internet est soumise au droit d’auteur. Ce droit
@@ -443,6 +485,8 @@ mémoire. De plus, Android propose une propriété Animation sur les View,
 permettant d'enchaîner plusieurs images à la vitesse choisie.
 
 \subsection{Le jeu et la physique}
+\bigskip
+
 
 \subsubsection{Les déplacements}
 
@@ -451,7 +495,7 @@ bas. Un joueur peut se déplacer, marcher, uniquement si la différence de
 hauteur entre ses positions est inférieur à un certain seuil fixé. Le
 personnage peut se déplacer d’un nombre fixe de pixels à gauche ou à
 droite. La lenteur ressentie lors des déplacements provient des prises
-e position du doigt de l’utilisateur qui sont fixes pendant un
+de position du doigt de l’utilisateur qui sont fixes pendant un
 intervalle de temps donné. Afin de fluidifier le mouvement il faudrait
 diminuer cet intervalle.
 
@@ -529,16 +573,16 @@ fonctionnement depuis le début du développement.
 
 Dans les premières versions d’Androworms, l’accent avait été mis sur les
 performances limitées des appareils. C’est pourquoi la gestion des
-ollisions représentait un calcul très important, nous nous sommes donc
+collisions représentait un calcul très important, nous nous sommes donc
 dirigés vers l’utilisation des enveloppes convexes. C’est un système
-ien plus rapide que de parcourir l’ensemble des points du personnage
-our vérifier les collisions. En effet, notre bonhomme faisant 81x107
-ixels (8667pixels en tout), cette vérification devait être faite sur
+bien plus rapide que de parcourir l’ensemble des points du personnage
+pour vérifier les collisions. En effet, notre bonhomme faisant 81x107
+pixels (8667pixels en tout), cette vérification devait être faite sur
 chaque position lors du déplacement du personnage. 
 
 Le souci de l’enveloppe convexe se pose lors des sauts, ces déplacements
 ne se limitant pas à un pixel de côté ; des points de textures pouvaient
-ntrer en collision sans être détectés. 
+entrer en collision sans être détectés. 
 Le système d’enveloppe convexe a finalement été mis de côté pour un
 calcul exhaustif de la collision afin de pallier à toutes les
 possibilités.
@@ -559,6 +603,8 @@ optimisation non souhaitée ou trouver le bug correspondant.
 
 
 \subsection{Le réseau}
+\bigskip
+
 
 Lors de la première réunion, nous avons choisi de faire le jeu en
 multi-joueurs. Pour réaliser cela, nous avions plusieurs solutions.
@@ -607,6 +653,8 @@ l’étape suivante de configuration de la partie. La suite du processus
 n’a pas été réalisée par manque de temps.
 
 \subsection{API des réseaux sociaux}
+\bigskip
+
 
 \subsubsection{Partage de l’application avec les possibilités du smartphone}
 
@@ -679,6 +727,8 @@ officielle qui permet d’effectuer le partage en ouvrant une page we
  valider le message.
 
 \subsection{Générateur de cartes}
+\bigskip
+
 
 Un des caractères innovant de cette application est sans nul doute le
 générateur de cartes.
@@ -855,6 +905,8 @@ C’est ce dernier algorithme que nous utilisons car il donne des
 résultats très esthétiques avec un temps de calcul suffisamment réduit.
 
 \subsection{Proof-Of-Concept (POC)}
+\bigskip
+
 
 Notre intention dans ce projet était d’ajouter un maximum d'éléments
 intéressants dans cette application. Vu que nous étions bloqués sur
@@ -889,6 +941,8 @@ es mouvements et de l’inclinaison du téléphone. Par manque de temps, nous
 n’avons malheureusement pas eu l’occasion de l’intégrer au projet.
 
 \subsection{Problèmes rencontrés et solutions appliquées}
+\bigskip
+
 
 \subsubsection{Problème de mémoire limitée}
 
@@ -923,9 +977,15 @@ d’autres membres du projet s’y intéressent afin d’obtenir le plus
 rapidement possible un environnement de test réaliste.
 \newpage
 
+\newpage
+
 \section{Qualité et tests}
+\bigskip
+
 
 \subsection{Qualité code source avec Sonar}
+\bigskip
+
 
 \begin{figure}[h]
 \begin{wrapfigure}{l}{30mm}
@@ -949,6 +1009,8 @@ Ces informations permettent d’assurer un suivi sur la qualité de
 ayant un code source relativement propre.
 
 \subsection{Matériels de test}
+\bigskip
+
 
 De nombreux tests ont été effectués de manière régulière sur une large
 gamme de téléphones et tablettes :
@@ -990,6 +1052,8 @@ projet n’était pas entièrement abouti, nous avons que faiblement fait
 tester notre application par des personnes tierces.
 
 \subsection{Tests du singe}
+\bigskip
+
 
 Le SDK de Android intègre la possibilité de faire des tests du singe
 monkey test) sur une application Android. Le fonctionnement consiste à
@@ -1022,6 +1086,8 @@ Grâce à ces tests, nous avons donc repéré quelques défauts dans notre
 pplication que nous avons répertoriés ou directement corrigés.
 
 \subsection{Tests unitaires}
+\bigskip
+
 
 Nous avons tenté de mettre des tests unitaires dans notre application
 au mois de janvier. Mais nous ne sommes pas allés au bout de notre
@@ -1047,9 +1113,15 @@ De plus, nous possédons déjà une assurance qualité avec Sonar.
 Toutes ces raisons nous ont confortés dans notre décision de nous passer
 de tests unitaires.
 
+\newpage
+
 \section{Statistiques}
+\bigskip
+
 
 \subsection{Statistiques générales}
+\bigskip
+
 
 Voici quelques statistiques sur notre projet :
 \begin{itemize}
@@ -1065,6 +1137,8 @@ commentaires)
 \end{itemize}
 
 \subsection{Statistiques détaillés issue de Sonar}
+\bigskip
+
 
 Ci-dessous, nous allons détailler quelques informations issues de Sonar
 
@@ -1160,7 +1234,11 @@ Les statistiques SVN générés par Sonar sont disponibles à l’adresse suivan
 \url{http://doc.petrolkiwi.net/dashboard/index/Androworms?did=8}
 
 
+\newpage
+
 \section{Conclusion et perspective}
+\bigskip
+
 
 Le développement de jeux vidéo est complexe de par les multitudes
 interactions matérielles/logiciels qu’il comporte et y jouer n’apprend
