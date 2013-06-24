@@ -345,7 +345,7 @@ création a soulevé des questions importantes :
 \item Comment faire pour garder le même comportement en mode solo et
 multi-joueurs ?
 \item Où placer l’intelligence artificielle ? Dans la partie réseau,
-fin de l’exécuter sur l’appareil le plus puissant et réduire les temps
+afin de l’exécuter sur l’appareil le plus puissant et réduire les temps
 de calcul ou l’attacher au noyau pour simplifier le développement ?
 \end{itemize}
 
@@ -577,7 +577,7 @@ collisions représentait un calcul très important, nous nous sommes donc
 dirigés vers l’utilisation des enveloppes convexes. C’est un système
 bien plus rapide que de parcourir l’ensemble des points du personnage
 pour vérifier les collisions. En effet, notre bonhomme faisant 81x107
-pixels (8667pixels en tout), cette vérification devait être faite sur
+pixels (8667 pixels en tout), cette vérification devait être faite sur
 chaque position lors du déplacement du personnage. 
 
 Le souci de l’enveloppe convexe se pose lors des sauts, ces déplacements
@@ -636,7 +636,7 @@ serveur n’était pas dans notre projet, cela aurait pris du temps et des
 questions matérielles se seraient posées. Nous avons décidé de sacrifier
 le débit et la distance au profit des utilisateurs. Certes le Wifi est
 bien meilleur au niveau portée et débit mais pour notre choix de SDK le
-bluetooth était suffisant.
+Bluetooth était suffisant.
 
 \subsubsection{État de réalisation dans le projet}
 
@@ -761,7 +761,7 @@ Dans les nouvelles versions d'Android, ces callbacks sont toujours
 appelés pour des raisons de rétrocompatibilité, mais le callback
 d'image « raw » renvoie null comme argument. Alors que nous voulions
 utiliser un format « raw » pour choisir le format, la compression des
-données, les données rutes n'étaient jamais disponibles. Aucune
+données, les données brutes n'étaient jamais disponibles. Aucune
 documentation ne spécifiait que dans les dernières versions d'Android,
 aucune image brute n'était plus disponible. Nous avons donc utilisé les
 images déjà compressées.
@@ -892,7 +892,7 @@ sombres ou clairs. Puis nous appliquons de l’alpha sur les points les plus cla
 
 Cet algorithme était beaucoup moins coûteux que K-means et donnait des
 résultats semblables. Cependant, on pouvait observer des
-artefacts: certains pixels clairs qui
+artefacts : certains pixels clairs qui
 apparaissaient au milieu de zones sombres se voyaient appliquer un
 alpha, ce qui donnait des résultats peu esthétiques. Pour l’améliorer,
 nous avons décidé de diminuer la résolution de calcul. Lors de la phase
@@ -901,8 +901,8 @@ blocs de plusieurs pixels, calculant la moyenne de densité des blocs
 avant de les classer dans l’une ou l’autre des catégories.
 \bigskip
 
-C’est ce dernier algorithme que nous utilisons car il donne des
-résultats très esthétiques avec un temps de calcul suffisamment réduit.
+Donnant des résultats très esthétiques avec un temps de calcul suffisamment 
+réduit, nous avons décidé d'utiliser cet algorithme.
 
 \subsection{Proof-Of-Concept (POC)}
 \bigskip
@@ -1059,7 +1059,7 @@ Le SDK de Android intègre la possibilité de faire des tests du singe
 monkey test) sur une application Android. Le fonctionnement consiste à
 démarrer une machine virtuelle Android avec l’application à tester, puis
 de lancer une commande qui va exécuter au choix un certain nombre
-opérations aléatoires sur la machine.
+d'opérations aléatoires sur la machine.
 
 Étant donné qu’une machine virtuelle est démarrée, nous pouvons voir
 comment se comporte l’application selon les différentes actions du
@@ -1105,7 +1105,7 @@ de développement non négligeable.
 Dans la mesure où cette application ne demande que très peu de code ou
 de fonctionnalités de pur développement (presque tout le code est en
 interaction avec l’interface), il n’y a que très peu de fonctions à
-ouvrir avec des tests unitaires. Dans le cas d’une librairie, il aurait
+couvrir avec des tests unitaires. Dans le cas d’une librairie, il aurait
 été bien plus judicieux de mettre des tests en place.
 
 De plus, nous possédons déjà une assurance qualité avec Sonar.
@@ -1131,12 +1131,12 @@ commentaires, ni les librairies)
 \item 787 lignes de commentaires dans le code Java (soit 13,2\% de
 commentaires)
 \item 0\% de duplication de code
-\item 97,2\% de taux de conformité dans Sonar
+\item 97,3\% de taux de conformité dans Sonar
 \item 321 commits
 \item 67 classes réparties dans 4 packages
 \end{itemize}
 
-\subsection{Statistiques détaillés issue de Sonar}
+\subsection{Statistiques détaillés issues de Sonar}
 \bigskip
 
 
@@ -1146,7 +1146,7 @@ Ci-dessous, nous allons détailler quelques informations issues de Sonar
 
 
 \begin{center}
-\includegraphics{images/quality_index}
+\includegraphics[scale=0.7]{images/quality_index}
 \end{center}
 
 Cette note s’explique principalement par le fait que nous n’avons pas
@@ -1206,7 +1206,7 @@ Zoom sur le package com.androworms :
 \subsubsection{Qualité globale de l’application}
 
 Le projet ne possède pas à un taux de conformité de 100\%. Analysons
-ensemble pourquoi la  métrique n’est qu’à 97,2\%.
+ensemble pourquoi la  métrique n’est qu’à 97,3\%.
 
 
 \includegraphics[scale=0.75]{images/rules}
@@ -1241,7 +1241,7 @@ Les statistiques SVN générés par Sonar sont disponibles à l’adresse suivan
 
 
 Le développement de jeux vidéo est complexe de par les multitudes
-interactions matérielles/logiciels qu’il comporte et y jouer n’apprend
+d'interactions matérielles/logiciels qu’il comporte et y jouer n’apprend
 rien sur leurs créations. De plus les appareils mobiles sont en plein
 essor à travers le monde, c’est pourquoi notre projet fut orienté vers
 cette architecture.
