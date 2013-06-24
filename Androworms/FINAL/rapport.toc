@@ -1,25 +1,69 @@
 \select@language {french}
 \contentsline {section}{\numberline {I}Introduction}{3}
 \contentsline {section}{\numberline {II}Choix du sujet}{3}
-\contentsline {subsection}{\numberline {II.1}Nos sp\IeC {\'e}cifications}{3}
-\contentsline {subsection}{\numberline {II.2}Vos sp\IeC {\'e}cifications}{3}
+\contentsline {subsection}{\numberline {II.1}Les sp\IeC {\'e}cifications que nous avons choisies}{3}
+\contentsline {subsection}{\numberline {II.2}Les contraintes du sujet}{3}
 \contentsline {section}{\numberline {III}Analyse du sujet}{4}
 \contentsline {subsection}{\numberline {III.1}Moyens techniques}{4}
 \contentsline {subsubsection}{Choix du langage et de l'API}{4}
-\contentsline {subsubsection}{L'environnement de d\IeC {\'e}veloppement}{4}
+\contentsline {subsubsection}{L'environnement de d\IeC {\'e}veloppement}{5}
 \contentsline {subsubsection}{Le gestionnaire de version}{5}
-\contentsline {subsubsection}{La gestion de la qualit\IeC {\'e}}{5}
+\contentsline {subsubsection}{La gestion de la qualit\IeC {\'e} du code source}{5}
 \contentsline {subsubsection}{Communication}{5}
 \contentsline {section}{\numberline {IV}Moyens techniques mis en place}{5}
+\contentsline {subsection}{\numberline {IV.1}D\IeC {\'e}but du projet}{5}
+\contentsline {subsection}{\numberline {IV.2}Diagramme d\IeC {\textquoteright }utilisation}{6}
+\contentsline {subsection}{\numberline {IV.3}\IeC {\'E}laboration d\IeC {\textquoteright }un diagramme de classe}{6}
 \contentsline {section}{\numberline {V}R\IeC {\'e}alisations et difficult\IeC {\'e}s}{8}
 \contentsline {subsection}{\numberline {V.1}Pr\IeC {\'e}sentation du projet}{8}
 \contentsline {subsection}{\numberline {V.2}Architecture du projet}{8}
-\contentsline {subsection}{\numberline {V.3}La GUI}{9}
-\contentsline {subsection}{\numberline {V.4}Les graphismes}{9}
+\contentsline {subsection}{\numberline {V.3}L\IeC {\textquoteright }interface utilisateur}{9}
+\contentsline {subsection}{\numberline {V.4}Les graphismes}{10}
 \contentsline {subsection}{\numberline {V.5}Le jeu et la physique}{10}
-\contentsline {subsubsection}{Les collisions}{10}
 \contentsline {subsubsection}{Les d\IeC {\'e}placements}{10}
 \contentsline {subsubsection}{Les sauts et les tirs}{10}
+\contentsline {subsubsection}{Les collisions}{11}
+\contentsline {subsubsection}{Retour sur objectifs}{11}
 \contentsline {subsection}{\numberline {V.6}Le r\IeC {\'e}seau}{11}
-\contentsline {subsection}{\numberline {V.7}G\IeC {\'e}n\IeC {\'e}rateur de cartes}{11}
-\contentsline {subsection}{\numberline {V.8}Probl\IeC {\`e}mes rencontr\IeC {\'e}s et solutions appliqu\IeC {\'e}es}{12}
+\contentsline {subsubsection}{Par internet}{11}
+\contentsline {subsubsection}{Par Wifi-Direct}{11}
+\contentsline {subsubsection}{Par Bluetooth}{11}
+\contentsline {subsubsection}{Solution choisie}{11}
+\contentsline {subsubsection}{\IeC {\'E}tat de r\IeC {\'e}alisation dans le projet}{12}
+\contentsline {subsection}{\numberline {V.7}API des r\IeC {\'e}seaux sociaux}{12}
+\contentsline {subsubsection}{Partage de l\IeC {\textquoteright }application avec les possibilit\IeC {\'e}s du smartphone}{12}
+\contentsline {subsubsection}{\IeC {\'E}valuation sur le Google Play Store}{12}
+\contentsline {subsubsection}{API Google+}{12}
+\contentsline {subsubsection}{API Facebook}{12}
+\contentsline {subsubsection}{API Twitter}{13}
+\contentsline {subsection}{\numberline {V.8}G\IeC {\'e}n\IeC {\'e}rateur de cartes}{13}
+\contentsline {subsubsection}{Seuillage fixe:}{13}
+\contentsline {subsubsection}{Seuillage dynamique :}{14}
+\contentsline {subsubsection}{K-means:}{14}
+\contentsline {subsubsection}{Technique hybride :}{14}
+\contentsline {subsection}{\numberline {V.9}Proof-Of-Concept (POC)}{15}
+\contentsline {subsubsection}{le son}{15}
+\contentsline {subsubsection}{le vibreur}{15}
+\contentsline {subsubsection}{l\IeC {\textquoteright }acc\IeC {\'e}l\IeC {\'e}rom\IeC {\`e}tre}{15}
+\contentsline {subsection}{\numberline {V.10}Probl\IeC {\`e}mes rencontr\IeC {\'e}s et solutions appliqu\IeC {\'e}es}{15}
+\contentsline {subsubsection}{Probl\IeC {\`e}me de m\IeC {\'e}moire limit\IeC {\'e}e}{15}
+\contentsline {subsubsection}{Android 2.3.x}{15}
+\contentsline {subsubsection}{Moteur graphique}{15}
+\contentsline {section}{\numberline {VI}Qualit\IeC {\'e} et tests}{16}
+\contentsline {subsection}{\numberline {VI.1}Qualit\IeC {\'e} code source avec Sonar}{16}
+\contentsline {subsection}{\numberline {VI.2}Mat\IeC {\'e}riels de test}{16}
+\contentsline {subsection}{\numberline {VI.3}Tests du singe}{16}
+\contentsline {subsection}{\numberline {VI.4}Tests unitaires}{17}
+\contentsline {subsubsection}{Probl\IeC {\`e}me de temps}{17}
+\contentsline {subsubsection}{Pas de n\IeC {\'e}cessit\IeC {\'e}}{17}
+\contentsline {section}{\numberline {VII}Statistiques}{17}
+\contentsline {subsection}{\numberline {VII.1}Statistiques g\IeC {\'e}n\IeC {\'e}rales}{17}
+\contentsline {subsection}{\numberline {VII.2}Statistiques d\IeC {\'e}taill\IeC {\'e}s issue de Sonar}{17}
+\contentsline {subsubsection}{Index de qualit\IeC {\'e}}{17}
+\contentsline {subsubsection}{Alertes remont\IeC {\'e} par Sonar}{18}
+\contentsline {subsubsection}{Historique et \IeC {\'e}volution du projet}{18}
+\contentsline {subsubsection}{Respect des interd\IeC {\'e}pendances entre packages}{19}
+\contentsline {subsubsection}{\IeC {\'E}tat du projet}{19}
+\contentsline {subsubsection}{Qualit\IeC {\'e} globale de l\IeC {\textquoteright }application}{20}
+\contentsline {subsubsection}{Statistiques SVN}{20}
+\contentsline {section}{\numberline {VIII}Conclusion et perspective}{20}
