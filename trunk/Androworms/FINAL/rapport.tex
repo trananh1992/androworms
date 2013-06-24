@@ -186,7 +186,7 @@ Cependant, entre septembre début du projet et juin, l’état du marché a
 Plus de 50\% des mobiles utilisent actuellement une version 4.0.x ou
 supérieur, ce qui ne justifierait plus forcément notre choix de départ.
 Ceci s’explique par une technologie relativement récente entraînant la
-ortie de mises à jour fréquentes et surtout la venue de nombreux mobiles
+sortie de mises à jour fréquentes et surtout la venue de nombreux mobiles
 rendant les vieilles versions obsolètes.
 
 L’anticipation de cette évolution et l’utilisation de la version 4.0.x
@@ -213,7 +213,7 @@ l’héberger sur Google Code à l’adresse suivante :
 \url{http://code.google.com/p/androworms}.
 Ce choix nous a permis d’utiliser le tracker intégré, permettant
 d’affecter des tâches aux différents membres du groupe, que ce soit pour
-es bugs ou des demandes d’évolutions
+des bugs ou des demandes d’évolutions
 (\url{http://code.google.com/p/androworms/issues/list}). Cette
 fonctionnalité permet l’envoi direct d’un mail à la personne en charge
 de la tâche.
@@ -224,7 +224,7 @@ son choix comme gestionnaire de version s’est rapidement imposé.
 \subsubsection{La gestion de la qualité du code source}
 
 Dès le début du projet, \url{http://www.sonarqube.org/}{Sonar} a été
-nstallé sur un serveur tiers afin de contrôler et améliorer la qualité
+installé sur un serveur tiers afin de contrôler et améliorer la qualité
 du code source.
 Cette plate-forme de contrôle continu effectue une analyse à chaque
 commit et renvoie le résultat en moins d’un minute.
@@ -243,7 +243,7 @@ Notre instance de Sonar est disponible à l’adresse suivante :
 La communication au sein du groupe n’a pas toujours été facile.
 Principalement en raison de l’emploi du temps de chacun, mais également
 en raison de la division par groupe pendant les TD/TP. Au final très peu
-e travail personnel en commun.
+de travail personnel en commun.
 
 D’autres moyens de communications ont été utilisés :
 \begin{itemize}
@@ -309,7 +309,7 @@ gestion de la collision + &&&&&\\
 
 Au début du projet, nous avons dû mettre en place le dépôt Google et
 installer Sonar sur un serveur. Ensuite, nous avons chacun étudié le
-onctionnement du SDK Android et commencé à faire des essais.
+fonctionnement du SDK Android et commencé à faire des essais.
 
 \subsection{Diagramme d’utilisation}
 \bigskip
@@ -338,7 +338,7 @@ enrichi pour obtenir la version suivante :
 
 En raison de nos faibles connaissances en conception et réalisation de
 jeux vidéo, nous avons eu beaucoup de mal à estimer les besoins de ce
-rojet. Ce schéma a donc été notre référence tout au long du projet. Sa
+projet. Ce schéma a donc été notre référence tout au long du projet. Sa
 création a soulevé des questions importantes :
 
 \begin{itemize}
@@ -470,7 +470,7 @@ protège les images de la modification, reproduction, diffusion ; elles
 ne peuvent être exploitées sans l’autorisation de l’auteur.
 
 Pour des soucis de légalité et dans l’optique d’une éventuelle
-ommercialisation de l’application dans le futur, nous avons décidé de
+commercialisation de l’application dans le futur, nous avons décidé de
 créer nos propres images.
 
 Chaque smartphone ayant un espace mémoire différent, il a fallu créer
@@ -548,16 +548,16 @@ Pour la gravité, le vecteur initial est forcément nul, seules les
 accélérations entrant en compte. 
 
 D’ailleurs pour ce genre d’action, il faudra faire attention à ce que le
- saut, la gravité ou le tir s'arrête lorsqu’il rentre en contact avec 
- les éléments du décor. En effet, l’action suit une somme de quantum de
-  temps, mais lorsque cette somme est grande, la nouvelle position est à
-   K pixels de la précédente (K >= 1). Sur la fin de la trajectoire, il 
-   n’y aura que peu de chance pour que le personnage effectuant un saut 
-   atterrisse les deux pieds par terre. Il flottera sûrement dans les 
-   airs puisque c’est la dernière position valide (position sans 
-   collision). Il faudra ajuster la position en fonction des deux 
-   derniers points (l’avant-dernier point valide et le dernier point 
-   invalide). 
+saut, la gravité ou le tir s'arrête lorsqu’il rentre en contact avec 
+les éléments du décor. En effet, l’action suit une somme de quantum de
+temps, mais lorsque cette somme est grande, la nouvelle position est à
+K pixels de la précédente (K >= 1). Sur la fin de la trajectoire, il 
+n’y aura que peu de chance pour que le personnage effectuant un saut
+atterrisse les deux pieds par terre. Il flottera sûrement dans les
+airs puisque c’est la dernière position valide (position sans
+collision). Il faudra ajuster la position en fonction des deux
+derniers points (l’avant-dernier point valide et le dernier point
+invalide). 
 Pour pallier à ce problème, notre code parcourt l’ensemble des points 
 formés par la droite décrite par ces deux derniers points et en déduit 
 la position réelle de l’élément.
@@ -596,7 +596,7 @@ vidéo actuels.
 Cependant il existe un léger souci sur le mouvement de la grenade lors
 d’un tir. En effet, lorsque la grenade redescend lors d’un tir direction
 nord-est, il y a une accélération du mouvement. Ceci n’est pas forcément
-n bug, le système de cache y ayant probablement sa part de
+un bug, le système de cache y ayant probablement sa part de
 responsabilité. Cependant, l’utilisateur ressent une accélération de la
 grenade et une solution devra être trouvée afin de palier à cette
 optimisation non souhaitée ou trouver le bug correspondant.
@@ -613,7 +613,7 @@ multi-joueurs. Pour réaliser cela, nous avions plusieurs solutions.
 
 Cette solution consiste à pouvoir jouer en multi-joueurs grâce au réseau
 internet. Pour cela, la mise en place d’un serveur est nécessaire afin
-ue les joueurs s’échangent l’état du jeu en permanence.
+que les joueurs s’échangent l’état du jeu en permanence.
 
 \subsubsection{Par Wifi-Direct}
 
@@ -625,7 +625,7 @@ Le Wifi-Direct n’est disponible que sous Android 4.0 et supérieur.
 \subsubsection{Par Bluetooth}
 
 Le Bluetooth est une technologie de communication sans fil entre deux
-ppareils. Les signaux Bluetooth sont disponibles sur 20 à 300m et
+appareils. Les signaux Bluetooth sont disponibles sur 20 à 300m et
 proposent un débit de 6Mpbs.
 Le Bluetooth est disponible sous Android 2.0 et supérieur.
 
@@ -636,7 +636,7 @@ serveur n’était pas dans notre projet, cela aurait pris du temps et des
 questions matérielles se seraient posées. Nous avons décidé de sacrifier
 le débit et la distance au profit des utilisateurs. Certes le Wifi est
 bien meilleur au niveau portée et débit mais pour notre choix de SDK le
-luetooth était suffisant.
+bluetooth était suffisant.
 
 \subsubsection{État de réalisation dans le projet}
 
@@ -698,7 +698,7 @@ informations nécessaires comme les clés pour pouvoir utiliser l’API de
 Google+. Cette fonctionnalité nous a demandé beaucoup plus de temps que
 prévu. En effet, nous ne nous attendions pas à une telle complexité pour
 l’ajout d’un simple bouton de partage sur Google+. Il est nécessaire
-’écrire plusieurs centaines de lignes pour faire fonctionner ce bouton
+d’écrire plusieurs centaines de lignes pour faire fonctionner ce bouton
 de partage et malgré de nombreux tests, nous n’avons jamais réellement
 réussi à le faire fonctionner.
 
@@ -708,12 +708,12 @@ Pour utiliser l’API de « Facebook », nous avons dû utiliser le compte
 d’un des membres de l’équipe afin qu’il ait un compte « Facebook
 developer » et ainsi pouvoir enregistrer l’application au sein de
 Facebook et obtenir l’ID de l’application. Encore une fois nous sommes
-tonnés par la complexité de l’ajout d’un simple bouton de partage via un
+étonnés par la complexité de l’ajout d’un simple bouton de partage via un
 SDK. Nous avons pratiquement abouti au résultat souhaité. Lorsque
 l’application Facebook n’est pas installée, le bouton génère une page
 web dans une Frame fonctionnelle. Au contraire, quand l’application
 Facebook est installée, le bouton déclenche l’ouverture de l’application
-acebook qui échoue à la connexion. Ce bouton n’est pas complètement
+Facebook qui échoue à la connexion. Ce bouton n’est pas complètement
 opérationnel. De plus, nous n’avons pas trouvé comment créer un bouton
 “Connexion \& partage”. Visiblement selon le SDK, nous aurions été
 obligés de séparer ces deux opérations.
@@ -811,7 +811,7 @@ quel.
 
 Cet algorithme a l’avantage d’être simple et peu coûteux en temps et
 ressources, mais les résultats produits étaient très aléatoires et peu
-sthétiques.
+esthétiques.
 
 En effet, on ne peut prédire si l’image sera plutôt claire
 ou plutôt sombre. Si le seuil choisit est trop bas et l’image est
@@ -840,7 +840,7 @@ On débute en prenant deux pixels aléatoire p1 et p2, on calcule leurs
 densités d1 et d2. Ces deux densités forment alors la base de deux
 ensembles e1 et e2. On parcourt ensuite l’ensemble des pixels et pour
 chaque pixel p, on calcule sa densité d, et on le place dans un des
-nsembles selon le critère suivant :
+ensembles selon le critère suivant :
 \bigskip
 
 \begin{itemize}
@@ -937,7 +937,7 @@ jeu. Une de ces armes aurait dû être un missile téléguidé par
 l’accéléromètre du téléphone. Pour ce faire, nous avons réalisé une page
 de test depuis le menu principal de l’application en clinquant sur
 « Test du gyro ». Cette petite flèche rose orientée, tourne en fonction
-es mouvements et de l’inclinaison du téléphone. Par manque de temps, nous
+des mouvements et de l’inclinaison du téléphone. Par manque de temps, nous
 n’avons malheureusement pas eu l’occasion de l’intégrer au projet.
 
 \subsection{Problèmes rencontrés et solutions appliquées}
@@ -948,7 +948,7 @@ n’avons malheureusement pas eu l’occasion de l’intégrer au projet.
 
 Sur certains appareils, il n’est pas possible de stocker plus de deux ou
 trois images volumineuses en même temps en mémoire. De ce fait il n’est
-as possible d’annuler les actions lors de la prise de photo avec
+pas possible d’annuler les actions lors de la prise de photo avec
 l’appareil photo.
 
 \subsubsection{Android 2.3.x}
@@ -968,7 +968,7 @@ fonctionnant de manière correcte. Les premières tentatives permettait
 bien d’afficher les objets, de déplacer et de zoomer la carte, mais
 elles étaient complexes et nous paraissaient difficilement utilisables ;
 elles étaient peu compréhensibles et très peu maniables. Il a fallu
-lusieurs versions pour obtenir une version qui au final n’était pas
+plusieurs versions pour obtenir une version qui au final n’était pas
 totalement satisfaisante. Le développement de jeux vidéo sur Android a
 été bien plus complexe que nous l’avions imaginé. De plus l’accent étant
 mis au fil des semaines sur l’interface graphique, en effet son absence
@@ -1005,7 +1005,7 @@ la qualité du code source d’une application. C’est une application qui
 regroupe des librairies de contrôle de code existant sûr et qui fournit
 les violations à ces règles ainsi que des statistiques sur le projet.
 Ces informations permettent d’assurer un suivi sur la qualité de
-’application et permettent ainsi de réduire le risque de bugs tout en
+l’application et permettent ainsi de réduire le risque de bugs tout en
 ayant un code source relativement propre.
 
 \subsection{Matériels de test}
@@ -1043,7 +1043,7 @@ dus à :
 les mobiles)
 \item la version d’Android (2.3.6 à 4.2.2)
 \item la taille de l’écran qui varie énormément et qui complique
-’affichage des éléments graphiques
+l’affichage des éléments graphiques
 \end{itemize}
 \bigskip
 
@@ -1057,7 +1057,7 @@ tester notre application par des personnes tierces.
 
 Le SDK de Android intègre la possibilité de faire des tests du singe
 monkey test) sur une application Android. Le fonctionnement consiste à
-émarrer une machine virtuelle Android avec l’application à tester, puis
+démarrer une machine virtuelle Android avec l’application à tester, puis
 de lancer une commande qui va exécuter au choix un certain nombre
 opérations aléatoires sur la machine.
 
@@ -1076,14 +1076,14 @@ L’objectif de ces tests, est de repérer :
 \item s’il arrive à faire planter l’application (ce qui entraîne l’arrêt
 de l’application)
 \item s’il arrive à produire des comportements jugés « bizarre » dans
-es actions.
+ses actions.
 \end{itemize}
 Ces tests peuvent également être qualifiés de « stress tests » puisque
 le singe fait un très grand nombre d’actions par seconde et peut donc
 détecter des problèmes qu’un utilisateur lambda ne produira pas.
 
 Grâce à ces tests, nous avons donc repéré quelques défauts dans notre
-pplication que nous avons répertoriés ou directement corrigés.
+application que nous avons répertoriés ou directement corrigés.
 
 \subsection{Tests unitaires}
 \bigskip
@@ -1103,7 +1103,7 @@ de développement non négligeable.
 \subsubsection{Pas de nécessité}
 
 Dans la mesure où cette application ne demande que très peu de code ou
-e fonctionnalités de pur développement (presque tout le code est en
+de fonctionnalités de pur développement (presque tout le code est en
 interaction avec l’interface), il n’y a que très peu de fonctions à
 ouvrir avec des tests unitaires. Dans le cas d’une librairie, il aurait
 été bien plus judicieux de mettre des tests en place.
@@ -1162,8 +1162,8 @@ d’historique, on peut voir les alertes en passant la souris sur le
 
 Dans la majorité des cas, les alertes ont permis de rétablir rapidement
 la situation. La seule exception se situe entre le 10 mai et le 9 juin,
-n raison du manque de documentation de l’API. Cette alerte n’était pas
-pécialement importante et a pris du temps à être corrigée.
+en raison du manque de documentation de l’API. Cette alerte n’était pas
+spécialement importante et a pris du temps à être corrigée.
 
 Aujourd’hui, le projet est conforme, il ne possède aucune alerte.
 
@@ -1175,16 +1175,16 @@ Aujourd’hui, le projet est conforme, il ne possède aucune alerte.
 
 Sur ce graphique on voit la courbe bleue représentant le nombre de
 lignes de code qui a évolué tout au long du projet. La courbe orange
-eprésente le taux de conformité ; peu respecté au début du projet le
-emps que chacun prenne conscience des standards de développement. 
+représente le taux de conformité ; peu respecté au début du projet le
+temps que chacun prenne conscience des standards de développement. 
 
 La courbe verte, quant à elle, représente le nombre de violations dans
-e code.
+le code.
 
 Sous le graphique, les flèches représentent les analyses de Sonar. On
-emarque que le développement a été très actif au début, et plus faible
+remarque que le développement a été très actif au début, et plus faible
 sur la fin (tout en restant actif). A noter que certains commits n’ont
-as été analysés à cause de bugs sur le serveur d’intégration.
+pas été analysés à cause de bugs sur le serveur d’intégration.
 
 \subsubsection{Respect des interdépendances entre packages}
 %TODO : commenter un peu cette section quand même
@@ -1214,8 +1214,8 @@ ensemble pourquoi la  métrique n’est qu’à 97,2\%.
 « Éviter le code mort commenté » est assez simple à comprendre. La
 règle « Magic Number », quant à elle, correspond à une présence de
 nombres différents de 0, 1 et 2 directement dans les instructions. En
-ffet ces nombres correspondent généralement à des valeurs modifiables
-eur placement dans une constante est donc souhaitable.
+effet ces nombres correspondent généralement à des valeurs modifiables
+leur placement dans une constante est donc souhaitable.
 
 Les 2 règles les plus enfreintes sont des règles qui disparaissent avec
 la fin du développement actif du projet. Dans la mesure où notre projet
@@ -1242,7 +1242,7 @@ Les statistiques SVN générés par Sonar sont disponibles à l’adresse suivan
 
 Le développement de jeux vidéo est complexe de par les multitudes
 interactions matérielles/logiciels qu’il comporte et y jouer n’apprend
-ien sur leurs créations. De plus les appareils mobiles sont en plein
+rien sur leurs créations. De plus les appareils mobiles sont en plein
 essor à travers le monde, c’est pourquoi notre projet fut orienté vers
 cette architecture.
 
@@ -1259,8 +1259,8 @@ les joueurs et les actions des personnages sont fonctionnelles.
 
 Lors de ce projet, nous avons aussi pu découvrir l’importance des
 interactions entre les différentes personnes constituant notre groupe
-omme la difficulté à faire un transfert de connaissance intéressant et
-erformant lors des réunions. Nous pensons donc, que l’apport de ce sujet
+comme la difficulté à faire un transfert de connaissance intéressant et
+performant lors des réunions. Nous pensons donc, que l’apport de ce sujet
 libre a été important et nous aurions aimé avoir plus de temps afin de
 mener à bien ce projet.
 
