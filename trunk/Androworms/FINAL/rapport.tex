@@ -1002,7 +1002,9 @@ comment se comporte l’application selon les différentes actions du
 singe. Nous avons également accès aux logs de l’application et du
 téléphone.
 
-/*TODO image*/
+\begin{center}
+\includegraphics[scale=0.8]{images/monkey}
+\end{center}
 
 L’objectif de ces tests, est de repérer :
 \begin{itemize}
@@ -1068,7 +1070,10 @@ Ci-dessous, nous allons détailler quelques informations issues de Sonar
 
 \subsubsection{Index de qualité}
 
-/*TODO image*/
+
+\begin{center}
+\includegraphics{images/quality_index}
+\end{center}
 
 Cette note s’explique principalement par le fait que nous n’avons pas
 effectué de tests unitaires.
@@ -1077,9 +1082,9 @@ effectué de tests unitaires.
 
 Voici les alertes remontées par notre serveur Sonar. Dans cette fenêtre
 d’historique, on peut voir les alertes en passant la souris sur le
-/*TODO image*/.
+\includegraphics[scale=0.8]{images/info_icon}.
 
-/*TODO image*/
+\includegraphics[scale=0.8]{images/alert1}
 
 Dans la majorité des cas, les alertes ont permis de rétablir rapidement
 la situation. La seule exception se situe entre le 10 mai et le 9 juin,
@@ -1088,11 +1093,11 @@ pécialement importante et a pris du temps à être corrigée.
 
 Aujourd’hui, le projet est conforme, il ne possède aucune alerte.
 
-/*TODO image*/
+\includegraphics{images/alert2}
 
 \subsubsection{Historique et évolution du projet}
 
-/*TODO image*/
+\includegraphics[scale=0.55]{images/evolution}
 
 Sur ce graphique on voit la courbe bleue représentant le nombre de
 lignes de code qui a évolué tout au long du projet. La courbe orange
@@ -1108,20 +1113,29 @@ sur la fin (tout en restant actif). A noter que certains commits n’ont
 as été analysés à cause de bugs sur le serveur d’intégration.
 
 \subsubsection{Respect des interdépendances entre packages}
-
-/*TODO image*/
+%TODO : commenter un peu cette section quand même
+\begin{center}
+\includegraphics[scale=0.5]{images/depedencies}
+\end{center}
 
 \subsubsection{État du projet}
-/*TODO image*/
+\begin{center}
+\includegraphics[scale=0.8]{images/state1}
+\end{center}
 Zoom sur le package com.androworms :
-/*TODO image*/
+
+
+\begin{center}
+\includegraphics[scale=0.8]{images/state2}
+\end{center}
 
 \subsubsection{Qualité globale de l’application}
 
 Le projet ne possède pas à un taux de conformité de 100\%. Analysons
 ensemble pourquoi la  métrique n’est qu’à 97,2\%.
 
-/*TODO image*/
+
+\includegraphics[scale=0.75]{images/rules}
 
 « Éviter le code mort commenté » est assez simple à comprendre. La
 règle « Magic Number », quant à elle, correspond à une présence de
